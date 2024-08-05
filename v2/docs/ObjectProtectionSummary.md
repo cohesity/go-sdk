@@ -1,0 +1,648 @@
+# ObjectProtectionSummary
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Environment** | Pointer to **NullableString** | Specifies the environment of the object. | [optional] 
+**Id** | Pointer to **NullableInt64** | Specifies object id. | [optional] 
+**Name** | Pointer to **NullableString** | Specifies the name of the object. | [optional] 
+**SourceId** | Pointer to **NullableInt64** | Specifies registered source id to which object belongs. | [optional] 
+**SourceName** | Pointer to **NullableString** | Specifies registered source name to which object belongs. | [optional] 
+**ChildObjects** | Pointer to [**[]ObjectSummary**](ObjectSummary.md) | Specifies child object details. | [optional] 
+**GlobalId** | Pointer to **NullableString** | Specifies the global id which is a unique identifier of the object. | [optional] 
+**LogicalSizeBytes** | Pointer to **NullableInt64** | Specifies the logical size of object in bytes. | [optional] 
+**ObjectHash** | Pointer to **NullableString** | Specifies the hash identifier of the object. | [optional] 
+**ObjectType** | Pointer to **NullableString** | Specifies the type of the object. | [optional] 
+**OsType** | Pointer to **NullableString** | Specifies the operating system type of the object. | [optional] 
+**ProtectionType** | Pointer to **NullableString** | Specifies the protection type of the object if any. | [optional] 
+**SharepointSiteSummary** | Pointer to [**SharepointObjectParams**](SharepointObjectParams.md) |  | [optional] 
+**Uuid** | Pointer to **NullableString** | Specifies the uuid which is a unique identifier of the object. | [optional] 
+**VCenterSummary** | Pointer to [**ObjectTypeVCenterParams**](ObjectTypeVCenterParams.md) |  | [optional] 
+**WindowsClusterSummary** | Pointer to [**ObjectTypeWindowsClusterParams**](ObjectTypeWindowsClusterParams.md) |  | [optional] 
+**Error** | Pointer to **NullableString** | Specifies the error message if an error occurred during creation of the object protection. | [optional] 
+**ErrorType** | Pointer to **NullableString** | Specifies the type of error which occurred during creation of the object protection. | [optional] 
+
+## Methods
+
+### NewObjectProtectionSummary
+
+`func NewObjectProtectionSummary() *ObjectProtectionSummary`
+
+NewObjectProtectionSummary instantiates a new ObjectProtectionSummary object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewObjectProtectionSummaryWithDefaults
+
+`func NewObjectProtectionSummaryWithDefaults() *ObjectProtectionSummary`
+
+NewObjectProtectionSummaryWithDefaults instantiates a new ObjectProtectionSummary object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetEnvironment
+
+`func (o *ObjectProtectionSummary) GetEnvironment() string`
+
+GetEnvironment returns the Environment field if non-nil, zero value otherwise.
+
+### GetEnvironmentOk
+
+`func (o *ObjectProtectionSummary) GetEnvironmentOk() (*string, bool)`
+
+GetEnvironmentOk returns a tuple with the Environment field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvironment
+
+`func (o *ObjectProtectionSummary) SetEnvironment(v string)`
+
+SetEnvironment sets Environment field to given value.
+
+### HasEnvironment
+
+`func (o *ObjectProtectionSummary) HasEnvironment() bool`
+
+HasEnvironment returns a boolean if a field has been set.
+
+### SetEnvironmentNil
+
+`func (o *ObjectProtectionSummary) SetEnvironmentNil(b bool)`
+
+ SetEnvironmentNil sets the value for Environment to be an explicit nil
+
+### UnsetEnvironment
+`func (o *ObjectProtectionSummary) UnsetEnvironment()`
+
+UnsetEnvironment ensures that no value is present for Environment, not even an explicit nil
+### GetId
+
+`func (o *ObjectProtectionSummary) GetId() int64`
+
+GetId returns the Id field if non-nil, zero value otherwise.
+
+### GetIdOk
+
+`func (o *ObjectProtectionSummary) GetIdOk() (*int64, bool)`
+
+GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetId
+
+`func (o *ObjectProtectionSummary) SetId(v int64)`
+
+SetId sets Id field to given value.
+
+### HasId
+
+`func (o *ObjectProtectionSummary) HasId() bool`
+
+HasId returns a boolean if a field has been set.
+
+### SetIdNil
+
+`func (o *ObjectProtectionSummary) SetIdNil(b bool)`
+
+ SetIdNil sets the value for Id to be an explicit nil
+
+### UnsetId
+`func (o *ObjectProtectionSummary) UnsetId()`
+
+UnsetId ensures that no value is present for Id, not even an explicit nil
+### GetName
+
+`func (o *ObjectProtectionSummary) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *ObjectProtectionSummary) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *ObjectProtectionSummary) SetName(v string)`
+
+SetName sets Name field to given value.
+
+### HasName
+
+`func (o *ObjectProtectionSummary) HasName() bool`
+
+HasName returns a boolean if a field has been set.
+
+### SetNameNil
+
+`func (o *ObjectProtectionSummary) SetNameNil(b bool)`
+
+ SetNameNil sets the value for Name to be an explicit nil
+
+### UnsetName
+`func (o *ObjectProtectionSummary) UnsetName()`
+
+UnsetName ensures that no value is present for Name, not even an explicit nil
+### GetSourceId
+
+`func (o *ObjectProtectionSummary) GetSourceId() int64`
+
+GetSourceId returns the SourceId field if non-nil, zero value otherwise.
+
+### GetSourceIdOk
+
+`func (o *ObjectProtectionSummary) GetSourceIdOk() (*int64, bool)`
+
+GetSourceIdOk returns a tuple with the SourceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceId
+
+`func (o *ObjectProtectionSummary) SetSourceId(v int64)`
+
+SetSourceId sets SourceId field to given value.
+
+### HasSourceId
+
+`func (o *ObjectProtectionSummary) HasSourceId() bool`
+
+HasSourceId returns a boolean if a field has been set.
+
+### SetSourceIdNil
+
+`func (o *ObjectProtectionSummary) SetSourceIdNil(b bool)`
+
+ SetSourceIdNil sets the value for SourceId to be an explicit nil
+
+### UnsetSourceId
+`func (o *ObjectProtectionSummary) UnsetSourceId()`
+
+UnsetSourceId ensures that no value is present for SourceId, not even an explicit nil
+### GetSourceName
+
+`func (o *ObjectProtectionSummary) GetSourceName() string`
+
+GetSourceName returns the SourceName field if non-nil, zero value otherwise.
+
+### GetSourceNameOk
+
+`func (o *ObjectProtectionSummary) GetSourceNameOk() (*string, bool)`
+
+GetSourceNameOk returns a tuple with the SourceName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceName
+
+`func (o *ObjectProtectionSummary) SetSourceName(v string)`
+
+SetSourceName sets SourceName field to given value.
+
+### HasSourceName
+
+`func (o *ObjectProtectionSummary) HasSourceName() bool`
+
+HasSourceName returns a boolean if a field has been set.
+
+### SetSourceNameNil
+
+`func (o *ObjectProtectionSummary) SetSourceNameNil(b bool)`
+
+ SetSourceNameNil sets the value for SourceName to be an explicit nil
+
+### UnsetSourceName
+`func (o *ObjectProtectionSummary) UnsetSourceName()`
+
+UnsetSourceName ensures that no value is present for SourceName, not even an explicit nil
+### GetChildObjects
+
+`func (o *ObjectProtectionSummary) GetChildObjects() []ObjectSummary`
+
+GetChildObjects returns the ChildObjects field if non-nil, zero value otherwise.
+
+### GetChildObjectsOk
+
+`func (o *ObjectProtectionSummary) GetChildObjectsOk() (*[]ObjectSummary, bool)`
+
+GetChildObjectsOk returns a tuple with the ChildObjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetChildObjects
+
+`func (o *ObjectProtectionSummary) SetChildObjects(v []ObjectSummary)`
+
+SetChildObjects sets ChildObjects field to given value.
+
+### HasChildObjects
+
+`func (o *ObjectProtectionSummary) HasChildObjects() bool`
+
+HasChildObjects returns a boolean if a field has been set.
+
+### SetChildObjectsNil
+
+`func (o *ObjectProtectionSummary) SetChildObjectsNil(b bool)`
+
+ SetChildObjectsNil sets the value for ChildObjects to be an explicit nil
+
+### UnsetChildObjects
+`func (o *ObjectProtectionSummary) UnsetChildObjects()`
+
+UnsetChildObjects ensures that no value is present for ChildObjects, not even an explicit nil
+### GetGlobalId
+
+`func (o *ObjectProtectionSummary) GetGlobalId() string`
+
+GetGlobalId returns the GlobalId field if non-nil, zero value otherwise.
+
+### GetGlobalIdOk
+
+`func (o *ObjectProtectionSummary) GetGlobalIdOk() (*string, bool)`
+
+GetGlobalIdOk returns a tuple with the GlobalId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGlobalId
+
+`func (o *ObjectProtectionSummary) SetGlobalId(v string)`
+
+SetGlobalId sets GlobalId field to given value.
+
+### HasGlobalId
+
+`func (o *ObjectProtectionSummary) HasGlobalId() bool`
+
+HasGlobalId returns a boolean if a field has been set.
+
+### SetGlobalIdNil
+
+`func (o *ObjectProtectionSummary) SetGlobalIdNil(b bool)`
+
+ SetGlobalIdNil sets the value for GlobalId to be an explicit nil
+
+### UnsetGlobalId
+`func (o *ObjectProtectionSummary) UnsetGlobalId()`
+
+UnsetGlobalId ensures that no value is present for GlobalId, not even an explicit nil
+### GetLogicalSizeBytes
+
+`func (o *ObjectProtectionSummary) GetLogicalSizeBytes() int64`
+
+GetLogicalSizeBytes returns the LogicalSizeBytes field if non-nil, zero value otherwise.
+
+### GetLogicalSizeBytesOk
+
+`func (o *ObjectProtectionSummary) GetLogicalSizeBytesOk() (*int64, bool)`
+
+GetLogicalSizeBytesOk returns a tuple with the LogicalSizeBytes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLogicalSizeBytes
+
+`func (o *ObjectProtectionSummary) SetLogicalSizeBytes(v int64)`
+
+SetLogicalSizeBytes sets LogicalSizeBytes field to given value.
+
+### HasLogicalSizeBytes
+
+`func (o *ObjectProtectionSummary) HasLogicalSizeBytes() bool`
+
+HasLogicalSizeBytes returns a boolean if a field has been set.
+
+### SetLogicalSizeBytesNil
+
+`func (o *ObjectProtectionSummary) SetLogicalSizeBytesNil(b bool)`
+
+ SetLogicalSizeBytesNil sets the value for LogicalSizeBytes to be an explicit nil
+
+### UnsetLogicalSizeBytes
+`func (o *ObjectProtectionSummary) UnsetLogicalSizeBytes()`
+
+UnsetLogicalSizeBytes ensures that no value is present for LogicalSizeBytes, not even an explicit nil
+### GetObjectHash
+
+`func (o *ObjectProtectionSummary) GetObjectHash() string`
+
+GetObjectHash returns the ObjectHash field if non-nil, zero value otherwise.
+
+### GetObjectHashOk
+
+`func (o *ObjectProtectionSummary) GetObjectHashOk() (*string, bool)`
+
+GetObjectHashOk returns a tuple with the ObjectHash field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetObjectHash
+
+`func (o *ObjectProtectionSummary) SetObjectHash(v string)`
+
+SetObjectHash sets ObjectHash field to given value.
+
+### HasObjectHash
+
+`func (o *ObjectProtectionSummary) HasObjectHash() bool`
+
+HasObjectHash returns a boolean if a field has been set.
+
+### SetObjectHashNil
+
+`func (o *ObjectProtectionSummary) SetObjectHashNil(b bool)`
+
+ SetObjectHashNil sets the value for ObjectHash to be an explicit nil
+
+### UnsetObjectHash
+`func (o *ObjectProtectionSummary) UnsetObjectHash()`
+
+UnsetObjectHash ensures that no value is present for ObjectHash, not even an explicit nil
+### GetObjectType
+
+`func (o *ObjectProtectionSummary) GetObjectType() string`
+
+GetObjectType returns the ObjectType field if non-nil, zero value otherwise.
+
+### GetObjectTypeOk
+
+`func (o *ObjectProtectionSummary) GetObjectTypeOk() (*string, bool)`
+
+GetObjectTypeOk returns a tuple with the ObjectType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetObjectType
+
+`func (o *ObjectProtectionSummary) SetObjectType(v string)`
+
+SetObjectType sets ObjectType field to given value.
+
+### HasObjectType
+
+`func (o *ObjectProtectionSummary) HasObjectType() bool`
+
+HasObjectType returns a boolean if a field has been set.
+
+### SetObjectTypeNil
+
+`func (o *ObjectProtectionSummary) SetObjectTypeNil(b bool)`
+
+ SetObjectTypeNil sets the value for ObjectType to be an explicit nil
+
+### UnsetObjectType
+`func (o *ObjectProtectionSummary) UnsetObjectType()`
+
+UnsetObjectType ensures that no value is present for ObjectType, not even an explicit nil
+### GetOsType
+
+`func (o *ObjectProtectionSummary) GetOsType() string`
+
+GetOsType returns the OsType field if non-nil, zero value otherwise.
+
+### GetOsTypeOk
+
+`func (o *ObjectProtectionSummary) GetOsTypeOk() (*string, bool)`
+
+GetOsTypeOk returns a tuple with the OsType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOsType
+
+`func (o *ObjectProtectionSummary) SetOsType(v string)`
+
+SetOsType sets OsType field to given value.
+
+### HasOsType
+
+`func (o *ObjectProtectionSummary) HasOsType() bool`
+
+HasOsType returns a boolean if a field has been set.
+
+### SetOsTypeNil
+
+`func (o *ObjectProtectionSummary) SetOsTypeNil(b bool)`
+
+ SetOsTypeNil sets the value for OsType to be an explicit nil
+
+### UnsetOsType
+`func (o *ObjectProtectionSummary) UnsetOsType()`
+
+UnsetOsType ensures that no value is present for OsType, not even an explicit nil
+### GetProtectionType
+
+`func (o *ObjectProtectionSummary) GetProtectionType() string`
+
+GetProtectionType returns the ProtectionType field if non-nil, zero value otherwise.
+
+### GetProtectionTypeOk
+
+`func (o *ObjectProtectionSummary) GetProtectionTypeOk() (*string, bool)`
+
+GetProtectionTypeOk returns a tuple with the ProtectionType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProtectionType
+
+`func (o *ObjectProtectionSummary) SetProtectionType(v string)`
+
+SetProtectionType sets ProtectionType field to given value.
+
+### HasProtectionType
+
+`func (o *ObjectProtectionSummary) HasProtectionType() bool`
+
+HasProtectionType returns a boolean if a field has been set.
+
+### SetProtectionTypeNil
+
+`func (o *ObjectProtectionSummary) SetProtectionTypeNil(b bool)`
+
+ SetProtectionTypeNil sets the value for ProtectionType to be an explicit nil
+
+### UnsetProtectionType
+`func (o *ObjectProtectionSummary) UnsetProtectionType()`
+
+UnsetProtectionType ensures that no value is present for ProtectionType, not even an explicit nil
+### GetSharepointSiteSummary
+
+`func (o *ObjectProtectionSummary) GetSharepointSiteSummary() SharepointObjectParams`
+
+GetSharepointSiteSummary returns the SharepointSiteSummary field if non-nil, zero value otherwise.
+
+### GetSharepointSiteSummaryOk
+
+`func (o *ObjectProtectionSummary) GetSharepointSiteSummaryOk() (*SharepointObjectParams, bool)`
+
+GetSharepointSiteSummaryOk returns a tuple with the SharepointSiteSummary field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSharepointSiteSummary
+
+`func (o *ObjectProtectionSummary) SetSharepointSiteSummary(v SharepointObjectParams)`
+
+SetSharepointSiteSummary sets SharepointSiteSummary field to given value.
+
+### HasSharepointSiteSummary
+
+`func (o *ObjectProtectionSummary) HasSharepointSiteSummary() bool`
+
+HasSharepointSiteSummary returns a boolean if a field has been set.
+
+### GetUuid
+
+`func (o *ObjectProtectionSummary) GetUuid() string`
+
+GetUuid returns the Uuid field if non-nil, zero value otherwise.
+
+### GetUuidOk
+
+`func (o *ObjectProtectionSummary) GetUuidOk() (*string, bool)`
+
+GetUuidOk returns a tuple with the Uuid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUuid
+
+`func (o *ObjectProtectionSummary) SetUuid(v string)`
+
+SetUuid sets Uuid field to given value.
+
+### HasUuid
+
+`func (o *ObjectProtectionSummary) HasUuid() bool`
+
+HasUuid returns a boolean if a field has been set.
+
+### SetUuidNil
+
+`func (o *ObjectProtectionSummary) SetUuidNil(b bool)`
+
+ SetUuidNil sets the value for Uuid to be an explicit nil
+
+### UnsetUuid
+`func (o *ObjectProtectionSummary) UnsetUuid()`
+
+UnsetUuid ensures that no value is present for Uuid, not even an explicit nil
+### GetVCenterSummary
+
+`func (o *ObjectProtectionSummary) GetVCenterSummary() ObjectTypeVCenterParams`
+
+GetVCenterSummary returns the VCenterSummary field if non-nil, zero value otherwise.
+
+### GetVCenterSummaryOk
+
+`func (o *ObjectProtectionSummary) GetVCenterSummaryOk() (*ObjectTypeVCenterParams, bool)`
+
+GetVCenterSummaryOk returns a tuple with the VCenterSummary field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVCenterSummary
+
+`func (o *ObjectProtectionSummary) SetVCenterSummary(v ObjectTypeVCenterParams)`
+
+SetVCenterSummary sets VCenterSummary field to given value.
+
+### HasVCenterSummary
+
+`func (o *ObjectProtectionSummary) HasVCenterSummary() bool`
+
+HasVCenterSummary returns a boolean if a field has been set.
+
+### GetWindowsClusterSummary
+
+`func (o *ObjectProtectionSummary) GetWindowsClusterSummary() ObjectTypeWindowsClusterParams`
+
+GetWindowsClusterSummary returns the WindowsClusterSummary field if non-nil, zero value otherwise.
+
+### GetWindowsClusterSummaryOk
+
+`func (o *ObjectProtectionSummary) GetWindowsClusterSummaryOk() (*ObjectTypeWindowsClusterParams, bool)`
+
+GetWindowsClusterSummaryOk returns a tuple with the WindowsClusterSummary field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWindowsClusterSummary
+
+`func (o *ObjectProtectionSummary) SetWindowsClusterSummary(v ObjectTypeWindowsClusterParams)`
+
+SetWindowsClusterSummary sets WindowsClusterSummary field to given value.
+
+### HasWindowsClusterSummary
+
+`func (o *ObjectProtectionSummary) HasWindowsClusterSummary() bool`
+
+HasWindowsClusterSummary returns a boolean if a field has been set.
+
+### GetError
+
+`func (o *ObjectProtectionSummary) GetError() string`
+
+GetError returns the Error field if non-nil, zero value otherwise.
+
+### GetErrorOk
+
+`func (o *ObjectProtectionSummary) GetErrorOk() (*string, bool)`
+
+GetErrorOk returns a tuple with the Error field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetError
+
+`func (o *ObjectProtectionSummary) SetError(v string)`
+
+SetError sets Error field to given value.
+
+### HasError
+
+`func (o *ObjectProtectionSummary) HasError() bool`
+
+HasError returns a boolean if a field has been set.
+
+### SetErrorNil
+
+`func (o *ObjectProtectionSummary) SetErrorNil(b bool)`
+
+ SetErrorNil sets the value for Error to be an explicit nil
+
+### UnsetError
+`func (o *ObjectProtectionSummary) UnsetError()`
+
+UnsetError ensures that no value is present for Error, not even an explicit nil
+### GetErrorType
+
+`func (o *ObjectProtectionSummary) GetErrorType() string`
+
+GetErrorType returns the ErrorType field if non-nil, zero value otherwise.
+
+### GetErrorTypeOk
+
+`func (o *ObjectProtectionSummary) GetErrorTypeOk() (*string, bool)`
+
+GetErrorTypeOk returns a tuple with the ErrorType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetErrorType
+
+`func (o *ObjectProtectionSummary) SetErrorType(v string)`
+
+SetErrorType sets ErrorType field to given value.
+
+### HasErrorType
+
+`func (o *ObjectProtectionSummary) HasErrorType() bool`
+
+HasErrorType returns a boolean if a field has been set.
+
+### SetErrorTypeNil
+
+`func (o *ObjectProtectionSummary) SetErrorTypeNil(b bool)`
+
+ SetErrorTypeNil sets the value for ErrorType to be an explicit nil
+
+### UnsetErrorType
+`func (o *ObjectProtectionSummary) UnsetErrorType()`
+
+UnsetErrorType ensures that no value is present for ErrorType, not even an explicit nil
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

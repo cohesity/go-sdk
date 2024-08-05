@@ -1,0 +1,304 @@
+# RecoverOtherNasToFlashbladeFilesTargetParams
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**AlternatePath** | **NullableString** | Specifies the path location to recover files to. | 
+**ContinueOnError** | Pointer to **NullableBool** | Specifies whether to continue recovering other files if one of the files fails to recover. Default value is false. | [optional] 
+**EncryptionEnabled** | Pointer to **NullableBool** | Specifies whether encryption should be enabled during recovery. | [optional] 
+**FilterIpConfig** | Pointer to [**FilterIpConfig**](FilterIpConfig.md) |  | [optional] 
+**OverwriteExistingFile** | Pointer to **NullableBool** | Specifies whether to overwrite existing file/folder during recovery. | [optional] 
+**ParentSource** | Pointer to [**RecoverOtherNasToElastifileFilesTargetParamsParentSource**](RecoverOtherNasToElastifileFilesTargetParamsParentSource.md) |  | [optional] 
+**PreserveFileAttributes** | Pointer to **NullableBool** | Specifies whether to preserve file/folder attributes during recovery. | [optional] 
+**VlanConfig** | Pointer to [**RecoveryVlanConfig**](RecoveryVlanConfig.md) |  | [optional] 
+**Volume** | [**RecoverOtherNasToElastifileFilesTargetParamsVolume**](RecoverOtherNasToElastifileFilesTargetParamsVolume.md) |  | 
+
+## Methods
+
+### NewRecoverOtherNasToFlashbladeFilesTargetParams
+
+`func NewRecoverOtherNasToFlashbladeFilesTargetParams(alternatePath NullableString, volume RecoverOtherNasToElastifileFilesTargetParamsVolume, ) *RecoverOtherNasToFlashbladeFilesTargetParams`
+
+NewRecoverOtherNasToFlashbladeFilesTargetParams instantiates a new RecoverOtherNasToFlashbladeFilesTargetParams object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewRecoverOtherNasToFlashbladeFilesTargetParamsWithDefaults
+
+`func NewRecoverOtherNasToFlashbladeFilesTargetParamsWithDefaults() *RecoverOtherNasToFlashbladeFilesTargetParams`
+
+NewRecoverOtherNasToFlashbladeFilesTargetParamsWithDefaults instantiates a new RecoverOtherNasToFlashbladeFilesTargetParams object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetAlternatePath
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetAlternatePath() string`
+
+GetAlternatePath returns the AlternatePath field if non-nil, zero value otherwise.
+
+### GetAlternatePathOk
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetAlternatePathOk() (*string, bool)`
+
+GetAlternatePathOk returns a tuple with the AlternatePath field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAlternatePath
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetAlternatePath(v string)`
+
+SetAlternatePath sets AlternatePath field to given value.
+
+
+### SetAlternatePathNil
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetAlternatePathNil(b bool)`
+
+ SetAlternatePathNil sets the value for AlternatePath to be an explicit nil
+
+### UnsetAlternatePath
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) UnsetAlternatePath()`
+
+UnsetAlternatePath ensures that no value is present for AlternatePath, not even an explicit nil
+### GetContinueOnError
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetContinueOnError() bool`
+
+GetContinueOnError returns the ContinueOnError field if non-nil, zero value otherwise.
+
+### GetContinueOnErrorOk
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetContinueOnErrorOk() (*bool, bool)`
+
+GetContinueOnErrorOk returns a tuple with the ContinueOnError field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContinueOnError
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetContinueOnError(v bool)`
+
+SetContinueOnError sets ContinueOnError field to given value.
+
+### HasContinueOnError
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) HasContinueOnError() bool`
+
+HasContinueOnError returns a boolean if a field has been set.
+
+### SetContinueOnErrorNil
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetContinueOnErrorNil(b bool)`
+
+ SetContinueOnErrorNil sets the value for ContinueOnError to be an explicit nil
+
+### UnsetContinueOnError
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) UnsetContinueOnError()`
+
+UnsetContinueOnError ensures that no value is present for ContinueOnError, not even an explicit nil
+### GetEncryptionEnabled
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetEncryptionEnabled() bool`
+
+GetEncryptionEnabled returns the EncryptionEnabled field if non-nil, zero value otherwise.
+
+### GetEncryptionEnabledOk
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetEncryptionEnabledOk() (*bool, bool)`
+
+GetEncryptionEnabledOk returns a tuple with the EncryptionEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEncryptionEnabled
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetEncryptionEnabled(v bool)`
+
+SetEncryptionEnabled sets EncryptionEnabled field to given value.
+
+### HasEncryptionEnabled
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) HasEncryptionEnabled() bool`
+
+HasEncryptionEnabled returns a boolean if a field has been set.
+
+### SetEncryptionEnabledNil
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetEncryptionEnabledNil(b bool)`
+
+ SetEncryptionEnabledNil sets the value for EncryptionEnabled to be an explicit nil
+
+### UnsetEncryptionEnabled
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) UnsetEncryptionEnabled()`
+
+UnsetEncryptionEnabled ensures that no value is present for EncryptionEnabled, not even an explicit nil
+### GetFilterIpConfig
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetFilterIpConfig() FilterIpConfig`
+
+GetFilterIpConfig returns the FilterIpConfig field if non-nil, zero value otherwise.
+
+### GetFilterIpConfigOk
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetFilterIpConfigOk() (*FilterIpConfig, bool)`
+
+GetFilterIpConfigOk returns a tuple with the FilterIpConfig field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilterIpConfig
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetFilterIpConfig(v FilterIpConfig)`
+
+SetFilterIpConfig sets FilterIpConfig field to given value.
+
+### HasFilterIpConfig
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) HasFilterIpConfig() bool`
+
+HasFilterIpConfig returns a boolean if a field has been set.
+
+### GetOverwriteExistingFile
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetOverwriteExistingFile() bool`
+
+GetOverwriteExistingFile returns the OverwriteExistingFile field if non-nil, zero value otherwise.
+
+### GetOverwriteExistingFileOk
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetOverwriteExistingFileOk() (*bool, bool)`
+
+GetOverwriteExistingFileOk returns a tuple with the OverwriteExistingFile field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOverwriteExistingFile
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetOverwriteExistingFile(v bool)`
+
+SetOverwriteExistingFile sets OverwriteExistingFile field to given value.
+
+### HasOverwriteExistingFile
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) HasOverwriteExistingFile() bool`
+
+HasOverwriteExistingFile returns a boolean if a field has been set.
+
+### SetOverwriteExistingFileNil
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetOverwriteExistingFileNil(b bool)`
+
+ SetOverwriteExistingFileNil sets the value for OverwriteExistingFile to be an explicit nil
+
+### UnsetOverwriteExistingFile
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) UnsetOverwriteExistingFile()`
+
+UnsetOverwriteExistingFile ensures that no value is present for OverwriteExistingFile, not even an explicit nil
+### GetParentSource
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetParentSource() RecoverOtherNasToElastifileFilesTargetParamsParentSource`
+
+GetParentSource returns the ParentSource field if non-nil, zero value otherwise.
+
+### GetParentSourceOk
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetParentSourceOk() (*RecoverOtherNasToElastifileFilesTargetParamsParentSource, bool)`
+
+GetParentSourceOk returns a tuple with the ParentSource field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentSource
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetParentSource(v RecoverOtherNasToElastifileFilesTargetParamsParentSource)`
+
+SetParentSource sets ParentSource field to given value.
+
+### HasParentSource
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) HasParentSource() bool`
+
+HasParentSource returns a boolean if a field has been set.
+
+### GetPreserveFileAttributes
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetPreserveFileAttributes() bool`
+
+GetPreserveFileAttributes returns the PreserveFileAttributes field if non-nil, zero value otherwise.
+
+### GetPreserveFileAttributesOk
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetPreserveFileAttributesOk() (*bool, bool)`
+
+GetPreserveFileAttributesOk returns a tuple with the PreserveFileAttributes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreserveFileAttributes
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetPreserveFileAttributes(v bool)`
+
+SetPreserveFileAttributes sets PreserveFileAttributes field to given value.
+
+### HasPreserveFileAttributes
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) HasPreserveFileAttributes() bool`
+
+HasPreserveFileAttributes returns a boolean if a field has been set.
+
+### SetPreserveFileAttributesNil
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetPreserveFileAttributesNil(b bool)`
+
+ SetPreserveFileAttributesNil sets the value for PreserveFileAttributes to be an explicit nil
+
+### UnsetPreserveFileAttributes
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) UnsetPreserveFileAttributes()`
+
+UnsetPreserveFileAttributes ensures that no value is present for PreserveFileAttributes, not even an explicit nil
+### GetVlanConfig
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetVlanConfig() RecoveryVlanConfig`
+
+GetVlanConfig returns the VlanConfig field if non-nil, zero value otherwise.
+
+### GetVlanConfigOk
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetVlanConfigOk() (*RecoveryVlanConfig, bool)`
+
+GetVlanConfigOk returns a tuple with the VlanConfig field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVlanConfig
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetVlanConfig(v RecoveryVlanConfig)`
+
+SetVlanConfig sets VlanConfig field to given value.
+
+### HasVlanConfig
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) HasVlanConfig() bool`
+
+HasVlanConfig returns a boolean if a field has been set.
+
+### GetVolume
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetVolume() RecoverOtherNasToElastifileFilesTargetParamsVolume`
+
+GetVolume returns the Volume field if non-nil, zero value otherwise.
+
+### GetVolumeOk
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) GetVolumeOk() (*RecoverOtherNasToElastifileFilesTargetParamsVolume, bool)`
+
+GetVolumeOk returns a tuple with the Volume field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVolume
+
+`func (o *RecoverOtherNasToFlashbladeFilesTargetParams) SetVolume(v RecoverOtherNasToElastifileFilesTargetParamsVolume)`
+
+SetVolume sets Volume field to given value.
+
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

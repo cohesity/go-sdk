@@ -1,0 +1,468 @@
+# HyperVProtectionGroupParams
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**AppConsistentSnapshot** | Pointer to **NullableBool** | Specifies whether or not to quiesce apps and the file system in order to take app consistent snapshots. If not specified or false then snapshots will not be app consistent. | [optional] 
+**FallbackToCrashConsistentSnapshot** | Pointer to **NullableBool** | Specifies whether or not to fallback to a crash consistent snapshot in the event that an app consistent snapshot fails. | [optional] 
+**IndexingPolicy** | Pointer to [**IndexingPolicy**](IndexingPolicy.md) |  | [optional] 
+**CloudMigration** | Pointer to **NullableBool** | Specifies whether or not to move the workload to the cloud. | [optional] 
+**ExcludeObjectIds** | Pointer to **[]int64** | Specifies the list of IDs of the objects to not be protected by this Protection Group. This can be used to ignore specific objects under a parent object which has been included for protection. | [optional] 
+**ExcludeVmTagIds** | Pointer to **[][]int64** | Array of Arrays of VM Tag Ids that Specify VMs to Exclude. Optionally specify a list of VMs to exclude from protecting by listing Protection Source ids of VM Tags in this two dimensional array. Using this two dimensional array of Tag ids, the Cluster generates a list of VMs to exclude from protecting, which are derived from intersections of the inner arrays and union of the outer array, as shown by the following example. For example a Datacenter is selected to be protected but you want to exclude all the &#39;Former Employees&#39; VMs in the East and West but keep all the VMs for &#39;Former Employees&#39; in the South which are also stored in this Datacenter, by specifying the following tag id array: [ [1000, 2221], [1000, 3031] ], where 1000 is the &#39;Former Employee&#39; VM Tag id, 2221 is the &#39;East&#39; VM Tag id and 3031 is the &#39;West&#39; VM Tag id. The first inner array [1000, 2221] produces a list of VMs that are both tagged with &#39;Former Employees&#39; and &#39;East&#39; (an intersection). The second inner array [1000, 3031] produces a list of VMs that are both tagged with &#39;Former Employees&#39; and &#39;West&#39; (an intersection). The outer array combines the list of VMs from the two inner arrays. The list of resulting VMs are excluded from being protected this Job. | [optional] 
+**GlobalExcludeDisks** | Pointer to [**[]HyperVDiskInfo**](HyperVDiskInfo.md) | Specifies a global list of disks to be excluded for the all the VMs part of the protection group. | [optional] 
+**GlobalIncludeDisks** | Pointer to [**[]HyperVDiskInfo**](HyperVDiskInfo.md) | Specifies a global list of disks to be included for the all the VMs part of the protection group. | [optional] 
+**Objects** | Pointer to [**[]HyperVProtectionGroupObjectParams**](HyperVProtectionGroupObjectParams.md) | Specifies the objects to be included in the Protection Group. | [optional] 
+**ProtectionType** | Pointer to **NullableString** | Specifies the Protection Group type. If not specified, then backup method is auto determined. Specifying RCT will forcibly use RCT backup for all VMs in this Protection Group. Available only for VMs with hardware version 8.0 and above, but is more efficient. Specifying VSS will forcibly use VSS backup for all VMs in this Protection Group. Available for VMs with hardware version 5.0 and above, but is slower than RCT backup. | [optional] 
+**SourceId** | Pointer to **NullableInt64** | Specifies the id of the parent of the objects. | [optional] [readonly] 
+**SourceName** | Pointer to **NullableString** | Specifies the name of the parent of the objects. | [optional] [readonly] 
+**VmTagIds** | Pointer to **[][]int64** | Array of Array of VM Tag Ids that Specify VMs to Protect. Optionally specify a list of VMs to protect by listing Protection Source ids of VM Tags in this two dimensional array. Using this two dimensional array of Tag ids, the Cluster generates a list of VMs to protect which are derived from intersections of the inner arrays and union of the outer array, as shown by the following example. To protect only &#39;Eng&#39; VMs in the East and all the VMs in the West, specify the following tag id array: [ [1101, 2221], [3031] ], where 1101 is the &#39;Eng&#39; VM Tag id, 2221 is the &#39;East&#39; VM Tag id and 3031 is the &#39;West&#39; VM Tag id. The inner array [1101, 2221] produces a list of VMs that are both tagged with &#39;Eng&#39; and &#39;East&#39; (an intersection). The outer array combines the list from the inner array with list of VMs tagged with &#39;West&#39; (a union). The list of resulting VMs are protected by this Protection Group. | [optional] 
+
+## Methods
+
+### NewHyperVProtectionGroupParams
+
+`func NewHyperVProtectionGroupParams() *HyperVProtectionGroupParams`
+
+NewHyperVProtectionGroupParams instantiates a new HyperVProtectionGroupParams object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewHyperVProtectionGroupParamsWithDefaults
+
+`func NewHyperVProtectionGroupParamsWithDefaults() *HyperVProtectionGroupParams`
+
+NewHyperVProtectionGroupParamsWithDefaults instantiates a new HyperVProtectionGroupParams object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetAppConsistentSnapshot
+
+`func (o *HyperVProtectionGroupParams) GetAppConsistentSnapshot() bool`
+
+GetAppConsistentSnapshot returns the AppConsistentSnapshot field if non-nil, zero value otherwise.
+
+### GetAppConsistentSnapshotOk
+
+`func (o *HyperVProtectionGroupParams) GetAppConsistentSnapshotOk() (*bool, bool)`
+
+GetAppConsistentSnapshotOk returns a tuple with the AppConsistentSnapshot field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppConsistentSnapshot
+
+`func (o *HyperVProtectionGroupParams) SetAppConsistentSnapshot(v bool)`
+
+SetAppConsistentSnapshot sets AppConsistentSnapshot field to given value.
+
+### HasAppConsistentSnapshot
+
+`func (o *HyperVProtectionGroupParams) HasAppConsistentSnapshot() bool`
+
+HasAppConsistentSnapshot returns a boolean if a field has been set.
+
+### SetAppConsistentSnapshotNil
+
+`func (o *HyperVProtectionGroupParams) SetAppConsistentSnapshotNil(b bool)`
+
+ SetAppConsistentSnapshotNil sets the value for AppConsistentSnapshot to be an explicit nil
+
+### UnsetAppConsistentSnapshot
+`func (o *HyperVProtectionGroupParams) UnsetAppConsistentSnapshot()`
+
+UnsetAppConsistentSnapshot ensures that no value is present for AppConsistentSnapshot, not even an explicit nil
+### GetFallbackToCrashConsistentSnapshot
+
+`func (o *HyperVProtectionGroupParams) GetFallbackToCrashConsistentSnapshot() bool`
+
+GetFallbackToCrashConsistentSnapshot returns the FallbackToCrashConsistentSnapshot field if non-nil, zero value otherwise.
+
+### GetFallbackToCrashConsistentSnapshotOk
+
+`func (o *HyperVProtectionGroupParams) GetFallbackToCrashConsistentSnapshotOk() (*bool, bool)`
+
+GetFallbackToCrashConsistentSnapshotOk returns a tuple with the FallbackToCrashConsistentSnapshot field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFallbackToCrashConsistentSnapshot
+
+`func (o *HyperVProtectionGroupParams) SetFallbackToCrashConsistentSnapshot(v bool)`
+
+SetFallbackToCrashConsistentSnapshot sets FallbackToCrashConsistentSnapshot field to given value.
+
+### HasFallbackToCrashConsistentSnapshot
+
+`func (o *HyperVProtectionGroupParams) HasFallbackToCrashConsistentSnapshot() bool`
+
+HasFallbackToCrashConsistentSnapshot returns a boolean if a field has been set.
+
+### SetFallbackToCrashConsistentSnapshotNil
+
+`func (o *HyperVProtectionGroupParams) SetFallbackToCrashConsistentSnapshotNil(b bool)`
+
+ SetFallbackToCrashConsistentSnapshotNil sets the value for FallbackToCrashConsistentSnapshot to be an explicit nil
+
+### UnsetFallbackToCrashConsistentSnapshot
+`func (o *HyperVProtectionGroupParams) UnsetFallbackToCrashConsistentSnapshot()`
+
+UnsetFallbackToCrashConsistentSnapshot ensures that no value is present for FallbackToCrashConsistentSnapshot, not even an explicit nil
+### GetIndexingPolicy
+
+`func (o *HyperVProtectionGroupParams) GetIndexingPolicy() IndexingPolicy`
+
+GetIndexingPolicy returns the IndexingPolicy field if non-nil, zero value otherwise.
+
+### GetIndexingPolicyOk
+
+`func (o *HyperVProtectionGroupParams) GetIndexingPolicyOk() (*IndexingPolicy, bool)`
+
+GetIndexingPolicyOk returns a tuple with the IndexingPolicy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIndexingPolicy
+
+`func (o *HyperVProtectionGroupParams) SetIndexingPolicy(v IndexingPolicy)`
+
+SetIndexingPolicy sets IndexingPolicy field to given value.
+
+### HasIndexingPolicy
+
+`func (o *HyperVProtectionGroupParams) HasIndexingPolicy() bool`
+
+HasIndexingPolicy returns a boolean if a field has been set.
+
+### GetCloudMigration
+
+`func (o *HyperVProtectionGroupParams) GetCloudMigration() bool`
+
+GetCloudMigration returns the CloudMigration field if non-nil, zero value otherwise.
+
+### GetCloudMigrationOk
+
+`func (o *HyperVProtectionGroupParams) GetCloudMigrationOk() (*bool, bool)`
+
+GetCloudMigrationOk returns a tuple with the CloudMigration field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCloudMigration
+
+`func (o *HyperVProtectionGroupParams) SetCloudMigration(v bool)`
+
+SetCloudMigration sets CloudMigration field to given value.
+
+### HasCloudMigration
+
+`func (o *HyperVProtectionGroupParams) HasCloudMigration() bool`
+
+HasCloudMigration returns a boolean if a field has been set.
+
+### SetCloudMigrationNil
+
+`func (o *HyperVProtectionGroupParams) SetCloudMigrationNil(b bool)`
+
+ SetCloudMigrationNil sets the value for CloudMigration to be an explicit nil
+
+### UnsetCloudMigration
+`func (o *HyperVProtectionGroupParams) UnsetCloudMigration()`
+
+UnsetCloudMigration ensures that no value is present for CloudMigration, not even an explicit nil
+### GetExcludeObjectIds
+
+`func (o *HyperVProtectionGroupParams) GetExcludeObjectIds() []*int64`
+
+GetExcludeObjectIds returns the ExcludeObjectIds field if non-nil, zero value otherwise.
+
+### GetExcludeObjectIdsOk
+
+`func (o *HyperVProtectionGroupParams) GetExcludeObjectIdsOk() (*[]*int64, bool)`
+
+GetExcludeObjectIdsOk returns a tuple with the ExcludeObjectIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExcludeObjectIds
+
+`func (o *HyperVProtectionGroupParams) SetExcludeObjectIds(v []*int64)`
+
+SetExcludeObjectIds sets ExcludeObjectIds field to given value.
+
+### HasExcludeObjectIds
+
+`func (o *HyperVProtectionGroupParams) HasExcludeObjectIds() bool`
+
+HasExcludeObjectIds returns a boolean if a field has been set.
+
+### GetExcludeVmTagIds
+
+`func (o *HyperVProtectionGroupParams) GetExcludeVmTagIds() [][]int64`
+
+GetExcludeVmTagIds returns the ExcludeVmTagIds field if non-nil, zero value otherwise.
+
+### GetExcludeVmTagIdsOk
+
+`func (o *HyperVProtectionGroupParams) GetExcludeVmTagIdsOk() (*[][]int64, bool)`
+
+GetExcludeVmTagIdsOk returns a tuple with the ExcludeVmTagIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExcludeVmTagIds
+
+`func (o *HyperVProtectionGroupParams) SetExcludeVmTagIds(v [][]int64)`
+
+SetExcludeVmTagIds sets ExcludeVmTagIds field to given value.
+
+### HasExcludeVmTagIds
+
+`func (o *HyperVProtectionGroupParams) HasExcludeVmTagIds() bool`
+
+HasExcludeVmTagIds returns a boolean if a field has been set.
+
+### SetExcludeVmTagIdsNil
+
+`func (o *HyperVProtectionGroupParams) SetExcludeVmTagIdsNil(b bool)`
+
+ SetExcludeVmTagIdsNil sets the value for ExcludeVmTagIds to be an explicit nil
+
+### UnsetExcludeVmTagIds
+`func (o *HyperVProtectionGroupParams) UnsetExcludeVmTagIds()`
+
+UnsetExcludeVmTagIds ensures that no value is present for ExcludeVmTagIds, not even an explicit nil
+### GetGlobalExcludeDisks
+
+`func (o *HyperVProtectionGroupParams) GetGlobalExcludeDisks() []HyperVDiskInfo`
+
+GetGlobalExcludeDisks returns the GlobalExcludeDisks field if non-nil, zero value otherwise.
+
+### GetGlobalExcludeDisksOk
+
+`func (o *HyperVProtectionGroupParams) GetGlobalExcludeDisksOk() (*[]HyperVDiskInfo, bool)`
+
+GetGlobalExcludeDisksOk returns a tuple with the GlobalExcludeDisks field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGlobalExcludeDisks
+
+`func (o *HyperVProtectionGroupParams) SetGlobalExcludeDisks(v []HyperVDiskInfo)`
+
+SetGlobalExcludeDisks sets GlobalExcludeDisks field to given value.
+
+### HasGlobalExcludeDisks
+
+`func (o *HyperVProtectionGroupParams) HasGlobalExcludeDisks() bool`
+
+HasGlobalExcludeDisks returns a boolean if a field has been set.
+
+### SetGlobalExcludeDisksNil
+
+`func (o *HyperVProtectionGroupParams) SetGlobalExcludeDisksNil(b bool)`
+
+ SetGlobalExcludeDisksNil sets the value for GlobalExcludeDisks to be an explicit nil
+
+### UnsetGlobalExcludeDisks
+`func (o *HyperVProtectionGroupParams) UnsetGlobalExcludeDisks()`
+
+UnsetGlobalExcludeDisks ensures that no value is present for GlobalExcludeDisks, not even an explicit nil
+### GetGlobalIncludeDisks
+
+`func (o *HyperVProtectionGroupParams) GetGlobalIncludeDisks() []HyperVDiskInfo`
+
+GetGlobalIncludeDisks returns the GlobalIncludeDisks field if non-nil, zero value otherwise.
+
+### GetGlobalIncludeDisksOk
+
+`func (o *HyperVProtectionGroupParams) GetGlobalIncludeDisksOk() (*[]HyperVDiskInfo, bool)`
+
+GetGlobalIncludeDisksOk returns a tuple with the GlobalIncludeDisks field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGlobalIncludeDisks
+
+`func (o *HyperVProtectionGroupParams) SetGlobalIncludeDisks(v []HyperVDiskInfo)`
+
+SetGlobalIncludeDisks sets GlobalIncludeDisks field to given value.
+
+### HasGlobalIncludeDisks
+
+`func (o *HyperVProtectionGroupParams) HasGlobalIncludeDisks() bool`
+
+HasGlobalIncludeDisks returns a boolean if a field has been set.
+
+### SetGlobalIncludeDisksNil
+
+`func (o *HyperVProtectionGroupParams) SetGlobalIncludeDisksNil(b bool)`
+
+ SetGlobalIncludeDisksNil sets the value for GlobalIncludeDisks to be an explicit nil
+
+### UnsetGlobalIncludeDisks
+`func (o *HyperVProtectionGroupParams) UnsetGlobalIncludeDisks()`
+
+UnsetGlobalIncludeDisks ensures that no value is present for GlobalIncludeDisks, not even an explicit nil
+### GetObjects
+
+`func (o *HyperVProtectionGroupParams) GetObjects() []HyperVProtectionGroupObjectParams`
+
+GetObjects returns the Objects field if non-nil, zero value otherwise.
+
+### GetObjectsOk
+
+`func (o *HyperVProtectionGroupParams) GetObjectsOk() (*[]HyperVProtectionGroupObjectParams, bool)`
+
+GetObjectsOk returns a tuple with the Objects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetObjects
+
+`func (o *HyperVProtectionGroupParams) SetObjects(v []HyperVProtectionGroupObjectParams)`
+
+SetObjects sets Objects field to given value.
+
+### HasObjects
+
+`func (o *HyperVProtectionGroupParams) HasObjects() bool`
+
+HasObjects returns a boolean if a field has been set.
+
+### GetProtectionType
+
+`func (o *HyperVProtectionGroupParams) GetProtectionType() string`
+
+GetProtectionType returns the ProtectionType field if non-nil, zero value otherwise.
+
+### GetProtectionTypeOk
+
+`func (o *HyperVProtectionGroupParams) GetProtectionTypeOk() (*string, bool)`
+
+GetProtectionTypeOk returns a tuple with the ProtectionType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProtectionType
+
+`func (o *HyperVProtectionGroupParams) SetProtectionType(v string)`
+
+SetProtectionType sets ProtectionType field to given value.
+
+### HasProtectionType
+
+`func (o *HyperVProtectionGroupParams) HasProtectionType() bool`
+
+HasProtectionType returns a boolean if a field has been set.
+
+### SetProtectionTypeNil
+
+`func (o *HyperVProtectionGroupParams) SetProtectionTypeNil(b bool)`
+
+ SetProtectionTypeNil sets the value for ProtectionType to be an explicit nil
+
+### UnsetProtectionType
+`func (o *HyperVProtectionGroupParams) UnsetProtectionType()`
+
+UnsetProtectionType ensures that no value is present for ProtectionType, not even an explicit nil
+### GetSourceId
+
+`func (o *HyperVProtectionGroupParams) GetSourceId() int64`
+
+GetSourceId returns the SourceId field if non-nil, zero value otherwise.
+
+### GetSourceIdOk
+
+`func (o *HyperVProtectionGroupParams) GetSourceIdOk() (*int64, bool)`
+
+GetSourceIdOk returns a tuple with the SourceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceId
+
+`func (o *HyperVProtectionGroupParams) SetSourceId(v int64)`
+
+SetSourceId sets SourceId field to given value.
+
+### HasSourceId
+
+`func (o *HyperVProtectionGroupParams) HasSourceId() bool`
+
+HasSourceId returns a boolean if a field has been set.
+
+### SetSourceIdNil
+
+`func (o *HyperVProtectionGroupParams) SetSourceIdNil(b bool)`
+
+ SetSourceIdNil sets the value for SourceId to be an explicit nil
+
+### UnsetSourceId
+`func (o *HyperVProtectionGroupParams) UnsetSourceId()`
+
+UnsetSourceId ensures that no value is present for SourceId, not even an explicit nil
+### GetSourceName
+
+`func (o *HyperVProtectionGroupParams) GetSourceName() string`
+
+GetSourceName returns the SourceName field if non-nil, zero value otherwise.
+
+### GetSourceNameOk
+
+`func (o *HyperVProtectionGroupParams) GetSourceNameOk() (*string, bool)`
+
+GetSourceNameOk returns a tuple with the SourceName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceName
+
+`func (o *HyperVProtectionGroupParams) SetSourceName(v string)`
+
+SetSourceName sets SourceName field to given value.
+
+### HasSourceName
+
+`func (o *HyperVProtectionGroupParams) HasSourceName() bool`
+
+HasSourceName returns a boolean if a field has been set.
+
+### SetSourceNameNil
+
+`func (o *HyperVProtectionGroupParams) SetSourceNameNil(b bool)`
+
+ SetSourceNameNil sets the value for SourceName to be an explicit nil
+
+### UnsetSourceName
+`func (o *HyperVProtectionGroupParams) UnsetSourceName()`
+
+UnsetSourceName ensures that no value is present for SourceName, not even an explicit nil
+### GetVmTagIds
+
+`func (o *HyperVProtectionGroupParams) GetVmTagIds() [][]int64`
+
+GetVmTagIds returns the VmTagIds field if non-nil, zero value otherwise.
+
+### GetVmTagIdsOk
+
+`func (o *HyperVProtectionGroupParams) GetVmTagIdsOk() (*[][]int64, bool)`
+
+GetVmTagIdsOk returns a tuple with the VmTagIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVmTagIds
+
+`func (o *HyperVProtectionGroupParams) SetVmTagIds(v [][]int64)`
+
+SetVmTagIds sets VmTagIds field to given value.
+
+### HasVmTagIds
+
+`func (o *HyperVProtectionGroupParams) HasVmTagIds() bool`
+
+HasVmTagIds returns a boolean if a field has been set.
+
+### SetVmTagIdsNil
+
+`func (o *HyperVProtectionGroupParams) SetVmTagIdsNil(b bool)`
+
+ SetVmTagIdsNil sets the value for VmTagIds to be an explicit nil
+
+### UnsetVmTagIds
+`func (o *HyperVProtectionGroupParams) UnsetVmTagIds()`
+
+UnsetVmTagIds ensures that no value is present for VmTagIds, not even an explicit nil
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

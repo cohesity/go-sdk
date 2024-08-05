@@ -1,0 +1,247 @@
+# RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**ContinueOnError** | Pointer to **NullableBool** | Specifies whether to continue recovering other volumes if one of the volumes fails to recover. Default value is false. | [optional] 
+**EncryptionEnabled** | Pointer to **NullableBool** | Specifies whether encryption should be enabled during recovery. | [optional] 
+**OverwriteExistingFile** | Pointer to **NullableBool** | Specifies whether to overwrite existing file/folder during recovery. | [optional] 
+**ParentSource** | Pointer to [**RecoverOtherNasToElastifileFilesTargetParamsParentSource**](RecoverOtherNasToElastifileFilesTargetParamsParentSource.md) |  | [optional] 
+**PreserveFileAttributes** | Pointer to **NullableBool** | Specifies whether to preserve file/folder attributes during recovery. | [optional] 
+**VlanConfig** | Pointer to [**RecoveryVlanConfig**](RecoveryVlanConfig.md) |  | [optional] 
+**Volume** | [**RecoverOtherNasToElastifileVolumeTargetParamsVolume**](RecoverOtherNasToElastifileVolumeTargetParamsVolume.md) |  | 
+
+## Methods
+
+### NewRecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig
+
+`func NewRecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig(volume RecoverOtherNasToElastifileVolumeTargetParamsVolume, ) *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig`
+
+NewRecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig instantiates a new RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewRecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfigWithDefaults
+
+`func NewRecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfigWithDefaults() *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig`
+
+NewRecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfigWithDefaults instantiates a new RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetContinueOnError
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetContinueOnError() bool`
+
+GetContinueOnError returns the ContinueOnError field if non-nil, zero value otherwise.
+
+### GetContinueOnErrorOk
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetContinueOnErrorOk() (*bool, bool)`
+
+GetContinueOnErrorOk returns a tuple with the ContinueOnError field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetContinueOnError
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) SetContinueOnError(v bool)`
+
+SetContinueOnError sets ContinueOnError field to given value.
+
+### HasContinueOnError
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) HasContinueOnError() bool`
+
+HasContinueOnError returns a boolean if a field has been set.
+
+### SetContinueOnErrorNil
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) SetContinueOnErrorNil(b bool)`
+
+ SetContinueOnErrorNil sets the value for ContinueOnError to be an explicit nil
+
+### UnsetContinueOnError
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) UnsetContinueOnError()`
+
+UnsetContinueOnError ensures that no value is present for ContinueOnError, not even an explicit nil
+### GetEncryptionEnabled
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetEncryptionEnabled() bool`
+
+GetEncryptionEnabled returns the EncryptionEnabled field if non-nil, zero value otherwise.
+
+### GetEncryptionEnabledOk
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetEncryptionEnabledOk() (*bool, bool)`
+
+GetEncryptionEnabledOk returns a tuple with the EncryptionEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEncryptionEnabled
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) SetEncryptionEnabled(v bool)`
+
+SetEncryptionEnabled sets EncryptionEnabled field to given value.
+
+### HasEncryptionEnabled
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) HasEncryptionEnabled() bool`
+
+HasEncryptionEnabled returns a boolean if a field has been set.
+
+### SetEncryptionEnabledNil
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) SetEncryptionEnabledNil(b bool)`
+
+ SetEncryptionEnabledNil sets the value for EncryptionEnabled to be an explicit nil
+
+### UnsetEncryptionEnabled
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) UnsetEncryptionEnabled()`
+
+UnsetEncryptionEnabled ensures that no value is present for EncryptionEnabled, not even an explicit nil
+### GetOverwriteExistingFile
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetOverwriteExistingFile() bool`
+
+GetOverwriteExistingFile returns the OverwriteExistingFile field if non-nil, zero value otherwise.
+
+### GetOverwriteExistingFileOk
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetOverwriteExistingFileOk() (*bool, bool)`
+
+GetOverwriteExistingFileOk returns a tuple with the OverwriteExistingFile field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOverwriteExistingFile
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) SetOverwriteExistingFile(v bool)`
+
+SetOverwriteExistingFile sets OverwriteExistingFile field to given value.
+
+### HasOverwriteExistingFile
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) HasOverwriteExistingFile() bool`
+
+HasOverwriteExistingFile returns a boolean if a field has been set.
+
+### SetOverwriteExistingFileNil
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) SetOverwriteExistingFileNil(b bool)`
+
+ SetOverwriteExistingFileNil sets the value for OverwriteExistingFile to be an explicit nil
+
+### UnsetOverwriteExistingFile
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) UnsetOverwriteExistingFile()`
+
+UnsetOverwriteExistingFile ensures that no value is present for OverwriteExistingFile, not even an explicit nil
+### GetParentSource
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetParentSource() RecoverOtherNasToElastifileFilesTargetParamsParentSource`
+
+GetParentSource returns the ParentSource field if non-nil, zero value otherwise.
+
+### GetParentSourceOk
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetParentSourceOk() (*RecoverOtherNasToElastifileFilesTargetParamsParentSource, bool)`
+
+GetParentSourceOk returns a tuple with the ParentSource field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentSource
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) SetParentSource(v RecoverOtherNasToElastifileFilesTargetParamsParentSource)`
+
+SetParentSource sets ParentSource field to given value.
+
+### HasParentSource
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) HasParentSource() bool`
+
+HasParentSource returns a boolean if a field has been set.
+
+### GetPreserveFileAttributes
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetPreserveFileAttributes() bool`
+
+GetPreserveFileAttributes returns the PreserveFileAttributes field if non-nil, zero value otherwise.
+
+### GetPreserveFileAttributesOk
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetPreserveFileAttributesOk() (*bool, bool)`
+
+GetPreserveFileAttributesOk returns a tuple with the PreserveFileAttributes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPreserveFileAttributes
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) SetPreserveFileAttributes(v bool)`
+
+SetPreserveFileAttributes sets PreserveFileAttributes field to given value.
+
+### HasPreserveFileAttributes
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) HasPreserveFileAttributes() bool`
+
+HasPreserveFileAttributes returns a boolean if a field has been set.
+
+### SetPreserveFileAttributesNil
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) SetPreserveFileAttributesNil(b bool)`
+
+ SetPreserveFileAttributesNil sets the value for PreserveFileAttributes to be an explicit nil
+
+### UnsetPreserveFileAttributes
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) UnsetPreserveFileAttributes()`
+
+UnsetPreserveFileAttributes ensures that no value is present for PreserveFileAttributes, not even an explicit nil
+### GetVlanConfig
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetVlanConfig() RecoveryVlanConfig`
+
+GetVlanConfig returns the VlanConfig field if non-nil, zero value otherwise.
+
+### GetVlanConfigOk
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetVlanConfigOk() (*RecoveryVlanConfig, bool)`
+
+GetVlanConfigOk returns a tuple with the VlanConfig field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVlanConfig
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) SetVlanConfig(v RecoveryVlanConfig)`
+
+SetVlanConfig sets VlanConfig field to given value.
+
+### HasVlanConfig
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) HasVlanConfig() bool`
+
+HasVlanConfig returns a boolean if a field has been set.
+
+### GetVolume
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetVolume() RecoverOtherNasToElastifileVolumeTargetParamsVolume`
+
+GetVolume returns the Volume field if non-nil, zero value otherwise.
+
+### GetVolumeOk
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) GetVolumeOk() (*RecoverOtherNasToElastifileVolumeTargetParamsVolume, bool)`
+
+GetVolumeOk returns a tuple with the Volume field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVolume
+
+`func (o *RecoverGenericNasToGenericNasVolumeTargetParamsNewSourceConfig) SetVolume(v RecoverOtherNasToElastifileVolumeTargetParamsVolume)`
+
+SetVolume sets Volume field to given value.
+
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
