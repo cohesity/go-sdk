@@ -1,0 +1,87 @@
+# StandaloneClusterRegistrationParams
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Description** | Pointer to **NullableString** | Specifies the description of the source being registered. | [optional] 
+**Endpoint** | **string** | Specifies the endpoint IPaddress, URL or hostname of the host. | 
+
+## Methods
+
+### NewStandaloneClusterRegistrationParams
+
+`func NewStandaloneClusterRegistrationParams(endpoint string, ) *StandaloneClusterRegistrationParams`
+
+NewStandaloneClusterRegistrationParams instantiates a new StandaloneClusterRegistrationParams object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewStandaloneClusterRegistrationParamsWithDefaults
+
+`func NewStandaloneClusterRegistrationParamsWithDefaults() *StandaloneClusterRegistrationParams`
+
+NewStandaloneClusterRegistrationParamsWithDefaults instantiates a new StandaloneClusterRegistrationParams object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetDescription
+
+`func (o *StandaloneClusterRegistrationParams) GetDescription() string`
+
+GetDescription returns the Description field if non-nil, zero value otherwise.
+
+### GetDescriptionOk
+
+`func (o *StandaloneClusterRegistrationParams) GetDescriptionOk() (*string, bool)`
+
+GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDescription
+
+`func (o *StandaloneClusterRegistrationParams) SetDescription(v string)`
+
+SetDescription sets Description field to given value.
+
+### HasDescription
+
+`func (o *StandaloneClusterRegistrationParams) HasDescription() bool`
+
+HasDescription returns a boolean if a field has been set.
+
+### SetDescriptionNil
+
+`func (o *StandaloneClusterRegistrationParams) SetDescriptionNil(b bool)`
+
+ SetDescriptionNil sets the value for Description to be an explicit nil
+
+### UnsetDescription
+`func (o *StandaloneClusterRegistrationParams) UnsetDescription()`
+
+UnsetDescription ensures that no value is present for Description, not even an explicit nil
+### GetEndpoint
+
+`func (o *StandaloneClusterRegistrationParams) GetEndpoint() string`
+
+GetEndpoint returns the Endpoint field if non-nil, zero value otherwise.
+
+### GetEndpointOk
+
+`func (o *StandaloneClusterRegistrationParams) GetEndpointOk() (*string, bool)`
+
+GetEndpointOk returns a tuple with the Endpoint field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEndpoint
+
+`func (o *StandaloneClusterRegistrationParams) SetEndpoint(v string)`
+
+SetEndpoint sets Endpoint field to given value.
+
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
