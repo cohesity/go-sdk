@@ -788,7 +788,7 @@ func (r ApiGetActiveDirectoryPrincipalsRequest) DomainName(domainName string) Ap
 	return r
 }
 
-// Optionally filter by a list of security identifiers (SIDs) found in the specified domain. Only principals matching the specified SIDs are returned. If specified, a &#39;searchTerm&#39; parameter should not be specified.
+// Optionally filter by a list of security identifiers (SIDs) found in the specified domain. Only principals matching the specified SIDs are returned. If specified, a &#39;searchTerm&#39; parameter should not be specified. Note: Duplicate SIDs will be ignored.
 func (r ApiGetActiveDirectoryPrincipalsRequest) Sids(sids []string) ApiGetActiveDirectoryPrincipalsRequest {
 	r.sids = &sids
 	return r

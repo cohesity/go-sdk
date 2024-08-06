@@ -22,8 +22,6 @@ type PrimaryBackupTarget struct {
 	ArchivalTargetSettings *PrimaryArchivalTarget `json:"archivalTargetSettings,omitempty"`
 	// Specifies the primary backup location where backups will be stored. If not specified, then default is assumed as local backup on Cohesity cluster.
 	TargetType NullableString `json:"targetType,omitempty"`
-	// Specifies if the default primary backup target must be used for backups. If this is not specified or set to false, then targets specified in 'archivalTargetSettings' will be used for backups. If the value is specified as true, then default backup target is used internally. This field should only be set in the environment where tenant policy management is enabled and external targets are assigned to tenant when provisioning tenants.
-	UseDefaultBackupTarget NullableBool `json:"useDefaultBackupTarget,omitempty"`
 }
 
 // NewPrimaryBackupTarget instantiates a new PrimaryBackupTarget object
@@ -121,48 +119,6 @@ func (o *PrimaryBackupTarget) UnsetTargetType() {
 	o.TargetType.Unset()
 }
 
-// GetUseDefaultBackupTarget returns the UseDefaultBackupTarget field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *PrimaryBackupTarget) GetUseDefaultBackupTarget() bool {
-	if o == nil || IsNil(o.UseDefaultBackupTarget.Get()) {
-		var ret bool
-		return ret
-	}
-	return *o.UseDefaultBackupTarget.Get()
-}
-
-// GetUseDefaultBackupTargetOk returns a tuple with the UseDefaultBackupTarget field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PrimaryBackupTarget) GetUseDefaultBackupTargetOk() (*bool, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.UseDefaultBackupTarget.Get(), o.UseDefaultBackupTarget.IsSet()
-}
-
-// HasUseDefaultBackupTarget returns a boolean if a field has been set.
-func (o *PrimaryBackupTarget) HasUseDefaultBackupTarget() bool {
-	if o != nil && o.UseDefaultBackupTarget.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetUseDefaultBackupTarget gets a reference to the given NullableBool and assigns it to the UseDefaultBackupTarget field.
-func (o *PrimaryBackupTarget) SetUseDefaultBackupTarget(v bool) {
-	o.UseDefaultBackupTarget.Set(&v)
-}
-// SetUseDefaultBackupTargetNil sets the value for UseDefaultBackupTarget to be an explicit nil
-func (o *PrimaryBackupTarget) SetUseDefaultBackupTargetNil() {
-	o.UseDefaultBackupTarget.Set(nil)
-}
-
-// UnsetUseDefaultBackupTarget ensures that no value is present for UseDefaultBackupTarget, not even an explicit nil
-func (o *PrimaryBackupTarget) UnsetUseDefaultBackupTarget() {
-	o.UseDefaultBackupTarget.Unset()
-}
-
 func (o PrimaryBackupTarget) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -178,9 +134,6 @@ func (o PrimaryBackupTarget) ToMap() (map[string]interface{}, error) {
 	}
 	if o.TargetType.IsSet() {
 		toSerialize["targetType"] = o.TargetType.Get()
-	}
-	if o.UseDefaultBackupTarget.IsSet() {
-		toSerialize["useDefaultBackupTarget"] = o.UseDefaultBackupTarget.Get()
 	}
 	return toSerialize, nil
 }

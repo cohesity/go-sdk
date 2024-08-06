@@ -399,7 +399,7 @@ import (
 
 func main() {
 	domainName := "domainName_example" // string | Specifies the domain name of the principals to search. If specified the principals in that domain are searched. Domain could be an Active Directory domain joined by the Cluster or any one of the trusted domains of the Active Directory domain or the LOCAL domain. If not specified, all the domains are searched. (optional)
-	sids := []string{"Inner_example"} // []string | Optionally filter by a list of security identifiers (SIDs) found in the specified domain. Only principals matching the specified SIDs are returned. If specified, a 'searchTerm' parameter should not be specified. (optional)
+	sids := []string{"Inner_example"} // []string | Optionally filter by a list of security identifiers (SIDs) found in the specified domain. Only principals matching the specified SIDs are returned. If specified, a 'searchTerm' parameter should not be specified. Note: Duplicate SIDs will be ignored. (optional)
 	searchTerm := "searchTerm_example" // string | Optionally filter by matching a substring. Only principals with a name or sAMAccountName that matches part or all of the specified substring are returned. If specified, a 'sids' parameter should not be specified (optional)
 	includeComputers := true // bool | Specifies if Computer/GMSA accounts need to be included in this search. (optional)
 	includeServiceAccounts := true // bool | Specifies if service accounts should be included in the search result. (optional)
@@ -429,7 +429,7 @@ Other parameters are passed through a pointer to a apiGetActiveDirectoryPrincipa
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **domainName** | **string** | Specifies the domain name of the principals to search. If specified the principals in that domain are searched. Domain could be an Active Directory domain joined by the Cluster or any one of the trusted domains of the Active Directory domain or the LOCAL domain. If not specified, all the domains are searched. | 
- **sids** | **[]string** | Optionally filter by a list of security identifiers (SIDs) found in the specified domain. Only principals matching the specified SIDs are returned. If specified, a &#39;searchTerm&#39; parameter should not be specified. | 
+ **sids** | **[]string** | Optionally filter by a list of security identifiers (SIDs) found in the specified domain. Only principals matching the specified SIDs are returned. If specified, a &#39;searchTerm&#39; parameter should not be specified. Note: Duplicate SIDs will be ignored. | 
  **searchTerm** | **string** | Optionally filter by matching a substring. Only principals with a name or sAMAccountName that matches part or all of the specified substring are returned. If specified, a &#39;sids&#39; parameter should not be specified | 
  **includeComputers** | **bool** | Specifies if Computer/GMSA accounts need to be included in this search. | 
  **includeServiceAccounts** | **bool** | Specifies if service accounts should be included in the search result. | 
