@@ -1,0 +1,34 @@
+name: Create Pull Request for Last Commit
+
+on:
+  push:
+    branches:
+      - 'A'  # Replace 'A' with your branch name
+
+jobs:
+  create_pr:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Get last commit SHA
+      id: commit1
+      run: echo "::set-output name=sha1::$(git rev-parse HEAD~1)"
+
+    - name: Get current commit SHA
+      id: commit2
+      run: echo "::set-output name=sha2::$(git rev-parse HEAD)"
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "Automated Pull Request for Commit 2"
+        base: ${{ github.ref_name }}  # The current branch (A)
+        head: ${{ steps.commit1.outputs.sha1 }}  # Commit 1
+        compare-to: ${{ steps.commit2.outputs.sha2 }}  # Commit 2
+        title: "CR for Commit 1 vs Commit 2"
+        body: |
+          This pull request is between Commit 1 (SHA: ${{ steps.commit1.outputs.sha1 }}) and Commit 2 (SHA: ${{ steps.commit2.outputs.sha2 }})
