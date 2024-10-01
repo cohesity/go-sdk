@@ -13,7 +13,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/satwik-miyyapuram-cohesity/go-sdk/v1/models"
+	"github.com/cohesity/go-sdk/v1/models"
 )
 
 // CreateVirtualClusterReader is a Reader for the CreateVirtualCluster structure.

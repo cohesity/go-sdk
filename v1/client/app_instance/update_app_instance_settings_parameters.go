@@ -16,7 +16,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/satwik-miyyapuram-cohesity/go-sdk/v1/models"
+	"github.com/cohesity/go-sdk/v1/models"
 )
 
 // NewUpdateAppInstanceSettingsParams creates a new UpdateAppInstanceSettingsParams object,

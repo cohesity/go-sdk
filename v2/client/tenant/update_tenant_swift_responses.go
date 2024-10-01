@@ -13,7 +13,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/satwik-miyyapuram-cohesity/go-sdk/v2/models"
+	"github.com/cohesity/go-sdk/v2/models"
 )
 
 // UpdateTenantSwiftReader is a Reader for the UpdateTenantSwift structure.

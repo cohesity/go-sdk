@@ -1,4 +1,4 @@
-module github.com/satwik-miyyapuram-cohesity/go-sdk
+module github.com/cohesity/go-sdk
 
 go 1.22.5
 

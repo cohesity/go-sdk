@@ -15,7 +15,7 @@ import (
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/satwik-miyyapuram-cohesity/go-sdk/v1/models"
+	"github.com/cohesity/go-sdk/v1/models"
 )
 
 // NewRestoreFilesParams creates a new RestoreFilesParams object,

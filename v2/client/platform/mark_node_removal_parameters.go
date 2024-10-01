@@ -16,7 +16,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/satwik-miyyapuram-cohesity/go-sdk/v2/models"
+	"github.com/cohesity/go-sdk/v2/models"
 )
 
 // NewMarkNodeRemovalParams creates a new MarkNodeRemovalParams object,
