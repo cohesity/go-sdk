@@ -30,10 +30,10 @@ v1:
 ```go
 import(
   apiClient "github.com/cohesity/go-sdk/v1/client"
-	"github.com/cohesity/go-sdk/v1/client/access_tokens"
-	"github.com/cohesity/go-sdk/v1/models"
-	"github.com/cohesity/go-sdk/v1/client/protection_sources"
-	"github.com/go-openapi/strfmt"
+  "github.com/cohesity/go-sdk/v1/client/access_tokens"
+  "github.com/cohesity/go-sdk/v1/models"
+  "github.com/cohesity/go-sdk/v1/client/protection_sources"
+  "github.com/go-openapi/strfmt"
 
 )
 client := apiClient.NewHTTPClientWithConfig(strfmt.Default, apiClient.DefaultTransportConfig().WithHost("cluster_ip"))
@@ -54,9 +54,9 @@ v2:
 import(
   apiClient "github.com/cohesity/go-sdk/v2/client"
   "github.com/cohesity/go-sdk/v2/client/access_token"
-	"github.com/cohesity/go-sdk/v2/models"
-	"github.com/cohesity/go-sdk/v2/client/source"
-	"github.com/go-openapi/strfmt"
+  "github.com/cohesity/go-sdk/v2/models"
+  "github.com/cohesity/go-sdk/v2/client/source"
+  "github.com/go-openapi/strfmt"
 
 )
 client := apiClient.NewHTTPClientWithConfig(strfmt.Default, apiClient.DefaultTransportConfig().WithHost("cluster_ip"))
