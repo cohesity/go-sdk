@@ -23,8 +23,13 @@ import (
 // swagger:model RemoteProtectionJobRunInstance
 type RemoteProtectionJobRunInstance struct {
 
-	// archive task Uid
-	ArchiveTaskUID *RemoteProtectionJobRunInstanceArchiveTaskUID `json:"archiveTaskUid,omitempty"`
+	// Archive Task Uid.
+	//
+	// Specifies the globally unique id of the archival task that archived
+	// the Snapshot to the Vault.
+	ArchiveTaskUID struct {
+		UniversalID
+	} `json:"archiveTaskUid,omitempty"`
 
 	// Specifies the version of the archive.
 	ArchiveVersion *int32 `json:"archiveVersion,omitempty"`
@@ -82,17 +87,6 @@ func (m *RemoteProtectionJobRunInstance) Validate(formats strfmt.Registry) error
 func (m *RemoteProtectionJobRunInstance) validateArchiveTaskUID(formats strfmt.Registry) error {
 	if swag.IsZero(m.ArchiveTaskUID) { // not required
 		return nil
-	}
-
-	if m.ArchiveTaskUID != nil {
-		if err := m.ArchiveTaskUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("archiveTaskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("archiveTaskUid")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -161,22 +155,6 @@ func (m *RemoteProtectionJobRunInstance) ContextValidate(ctx context.Context, fo
 }
 
 func (m *RemoteProtectionJobRunInstance) contextValidateArchiveTaskUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.ArchiveTaskUID != nil {
-
-		if swag.IsZero(m.ArchiveTaskUID) { // not required
-			return nil
-		}
-
-		if err := m.ArchiveTaskUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("archiveTaskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("archiveTaskUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

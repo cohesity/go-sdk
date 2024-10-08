@@ -29,8 +29,12 @@ type VaultEncryptionKey struct {
 	// Encrypted Data Encryption Key (eDEK).
 	EncryptionKeyData *string `json:"encryptionKeyData,omitempty"`
 
-	// key Uid
-	KeyUID *VaultEncryptionKeyKeyUID `json:"keyUid,omitempty"`
+	// Universal Id.
+	//
+	// Specifies the universal id of the Data Encryption Key.
+	KeyUID struct {
+		UniversalID
+	} `json:"keyUid,omitempty"`
 
 	// Specifies the id of the Vault whose data is encrypted by
 	// this key.
@@ -59,17 +63,6 @@ func (m *VaultEncryptionKey) validateKeyUID(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.KeyUID != nil {
-		if err := m.KeyUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("keyUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("keyUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -88,22 +81,6 @@ func (m *VaultEncryptionKey) ContextValidate(ctx context.Context, formats strfmt
 }
 
 func (m *VaultEncryptionKey) contextValidateKeyUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.KeyUID != nil {
-
-		if swag.IsZero(m.KeyUID) { // not required
-			return nil
-		}
-
-		if err := m.KeyUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("keyUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("keyUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

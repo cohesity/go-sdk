@@ -21,16 +21,26 @@ import (
 // swagger:model IndexAndSnapshots
 type IndexAndSnapshots struct {
 
-	// archive task Uid
-	ArchiveTaskUID *IndexAndSnapshotsArchiveTaskUID `json:"archiveTaskUid,omitempty"`
+	// Archive Task Uid.
+	//
+	// Specifies a unique id of the Archive task that originally archived the
+	// object to the Vault.
+	ArchiveTaskUID struct {
+		UniversalID
+	} `json:"archiveTaskUid,omitempty"`
 
 	// Specifies the end time as a Unix epoch Timestamp (in microseconds).
 	// If set, only index and Snapshots for Protection Job Runs that
 	// started before the specified end time are restored.
 	EndTimeUsecs *int64 `json:"endTimeUsecs,omitempty"`
 
-	// remote protection job Uid
-	RemoteProtectionJobUID *IndexAndSnapshotsRemoteProtectionJobUID `json:"remoteProtectionJobUid,omitempty"`
+	// Protection Job Uid.
+	//
+	// Specifies a unique id assigned to the original Protection Job
+	// by the original Cluster that archived data to the remote Vault.
+	RemoteProtectionJobUID struct {
+		UniversalID
+	} `json:"remoteProtectionJobUid,omitempty"`
 
 	// Specifies the start time as a Unix epoch Timestamp (in microseconds).
 	// If set, only the index and Snapshots for Protection Job Runs that
@@ -65,34 +75,12 @@ func (m *IndexAndSnapshots) validateArchiveTaskUID(formats strfmt.Registry) erro
 		return nil
 	}
 
-	if m.ArchiveTaskUID != nil {
-		if err := m.ArchiveTaskUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("archiveTaskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("archiveTaskUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *IndexAndSnapshots) validateRemoteProtectionJobUID(formats strfmt.Registry) error {
 	if swag.IsZero(m.RemoteProtectionJobUID) { // not required
 		return nil
-	}
-
-	if m.RemoteProtectionJobUID != nil {
-		if err := m.RemoteProtectionJobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("remoteProtectionJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("remoteProtectionJobUid")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -118,42 +106,10 @@ func (m *IndexAndSnapshots) ContextValidate(ctx context.Context, formats strfmt.
 
 func (m *IndexAndSnapshots) contextValidateArchiveTaskUID(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.ArchiveTaskUID != nil {
-
-		if swag.IsZero(m.ArchiveTaskUID) { // not required
-			return nil
-		}
-
-		if err := m.ArchiveTaskUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("archiveTaskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("archiveTaskUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *IndexAndSnapshots) contextValidateRemoteProtectionJobUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RemoteProtectionJobUID != nil {
-
-		if swag.IsZero(m.RemoteProtectionJobUID) { // not required
-			return nil
-		}
-
-		if err := m.RemoteProtectionJobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("remoteProtectionJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("remoteProtectionJobUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

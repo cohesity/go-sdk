@@ -25,14 +25,14 @@ type ADDomain struct {
 	DNSRoot *string `json:"dnsRoot,omitempty"`
 
 	// Domain functional level numeric. (Get-ADDomain).DomainMode
-	// Windows2012R2Domain
+	// Example:Windows2012R2Domain
 	DomainMode *int32 `json:"domainMode,omitempty"`
 
 	// Forest. Example: qa01.eng.cohesity.com
 	Forest *string `json:"forest,omitempty"`
 
 	// Forest functional level. (Get-ADForest).ForestMode
-	// Windows2012R2Forest
+	// Example:Windows2012R2Forest
 	ForestMode *int32 `json:"forestMode,omitempty"`
 
 	// Identity of the domain.

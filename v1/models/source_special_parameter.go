@@ -58,8 +58,20 @@ type SourceSpecialParameter struct {
 	// deprecated: true
 	TruncateExchangeLog *bool `json:"truncateExchangeLog,omitempty"`
 
-	// vm credentials
-	VMCredentials *SourceSpecialParameterVMCredentials `json:"vmCredentials,omitempty"`
+	// VM Credentials.
+	//
+	// Specifies the administrator credentials to log in to the
+	// guest Windows system of a VM that hosts the Microsoft Exchange Server.
+	// If truncateExchangeLog is set to true and the specified source
+	// is a VM, administrator credentials to log in to the guest Windows system
+	// of the VM must be provided to truncate the logs.
+	// This field is only applicable to Sources in the kVMware environment.
+	// This field is deprecated. Use the field in VmCredentials inside
+	// source specific parameter.
+	// deprecated: true
+	VMCredentials struct {
+		Credentials
+	} `json:"vmCredentials,omitempty"`
 
 	// Specifies additional special parameters that are applicable only to
 	// Protection Sources of 'kVMware' type.
@@ -202,17 +214,6 @@ func (m *SourceSpecialParameter) validateSQLSpecialParameters(formats strfmt.Reg
 func (m *SourceSpecialParameter) validateVMCredentials(formats strfmt.Registry) error {
 	if swag.IsZero(m.VMCredentials) { // not required
 		return nil
-	}
-
-	if m.VMCredentials != nil {
-		if err := m.VMCredentials.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("vmCredentials")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("vmCredentials")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -381,22 +382,6 @@ func (m *SourceSpecialParameter) contextValidateSQLSpecialParameters(ctx context
 }
 
 func (m *SourceSpecialParameter) contextValidateVMCredentials(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.VMCredentials != nil {
-
-		if swag.IsZero(m.VMCredentials) { // not required
-			return nil
-		}
-
-		if err := m.VMCredentials.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("vmCredentials")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("vmCredentials")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

@@ -169,6 +169,21 @@ type GetBackupJobRunsParams struct {
 	*/
 	IncludeRpoSnapshots *bool
 
+	/* IncludeSourceDeletedJobs.
+
+	   If set, Magneto will also return the deleted jobs for the given EntityId.
+	*/
+	IncludeSourceDeletedJobs *bool
+
+	/* MaxResultCount.
+
+	     Identifies the max number of items to be returned. This is specifically
+	to be used with pagination.
+
+	     Format: int64
+	*/
+	MaxResultCount *int64
+
 	/* NumRuns.
 
 	     NumRuns is the number of runs. If specified, at most these many runs will
@@ -177,6 +192,13 @@ type GetBackupJobRunsParams struct {
 	     Format: int64
 	*/
 	NumRuns *int64
+
+	/* OnlyIncludeSourceTask.
+
+	     If set, Magneto will return only given source tasks in the job runs for
+	the given source(EntityId).
+	*/
+	OnlyIncludeSourceTask *bool
 
 	/* OnlyIncludeSuccessfulCopyRuns.
 
@@ -209,6 +231,12 @@ type GetBackupJobRunsParams struct {
 	default is json.
 	*/
 	OutputFormat *string
+
+	/* PaginationCookie.
+
+	   Pagination cookie to fetch the next set of results.
+	*/
+	PaginationCookie *string
 
 	/* RunTypes.
 
@@ -440,6 +468,28 @@ func (o *GetBackupJobRunsParams) SetIncludeRpoSnapshots(includeRpoSnapshots *boo
 	o.IncludeRpoSnapshots = includeRpoSnapshots
 }
 
+// WithIncludeSourceDeletedJobs adds the includeSourceDeletedJobs to the get backup job runs params
+func (o *GetBackupJobRunsParams) WithIncludeSourceDeletedJobs(includeSourceDeletedJobs *bool) *GetBackupJobRunsParams {
+	o.SetIncludeSourceDeletedJobs(includeSourceDeletedJobs)
+	return o
+}
+
+// SetIncludeSourceDeletedJobs adds the includeSourceDeletedJobs to the get backup job runs params
+func (o *GetBackupJobRunsParams) SetIncludeSourceDeletedJobs(includeSourceDeletedJobs *bool) {
+	o.IncludeSourceDeletedJobs = includeSourceDeletedJobs
+}
+
+// WithMaxResultCount adds the maxResultCount to the get backup job runs params
+func (o *GetBackupJobRunsParams) WithMaxResultCount(maxResultCount *int64) *GetBackupJobRunsParams {
+	o.SetMaxResultCount(maxResultCount)
+	return o
+}
+
+// SetMaxResultCount adds the maxResultCount to the get backup job runs params
+func (o *GetBackupJobRunsParams) SetMaxResultCount(maxResultCount *int64) {
+	o.MaxResultCount = maxResultCount
+}
+
 // WithNumRuns adds the numRuns to the get backup job runs params
 func (o *GetBackupJobRunsParams) WithNumRuns(numRuns *int64) *GetBackupJobRunsParams {
 	o.SetNumRuns(numRuns)
@@ -449,6 +499,17 @@ func (o *GetBackupJobRunsParams) WithNumRuns(numRuns *int64) *GetBackupJobRunsPa
 // SetNumRuns adds the numRuns to the get backup job runs params
 func (o *GetBackupJobRunsParams) SetNumRuns(numRuns *int64) {
 	o.NumRuns = numRuns
+}
+
+// WithOnlyIncludeSourceTask adds the onlyIncludeSourceTask to the get backup job runs params
+func (o *GetBackupJobRunsParams) WithOnlyIncludeSourceTask(onlyIncludeSourceTask *bool) *GetBackupJobRunsParams {
+	o.SetOnlyIncludeSourceTask(onlyIncludeSourceTask)
+	return o
+}
+
+// SetOnlyIncludeSourceTask adds the onlyIncludeSourceTask to the get backup job runs params
+func (o *GetBackupJobRunsParams) SetOnlyIncludeSourceTask(onlyIncludeSourceTask *bool) {
+	o.OnlyIncludeSourceTask = onlyIncludeSourceTask
 }
 
 // WithOnlyIncludeSuccessfulCopyRuns adds the onlyIncludeSuccessfulCopyRuns to the get backup job runs params
@@ -493,6 +554,17 @@ func (o *GetBackupJobRunsParams) WithOutputFormat(outputFormat *string) *GetBack
 // SetOutputFormat adds the outputFormat to the get backup job runs params
 func (o *GetBackupJobRunsParams) SetOutputFormat(outputFormat *string) {
 	o.OutputFormat = outputFormat
+}
+
+// WithPaginationCookie adds the paginationCookie to the get backup job runs params
+func (o *GetBackupJobRunsParams) WithPaginationCookie(paginationCookie *string) *GetBackupJobRunsParams {
+	o.SetPaginationCookie(paginationCookie)
+	return o
+}
+
+// SetPaginationCookie adds the paginationCookie to the get backup job runs params
+func (o *GetBackupJobRunsParams) SetPaginationCookie(paginationCookie *string) {
+	o.PaginationCookie = paginationCookie
 }
 
 // WithRunTypes adds the runTypes to the get backup job runs params
@@ -762,6 +834,40 @@ func (o *GetBackupJobRunsParams) WriteToRequest(r runtime.ClientRequest, reg str
 		}
 	}
 
+	if o.IncludeSourceDeletedJobs != nil {
+
+		// query param includeSourceDeletedJobs
+		var qrIncludeSourceDeletedJobs bool
+
+		if o.IncludeSourceDeletedJobs != nil {
+			qrIncludeSourceDeletedJobs = *o.IncludeSourceDeletedJobs
+		}
+		qIncludeSourceDeletedJobs := swag.FormatBool(qrIncludeSourceDeletedJobs)
+		if qIncludeSourceDeletedJobs != "" {
+
+			if err := r.SetQueryParam("includeSourceDeletedJobs", qIncludeSourceDeletedJobs); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.MaxResultCount != nil {
+
+		// query param maxResultCount
+		var qrMaxResultCount int64
+
+		if o.MaxResultCount != nil {
+			qrMaxResultCount = *o.MaxResultCount
+		}
+		qMaxResultCount := swag.FormatInt64(qrMaxResultCount)
+		if qMaxResultCount != "" {
+
+			if err := r.SetQueryParam("maxResultCount", qMaxResultCount); err != nil {
+				return err
+			}
+		}
+	}
+
 	if o.NumRuns != nil {
 
 		// query param numRuns
@@ -774,6 +880,23 @@ func (o *GetBackupJobRunsParams) WriteToRequest(r runtime.ClientRequest, reg str
 		if qNumRuns != "" {
 
 			if err := r.SetQueryParam("numRuns", qNumRuns); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.OnlyIncludeSourceTask != nil {
+
+		// query param onlyIncludeSourceTask
+		var qrOnlyIncludeSourceTask bool
+
+		if o.OnlyIncludeSourceTask != nil {
+			qrOnlyIncludeSourceTask = *o.OnlyIncludeSourceTask
+		}
+		qOnlyIncludeSourceTask := swag.FormatBool(qrOnlyIncludeSourceTask)
+		if qOnlyIncludeSourceTask != "" {
+
+			if err := r.SetQueryParam("onlyIncludeSourceTask", qOnlyIncludeSourceTask); err != nil {
 				return err
 			}
 		}
@@ -842,6 +965,23 @@ func (o *GetBackupJobRunsParams) WriteToRequest(r runtime.ClientRequest, reg str
 		if qOutputFormat != "" {
 
 			if err := r.SetQueryParam("outputFormat", qOutputFormat); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.PaginationCookie != nil {
+
+		// query param paginationCookie
+		var qrPaginationCookie string
+
+		if o.PaginationCookie != nil {
+			qrPaginationCookie = *o.PaginationCookie
+		}
+		qPaginationCookie := qrPaginationCookie
+		if qPaginationCookie != "" {
+
+			if err := r.SetQueryParam("paginationCookie", qPaginationCookie); err != nil {
 				return err
 			}
 		}

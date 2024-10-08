@@ -23,8 +23,13 @@ import (
 // swagger:model CloneTaskRequest
 type CloneTaskRequest struct {
 
-	// clone view parameters
-	CloneViewParameters *CloneTaskRequestCloneViewParameters `json:"cloneViewParameters,omitempty"`
+	// Clone View.
+	//
+	// Specifies settings for cloning an existing View.
+	// This field is required for a 'kCloneView' Restore Task.
+	CloneViewParameters struct {
+		CloneViewRequest
+	} `json:"cloneViewParameters,omitempty"`
 
 	// Specifies if the Restore Task should continue when some operations on some
 	// objects fail. If true, the Cohesity Cluster ignores intermittent
@@ -133,17 +138,6 @@ func (m *CloneTaskRequest) Validate(formats strfmt.Registry) error {
 func (m *CloneTaskRequest) validateCloneViewParameters(formats strfmt.Registry) error {
 	if swag.IsZero(m.CloneViewParameters) { // not required
 		return nil
-	}
-
-	if m.CloneViewParameters != nil {
-		if err := m.CloneViewParameters.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("cloneViewParameters")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("cloneViewParameters")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -360,22 +354,6 @@ func (m *CloneTaskRequest) ContextValidate(ctx context.Context, formats strfmt.R
 }
 
 func (m *CloneTaskRequest) contextValidateCloneViewParameters(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.CloneViewParameters != nil {
-
-		if swag.IsZero(m.CloneViewParameters) { // not required
-			return nil
-		}
-
-		if err := m.CloneViewParameters.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("cloneViewParameters")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("cloneViewParameters")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

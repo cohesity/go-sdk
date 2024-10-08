@@ -101,8 +101,10 @@ type SnapshotArchivalCopyPolicy struct {
 	// Specifies a the source cluster id from which the data must be archived.
 	SourceClusterID *int64 `json:"sourceClusterId,omitempty"`
 
-	// target
-	Target *SnapshotArchivalCopyPolicyTarget `json:"target,omitempty"`
+	// Specifies the archival target to copy the Snapshots to.
+	Target struct {
+		ArchivalExternalTarget
+	} `json:"target,omitempty"`
 }
 
 // Validate validates this snapshot archival copy policy
@@ -287,17 +289,6 @@ func (m *SnapshotArchivalCopyPolicy) validateTarget(formats strfmt.Registry) err
 		return nil
 	}
 
-	if m.Target != nil {
-		if err := m.Target.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("target")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("target")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -370,22 +361,6 @@ func (m *SnapshotArchivalCopyPolicy) contextValidateRunTimeouts(ctx context.Cont
 }
 
 func (m *SnapshotArchivalCopyPolicy) contextValidateTarget(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Target != nil {
-
-		if swag.IsZero(m.Target) { // not required
-			return nil
-		}
-
-		if err := m.Target.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("target")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("target")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

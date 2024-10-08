@@ -47,6 +47,9 @@ type CassandraConnectParams struct {
 	// Specifies the Directory from where DSE specific configuration can be read.
 	DseConfigDirectory *string `json:"dseConfigDirectory,omitempty"`
 
+	// DSE version
+	DseVersion *string `json:"dseVersion,omitempty"`
+
 	// Specifies whether this cluster has DSE Authenticator.
 	IsDseAuthenticator *bool `json:"isDseAuthenticator,omitempty"`
 

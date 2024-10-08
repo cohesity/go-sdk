@@ -29,8 +29,14 @@ type RestoreTask struct {
 	// Specifies parameters for restore task of application server object.
 	ApplicationParameters *ApplicationRestoreParameters `json:"applicationParameters,omitempty"`
 
-	// archive task Uid
-	ArchiveTaskUID *RestoreTaskArchiveTaskUID `json:"archiveTaskUid,omitempty"`
+	// Specifies the uid of the Restore Task that retrieves objects from
+	// an archive. This field is only populated when objects
+	// must be retrieved from an archive before being restored.
+	// This field is deprecated.
+	// deprecated:true
+	ArchiveTaskUID struct {
+		UniversalID
+	} `json:"archiveTaskUid,omitempty"`
 
 	// Specifies the uids of the Restore Task that retrieves objects from
 	// an archive. This field is only populated when objects
@@ -43,8 +49,10 @@ type RestoreTask struct {
 	// Enum: ["kRunning","kTearingDown","kTornDown","kTearDownFailed"]
 	CloneStatus *string `json:"cloneStatus,omitempty"`
 
-	// clone view parameters
-	CloneViewParameters *RestoreTaskCloneViewParameters `json:"cloneViewParameters,omitempty"`
+	// Specifies the View settings used when cloning a View.
+	CloneViewParameters struct {
+		UpdateViewParam
+	} `json:"cloneViewParameters,omitempty"`
 
 	// Specifies if the Restore Task should continue when some operations on some
 	// objects fail. If true, the Cohesity Cluster ignores intermittent
@@ -66,8 +74,13 @@ type RestoreTask struct {
 	// Restore Task completes.
 	EndTimeUsecs *int64 `json:"endTimeUsecs,omitempty"`
 
-	// error
-	Error *RestoreTaskError `json:"error,omitempty"`
+	// Restore Task Error.
+	//
+	// Specifies the error reported by the Restore Task (if any) after the
+	// Task has finished.
+	Error struct {
+		RequestError
+	} `json:"error,omitempty"`
 
 	// Specifies the full name of a View.
 	FullViewName *string `json:"fullViewName,omitempty"`
@@ -334,17 +347,6 @@ func (m *RestoreTask) validateArchiveTaskUID(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.ArchiveTaskUID != nil {
-		if err := m.ArchiveTaskUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("archiveTaskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("archiveTaskUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -427,17 +429,6 @@ func (m *RestoreTask) validateCloneViewParameters(formats strfmt.Registry) error
 		return nil
 	}
 
-	if m.CloneViewParameters != nil {
-		if err := m.CloneViewParameters.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("cloneViewParameters")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("cloneViewParameters")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -463,17 +454,6 @@ func (m *RestoreTask) validateDeployVmsToCloud(formats strfmt.Registry) error {
 func (m *RestoreTask) validateError(formats strfmt.Registry) error {
 	if swag.IsZero(m.Error) { // not required
 		return nil
-	}
-
-	if m.Error != nil {
-		if err := m.Error.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("error")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("error")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -999,22 +979,6 @@ func (m *RestoreTask) contextValidateApplicationParameters(ctx context.Context, 
 
 func (m *RestoreTask) contextValidateArchiveTaskUID(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.ArchiveTaskUID != nil {
-
-		if swag.IsZero(m.ArchiveTaskUID) { // not required
-			return nil
-		}
-
-		if err := m.ArchiveTaskUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("archiveTaskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("archiveTaskUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -1045,22 +1009,6 @@ func (m *RestoreTask) contextValidateArchiveTaskUids(ctx context.Context, format
 
 func (m *RestoreTask) contextValidateCloneViewParameters(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.CloneViewParameters != nil {
-
-		if swag.IsZero(m.CloneViewParameters) { // not required
-			return nil
-		}
-
-		if err := m.CloneViewParameters.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("cloneViewParameters")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("cloneViewParameters")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -1086,22 +1034,6 @@ func (m *RestoreTask) contextValidateDeployVmsToCloud(ctx context.Context, forma
 }
 
 func (m *RestoreTask) contextValidateError(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Error != nil {
-
-		if swag.IsZero(m.Error) { // not required
-			return nil
-		}
-
-		if err := m.Error.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("error")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("error")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

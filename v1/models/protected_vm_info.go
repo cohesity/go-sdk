@@ -30,8 +30,10 @@ type ProtectedVMInfo struct {
 	// Specifies a VM that is being protected on the Cohesity Cluster.
 	ProtectionSource *ProtectionSource `json:"protectionSource,omitempty"`
 
-	// stats
-	Stats *ProtectedVMInfoStats `json:"stats,omitempty"`
+	// Specifies the protection stats of VM.
+	Stats struct {
+		ProtectionSummary
+	} `json:"stats,omitempty"`
 }
 
 // Validate validates this protected Vm info
@@ -136,17 +138,6 @@ func (m *ProtectedVMInfo) validateStats(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.Stats != nil {
-		if err := m.Stats.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("stats")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -248,22 +239,6 @@ func (m *ProtectedVMInfo) contextValidateProtectionSource(ctx context.Context, f
 }
 
 func (m *ProtectedVMInfo) contextValidateStats(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Stats != nil {
-
-		if swag.IsZero(m.Stats) { // not required
-			return nil
-		}
-
-		if err := m.Stats.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("stats")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

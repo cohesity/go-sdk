@@ -157,6 +157,9 @@ type AwsProtectionSource struct {
 	// Specifies S3 entity specific params.
 	S3EntityInfo *S3EntityInfo `json:"s3EntityInfo,omitempty"`
 
+	// Params required for s3 backups for the registered entity.
+	S3ProtectionParams *S3ProtectionParams `json:"s3ProtectionParams,omitempty"`
+
 	// Specifies Secret Access key of the AWS account.
 	SecretAccessKey *string `json:"secretAccessKey,omitempty"`
 
@@ -241,6 +244,10 @@ func (m *AwsProtectionSource) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateS3EntityInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateS3ProtectionParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -579,6 +586,25 @@ func (m *AwsProtectionSource) validateS3EntityInfo(formats strfmt.Registry) erro
 	return nil
 }
 
+func (m *AwsProtectionSource) validateS3ProtectionParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.S3ProtectionParams) { // not required
+		return nil
+	}
+
+	if m.S3ProtectionParams != nil {
+		if err := m.S3ProtectionParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("s3ProtectionParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("s3ProtectionParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 var awsProtectionSourceTypeSubscriptionTypePropEnum []interface{}
 
 func init() {
@@ -795,6 +821,10 @@ func (m *AwsProtectionSource) ContextValidate(ctx context.Context, formats strfm
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateS3ProtectionParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateTagAttributes(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -885,6 +915,27 @@ func (m *AwsProtectionSource) contextValidateS3EntityInfo(ctx context.Context, f
 				return ve.ValidateName("s3EntityInfo")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("s3EntityInfo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *AwsProtectionSource) contextValidateS3ProtectionParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.S3ProtectionParams != nil {
+
+		if swag.IsZero(m.S3ProtectionParams) { // not required
+			return nil
+		}
+
+		if err := m.S3ProtectionParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("s3ProtectionParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("s3ProtectionParams")
 			}
 			return err
 		}

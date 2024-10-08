@@ -70,11 +70,17 @@ type ProtectionSourceNode struct {
 	// be available at the 0th index of the vector.
 	ProtectedSourcesSummary []*AggregatedSubtreeInfo `json:"protectedSourcesSummary"`
 
-	// protection source
-	ProtectionSource *ProtectionSourceNodeProtectionSource `json:"protectionSource,omitempty"`
+	// Specifies the Protection Source for the current node.
+	ProtectionSource struct {
+		ProtectionSource
+	} `json:"protectionSource,omitempty"`
 
-	// registration info
-	RegistrationInfo *ProtectionSourceNodeRegistrationInfo `json:"registrationInfo,omitempty"`
+	// Specifies registration information for a root node in a Protection
+	// Sources tree. A root node represents a registered Source on the
+	// Cohesity Cluster, such as a vCenter Server.
+	RegistrationInfo struct {
+		RegisteredSourceInfo
+	} `json:"registrationInfo,omitempty"`
 
 	// Specifies the total bytes downtiered from the source so far.
 	TotalDowntieredSizeInBytes *int64 `json:"totalDowntieredSizeInBytes,omitempty"`
@@ -244,34 +250,12 @@ func (m *ProtectionSourceNode) validateProtectionSource(formats strfmt.Registry)
 		return nil
 	}
 
-	if m.ProtectionSource != nil {
-		if err := m.ProtectionSource.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("protectionSource")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("protectionSource")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ProtectionSourceNode) validateRegistrationInfo(formats strfmt.Registry) error {
 	if swag.IsZero(m.RegistrationInfo) { // not required
 		return nil
-	}
-
-	if m.RegistrationInfo != nil {
-		if err := m.RegistrationInfo.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("registrationInfo")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("registrationInfo")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -456,42 +440,10 @@ func (m *ProtectionSourceNode) contextValidateProtectedSourcesSummary(ctx contex
 
 func (m *ProtectionSourceNode) contextValidateProtectionSource(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.ProtectionSource != nil {
-
-		if swag.IsZero(m.ProtectionSource) { // not required
-			return nil
-		}
-
-		if err := m.ProtectionSource.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("protectionSource")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("protectionSource")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ProtectionSourceNode) contextValidateRegistrationInfo(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RegistrationInfo != nil {
-
-		if swag.IsZero(m.RegistrationInfo) { // not required
-			return nil
-		}
-
-		if err := m.RegistrationInfo.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("registrationInfo")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("registrationInfo")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

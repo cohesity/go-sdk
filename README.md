@@ -22,7 +22,7 @@ go get github.com/cohesity/go-sdk
 
 |Cluster Version| SDK Version|
 |---|--|
-|7.1.2|7.1.2|
+|7.1.2_u2|7.1.2201|
 ## <a name="howto"></a> How to Use: :mag_right:
 This SDK exposes all the functionality provided by *Cohesity REST API*.
 
@@ -55,7 +55,7 @@ import(
   apiClient "github.com/cohesity/go-sdk/v2/client"
   "github.com/cohesity/go-sdk/v2/client/access_token"
   "github.com/cohesity/go-sdk/v2/models"
-  "github.com/cohesity/go-sdk/v2/client/source"
+  "github.com/cohesity/go-sdk/v2/client/protection_group"
   "github.com/go-openapi/strfmt"
 
 )
@@ -70,7 +70,7 @@ body := &models.CreateAccessTokenRequestParams{
 }
 resp, err := client.AccessToken.CreateAccessToken(access_token.NewCreateAccessTokenParams().WithBody(body), nil)
 bearerTokenAuth := httptransport.BearerToken(*resp.Payload.AccessToken) # the bearertoken is the authentication we use to access the APIs
-sourceResp, err := client2.Source.GetProtectionSources(source.NewGetProtectionSourcesParams(), bearerTokenAuth) #example api
+protectionGroupResp, err := client.ProtectionGroup.GetProtectionGroups(protection_group.NewGetProtectionGroupsParams(), bearerTokenAuth) #example api
 ```
 
 ## <a name ="suggest"></a> Questions or Feedback :raised_hand:

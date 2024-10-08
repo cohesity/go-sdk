@@ -49,11 +49,27 @@ type CreateViewBoxParams struct {
 	// Required: true
 	ClusterPartitionID *int64 `json:"clusterPartitionId"`
 
-	// default user quota policy
-	DefaultUserQuotaPolicy *CreateViewBoxParamsDefaultUserQuotaPolicy `json:"defaultUserQuotaPolicy,omitempty"`
+	// Specifies an optional quota policy/limits that are inherited by all users
+	// within the views in this viewbox.
+	DefaultUserQuotaPolicy struct {
+		QuotaPolicy
+	} `json:"defaultUserQuotaPolicy,omitempty"`
 
-	// default view quota policy
-	DefaultViewQuotaPolicy *CreateViewBoxParamsDefaultViewQuotaPolicy `json:"defaultViewQuotaPolicy,omitempty"`
+	// Specifies an optional default logical quota limit (in bytes)
+	// for the Views in this Storage Domain (View Box).
+	// (Logical data is when the data is fully hydrated and expanded.)
+	// However, this inherited quota can be overwritten at the View level.
+	// A new write is not allowed if the Storage Domain (View Box) will exceed
+	// the specified quota.
+	// However, it takes time for the Cohesity Cluster to calculate
+	// the usage across Nodes, so the limit may be exceeded by a small amount.
+	// In addition, if the limit is increased or data is removed,
+	// there may be delay before the Cohesity Cluster allows more data
+	// to be written to the Storage Domain (View Box), as the Cluster is
+	// calculating the usage across Nodes.
+	DefaultViewQuotaPolicy struct {
+		QuotaPolicy
+	} `json:"defaultViewQuotaPolicy,omitempty"`
 
 	// Specifies whether DEK(Data Encryption Key) rotation is enabled for this
 	// viewbox. This is applicable only when the viewbox uses AWS or similar KMS
@@ -92,8 +108,24 @@ type CreateViewBoxParams struct {
 	// Specifies the NIS domain that this view box is mapped to.
 	NisDomainNameVec []string `json:"nisDomainNameVec"`
 
-	// physical quota
-	PhysicalQuota *CreateViewBoxParamsPhysicalQuota `json:"physicalQuota,omitempty"`
+	// Specifies an optional quota limit (in bytes) for the physical
+	// usage of this Storage Domain (View Box).
+	// This quota limit defines a physical limit for size of the data that
+	// can be physically stored on the Storage Domain (View Box), after the data
+	// has been reduced by change block tracking, compression and deduplication.
+	// The physical usage is the aggregate sum of the data stored for this
+	// Storage Domain (View Box) on all disks in the Cluster.
+	// (The usage includes Cloud Tier data and user data.)
+	// A new write is not allowed if the Storage Domain (View Box) will exceed
+	// the specified quota. However, it takes time for the Cohesity Cluster to
+	// calculate the usage across Nodes, so the limit may be exceeded by a small
+	// amount. In addition, if the limit is increased or data is removed,
+	// there may be a delay before the Cohesity Cluster allows more data
+	// to be written to the Storage Domain (View Box), as the Cluster is
+	// calculating the usage across Nodes.
+	PhysicalQuota struct {
+		QuotaPolicy
+	} `json:"physicalQuota,omitempty"`
 
 	// Specifies whether creation of a S3 bucket is allowed in this
 	// Storage Domain (View Box).
@@ -196,34 +228,12 @@ func (m *CreateViewBoxParams) validateDefaultUserQuotaPolicy(formats strfmt.Regi
 		return nil
 	}
 
-	if m.DefaultUserQuotaPolicy != nil {
-		if err := m.DefaultUserQuotaPolicy.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("defaultUserQuotaPolicy")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("defaultUserQuotaPolicy")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *CreateViewBoxParams) validateDefaultViewQuotaPolicy(formats strfmt.Registry) error {
 	if swag.IsZero(m.DefaultViewQuotaPolicy) { // not required
 		return nil
-	}
-
-	if m.DefaultViewQuotaPolicy != nil {
-		if err := m.DefaultViewQuotaPolicy.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("defaultViewQuotaPolicy")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("defaultViewQuotaPolicy")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -241,17 +251,6 @@ func (m *CreateViewBoxParams) validateName(formats strfmt.Registry) error {
 func (m *CreateViewBoxParams) validatePhysicalQuota(formats strfmt.Registry) error {
 	if swag.IsZero(m.PhysicalQuota) { // not required
 		return nil
-	}
-
-	if m.PhysicalQuota != nil {
-		if err := m.PhysicalQuota.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("physicalQuota")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("physicalQuota")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -333,63 +332,15 @@ func (m *CreateViewBoxParams) contextValidateClientSubnetWhiteList(ctx context.C
 
 func (m *CreateViewBoxParams) contextValidateDefaultUserQuotaPolicy(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.DefaultUserQuotaPolicy != nil {
-
-		if swag.IsZero(m.DefaultUserQuotaPolicy) { // not required
-			return nil
-		}
-
-		if err := m.DefaultUserQuotaPolicy.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("defaultUserQuotaPolicy")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("defaultUserQuotaPolicy")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *CreateViewBoxParams) contextValidateDefaultViewQuotaPolicy(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.DefaultViewQuotaPolicy != nil {
-
-		if swag.IsZero(m.DefaultViewQuotaPolicy) { // not required
-			return nil
-		}
-
-		if err := m.DefaultViewQuotaPolicy.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("defaultViewQuotaPolicy")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("defaultViewQuotaPolicy")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *CreateViewBoxParams) contextValidatePhysicalQuota(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.PhysicalQuota != nil {
-
-		if swag.IsZero(m.PhysicalQuota) { // not required
-			return nil
-		}
-
-		if err := m.PhysicalQuota.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("physicalQuota")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("physicalQuota")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

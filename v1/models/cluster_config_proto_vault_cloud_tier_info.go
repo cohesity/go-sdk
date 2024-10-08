@@ -25,7 +25,7 @@ type ClusterConfigProtoVaultCloudTierInfo struct {
 
 	// Represents the number of seconds since the snapshot first got archived
 	// (to default tier) after which it needs to be moved to the target tier.
-	// For example, if user selects target as an AWS vault (S3 tier is default)
+	// For example, if user selects target as an AWS vault (default: S3 tier)
 	// with 3 months retention, move to glacier after 1 month, and move to
 	// deep glacier after 2 months, then the below field should be set to
 	// appropriate number of seconds corresponding to 1 or 2 months by iris.

@@ -139,6 +139,15 @@ type GetProtectionRunsParams struct {
 	*/
 	JobID *int64
 
+	/* MaxResultCount.
+
+	     Identifies the max number of items to be returned. This is specifically
+	to be used with pagination.
+
+	     Format: int64
+	*/
+	MaxResultCount *int64
+
 	/* NumRuns.
 
 	     Specify the number of Job Runs to return.
@@ -165,6 +174,12 @@ type GetProtectionRunsParams struct {
 	include extra details such as attempt/task info etc.
 	*/
 	OnlyReturnShellInfo *bool
+
+	/* PaginationCookie.
+
+	   Pagination cookie to fetch the next set of results.
+	*/
+	PaginationCookie *string
 
 	/* RunTypes.
 
@@ -357,6 +372,17 @@ func (o *GetProtectionRunsParams) SetJobID(jobID *int64) {
 	o.JobID = jobID
 }
 
+// WithMaxResultCount adds the maxResultCount to the get protection runs params
+func (o *GetProtectionRunsParams) WithMaxResultCount(maxResultCount *int64) *GetProtectionRunsParams {
+	o.SetMaxResultCount(maxResultCount)
+	return o
+}
+
+// SetMaxResultCount adds the maxResultCount to the get protection runs params
+func (o *GetProtectionRunsParams) SetMaxResultCount(maxResultCount *int64) {
+	o.MaxResultCount = maxResultCount
+}
+
 // WithNumRuns adds the numRuns to the get protection runs params
 func (o *GetProtectionRunsParams) WithNumRuns(numRuns *int64) *GetProtectionRunsParams {
 	o.SetNumRuns(numRuns)
@@ -388,6 +414,17 @@ func (o *GetProtectionRunsParams) WithOnlyReturnShellInfo(onlyReturnShellInfo *b
 // SetOnlyReturnShellInfo adds the onlyReturnShellInfo to the get protection runs params
 func (o *GetProtectionRunsParams) SetOnlyReturnShellInfo(onlyReturnShellInfo *bool) {
 	o.OnlyReturnShellInfo = onlyReturnShellInfo
+}
+
+// WithPaginationCookie adds the paginationCookie to the get protection runs params
+func (o *GetProtectionRunsParams) WithPaginationCookie(paginationCookie *string) *GetProtectionRunsParams {
+	o.SetPaginationCookie(paginationCookie)
+	return o
+}
+
+// SetPaginationCookie adds the paginationCookie to the get protection runs params
+func (o *GetProtectionRunsParams) SetPaginationCookie(paginationCookie *string) {
+	o.PaginationCookie = paginationCookie
 }
 
 // WithRunTypes adds the runTypes to the get protection runs params
@@ -589,6 +626,23 @@ func (o *GetProtectionRunsParams) WriteToRequest(r runtime.ClientRequest, reg st
 		}
 	}
 
+	if o.MaxResultCount != nil {
+
+		// query param maxResultCount
+		var qrMaxResultCount int64
+
+		if o.MaxResultCount != nil {
+			qrMaxResultCount = *o.MaxResultCount
+		}
+		qMaxResultCount := swag.FormatInt64(qrMaxResultCount)
+		if qMaxResultCount != "" {
+
+			if err := r.SetQueryParam("maxResultCount", qMaxResultCount); err != nil {
+				return err
+			}
+		}
+	}
+
 	if o.NumRuns != nil {
 
 		// query param numRuns
@@ -635,6 +689,23 @@ func (o *GetProtectionRunsParams) WriteToRequest(r runtime.ClientRequest, reg st
 		if qOnlyReturnShellInfo != "" {
 
 			if err := r.SetQueryParam("onlyReturnShellInfo", qOnlyReturnShellInfo); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.PaginationCookie != nil {
+
+		// query param paginationCookie
+		var qrPaginationCookie string
+
+		if o.PaginationCookie != nil {
+			qrPaginationCookie = *o.PaginationCookie
+		}
+		qPaginationCookie := qrPaginationCookie
+		if qPaginationCookie != "" {
+
+			if err := r.SetQueryParam("paginationCookie", qPaginationCookie); err != nil {
 				return err
 			}
 		}

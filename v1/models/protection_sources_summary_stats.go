@@ -111,8 +111,12 @@ type ProtectionSourcesSummaryStats struct {
 	// of this Protection Source Object.
 	NumWarnings *int32 `json:"numWarnings,omitempty"`
 
-	// protection source
-	ProtectionSource *ProtectionSourcesSummaryStatsProtectionSource `json:"protectionSource,omitempty"`
+	// Specifies the leaf Protection Source Object (such as VM).
+	// Snapshot summary statistics are reported for this Protection Source
+	// Object.
+	ProtectionSource struct {
+		ProtectionSource
+	} `json:"protectionSource,omitempty"`
 
 	// Specifies the name of the Registered Source that is the top level
 	// parent of the specified Protection Source Object.
@@ -253,17 +257,6 @@ func (m *ProtectionSourcesSummaryStats) validateProtectionSource(formats strfmt.
 		return nil
 	}
 
-	if m.ProtectionSource != nil {
-		if err := m.ProtectionSource.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("protectionSource")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("protectionSource")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -312,22 +305,6 @@ func (m *ProtectionSourcesSummaryStats) ContextValidate(ctx context.Context, for
 }
 
 func (m *ProtectionSourcesSummaryStats) contextValidateProtectionSource(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.ProtectionSource != nil {
-
-		if swag.IsZero(m.ProtectionSource) { // not required
-			return nil
-		}
-
-		if err := m.ProtectionSource.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("protectionSource")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("protectionSource")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

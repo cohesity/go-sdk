@@ -22,14 +22,25 @@ import (
 // swagger:model SchedulingPolicy
 type SchedulingPolicy struct {
 
-	// continuous schedule
-	ContinuousSchedule *SchedulingPolicyContinuousSchedule `json:"continuousSchedule,omitempty"`
+	// Specifies the time interval between two Job Runs of a continuous backup
+	// schedule and any QuietTime periods when new Job Runs
+	// should NOT be started.
+	// Set if periodicity is kContinuous.
+	ContinuousSchedule struct {
+		ContinuousSchedule
+	} `json:"continuousSchedule,omitempty"`
 
-	// daily schedule
-	DailySchedule *SchedulingPolicyDailySchedule `json:"dailySchedule,omitempty"`
+	// Specifies a daily or weekly backup schedule.
+	// Set if periodicity is kDaily.
+	DailySchedule struct {
+		DailySchedule
+	} `json:"dailySchedule,omitempty"`
 
-	// monthly schedule
-	MonthlySchedule *SchedulingPolicyMonthlySchedule `json:"monthlySchedule,omitempty"`
+	// Specifies a monthly backup schedule.
+	// Set if periodicity is kMonthly.
+	MonthlySchedule struct {
+		MonthlySchedule
+	} `json:"monthlySchedule,omitempty"`
 
 	// Specifies how often to start new Job Runs of a Protection Job.
 	// 'kDaily' means new Job Runs start daily.
@@ -41,8 +52,11 @@ type SchedulingPolicy struct {
 	// Enum: ["kContinuous","kDaily","kMonthly","kContinuousRPO","kCDP"]
 	Periodicity *string `json:"periodicity,omitempty"`
 
-	// rpo schedule
-	RpoSchedule *SchedulingPolicyRpoSchedule `json:"rpoSchedule,omitempty"`
+	// Specifies an RPO backup schedule.
+	// Set if periodicity is kContinuousRPO.
+	RpoSchedule struct {
+		RpoSchedule
+	} `json:"rpoSchedule,omitempty"`
 }
 
 // Validate validates this scheduling policy
@@ -80,17 +94,6 @@ func (m *SchedulingPolicy) validateContinuousSchedule(formats strfmt.Registry) e
 		return nil
 	}
 
-	if m.ContinuousSchedule != nil {
-		if err := m.ContinuousSchedule.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("continuousSchedule")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("continuousSchedule")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -99,34 +102,12 @@ func (m *SchedulingPolicy) validateDailySchedule(formats strfmt.Registry) error 
 		return nil
 	}
 
-	if m.DailySchedule != nil {
-		if err := m.DailySchedule.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("dailySchedule")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("dailySchedule")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *SchedulingPolicy) validateMonthlySchedule(formats strfmt.Registry) error {
 	if swag.IsZero(m.MonthlySchedule) { // not required
 		return nil
-	}
-
-	if m.MonthlySchedule != nil {
-		if err := m.MonthlySchedule.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("monthlySchedule")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("monthlySchedule")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -188,17 +169,6 @@ func (m *SchedulingPolicy) validateRpoSchedule(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.RpoSchedule != nil {
-		if err := m.RpoSchedule.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("rpoSchedule")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("rpoSchedule")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -230,84 +200,20 @@ func (m *SchedulingPolicy) ContextValidate(ctx context.Context, formats strfmt.R
 
 func (m *SchedulingPolicy) contextValidateContinuousSchedule(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.ContinuousSchedule != nil {
-
-		if swag.IsZero(m.ContinuousSchedule) { // not required
-			return nil
-		}
-
-		if err := m.ContinuousSchedule.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("continuousSchedule")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("continuousSchedule")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *SchedulingPolicy) contextValidateDailySchedule(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.DailySchedule != nil {
-
-		if swag.IsZero(m.DailySchedule) { // not required
-			return nil
-		}
-
-		if err := m.DailySchedule.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("dailySchedule")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("dailySchedule")
-			}
-			return err
-		}
-	}
 
 	return nil
 }
 
 func (m *SchedulingPolicy) contextValidateMonthlySchedule(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.MonthlySchedule != nil {
-
-		if swag.IsZero(m.MonthlySchedule) { // not required
-			return nil
-		}
-
-		if err := m.MonthlySchedule.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("monthlySchedule")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("monthlySchedule")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *SchedulingPolicy) contextValidateRpoSchedule(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RpoSchedule != nil {
-
-		if swag.IsZero(m.RpoSchedule) { // not required
-			return nil
-		}
-
-		if err := m.RpoSchedule.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("rpoSchedule")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("rpoSchedule")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

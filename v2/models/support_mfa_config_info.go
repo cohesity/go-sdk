@@ -25,20 +25,28 @@ type SupportMfaConfigInfo struct {
 
 	// Specifies the mechanism to receive the OTP code.
 	// Enum: ["email","totp","salesforce"]
-	Environment *string `json:"mfaType,omitempty"`
+	MfaType *string `json:"mfaType,omitempty"`
 
 	// Specifies email address of the support user. Used when MFA mode is email.
 	Email *string `json:"email,omitempty"`
 
 	// MFA code that needs to be passed when disabling MFA or changing email address when email based MFA is configured.
 	MfaCode *string `json:"mfaCode,omitempty"`
+
+	// Specifies the status of otp verification.
+	// Enum: ["kNotStarted","kSuccess","kFailure","kPending"]
+	OtpVerificationState *string `json:"otpVerificationState,omitempty"`
 }
 
 // Validate validates this support mfa config info
 func (m *SupportMfaConfigInfo) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateEnvironment(formats); err != nil {
+	if err := m.validateMfaType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateOtpVerificationState(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -48,7 +56,7 @@ func (m *SupportMfaConfigInfo) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-var supportMfaConfigInfoTypeEnvironmentPropEnum []interface{}
+var supportMfaConfigInfoTypeMfaTypePropEnum []interface{}
 
 func init() {
 	var res []string
@@ -56,37 +64,85 @@ func init() {
 		panic(err)
 	}
 	for _, v := range res {
-		supportMfaConfigInfoTypeEnvironmentPropEnum = append(supportMfaConfigInfoTypeEnvironmentPropEnum, v)
+		supportMfaConfigInfoTypeMfaTypePropEnum = append(supportMfaConfigInfoTypeMfaTypePropEnum, v)
 	}
 }
 
 const (
 
-	// SupportMfaConfigInfoEnvironmentEmail captures enum value "email"
-	SupportMfaConfigInfoEnvironmentEmail string = "email"
+	// SupportMfaConfigInfoMfaTypeEmail captures enum value "email"
+	SupportMfaConfigInfoMfaTypeEmail string = "email"
 
-	// SupportMfaConfigInfoEnvironmentTotp captures enum value "totp"
-	SupportMfaConfigInfoEnvironmentTotp string = "totp"
+	// SupportMfaConfigInfoMfaTypeTotp captures enum value "totp"
+	SupportMfaConfigInfoMfaTypeTotp string = "totp"
 
-	// SupportMfaConfigInfoEnvironmentSalesforce captures enum value "salesforce"
-	SupportMfaConfigInfoEnvironmentSalesforce string = "salesforce"
+	// SupportMfaConfigInfoMfaTypeSalesforce captures enum value "salesforce"
+	SupportMfaConfigInfoMfaTypeSalesforce string = "salesforce"
 )
 
 // prop value enum
-func (m *SupportMfaConfigInfo) validateEnvironmentEnum(path, location string, value string) error {
-	if err := validate.EnumCase(path, location, value, supportMfaConfigInfoTypeEnvironmentPropEnum, true); err != nil {
+func (m *SupportMfaConfigInfo) validateMfaTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, supportMfaConfigInfoTypeMfaTypePropEnum, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *SupportMfaConfigInfo) validateEnvironment(formats strfmt.Registry) error {
-	if swag.IsZero(m.Environment) { // not required
+func (m *SupportMfaConfigInfo) validateMfaType(formats strfmt.Registry) error {
+	if swag.IsZero(m.MfaType) { // not required
 		return nil
 	}
 
 	// value enum
-	if err := m.validateEnvironmentEnum("mfaType", "body", *m.Environment); err != nil {
+	if err := m.validateMfaTypeEnum("mfaType", "body", *m.MfaType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var supportMfaConfigInfoTypeOtpVerificationStatePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["kNotStarted","kSuccess","kFailure","kPending"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		supportMfaConfigInfoTypeOtpVerificationStatePropEnum = append(supportMfaConfigInfoTypeOtpVerificationStatePropEnum, v)
+	}
+}
+
+const (
+
+	// SupportMfaConfigInfoOtpVerificationStateKNotStarted captures enum value "kNotStarted"
+	SupportMfaConfigInfoOtpVerificationStateKNotStarted string = "kNotStarted"
+
+	// SupportMfaConfigInfoOtpVerificationStateKSuccess captures enum value "kSuccess"
+	SupportMfaConfigInfoOtpVerificationStateKSuccess string = "kSuccess"
+
+	// SupportMfaConfigInfoOtpVerificationStateKFailure captures enum value "kFailure"
+	SupportMfaConfigInfoOtpVerificationStateKFailure string = "kFailure"
+
+	// SupportMfaConfigInfoOtpVerificationStateKPending captures enum value "kPending"
+	SupportMfaConfigInfoOtpVerificationStateKPending string = "kPending"
+)
+
+// prop value enum
+func (m *SupportMfaConfigInfo) validateOtpVerificationStateEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, supportMfaConfigInfoTypeOtpVerificationStatePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *SupportMfaConfigInfo) validateOtpVerificationState(formats strfmt.Registry) error {
+	if swag.IsZero(m.OtpVerificationState) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateOtpVerificationStateEnum("otpVerificationState", "body", *m.OtpVerificationState); err != nil {
 		return err
 	}
 

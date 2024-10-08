@@ -99,11 +99,26 @@ type Vlan struct {
 	// mtu
 	Mtu *int32 `json:"mtu,omitempty"`
 
-	// subnet
-	Subnet *VlanSubnet `json:"subnet,omitempty"`
+	// Subnet.
+	//
+	// Specifies the subnet of the VLAN.
+	// The netmask can be specified by setting netmaskBits or netmaskIp4.
+	// The netmask can only be set using netmaskIp4 if the IP address is
+	// an IPv4 address. It can carry V4 or V6 in case of requests, and carries
+	// V4 in case of response.
+	Subnet struct {
+		Subnet
+	} `json:"subnet,omitempty"`
 
-	// subnet v6
-	SubnetV6 *VlanSubnetV6 `json:"subnetV6,omitempty"`
+	// Subnet.
+	//
+	// Specifies the subnet of the VLAN.
+	// The netmask can be specified by setting netmaskBits or netmaskIp4.
+	// The netmask can only be set using netmaskIp4 if the IP address is
+	// an IPv4 address.
+	SubnetV6 struct {
+		Subnet
+	} `json:"subnetV6,omitempty"`
 
 	// Optional tenant id that this vlan belongs to.
 	TenantID *string `json:"tenantId,omitempty"`
@@ -218,34 +233,12 @@ func (m *Vlan) validateSubnet(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.Subnet != nil {
-		if err := m.Subnet.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("subnet")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("subnet")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *Vlan) validateSubnetV6(formats strfmt.Registry) error {
 	if swag.IsZero(m.SubnetV6) { // not required
 		return nil
-	}
-
-	if m.SubnetV6 != nil {
-		if err := m.SubnetV6.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("subnetV6")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("subnetV6")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -354,42 +347,10 @@ func (m *Vlan) contextValidateIPRanges(ctx context.Context, formats strfmt.Regis
 
 func (m *Vlan) contextValidateSubnet(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.Subnet != nil {
-
-		if swag.IsZero(m.Subnet) { // not required
-			return nil
-		}
-
-		if err := m.Subnet.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("subnet")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("subnet")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *Vlan) contextValidateSubnetV6(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.SubnetV6 != nil {
-
-		if swag.IsZero(m.SubnetV6) { // not required
-			return nil
-		}
-
-		if err := m.SubnetV6.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("subnetV6")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("subnetV6")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

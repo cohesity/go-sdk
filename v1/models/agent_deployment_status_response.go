@@ -22,6 +22,9 @@ import (
 // swagger:model AgentDeploymentStatusResponse
 type AgentDeploymentStatusResponse struct {
 
+	// Specifies the port agent is listening on.
+	AgentPort *int32 `json:"agentPort,omitempty"`
+
 	// Specifies the certificate expiry time for agent.
 	CertificateExpiryTimeUsecs *int64 `json:"certificateExpiryTimeUsecs,omitempty"`
 
@@ -32,6 +35,9 @@ type AgentDeploymentStatusResponse struct {
 	// CertificateStatus specifies the status of the agent certificate
 	// Enum: ["Active","Expired"]
 	CertificateStatus *string `json:"certificateStatus,omitempty"`
+
+	// Specifies cipher type being used by the agent.
+	CipherType *string `json:"cipherType,omitempty"`
 
 	// Specifies the compact version of Cohesity agent. For example, 6.0.1.
 	CompactVersion *string `json:"compactVersion,omitempty"`

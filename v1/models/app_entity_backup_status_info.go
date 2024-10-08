@@ -34,7 +34,7 @@ type AppEntityBackupStatusInfo struct {
 	Name *string `json:"name,omitempty"`
 
 	// Specifies the owner id of the the app. Owner is the host under which
-	// the app is located.   SQL DB entities can be hosted by Physicals can be hosted by Physical can be hosted by Physical entities can be hosted by Physical
+	// the app is located. Example: SQL DB entities can be hosted by Physical
 	// host or virtual machine.
 	OwnerID *int64 `json:"ownerId,omitempty"`
 

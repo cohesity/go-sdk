@@ -37,8 +37,14 @@ type ObjectSnapshotInfo struct {
 	// Specifies the name of the Protection Job that captured the backup.
 	JobName *string `json:"jobName,omitempty"`
 
-	// job Uid
-	JobUID *ObjectSnapshotInfoJobUID `json:"jobUid,omitempty"`
+	// Specifies the globally unique id of the Protection Job that backed up
+	// this object. This id is unique across Cohesity Clusters.
+	// Even if this object is replicated to a Remote Cohesity Cluster
+	// and the object is associated with a new Job, the value specified
+	// in this field does not change.
+	JobUID struct {
+		UniversalID
+	} `json:"jobUid,omitempty"`
 
 	// Specifies the primary name of the object.
 	ObjectName *string `json:"objectName,omitempty"`
@@ -102,17 +108,6 @@ func (m *ObjectSnapshotInfo) Validate(formats strfmt.Registry) error {
 func (m *ObjectSnapshotInfo) validateJobUID(formats strfmt.Registry) error {
 	if swag.IsZero(m.JobUID) { // not required
 		return nil
-	}
-
-	if m.JobUID != nil {
-		if err := m.JobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("jobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("jobUid")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -209,22 +204,6 @@ func (m *ObjectSnapshotInfo) ContextValidate(ctx context.Context, formats strfmt
 }
 
 func (m *ObjectSnapshotInfo) contextValidateJobUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.JobUID != nil {
-
-		if swag.IsZero(m.JobUID) { // not required
-			return nil
-		}
-
-		if err := m.JobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("jobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("jobUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

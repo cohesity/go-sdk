@@ -124,6 +124,14 @@ type GetProtectionGroupRunsParams struct {
 	*/
 	LocalBackupRunStatus []string
 
+	/* MaxResultCount.
+
+	   Identifies the max number of items to be returned. This is specifically to be used with pagination.
+
+	   Format: int64
+	*/
+	MaxResultCount *int64
+
 	/* NumRuns.
 
 	   Specifies the max number of runs. If not specified, at most 100 runs will be returned.
@@ -137,6 +145,12 @@ type GetProtectionGroupRunsParams struct {
 	   If set to false, all copy_tasks in any given valid state will be considered. If left empty or set to true, only successful copy_tasks would be considered. Note: this field is only considered when, filterByCopyTaskEndTime is set to true, or else it is ignored.
 	*/
 	OnlyReturnSuccessfulCopyRun *bool
+
+	/* PaginationCookie.
+
+	   Specifies the cookie to fetch the next page of results
+	*/
+	PaginationCookie *string
 
 	/* ReplicationRunStatus.
 
@@ -368,6 +382,17 @@ func (o *GetProtectionGroupRunsParams) SetLocalBackupRunStatus(localBackupRunSta
 	o.LocalBackupRunStatus = localBackupRunStatus
 }
 
+// WithMaxResultCount adds the maxResultCount to the get protection group runs params
+func (o *GetProtectionGroupRunsParams) WithMaxResultCount(maxResultCount *int64) *GetProtectionGroupRunsParams {
+	o.SetMaxResultCount(maxResultCount)
+	return o
+}
+
+// SetMaxResultCount adds the maxResultCount to the get protection group runs params
+func (o *GetProtectionGroupRunsParams) SetMaxResultCount(maxResultCount *int64) {
+	o.MaxResultCount = maxResultCount
+}
+
 // WithNumRuns adds the numRuns to the get protection group runs params
 func (o *GetProtectionGroupRunsParams) WithNumRuns(numRuns *int64) *GetProtectionGroupRunsParams {
 	o.SetNumRuns(numRuns)
@@ -388,6 +413,17 @@ func (o *GetProtectionGroupRunsParams) WithOnlyReturnSuccessfulCopyRun(onlyRetur
 // SetOnlyReturnSuccessfulCopyRun adds the onlyReturnSuccessfulCopyRun to the get protection group runs params
 func (o *GetProtectionGroupRunsParams) SetOnlyReturnSuccessfulCopyRun(onlyReturnSuccessfulCopyRun *bool) {
 	o.OnlyReturnSuccessfulCopyRun = onlyReturnSuccessfulCopyRun
+}
+
+// WithPaginationCookie adds the paginationCookie to the get protection group runs params
+func (o *GetProtectionGroupRunsParams) WithPaginationCookie(paginationCookie *string) *GetProtectionGroupRunsParams {
+	o.SetPaginationCookie(paginationCookie)
+	return o
+}
+
+// SetPaginationCookie adds the paginationCookie to the get protection group runs params
+func (o *GetProtectionGroupRunsParams) SetPaginationCookie(paginationCookie *string) {
+	o.PaginationCookie = paginationCookie
 }
 
 // WithReplicationRunStatus adds the replicationRunStatus to the get protection group runs params
@@ -637,6 +673,23 @@ func (o *GetProtectionGroupRunsParams) WriteToRequest(r runtime.ClientRequest, r
 		}
 	}
 
+	if o.MaxResultCount != nil {
+
+		// query param maxResultCount
+		var qrMaxResultCount int64
+
+		if o.MaxResultCount != nil {
+			qrMaxResultCount = *o.MaxResultCount
+		}
+		qMaxResultCount := swag.FormatInt64(qrMaxResultCount)
+		if qMaxResultCount != "" {
+
+			if err := r.SetQueryParam("maxResultCount", qMaxResultCount); err != nil {
+				return err
+			}
+		}
+	}
+
 	if o.NumRuns != nil {
 
 		// query param numRuns
@@ -666,6 +719,23 @@ func (o *GetProtectionGroupRunsParams) WriteToRequest(r runtime.ClientRequest, r
 		if qOnlyReturnSuccessfulCopyRun != "" {
 
 			if err := r.SetQueryParam("onlyReturnSuccessfulCopyRun", qOnlyReturnSuccessfulCopyRun); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.PaginationCookie != nil {
+
+		// query param paginationCookie
+		var qrPaginationCookie string
+
+		if o.PaginationCookie != nil {
+			qrPaginationCookie = *o.PaginationCookie
+		}
+		qPaginationCookie := qrPaginationCookie
+		if qPaginationCookie != "" {
+
+			if err := r.SetQueryParam("paginationCookie", qPaginationCookie); err != nil {
 				return err
 			}
 		}

@@ -135,8 +135,13 @@ type UpdateProtectionSourceParameters struct {
 	// due to low space.
 	MinimumFreeSpaceGB *int64 `json:"minimumFreeSpaceGB,omitempty"`
 
-	// nas mount credentials
-	NasMountCredentials *UpdateProtectionSourceParametersNasMountCredentials `json:"nasMountCredentials,omitempty"`
+	// NAS Server Credentials.
+	//
+	// Specifies the server credentials to connect to a NetApp server.
+	// This field is required for mounting SMB volumes on NetApp servers.
+	NasMountCredentials struct {
+		NasMountCredentialParams
+	} `json:"nasMountCredentials,omitempty"`
 
 	// Office365 Source Credentials.
 	//
@@ -186,8 +191,10 @@ type UpdateProtectionSourceParameters struct {
 	// input fields. All other fields provided as input will be ignored.
 	Subnets []*Subnet `json:"subnets"`
 
-	// throttling policy
-	ThrottlingPolicy *UpdateProtectionSourceParametersThrottlingPolicy `json:"throttlingPolicy,omitempty"`
+	// Specifies the throttling policy that should be applied to this Source.
+	ThrottlingPolicy struct {
+		ThrottlingPolicyParameters
+	} `json:"throttlingPolicy,omitempty"`
 
 	// Array of Throttling Policy Overrides for Datastores.
 	//
@@ -585,17 +592,6 @@ func (m *UpdateProtectionSourceParameters) validateNasMountCredentials(formats s
 		return nil
 	}
 
-	if m.NasMountCredentials != nil {
-		if err := m.NasMountCredentials.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("nasMountCredentials")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("nasMountCredentials")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -699,17 +695,6 @@ func (m *UpdateProtectionSourceParameters) validateSubnets(formats strfmt.Regist
 func (m *UpdateProtectionSourceParameters) validateThrottlingPolicy(formats strfmt.Registry) error {
 	if swag.IsZero(m.ThrottlingPolicy) { // not required
 		return nil
-	}
-
-	if m.ThrottlingPolicy != nil {
-		if err := m.ThrottlingPolicy.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("throttlingPolicy")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("throttlingPolicy")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -1054,22 +1039,6 @@ func (m *UpdateProtectionSourceParameters) contextValidateKubernetesParams(ctx c
 
 func (m *UpdateProtectionSourceParameters) contextValidateNasMountCredentials(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.NasMountCredentials != nil {
-
-		if swag.IsZero(m.NasMountCredentials) { // not required
-			return nil
-		}
-
-		if err := m.NasMountCredentials.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("nasMountCredentials")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("nasMountCredentials")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -1170,22 +1139,6 @@ func (m *UpdateProtectionSourceParameters) contextValidateSubnets(ctx context.Co
 }
 
 func (m *UpdateProtectionSourceParameters) contextValidateThrottlingPolicy(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.ThrottlingPolicy != nil {
-
-		if swag.IsZero(m.ThrottlingPolicy) { // not required
-			return nil
-		}
-
-		if err := m.ThrottlingPolicy.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("throttlingPolicy")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("throttlingPolicy")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

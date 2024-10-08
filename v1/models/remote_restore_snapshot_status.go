@@ -26,8 +26,13 @@ type RemoteRestoreSnapshotStatus struct {
 	// as a Unix epoch Timestamp (in microseconds).
 	SnapshotTaskStartTimeUsecs *int64 `json:"SnapshotTaskStartTimeUsecs,omitempty"`
 
-	// archive task Uid
-	ArchiveTaskUID *RemoteRestoreSnapshotStatusArchiveTaskUID `json:"archiveTaskUid,omitempty"`
+	// Archive Task Uid.
+	//
+	// Specifies the globally unique id of the archival task that archived
+	// the Snapshots to the remote Vault.
+	ArchiveTaskUID struct {
+		UniversalID
+	} `json:"archiveTaskUid,omitempty"`
 
 	// Specifies the error message if the indexing task fails.
 	Error *string `json:"error,omitempty"`
@@ -56,8 +61,12 @@ type RemoteRestoreSnapshotStatus struct {
 	// Enum: ["kJobRunning","kJobFinished","kJobFailed","kJobCanceled","kJobPaused"]
 	SnapshotTaskStatus *string `json:"snapshotTaskStatus,omitempty"`
 
-	// snapshot task Uid
-	SnapshotTaskUID *RemoteRestoreSnapshotStatusSnapshotTaskUID `json:"snapshotTaskUid,omitempty"`
+	// Snapshot Task Uid.
+	//
+	// Specifies the globally unique id of the task capturing the Snapshot.
+	SnapshotTaskUID struct {
+		UniversalID
+	} `json:"snapshotTaskUid,omitempty"`
 
 	// Specify the time the Snapshot was captured.
 	// This time is recorded as a Unix epoch Timestamp (in microseconds).
@@ -89,17 +98,6 @@ func (m *RemoteRestoreSnapshotStatus) Validate(formats strfmt.Registry) error {
 func (m *RemoteRestoreSnapshotStatus) validateArchiveTaskUID(formats strfmt.Registry) error {
 	if swag.IsZero(m.ArchiveTaskUID) { // not required
 		return nil
-	}
-
-	if m.ArchiveTaskUID != nil {
-		if err := m.ArchiveTaskUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("archiveTaskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("archiveTaskUid")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -161,17 +159,6 @@ func (m *RemoteRestoreSnapshotStatus) validateSnapshotTaskUID(formats strfmt.Reg
 		return nil
 	}
 
-	if m.SnapshotTaskUID != nil {
-		if err := m.SnapshotTaskUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("snapshotTaskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("snapshotTaskUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -195,42 +182,10 @@ func (m *RemoteRestoreSnapshotStatus) ContextValidate(ctx context.Context, forma
 
 func (m *RemoteRestoreSnapshotStatus) contextValidateArchiveTaskUID(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.ArchiveTaskUID != nil {
-
-		if swag.IsZero(m.ArchiveTaskUID) { // not required
-			return nil
-		}
-
-		if err := m.ArchiveTaskUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("archiveTaskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("archiveTaskUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *RemoteRestoreSnapshotStatus) contextValidateSnapshotTaskUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.SnapshotTaskUID != nil {
-
-		if swag.IsZero(m.SnapshotTaskUID) { // not required
-			return nil
-		}
-
-		if err := m.SnapshotTaskUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("snapshotTaskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("snapshotTaskUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

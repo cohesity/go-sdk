@@ -23,7 +23,7 @@ import (
 type AuditEntityTypes struct {
 
 	// Entity Types
-	// Enum: ["ClusterPartition","StorageDomain","View","Share","Node","Disk","Cluster","Vlan","User","ApiKey","Chassis","SslCertificate","ProtectionGroup","Source","RecoveryTask","SmtpServer","EncryptionKey","ProtectionPolicy","Alert","Resolution","AlertNotificationRule","Vault","RemoteCluster","ActiveDirectory","KerberosProvider","Ldap","AntivirusServiceGroup","InfectedFile","PreferredDomainController","Group","Role","ProtectionRun","SearchJob","PhysicalAgent","CloneTask","CloneRefreshTask","Network","Interface","NetworkInerfaceGroup","Scheduler","ProxyServer","StaticRoute","Ip","Qos","KmsConfiguration","CloudSpin","Tenant","IdpConfiguration","App","HeliosEvent","Object","ClusterServices","AccessToken","SnmpConfig","IoTier","ServiceFlag","SupportServer","Csr","Keystone","SwiftRoles","Tags","Nis","Snapshot","HybridExtender","DataTieringAnalysisGroup","DataTieringDowntierTask","DataTieringUptierTask","TrustedCA","AMQPTargetConfiguration","Patch","Hotfix","NisNetgroup","QuorumGroup","QuorumApplication","BifrostConnection","BifrostConnector","HostMapping","FirewallSetting"]
+	// Enum: ["ClusterPartition","StorageDomain","View","Share","Node","Disk","Cluster","Vlan","User","ApiKey","Chassis","SslCertificate","ProtectionGroup","Source","RecoveryTask","SmtpServer","EncryptionKey","ProtectionPolicy","Alert","Resolution","AlertNotificationRule","Vault","RemoteCluster","ActiveDirectory","KerberosProvider","Ldap","AntivirusServiceGroup","InfectedFile","PreferredDomainController","Group","Role","ProtectionRun","SearchJob","PhysicalAgent","CloneTask","CloneRefreshTask","Network","Interface","NetworkInerfaceGroup","Scheduler","ProxyServer","StaticRoute","Ip","Qos","KmsConfiguration","CloudSpin","Tenant","IdpConfiguration","App","HeliosEvent","Object","ClusterServices","AccessToken","SnmpConfig","IoTier","ServiceFlag","SupportServer","Csr","Keystone","SwiftRoles","Tags","Nis","Snapshot","HybridExtender","DataTieringAnalysisGroup","DataTieringDowntierTask","DataTieringUptierTask","TrustedCA","AMQPTargetConfiguration","Patch","Hotfix","NisNetgroup","QuorumGroup","QuorumApplication","BifrostConnection","BifrostConnector","HostMapping","FirewallSetting","ClusterSnapshotPolicy","NodePower"]
 	EntityTypes string `json:"entityTypes,omitempty"`
 }
 
@@ -45,7 +45,7 @@ var auditEntityTypesTypeEntityTypesPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["ClusterPartition","StorageDomain","View","Share","Node","Disk","Cluster","Vlan","User","ApiKey","Chassis","SslCertificate","ProtectionGroup","Source","RecoveryTask","SmtpServer","EncryptionKey","ProtectionPolicy","Alert","Resolution","AlertNotificationRule","Vault","RemoteCluster","ActiveDirectory","KerberosProvider","Ldap","AntivirusServiceGroup","InfectedFile","PreferredDomainController","Group","Role","ProtectionRun","SearchJob","PhysicalAgent","CloneTask","CloneRefreshTask","Network","Interface","NetworkInerfaceGroup","Scheduler","ProxyServer","StaticRoute","Ip","Qos","KmsConfiguration","CloudSpin","Tenant","IdpConfiguration","App","HeliosEvent","Object","ClusterServices","AccessToken","SnmpConfig","IoTier","ServiceFlag","SupportServer","Csr","Keystone","SwiftRoles","Tags","Nis","Snapshot","HybridExtender","DataTieringAnalysisGroup","DataTieringDowntierTask","DataTieringUptierTask","TrustedCA","AMQPTargetConfiguration","Patch","Hotfix","NisNetgroup","QuorumGroup","QuorumApplication","BifrostConnection","BifrostConnector","HostMapping","FirewallSetting"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["ClusterPartition","StorageDomain","View","Share","Node","Disk","Cluster","Vlan","User","ApiKey","Chassis","SslCertificate","ProtectionGroup","Source","RecoveryTask","SmtpServer","EncryptionKey","ProtectionPolicy","Alert","Resolution","AlertNotificationRule","Vault","RemoteCluster","ActiveDirectory","KerberosProvider","Ldap","AntivirusServiceGroup","InfectedFile","PreferredDomainController","Group","Role","ProtectionRun","SearchJob","PhysicalAgent","CloneTask","CloneRefreshTask","Network","Interface","NetworkInerfaceGroup","Scheduler","ProxyServer","StaticRoute","Ip","Qos","KmsConfiguration","CloudSpin","Tenant","IdpConfiguration","App","HeliosEvent","Object","ClusterServices","AccessToken","SnmpConfig","IoTier","ServiceFlag","SupportServer","Csr","Keystone","SwiftRoles","Tags","Nis","Snapshot","HybridExtender","DataTieringAnalysisGroup","DataTieringDowntierTask","DataTieringUptierTask","TrustedCA","AMQPTargetConfiguration","Patch","Hotfix","NisNetgroup","QuorumGroup","QuorumApplication","BifrostConnection","BifrostConnector","HostMapping","FirewallSetting","ClusterSnapshotPolicy","NodePower"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -288,6 +288,12 @@ const (
 
 	// AuditEntityTypesEntityTypesFirewallSetting captures enum value "FirewallSetting"
 	AuditEntityTypesEntityTypesFirewallSetting string = "FirewallSetting"
+
+	// AuditEntityTypesEntityTypesClusterSnapshotPolicy captures enum value "ClusterSnapshotPolicy"
+	AuditEntityTypesEntityTypesClusterSnapshotPolicy string = "ClusterSnapshotPolicy"
+
+	// AuditEntityTypesEntityTypesNodePower captures enum value "NodePower"
+	AuditEntityTypesEntityTypesNodePower string = "NodePower"
 )
 
 // prop value enum

@@ -21,8 +21,10 @@ import (
 // swagger:model ProtectionSourcesJobRunsReportElement
 type ProtectionSourcesJobRunsReportElement struct {
 
-	// protection source
-	ProtectionSource *ProtectionSourcesJobRunsReportElementProtectionSource `json:"protectionSource,omitempty"`
+	// Specifies the leaf Protection Source Object such as a VM.
+	ProtectionSource struct {
+		ProtectionSource
+	} `json:"protectionSource,omitempty"`
 
 	// Array of Snapshots
 	//
@@ -52,17 +54,6 @@ func (m *ProtectionSourcesJobRunsReportElement) Validate(formats strfmt.Registry
 func (m *ProtectionSourcesJobRunsReportElement) validateProtectionSource(formats strfmt.Registry) error {
 	if swag.IsZero(m.ProtectionSource) { // not required
 		return nil
-	}
-
-	if m.ProtectionSource != nil {
-		if err := m.ProtectionSource.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("protectionSource")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("protectionSource")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -113,22 +104,6 @@ func (m *ProtectionSourcesJobRunsReportElement) ContextValidate(ctx context.Cont
 }
 
 func (m *ProtectionSourcesJobRunsReportElement) contextValidateProtectionSource(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.ProtectionSource != nil {
-
-		if swag.IsZero(m.ProtectionSource) { // not required
-			return nil
-		}
-
-		if err := m.ProtectionSource.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("protectionSource")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("protectionSource")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

@@ -27,6 +27,9 @@ type ClusterNetworkingEndpoint struct {
 
 	// The IPv6 address.
 	IPV6Addr *string `json:"ipv6Addr,omitempty"`
+
+	// Specifies if this endpoint is preferred or not.
+	IsPreferredEndpoint *bool `json:"isPreferredEndpoint,omitempty"`
 }
 
 // Validate validates this cluster networking endpoint

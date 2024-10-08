@@ -57,8 +57,11 @@ type PhysicalProtectionSource struct {
 	// Enum: ["kLinux","kWindows","kAix","kSolaris","kSapHana","kSapOracle","kCockroachDB","kMySQL","kOther","kSapSybase","kSapMaxDB","kSapSybaseIQ","kDB2","kSapASE","kMariaDB","kPostgreSQL","kVOS","kHPUX"]
 	HostType *string `json:"hostType,omitempty"`
 
-	// id
-	ID *PhysicalProtectionSourceID `json:"id,omitempty"`
+	// Specifies a unique id of a Physical Protection Source.
+	// The id is unique across Cohesity Clusters.
+	ID struct {
+		UniversalID
+	} `json:"id,omitempty"`
 
 	// Specifies if the physical host is a proxy host.
 	IsProxyHost *bool `json:"isProxyHost,omitempty"`
@@ -262,17 +265,6 @@ func (m *PhysicalProtectionSource) validateID(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.ID != nil {
-		if err := m.ID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("id")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("id")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -454,22 +446,6 @@ func (m *PhysicalProtectionSource) contextValidateAgents(ctx context.Context, fo
 }
 
 func (m *PhysicalProtectionSource) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.ID != nil {
-
-		if swag.IsZero(m.ID) { // not required
-			return nil
-		}
-
-		if err := m.ID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("id")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("id")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

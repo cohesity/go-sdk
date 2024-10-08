@@ -20,8 +20,13 @@ import (
 // swagger:model ClusterStats
 type ClusterStats struct {
 
-	// cloud usage perf stats
-	CloudUsagePerfStats *ClusterStatsCloudUsagePerfStats `json:"cloudUsagePerfStats,omitempty"`
+	// Cloud Tier Statistics.
+	//
+	// Provides usage and performance statistics for the remote data stored on
+	// a Cloud Tier by the Cohesity Cluster.
+	CloudUsagePerfStats struct {
+		UsageAndPerformanceStats
+	} `json:"cloudUsagePerfStats,omitempty"`
 
 	// Provides the ratio of Cluster Logical Data (totalLogicalUsageBytes)
 	// Managed to Cluster Storage Used (totalPhysicalUsageBytes)
@@ -36,14 +41,32 @@ type ClusterStats struct {
 	// Specifies the id of the Cohesity Cluster.
 	ID *int64 `json:"id,omitempty"`
 
-	// local usage perf stats
-	LocalUsagePerfStats *ClusterStatsLocalUsagePerfStats `json:"localUsagePerfStats,omitempty"`
+	// Local Statistics.
+	//
+	// Provides usage and performance statistics for local data stored directly
+	// on the Cohesity Cluster.
+	LocalUsagePerfStats struct {
+		UsageAndPerformanceStats
+	} `json:"localUsagePerfStats,omitempty"`
 
-	// logical stats
-	LogicalStats *ClusterStatsLogicalStats `json:"logicalStats,omitempty"`
+	// Logical Statistics.
+	//
+	// Specifies the total logical data size of all the local and
+	// Cloud Tier data stored by the Cohesity Cluster before the data is
+	// reduced by change-block tracking, compression and deduplication.
+	// The size of the data if the data is fully hydrated or expanded.
+	LogicalStats struct {
+		LogicalStats
+	} `json:"logicalStats,omitempty"`
 
-	// usage perf stats
-	UsagePerfStats *ClusterStatsUsagePerfStats `json:"usagePerfStats,omitempty"`
+	// Local and Cloud Tier Statistics.
+	//
+	// Provides usage and performance statistics about the local data
+	// stored directly on the Cohesity Cluster and the remote data
+	// stored on a Cloud Tier for the Cohesity Cluster.
+	UsagePerfStats struct {
+		UsageAndPerformanceStats
+	} `json:"usagePerfStats,omitempty"`
 }
 
 // Validate validates this cluster stats
@@ -81,17 +104,6 @@ func (m *ClusterStats) validateCloudUsagePerfStats(formats strfmt.Registry) erro
 		return nil
 	}
 
-	if m.CloudUsagePerfStats != nil {
-		if err := m.CloudUsagePerfStats.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("cloudUsagePerfStats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("cloudUsagePerfStats")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -119,17 +131,6 @@ func (m *ClusterStats) validateLocalUsagePerfStats(formats strfmt.Registry) erro
 		return nil
 	}
 
-	if m.LocalUsagePerfStats != nil {
-		if err := m.LocalUsagePerfStats.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("localUsagePerfStats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("localUsagePerfStats")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -138,34 +139,12 @@ func (m *ClusterStats) validateLogicalStats(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.LogicalStats != nil {
-		if err := m.LogicalStats.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("logicalStats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("logicalStats")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ClusterStats) validateUsagePerfStats(formats strfmt.Registry) error {
 	if swag.IsZero(m.UsagePerfStats) { // not required
 		return nil
-	}
-
-	if m.UsagePerfStats != nil {
-		if err := m.UsagePerfStats.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("usagePerfStats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("usagePerfStats")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -203,22 +182,6 @@ func (m *ClusterStats) ContextValidate(ctx context.Context, formats strfmt.Regis
 
 func (m *ClusterStats) contextValidateCloudUsagePerfStats(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.CloudUsagePerfStats != nil {
-
-		if swag.IsZero(m.CloudUsagePerfStats) { // not required
-			return nil
-		}
-
-		if err := m.CloudUsagePerfStats.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("cloudUsagePerfStats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("cloudUsagePerfStats")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -245,63 +208,15 @@ func (m *ClusterStats) contextValidateDataUsageStats(ctx context.Context, format
 
 func (m *ClusterStats) contextValidateLocalUsagePerfStats(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.LocalUsagePerfStats != nil {
-
-		if swag.IsZero(m.LocalUsagePerfStats) { // not required
-			return nil
-		}
-
-		if err := m.LocalUsagePerfStats.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("localUsagePerfStats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("localUsagePerfStats")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ClusterStats) contextValidateLogicalStats(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.LogicalStats != nil {
-
-		if swag.IsZero(m.LogicalStats) { // not required
-			return nil
-		}
-
-		if err := m.LogicalStats.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("logicalStats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("logicalStats")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ClusterStats) contextValidateUsagePerfStats(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.UsagePerfStats != nil {
-
-		if swag.IsZero(m.UsagePerfStats) { // not required
-			return nil
-		}
-
-		if err := m.UsagePerfStats.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("usagePerfStats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("usagePerfStats")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

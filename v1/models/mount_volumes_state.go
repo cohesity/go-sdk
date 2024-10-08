@@ -32,8 +32,12 @@ type MountVolumesState struct {
 	// Specifies the results of mounting each specified volume.
 	MountVolumeResults []*MountVolumeResultDetails `json:"mountVolumeResults"`
 
-	// other error
-	OtherError *MountVolumesStateOtherError `json:"otherError,omitempty"`
+	// Non-mount Error.
+	//
+	// Specifies an error that did not occur during the mount operation.
+	OtherError struct {
+		RequestError
+	} `json:"otherError,omitempty"`
 
 	// Specifies the target Protection Source Id where the volumes will be
 	// mounted.
@@ -96,17 +100,6 @@ func (m *MountVolumesState) validateOtherError(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.OtherError != nil {
-		if err := m.OtherError.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("otherError")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("otherError")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -154,22 +147,6 @@ func (m *MountVolumesState) contextValidateMountVolumeResults(ctx context.Contex
 }
 
 func (m *MountVolumesState) contextValidateOtherError(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.OtherError != nil {
-
-		if swag.IsZero(m.OtherError) { // not required
-			return nil
-		}
-
-		if err := m.OtherError.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("otherError")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("otherError")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

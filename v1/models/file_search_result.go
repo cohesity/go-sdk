@@ -57,8 +57,11 @@ type FileSearchResult struct {
 	// contains the id of the new Inactive Job.
 	JobID *int64 `json:"jobId,omitempty"`
 
-	// job Uid
-	JobUID *FileSearchResultJobUID `json:"jobUid,omitempty"`
+	// Specifies the universal id of the Protection Job that backed up
+	// the object that contains the file or folder.
+	JobUID struct {
+		UniversalID
+	} `json:"jobUid,omitempty"`
 
 	// Specifies the metadata about the OneDrive documents.
 	OneDriveDocumentMetadata *OneDriveDocumentMetadata `json:"oneDriveDocumentMetadata,omitempty"`
@@ -204,17 +207,6 @@ func (m *FileSearchResult) validateFileVersions(formats strfmt.Registry) error {
 func (m *FileSearchResult) validateJobUID(formats strfmt.Registry) error {
 	if swag.IsZero(m.JobUID) { // not required
 		return nil
-	}
-
-	if m.JobUID != nil {
-		if err := m.JobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("jobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("jobUid")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -431,22 +423,6 @@ func (m *FileSearchResult) contextValidateFileVersions(ctx context.Context, form
 }
 
 func (m *FileSearchResult) contextValidateJobUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.JobUID != nil {
-
-		if swag.IsZero(m.JobUID) { // not required
-			return nil
-		}
-
-		if err := m.JobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("jobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("jobUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

@@ -37,8 +37,10 @@ type ProtectionObjectSummary struct {
 	// Returns the list of Protection Jobs with summary Information.
 	ProtectionJobs []*ProtectionRunInstance `json:"protectionJobs"`
 
-	// protection source
-	ProtectionSource *ProtectionObjectSummaryProtectionSource `json:"protectionSource,omitempty"`
+	// Specifies the leaf Protection Source Object such as a VM.
+	ProtectionSource struct {
+		ProtectionSource
+	} `json:"protectionSource,omitempty"`
 
 	// Specifies the id of the RPO policy protecting this object.
 	RpoPolicies []*ProtectionPolicy `json:"rpoPolicies"`
@@ -127,17 +129,6 @@ func (m *ProtectionObjectSummary) validateProtectionJobs(formats strfmt.Registry
 func (m *ProtectionObjectSummary) validateProtectionSource(formats strfmt.Registry) error {
 	if swag.IsZero(m.ProtectionSource) { // not required
 		return nil
-	}
-
-	if m.ProtectionSource != nil {
-		if err := m.ProtectionSource.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("protectionSource")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("protectionSource")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -242,22 +233,6 @@ func (m *ProtectionObjectSummary) contextValidateProtectionJobs(ctx context.Cont
 }
 
 func (m *ProtectionObjectSummary) contextValidateProtectionSource(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.ProtectionSource != nil {
-
-		if swag.IsZero(m.ProtectionSource) { // not required
-			return nil
-		}
-
-		if err := m.ProtectionSource.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("protectionSource")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("protectionSource")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

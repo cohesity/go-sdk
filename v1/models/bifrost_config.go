@@ -50,8 +50,16 @@ type BifrostConfig struct {
 	// DELETING
 	State *string `json:"state,omitempty"`
 
-	// subnet
-	Subnet *BifrostConfigSubnet `json:"subnet,omitempty"`
+	// Subnet.
+	//
+	// Specifies the subnet of the VLAN.
+	// The netmask can be specified by setting netmaskBits or netmaskIp4.
+	// The netmask can only be set using netmaskIp4 if the IP address is
+	// an IPv4 address. It can carry V4 or V6 in case of requests, and carries
+	// V4 in case of response.
+	Subnet struct {
+		BifrostSubnet
+	} `json:"subnet,omitempty"`
 
 	// Specifies the tenant id that this vlan belongs to.
 	TenantID *string `json:"tenantId,omitempty"`
@@ -84,17 +92,6 @@ func (m *BifrostConfig) validateSubnet(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.Subnet != nil {
-		if err := m.Subnet.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("subnet")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("subnet")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -113,22 +110,6 @@ func (m *BifrostConfig) ContextValidate(ctx context.Context, formats strfmt.Regi
 }
 
 func (m *BifrostConfig) contextValidateSubnet(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Subnet != nil {
-
-		if swag.IsZero(m.Subnet) { // not required
-			return nil
-		}
-
-		if err := m.Subnet.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("subnet")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("subnet")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

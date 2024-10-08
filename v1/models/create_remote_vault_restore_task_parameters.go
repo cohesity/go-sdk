@@ -51,9 +51,13 @@ type CreateRemoteVaultRestoreTaskParameters struct {
 	// originally archived from multiple remote Clusters.
 	RestoreObjects []*IndexAndSnapshots `json:"restoreObjects"`
 
-	// search job Uid
+	// Search Job Uid.
+	//
+	// Specifies the unique id of the remote Vault search Job.
 	// Required: true
-	SearchJobUID *CreateRemoteVaultRestoreTaskParametersSearchJobUID `json:"searchJobUid"`
+	SearchJobUID struct {
+		UniversalID
+	} `json:"searchJobUid"`
 
 	// Specifies a name of the restore task.
 	// Required: true
@@ -170,21 +174,6 @@ func (m *CreateRemoteVaultRestoreTaskParameters) validateRestoreObjects(formats 
 
 func (m *CreateRemoteVaultRestoreTaskParameters) validateSearchJobUID(formats strfmt.Registry) error {
 
-	if err := validate.Required("searchJobUid", "body", m.SearchJobUID); err != nil {
-		return err
-	}
-
-	if m.SearchJobUID != nil {
-		if err := m.SearchJobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("searchJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("searchJobUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -250,18 +239,6 @@ func (m *CreateRemoteVaultRestoreTaskParameters) contextValidateRestoreObjects(c
 }
 
 func (m *CreateRemoteVaultRestoreTaskParameters) contextValidateSearchJobUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.SearchJobUID != nil {
-
-		if err := m.SearchJobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("searchJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("searchJobUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

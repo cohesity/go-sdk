@@ -108,8 +108,24 @@ type CloneViewRequest struct {
 	// write to this view if this is set to true.
 	IsReadOnly *bool `json:"isReadOnly,omitempty"`
 
-	// logical quota
-	LogicalQuota *CloneViewRequestLogicalQuota `json:"logicalQuota,omitempty"`
+	// Specifies an optional logical quota limit (in bytes) for the usage allowed
+	// on this View.
+	// (Logical data is when the data is fully hydrated and expanded.)
+	// This limit overrides the limit inherited from the Storage Domain
+	// (View Box) (if set).
+	// If logicalQuota is nil, the limit is inherited from the
+	// Storage Domain (View Box) (if set).
+	// A new write is not allowed if the Storage Domain (View Box) will exceed the
+	// specified quota.
+	// However, it takes time for the Cohesity Cluster to calculate
+	// the usage across Nodes, so the limit may be exceeded by a small amount.
+	// In addition, if the limit is increased or data is removed,
+	// there may be a delay before the Cohesity Cluster allows more data
+	// to be written to the View, as the Cluster is calculating the usage
+	// across Nodes.
+	LogicalQuota struct {
+		QuotaPolicy
+	} `json:"logicalQuota,omitempty"`
 
 	// Array of Netgroups.
 	//
@@ -135,7 +151,7 @@ type CloneViewRequest struct {
 	// global setting.
 	OverrideGlobalWhitelist *bool `json:"overrideGlobalWhitelist,omitempty"`
 
-	// Specifies the supported Protocols for the View.
+	// Deprecated: Specifies the supported Protocols for the View.
 	// 'kAll' enables protocol access to following three views: NFS, SMB and S3.
 	// 'kNFSOnly' enables protocol access to NFS only.
 	// 'kSMBOnly' enables protocol access to SMB only.
@@ -195,6 +211,9 @@ type CloneViewRequest struct {
 
 	// Specifies the pinning config of this view.
 	ViewPinningConfig *ViewPinningConfig `json:"viewPinningConfig,omitempty"`
+
+	// Specifies the supported Protocols for the View.
+	ViewProtocol []*ViewProtocol `json:"viewProtocol"`
 }
 
 // Validate validates this clone view request
@@ -265,6 +284,10 @@ func (m *CloneViewRequest) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateViewProtocol(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -331,17 +354,6 @@ func (m *CloneViewRequest) validateFileLockConfig(formats strfmt.Registry) error
 func (m *CloneViewRequest) validateLogicalQuota(formats strfmt.Registry) error {
 	if swag.IsZero(m.LogicalQuota) { // not required
 		return nil
-	}
-
-	if m.LogicalQuota != nil {
-		if err := m.LogicalQuota.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("logicalQuota")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("logicalQuota")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -657,6 +669,32 @@ func (m *CloneViewRequest) validateViewPinningConfig(formats strfmt.Registry) er
 	return nil
 }
 
+func (m *CloneViewRequest) validateViewProtocol(formats strfmt.Registry) error {
+	if swag.IsZero(m.ViewProtocol) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.ViewProtocol); i++ {
+		if swag.IsZero(m.ViewProtocol[i]) { // not required
+			continue
+		}
+
+		if m.ViewProtocol[i] != nil {
+			if err := m.ViewProtocol[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("viewProtocol" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("viewProtocol" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 // ContextValidate validate this clone view request based on the context it is used
 func (m *CloneViewRequest) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -714,6 +752,10 @@ func (m *CloneViewRequest) ContextValidate(ctx context.Context, formats strfmt.R
 	}
 
 	if err := m.contextValidateViewPinningConfig(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateViewProtocol(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -787,22 +829,6 @@ func (m *CloneViewRequest) contextValidateFileLockConfig(ctx context.Context, fo
 }
 
 func (m *CloneViewRequest) contextValidateLogicalQuota(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.LogicalQuota != nil {
-
-		if swag.IsZero(m.LogicalQuota) { // not required
-			return nil
-		}
-
-		if err := m.LogicalQuota.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("logicalQuota")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("logicalQuota")
-			}
-			return err
-		}
-	}
 
 	return nil
 }
@@ -1024,6 +1050,31 @@ func (m *CloneViewRequest) contextValidateViewPinningConfig(ctx context.Context,
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *CloneViewRequest) contextValidateViewProtocol(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.ViewProtocol); i++ {
+
+		if m.ViewProtocol[i] != nil {
+
+			if swag.IsZero(m.ViewProtocol[i]) { // not required
+				return nil
+			}
+
+			if err := m.ViewProtocol[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("viewProtocol" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("viewProtocol" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

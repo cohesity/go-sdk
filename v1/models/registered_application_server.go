@@ -21,11 +21,22 @@ import (
 // swagger:model RegisteredApplicationServer
 type RegisteredApplicationServer struct {
 
-	// application server
-	ApplicationServer *RegisteredApplicationServerApplicationServer `json:"applicationServer,omitempty"`
+	// Application Server and the subtrees below them.
+	//
+	// Specifies the child subtree used to store additional application-level
+	// Objects.
+	// Different environments use the subtree to store application-level
+	// information. For example for SQL Server, this subtree stores the
+	// SQL Server instances running on a VM.
+	ApplicationServer struct {
+		ProtectionSourceNode
+	} `json:"applicationServer,omitempty"`
 
-	// registered protection source
-	RegisteredProtectionSource *RegisteredApplicationServerRegisteredProtectionSource `json:"registeredProtectionSource,omitempty"`
+	// Specifies the Protection Source like a VM or Physical Server that
+	// registered the Application Server.
+	RegisteredProtectionSource struct {
+		ProtectionSource
+	} `json:"registeredProtectionSource,omitempty"`
 }
 
 // Validate validates this registered application server
@@ -51,34 +62,12 @@ func (m *RegisteredApplicationServer) validateApplicationServer(formats strfmt.R
 		return nil
 	}
 
-	if m.ApplicationServer != nil {
-		if err := m.ApplicationServer.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("applicationServer")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("applicationServer")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *RegisteredApplicationServer) validateRegisteredProtectionSource(formats strfmt.Registry) error {
 	if swag.IsZero(m.RegisteredProtectionSource) { // not required
 		return nil
-	}
-
-	if m.RegisteredProtectionSource != nil {
-		if err := m.RegisteredProtectionSource.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("registeredProtectionSource")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("registeredProtectionSource")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -104,42 +93,10 @@ func (m *RegisteredApplicationServer) ContextValidate(ctx context.Context, forma
 
 func (m *RegisteredApplicationServer) contextValidateApplicationServer(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.ApplicationServer != nil {
-
-		if swag.IsZero(m.ApplicationServer) { // not required
-			return nil
-		}
-
-		if err := m.ApplicationServer.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("applicationServer")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("applicationServer")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *RegisteredApplicationServer) contextValidateRegisteredProtectionSource(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RegisteredProtectionSource != nil {
-
-		if swag.IsZero(m.RegisteredProtectionSource) { // not required
-			return nil
-		}
-
-		if err := m.RegisteredProtectionSource.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("registeredProtectionSource")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("registeredProtectionSource")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

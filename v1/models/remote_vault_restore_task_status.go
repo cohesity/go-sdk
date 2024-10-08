@@ -20,17 +20,42 @@ import (
 // swagger:model RemoteVaultRestoreTaskStatus
 type RemoteVaultRestoreTaskStatus struct {
 
-	// current indexing status
-	CurrentIndexingStatus *RemoteVaultRestoreTaskStatusCurrentIndexingStatus `json:"currentIndexingStatus,omitempty"`
+	// Status of Indexing Restore Task.
+	//
+	// Specifies the status of an indexing task that builds an index from
+	// the Protection Job metadata retrieved from the remote Vault.
+	// The index contains information about Job Runs (Snapshots)
+	// for a Protection Job and is required to restore Snapshots to this
+	// local Cluster.
+	CurrentIndexingStatus struct {
+		RemoteRestoreIndexingStatus
+	} `json:"currentIndexingStatus,omitempty"`
 
-	// current snapshot status
-	CurrentSnapshotStatus *RemoteVaultRestoreTaskStatusCurrentSnapshotStatus `json:"currentSnapshotStatus,omitempty"`
+	// Status of Snapshot Restore Task.
+	//
+	// Specifies the status of the Snapshot restore task.
+	// The Snapshot restore task restores the specified archived Snapshots from
+	// a remote Vault to this Cluster.
+	CurrentSnapshotStatus struct {
+		RemoteRestoreSnapshotStatus
+	} `json:"currentSnapshotStatus,omitempty"`
 
-	// local protection job Uid
-	LocalProtectionJobUID *RemoteVaultRestoreTaskStatusLocalProtectionJobUID `json:"localProtectionJobUid,omitempty"`
+	// Local Protection Job Uid.
+	//
+	// Specifies the globally unique id of the new inactive Protection Job
+	// created on the local Cluster as part of the restoration of archived
+	// data.
+	LocalProtectionJobUID struct {
+		UniversalID
+	} `json:"localProtectionJobUid,omitempty"`
 
-	// parent job Uid
-	ParentJobUID *RemoteVaultRestoreTaskStatusParentJobUID `json:"parentJobUid,omitempty"`
+	// Parent Job Uid.
+	//
+	// Specifies the unique id of the parent Job/task that spawned the
+	// indexing and Snapshot restore tasks.
+	ParentJobUID struct {
+		UniversalID
+	} `json:"parentJobUid,omitempty"`
 
 	// Remote Protection Job Information.
 	//
@@ -38,8 +63,12 @@ type RemoteVaultRestoreTaskStatus struct {
 	// to the remote Vault (External Target).
 	RemoteProtectionJobInformation *RemoteProtectionJobInformation `json:"remoteProtectionJobInformation,omitempty"`
 
-	// search job Uid
-	SearchJobUID *RemoteVaultRestoreTaskStatusSearchJobUID `json:"searchJobUid,omitempty"`
+	// Search Job Uid.
+	//
+	// Specifies the unique id of the search Job that searched the remote Vault.
+	SearchJobUID struct {
+		UniversalID
+	} `json:"searchJobUid,omitempty"`
 
 	// Vault Id
 	//
@@ -91,34 +120,12 @@ func (m *RemoteVaultRestoreTaskStatus) validateCurrentIndexingStatus(formats str
 		return nil
 	}
 
-	if m.CurrentIndexingStatus != nil {
-		if err := m.CurrentIndexingStatus.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("currentIndexingStatus")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("currentIndexingStatus")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *RemoteVaultRestoreTaskStatus) validateCurrentSnapshotStatus(formats strfmt.Registry) error {
 	if swag.IsZero(m.CurrentSnapshotStatus) { // not required
 		return nil
-	}
-
-	if m.CurrentSnapshotStatus != nil {
-		if err := m.CurrentSnapshotStatus.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("currentSnapshotStatus")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("currentSnapshotStatus")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -129,34 +136,12 @@ func (m *RemoteVaultRestoreTaskStatus) validateLocalProtectionJobUID(formats str
 		return nil
 	}
 
-	if m.LocalProtectionJobUID != nil {
-		if err := m.LocalProtectionJobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("localProtectionJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("localProtectionJobUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *RemoteVaultRestoreTaskStatus) validateParentJobUID(formats strfmt.Registry) error {
 	if swag.IsZero(m.ParentJobUID) { // not required
 		return nil
-	}
-
-	if m.ParentJobUID != nil {
-		if err := m.ParentJobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("parentJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("parentJobUid")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -184,17 +169,6 @@ func (m *RemoteVaultRestoreTaskStatus) validateRemoteProtectionJobInformation(fo
 func (m *RemoteVaultRestoreTaskStatus) validateSearchJobUID(formats strfmt.Registry) error {
 	if swag.IsZero(m.SearchJobUID) { // not required
 		return nil
-	}
-
-	if m.SearchJobUID != nil {
-		if err := m.SearchJobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("searchJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("searchJobUid")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -236,84 +210,20 @@ func (m *RemoteVaultRestoreTaskStatus) ContextValidate(ctx context.Context, form
 
 func (m *RemoteVaultRestoreTaskStatus) contextValidateCurrentIndexingStatus(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.CurrentIndexingStatus != nil {
-
-		if swag.IsZero(m.CurrentIndexingStatus) { // not required
-			return nil
-		}
-
-		if err := m.CurrentIndexingStatus.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("currentIndexingStatus")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("currentIndexingStatus")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *RemoteVaultRestoreTaskStatus) contextValidateCurrentSnapshotStatus(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.CurrentSnapshotStatus != nil {
-
-		if swag.IsZero(m.CurrentSnapshotStatus) { // not required
-			return nil
-		}
-
-		if err := m.CurrentSnapshotStatus.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("currentSnapshotStatus")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("currentSnapshotStatus")
-			}
-			return err
-		}
-	}
 
 	return nil
 }
 
 func (m *RemoteVaultRestoreTaskStatus) contextValidateLocalProtectionJobUID(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.LocalProtectionJobUID != nil {
-
-		if swag.IsZero(m.LocalProtectionJobUID) { // not required
-			return nil
-		}
-
-		if err := m.LocalProtectionJobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("localProtectionJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("localProtectionJobUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *RemoteVaultRestoreTaskStatus) contextValidateParentJobUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.ParentJobUID != nil {
-
-		if swag.IsZero(m.ParentJobUID) { // not required
-			return nil
-		}
-
-		if err := m.ParentJobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("parentJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("parentJobUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }
@@ -340,22 +250,6 @@ func (m *RemoteVaultRestoreTaskStatus) contextValidateRemoteProtectionJobInforma
 }
 
 func (m *RemoteVaultRestoreTaskStatus) contextValidateSearchJobUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.SearchJobUID != nil {
-
-		if swag.IsZero(m.SearchJobUID) { // not required
-			return nil
-		}
-
-		if err := m.SearchJobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("searchJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("searchJobUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

@@ -44,14 +44,23 @@ type ProtectionSourceTreeInfo struct {
 	// v7.1)
 	MaintenanceModeConfig *MaintenanceModeConfigProto `json:"maintenanceModeConfig,omitempty"`
 
-	// registration info
-	RegistrationInfo *ProtectionSourceTreeInfoRegistrationInfo `json:"registrationInfo,omitempty"`
+	// Specifies registration information for a root node in a Protection
+	// Sources tree. A root node represents a registered Source on the
+	// Cohesity Cluster, such as a vCenter Server.
+	RegistrationInfo struct {
+		RegisteredSourceInfo
+	} `json:"registrationInfo,omitempty"`
 
-	// root node
-	RootNode *ProtectionSourceTreeInfoRootNode `json:"rootNode,omitempty"`
+	// Specifies the Protection Source for the root node of the Protection
+	// Source tree.
+	RootNode struct {
+		ProtectionSource
+	} `json:"rootNode,omitempty"`
 
-	// stats
-	Stats *ProtectionSourceTreeInfoStats `json:"stats,omitempty"`
+	// Specifies the stats of protection for a Protection Source Tree.
+	Stats struct {
+		ProtectionSummary
+	} `json:"stats,omitempty"`
 
 	// Specifies the breakdown of the stats of protection by environment.
 	// overrideDescription: true
@@ -171,17 +180,6 @@ func (m *ProtectionSourceTreeInfo) validateRegistrationInfo(formats strfmt.Regis
 		return nil
 	}
 
-	if m.RegistrationInfo != nil {
-		if err := m.RegistrationInfo.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("registrationInfo")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("registrationInfo")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -190,34 +188,12 @@ func (m *ProtectionSourceTreeInfo) validateRootNode(formats strfmt.Registry) err
 		return nil
 	}
 
-	if m.RootNode != nil {
-		if err := m.RootNode.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("rootNode")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("rootNode")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ProtectionSourceTreeInfo) validateStats(formats strfmt.Registry) error {
 	if swag.IsZero(m.Stats) { // not required
 		return nil
-	}
-
-	if m.Stats != nil {
-		if err := m.Stats.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("stats")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -356,63 +332,15 @@ func (m *ProtectionSourceTreeInfo) contextValidateMaintenanceModeConfig(ctx cont
 
 func (m *ProtectionSourceTreeInfo) contextValidateRegistrationInfo(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.RegistrationInfo != nil {
-
-		if swag.IsZero(m.RegistrationInfo) { // not required
-			return nil
-		}
-
-		if err := m.RegistrationInfo.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("registrationInfo")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("registrationInfo")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ProtectionSourceTreeInfo) contextValidateRootNode(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.RootNode != nil {
-
-		if swag.IsZero(m.RootNode) { // not required
-			return nil
-		}
-
-		if err := m.RootNode.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("rootNode")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("rootNode")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ProtectionSourceTreeInfo) contextValidateStats(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Stats != nil {
-
-		if swag.IsZero(m.Stats) { // not required
-			return nil
-		}
-
-		if err := m.Stats.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("stats")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

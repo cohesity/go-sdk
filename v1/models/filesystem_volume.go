@@ -41,8 +41,13 @@ type FilesystemVolume struct {
 	// If true, this is a supported filesystem volume type.
 	IsSupported *bool `json:"isSupported,omitempty"`
 
-	// logical volume
-	LogicalVolume *FilesystemVolumeLogicalVolume `json:"logicalVolume,omitempty"`
+	// Logical Volume.
+	//
+	// Specify attributes for a kLMV (Linux) or kLDM (Windows) filesystem.
+	// This field is set only for kLVM and kLDM volume types.
+	LogicalVolume struct {
+		LogicalVolume
+	} `json:"logicalVolume,omitempty"`
 
 	// Specifies the type of logical volume such as kSimpleVolume, kLVM or kLDM.
 	// 'kSimpleVolume' indicates a simple volume. Data can be used by just
@@ -114,17 +119,6 @@ func (m *FilesystemVolume) validateDisks(formats strfmt.Registry) error {
 func (m *FilesystemVolume) validateLogicalVolume(formats strfmt.Registry) error {
 	if swag.IsZero(m.LogicalVolume) { // not required
 		return nil
-	}
-
-	if m.LogicalVolume != nil {
-		if err := m.LogicalVolume.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("logicalVolume")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("logicalVolume")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -219,22 +213,6 @@ func (m *FilesystemVolume) contextValidateDisks(ctx context.Context, formats str
 }
 
 func (m *FilesystemVolume) contextValidateLogicalVolume(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.LogicalVolume != nil {
-
-		if swag.IsZero(m.LogicalVolume) { // not required
-			return nil
-		}
-
-		if err := m.LogicalVolume.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("logicalVolume")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("logicalVolume")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

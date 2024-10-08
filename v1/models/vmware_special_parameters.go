@@ -30,8 +30,17 @@ type VmwareSpecialParameters struct {
 	// are excluded from all Protection Sources in the Protection Job.
 	ExcludedDisks []*DiskUnit `json:"excludedDisks"`
 
-	// vm credentials
-	VMCredentials *VmwareSpecialParametersVMCredentials `json:"vmCredentials,omitempty"`
+	// VM Credentials.
+	//
+	// Specifies the administrator credentials to log in to the
+	// guest Windows system of a VM that hosts the Microsoft Exchange Server.
+	// If truncateExchangeLog is set to true and the specified source
+	// is a VM, administrator credentials to log in to the guest Windows system
+	// of the VM must be provided to truncate the logs.
+	// This field is only applicable to Sources in the kVMware environment.
+	VMCredentials struct {
+		Credentials
+	} `json:"vmCredentials,omitempty"`
 }
 
 // Validate validates this vmware special parameters
@@ -106,17 +115,6 @@ func (m *VmwareSpecialParameters) validateVMCredentials(formats strfmt.Registry)
 		return nil
 	}
 
-	if m.VMCredentials != nil {
-		if err := m.VMCredentials.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("vmCredentials")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("vmCredentials")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -189,22 +187,6 @@ func (m *VmwareSpecialParameters) contextValidateExcludedDisks(ctx context.Conte
 }
 
 func (m *VmwareSpecialParameters) contextValidateVMCredentials(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.VMCredentials != nil {
-
-		if swag.IsZero(m.VMCredentials) { // not required
-			return nil
-		}
-
-		if err := m.VMCredentials.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("vmCredentials")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("vmCredentials")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

@@ -35,6 +35,9 @@ type Cluster struct {
 	// Specifies the number of racks in cluster with at least one rack assigned.
 	AssignedRacksCount *int32 `json:"assignedRacksCount,omitempty"`
 
+	// To attempt agent connection on port 21213 first
+	AttemptAgentPortsUpgrade *bool `json:"attemptAgentPortsUpgrade,omitempty"`
+
 	// Information about storage available for metadata
 	AvailableMetadataSpace *int64 `json:"availableMetadataSpace,omitempty"`
 
@@ -147,8 +150,12 @@ type Cluster struct {
 	// (30 days).
 	EncryptionKeyRotationPeriodSecs *int64 `json:"encryptionKeyRotationPeriodSecs,omitempty"`
 
-	// eula config
-	EulaConfig *ClusterEulaConfig `json:"eulaConfig,omitempty"`
+	// EULA Acceptance Information.
+	//
+	// Specifies the End User License Agreement (EULA) acceptance information.
+	EulaConfig struct {
+		EulaConfig
+	} `json:"eulaConfig,omitempty"`
 
 	// Specifies the level which 'MetadataFaultToleranceFactor' applies to.
 	// 'kNode' indicates 'MetadataFaultToleranceFactor' applies to Node level.
@@ -215,8 +222,12 @@ type Cluster struct {
 	// Specifies the language and locale for this Cohesity Cluster.
 	LanguageLocale *string `json:"languageLocale,omitempty"`
 
-	// license state
-	LicenseState *ClusterLicenseState `json:"licenseState,omitempty"`
+	// License State Information.
+	//
+	// Specifies the Licensing State information.
+	LicenseState struct {
+		LicenseState
+	} `json:"licenseState,omitempty"`
 
 	// Domain name for SMB local authentication.
 	LocalAuthDomainName *string `json:"localAuthDomainName,omitempty"`
@@ -335,6 +346,9 @@ type Cluster struct {
 
 	// Error string to capture why the upgrade failed.
 	UpgradeFailureErrorString *string `json:"upgradeFailureErrorString,omitempty"`
+
+	// To use default ports 50051 & 21213
+	UseDefaultAgentPorts *bool `json:"useDefaultAgentPorts,omitempty"`
 
 	// Specifies whether to enable Heimdall which tells whether services should
 	// use temporary fleet instances to mount disks by talking to Heimdall.
@@ -720,17 +734,6 @@ func (m *Cluster) validateEulaConfig(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.EulaConfig != nil {
-		if err := m.EulaConfig.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("eulaConfig")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("eulaConfig")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -820,17 +823,6 @@ func (m *Cluster) validateHardwareInfo(formats strfmt.Registry) error {
 func (m *Cluster) validateLicenseState(formats strfmt.Registry) error {
 	if swag.IsZero(m.LicenseState) { // not required
 		return nil
-	}
-
-	if m.LicenseState != nil {
-		if err := m.LicenseState.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("licenseState")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("licenseState")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -1124,22 +1116,6 @@ func (m *Cluster) contextValidateDiskCountByTier(ctx context.Context, formats st
 
 func (m *Cluster) contextValidateEulaConfig(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.EulaConfig != nil {
-
-		if swag.IsZero(m.EulaConfig) { // not required
-			return nil
-		}
-
-		if err := m.EulaConfig.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("eulaConfig")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("eulaConfig")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -1186,22 +1162,6 @@ func (m *Cluster) contextValidateHardwareInfo(ctx context.Context, formats strfm
 }
 
 func (m *Cluster) contextValidateLicenseState(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.LicenseState != nil {
-
-		if swag.IsZero(m.LicenseState) { // not required
-			return nil
-		}
-
-		if err := m.LicenseState.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("licenseState")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("licenseState")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

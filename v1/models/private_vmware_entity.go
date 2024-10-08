@@ -80,6 +80,10 @@ type PrivateVmwareEntity struct {
 	// kVirtualMachine.
 	HostType *int32 `json:"hostType,omitempty"`
 
+	// This field indicates the path to the entity in vSphere hierarchy. This is
+	// curently populated only for Datacenter entities.
+	InventoryPath *string `json:"inventoryPath,omitempty"`
+
 	// This field can be used to capture IP Addresses for entities that have it.
 	// The table below captures the type if information published by an entity
 	// type using this field.

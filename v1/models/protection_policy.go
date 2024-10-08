@@ -53,6 +53,12 @@ type ProtectionPolicy struct {
 	// deleted.
 	DatalockConfig *DataLockConfig `json:"datalockConfig,omitempty"`
 
+	// Specifies WORM retention type for the CDP snapshots. When a WORM retention
+	// type is specified, the snapshots of the Protection Groups using this
+	// policy will be kept for the last N days as specified in the duration of
+	// the datalock. During that time, the snapshots cannot be deleted.
+	DatalockConfigCdp *DataLockConfig `json:"datalockConfigCdp,omitempty"`
+
 	// Specifies WORM retention type for the log snapshots. When a WORM retention
 	// type is specified, the snapshots of the Protection Groups using this
 	// policy will be kept for the last N days as specified in the duration of
@@ -83,14 +89,26 @@ type ProtectionPolicy struct {
 	// the maximum of all retention policies that are applicable to it.
 	ExtendedRetentionPolicies []*ExtendedRetentionPolicy `json:"extendedRetentionPolicies"`
 
-	// full scheduling policy
-	FullSchedulingPolicy *ProtectionPolicyFullSchedulingPolicy `json:"fullSchedulingPolicy,omitempty"`
+	// Full (no CBT) Job Policy.
+	//
+	// Specifies the Full (no CBT) backup schedule of a Protection Job and
+	// how long Snapshots captured by this schedule are retained on the
+	// Cohesity Cluster.
+	FullSchedulingPolicy struct {
+		SchedulingPolicy
+	} `json:"fullSchedulingPolicy,omitempty"`
 
 	// Specifies a unique Policy id assigned by the Cohesity Cluster.
 	ID *string `json:"id,omitempty"`
 
-	// incremental scheduling policy
-	IncrementalSchedulingPolicy *ProtectionPolicyIncrementalSchedulingPolicy `json:"incrementalSchedulingPolicy,omitempty"`
+	// CBT-based Job Policy.
+	//
+	// Specifies the CBT-based backup schedule of a Protection Job and
+	// how long Snapshots captured by this schedule are
+	// retained on the Cohesity Cluster.
+	IncrementalSchedulingPolicy struct {
+		SchedulingPolicy
+	} `json:"incrementalSchedulingPolicy,omitempty"`
 
 	// Specifies if the policy is associated with cascaded replication.
 	IsCascadedReplicationPolicy *bool `json:"isCascadedReplicationPolicy,omitempty"`
@@ -224,6 +242,10 @@ func (m *ProtectionPolicy) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateDatalockConfig(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDatalockConfigCdp(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -401,6 +423,25 @@ func (m *ProtectionPolicy) validateDatalockConfig(formats strfmt.Registry) error
 	return nil
 }
 
+func (m *ProtectionPolicy) validateDatalockConfigCdp(formats strfmt.Registry) error {
+	if swag.IsZero(m.DatalockConfigCdp) { // not required
+		return nil
+	}
+
+	if m.DatalockConfigCdp != nil {
+		if err := m.DatalockConfigCdp.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("datalockConfigCdp")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("datalockConfigCdp")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *ProtectionPolicy) validateDatalockConfigLog(formats strfmt.Registry) error {
 	if swag.IsZero(m.DatalockConfigLog) { // not required
 		return nil
@@ -470,34 +511,12 @@ func (m *ProtectionPolicy) validateFullSchedulingPolicy(formats strfmt.Registry)
 		return nil
 	}
 
-	if m.FullSchedulingPolicy != nil {
-		if err := m.FullSchedulingPolicy.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("fullSchedulingPolicy")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("fullSchedulingPolicy")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ProtectionPolicy) validateIncrementalSchedulingPolicy(formats strfmt.Registry) error {
 	if swag.IsZero(m.IncrementalSchedulingPolicy) { // not required
 		return nil
-	}
-
-	if m.IncrementalSchedulingPolicy != nil {
-		if err := m.IncrementalSchedulingPolicy.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("incrementalSchedulingPolicy")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("incrementalSchedulingPolicy")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -742,6 +761,10 @@ func (m *ProtectionPolicy) ContextValidate(ctx context.Context, formats strfmt.R
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateDatalockConfigCdp(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateDatalockConfigLog(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -909,6 +932,27 @@ func (m *ProtectionPolicy) contextValidateDatalockConfig(ctx context.Context, fo
 	return nil
 }
 
+func (m *ProtectionPolicy) contextValidateDatalockConfigCdp(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.DatalockConfigCdp != nil {
+
+		if swag.IsZero(m.DatalockConfigCdp) { // not required
+			return nil
+		}
+
+		if err := m.DatalockConfigCdp.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("datalockConfigCdp")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("datalockConfigCdp")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *ProtectionPolicy) contextValidateDatalockConfigLog(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.DatalockConfigLog != nil {
@@ -978,42 +1022,10 @@ func (m *ProtectionPolicy) contextValidateExtendedRetentionPolicies(ctx context.
 
 func (m *ProtectionPolicy) contextValidateFullSchedulingPolicy(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.FullSchedulingPolicy != nil {
-
-		if swag.IsZero(m.FullSchedulingPolicy) { // not required
-			return nil
-		}
-
-		if err := m.FullSchedulingPolicy.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("fullSchedulingPolicy")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("fullSchedulingPolicy")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ProtectionPolicy) contextValidateIncrementalSchedulingPolicy(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.IncrementalSchedulingPolicy != nil {
-
-		if swag.IsZero(m.IncrementalSchedulingPolicy) { // not required
-			return nil
-		}
-
-		if err := m.IncrementalSchedulingPolicy.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("incrementalSchedulingPolicy")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("incrementalSchedulingPolicy")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

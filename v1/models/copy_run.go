@@ -74,8 +74,10 @@ type CopyRun struct {
 	// Remote Cohesity Cluster.
 	Target *SnapshotTargetSettings `json:"target,omitempty"`
 
-	// task Uid
-	TaskUID *CopyRunTaskUID `json:"taskUid,omitempty"`
+	// Specifies a globally unique id of the copy task.
+	TaskUID struct {
+		UniversalID
+	} `json:"taskUid,omitempty"`
 
 	// Specifies a message to the user if any manual intervention is needed to
 	// make forward progress for the archival task. This message is mainly
@@ -303,17 +305,6 @@ func (m *CopyRun) validateTaskUID(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.TaskUID != nil {
-		if err := m.TaskUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("taskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("taskUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -465,22 +456,6 @@ func (m *CopyRun) contextValidateTarget(ctx context.Context, formats strfmt.Regi
 }
 
 func (m *CopyRun) contextValidateTaskUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.TaskUID != nil {
-
-		if swag.IsZero(m.TaskUID) { // not required
-			return nil
-		}
-
-		if err := m.TaskUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("taskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("taskUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

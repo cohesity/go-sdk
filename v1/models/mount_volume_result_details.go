@@ -21,8 +21,11 @@ import (
 // swagger:model MountVolumeResultDetails
 type MountVolumeResultDetails struct {
 
-	// mount error
-	MountError *MountVolumeResultDetailsMountError `json:"mountError,omitempty"`
+	// Specifies the cause of the mount failure if the mounting of a
+	// volume failed.
+	MountError struct {
+		RequestError
+	} `json:"mountError,omitempty"`
 
 	// Specifies the mount point where the volume is mounted.
 	// NOTE: This field may not be populated for VM environments if the
@@ -52,17 +55,6 @@ func (m *MountVolumeResultDetails) validateMountError(formats strfmt.Registry) e
 		return nil
 	}
 
-	if m.MountError != nil {
-		if err := m.MountError.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("mountError")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("mountError")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -81,22 +73,6 @@ func (m *MountVolumeResultDetails) ContextValidate(ctx context.Context, formats 
 }
 
 func (m *MountVolumeResultDetails) contextValidateMountError(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.MountError != nil {
-
-		if swag.IsZero(m.MountError) { // not required
-			return nil
-		}
-
-		if err := m.MountError.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("mountError")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("mountError")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

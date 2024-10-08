@@ -35,6 +35,10 @@ type TenantMigrationAction struct {
 	// Retry count for the action. If an action needs to be retried, then clients will increment action_incarnation_id and can send the same request again
 	ActionIncarnationID *int32 `json:"actionIncarnationId,omitempty"`
 
+	// Specifies the target on which the action is performed.
+	// Enum: ["kNone","kSource","kDestination"]
+	Target *string `json:"target,omitempty"`
+
 	// Specifies the cluster service on which this action needs to be performed.
 	// Enum: ["kMagneto","kYoda","kIcebox"]
 	Service *string `json:"service,omitempty"`
@@ -52,6 +56,10 @@ func (m *TenantMigrationAction) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateAction(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTarget(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -153,6 +161,51 @@ func (m *TenantMigrationAction) validateAction(formats strfmt.Registry) error {
 
 	// value enum
 	if err := m.validateActionEnum("action", "body", *m.Action); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var tenantMigrationActionTypeTargetPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["kNone","kSource","kDestination"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		tenantMigrationActionTypeTargetPropEnum = append(tenantMigrationActionTypeTargetPropEnum, v)
+	}
+}
+
+const (
+
+	// TenantMigrationActionTargetKNone captures enum value "kNone"
+	TenantMigrationActionTargetKNone string = "kNone"
+
+	// TenantMigrationActionTargetKSource captures enum value "kSource"
+	TenantMigrationActionTargetKSource string = "kSource"
+
+	// TenantMigrationActionTargetKDestination captures enum value "kDestination"
+	TenantMigrationActionTargetKDestination string = "kDestination"
+)
+
+// prop value enum
+func (m *TenantMigrationAction) validateTargetEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, tenantMigrationActionTypeTargetPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *TenantMigrationAction) validateTarget(formats strfmt.Registry) error {
+	if swag.IsZero(m.Target) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateTargetEnum("target", "body", *m.Target); err != nil {
 		return err
 	}
 

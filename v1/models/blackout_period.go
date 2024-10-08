@@ -37,11 +37,19 @@ type BlackoutPeriod struct {
 	// Enum: ["kSunday","kMonday","kTuesday","kWednesday","kThursday","kFriday","kSaturday"]
 	Day *string `json:"day,omitempty"`
 
-	// end time
-	EndTime *BlackoutPeriodEndTime `json:"endTime,omitempty"`
+	// QuietTime End Time.
+	//
+	// Specifies the end time of the QuietTime time range.
+	EndTime struct {
+		TimeOfDay
+	} `json:"endTime,omitempty"`
 
-	// start time
-	StartTime *BlackoutPeriodStartTime `json:"startTime,omitempty"`
+	// QuietTime Start Time.
+	//
+	// Specifies the start time of the QuietTime time range.
+	StartTime struct {
+		TimeOfDay
+	} `json:"startTime,omitempty"`
 }
 
 // Validate validates this blackout period
@@ -128,34 +136,12 @@ func (m *BlackoutPeriod) validateEndTime(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.EndTime != nil {
-		if err := m.EndTime.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("endTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("endTime")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *BlackoutPeriod) validateStartTime(formats strfmt.Registry) error {
 	if swag.IsZero(m.StartTime) { // not required
 		return nil
-	}
-
-	if m.StartTime != nil {
-		if err := m.StartTime.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("startTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("startTime")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -181,42 +167,10 @@ func (m *BlackoutPeriod) ContextValidate(ctx context.Context, formats strfmt.Reg
 
 func (m *BlackoutPeriod) contextValidateEndTime(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.EndTime != nil {
-
-		if swag.IsZero(m.EndTime) { // not required
-			return nil
-		}
-
-		if err := m.EndTime.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("endTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("endTime")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *BlackoutPeriod) contextValidateStartTime(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.StartTime != nil {
-
-		if swag.IsZero(m.StartTime) { // not required
-			return nil
-		}
-
-		if err := m.StartTime.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("startTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("startTime")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

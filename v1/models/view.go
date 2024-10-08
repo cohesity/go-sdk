@@ -138,8 +138,24 @@ type View struct {
 	// Specifies if a view contains migrated data.
 	IsTargetForMigratedData *bool `json:"isTargetForMigratedData,omitempty"`
 
-	// logical quota
-	LogicalQuota *ViewLogicalQuota `json:"logicalQuota,omitempty"`
+	// Specifies an optional logical quota limit (in bytes) for the usage allowed
+	// on this View.
+	// (Logical data is when the data is fully hydrated and expanded.)
+	// This limit overrides the limit inherited from the Storage Domain
+	// (View Box) (if set).
+	// If logicalQuota is nil, the limit is inherited from the
+	// Storage Domain (View Box) (if set).
+	// A new write is not allowed if the Storage Domain (View Box) will exceed the
+	// specified quota.
+	// However, it takes time for the Cohesity Cluster to calculate
+	// the usage across Nodes, so the limit may be exceeded by a small amount.
+	// In addition, if the limit is increased or data is removed,
+	// there may be a delay before the Cohesity Cluster allows more data
+	// to be written to the View, as the Cluster is calculating the usage
+	// across Nodes.
+	LogicalQuota struct {
+		QuotaPolicy
+	} `json:"logicalQuota,omitempty"`
 
 	// LogicalUsageBytes is the logical usage in bytes for the view.
 	LogicalUsageBytes *int64 `json:"logicalUsageBytes,omitempty"`
@@ -177,7 +193,7 @@ type View struct {
 	// Specifies the Sid of the view owner.
 	OwnerSid *string `json:"ownerSid,omitempty"`
 
-	// Specifies the supported Protocols for the View.
+	// Deprecated: Specifies the supported Protocols for the View.
 	// 'kAll' enables protocol access to following three views: NFS, SMB and S3.
 	// 'kNFSOnly' enables protocol access to NFS only.
 	// 'kSMBOnly' enables protocol access to SMB only.
@@ -274,6 +290,9 @@ type View struct {
 
 	// Specifies information about the Protection Jobs protecting this View.
 	ViewProtection *ViewProtection `json:"viewProtection,omitempty"`
+
+	// Specifies the supported Protocols for the View.
+	ViewProtocol []*ViewProtocol `json:"viewProtocol"`
 }
 
 // Validate validates this view
@@ -361,6 +380,10 @@ func (m *View) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateViewProtection(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateViewProtocol(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -475,17 +498,6 @@ func (m *View) validateIntent(formats strfmt.Registry) error {
 func (m *View) validateLogicalQuota(formats strfmt.Registry) error {
 	if swag.IsZero(m.LogicalQuota) { // not required
 		return nil
-	}
-
-	if m.LogicalQuota != nil {
-		if err := m.LogicalQuota.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("logicalQuota")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("logicalQuota")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -890,6 +902,32 @@ func (m *View) validateViewProtection(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *View) validateViewProtocol(formats strfmt.Registry) error {
+	if swag.IsZero(m.ViewProtocol) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.ViewProtocol); i++ {
+		if swag.IsZero(m.ViewProtocol[i]) { // not required
+			continue
+		}
+
+		if m.ViewProtocol[i] != nil {
+			if err := m.ViewProtocol[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("viewProtocol" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("viewProtocol" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 // ContextValidate validate this view based on the context it is used
 func (m *View) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -963,6 +1001,10 @@ func (m *View) ContextValidate(ctx context.Context, formats strfmt.Registry) err
 	}
 
 	if err := m.contextValidateViewProtection(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateViewProtocol(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1082,22 +1124,6 @@ func (m *View) contextValidateIntent(ctx context.Context, formats strfmt.Registr
 }
 
 func (m *View) contextValidateLogicalQuota(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.LogicalQuota != nil {
-
-		if swag.IsZero(m.LogicalQuota) { // not required
-			return nil
-		}
-
-		if err := m.LogicalQuota.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("logicalQuota")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("logicalQuota")
-			}
-			return err
-		}
-	}
 
 	return nil
 }
@@ -1361,6 +1387,31 @@ func (m *View) contextValidateViewProtection(ctx context.Context, formats strfmt
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *View) contextValidateViewProtocol(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.ViewProtocol); i++ {
+
+		if m.ViewProtocol[i] != nil {
+
+			if swag.IsZero(m.ViewProtocol[i]) { // not required
+				return nil
+			}
+
+			if err := m.ViewProtocol[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("viewProtocol" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("viewProtocol" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

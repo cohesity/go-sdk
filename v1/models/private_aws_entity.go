@@ -79,6 +79,9 @@ type PrivateAwsEntity struct {
 	// S3 bucket specific info.
 	S3EntityInfo *PrivateS3ProtoEntity `json:"s3EntityInfo,omitempty"`
 
+	// Params required for s3 backups for the registered entity.
+	S3ProtectionParams *PrivateS3ProtectionParams `json:"s3ProtectionParams,omitempty"`
+
 	// Optional list of tag attributes associated with this entity.
 	TagAttributesVec []*TagAttributes `json:"tagAttributesVec"`
 
@@ -126,6 +129,10 @@ func (m *PrivateAwsEntity) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateS3EntityInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateS3ProtectionParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -295,6 +302,25 @@ func (m *PrivateAwsEntity) validateS3EntityInfo(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *PrivateAwsEntity) validateS3ProtectionParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.S3ProtectionParams) { // not required
+		return nil
+	}
+
+	if m.S3ProtectionParams != nil {
+		if err := m.S3ProtectionParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("s3ProtectionParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("s3ProtectionParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *PrivateAwsEntity) validateTagAttributesVec(formats strfmt.Registry) error {
 	if swag.IsZero(m.TagAttributesVec) { // not required
 		return nil
@@ -380,6 +406,10 @@ func (m *PrivateAwsEntity) ContextValidate(ctx context.Context, formats strfmt.R
 	}
 
 	if err := m.contextValidateS3EntityInfo(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateS3ProtectionParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -557,6 +587,27 @@ func (m *PrivateAwsEntity) contextValidateS3EntityInfo(ctx context.Context, form
 				return ve.ValidateName("s3EntityInfo")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("s3EntityInfo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *PrivateAwsEntity) contextValidateS3ProtectionParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.S3ProtectionParams != nil {
+
+		if swag.IsZero(m.S3ProtectionParams) { // not required
+			return nil
+		}
+
+		if err := m.S3ProtectionParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("s3ProtectionParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("s3ProtectionParams")
 			}
 			return err
 		}

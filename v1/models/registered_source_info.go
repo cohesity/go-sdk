@@ -167,8 +167,13 @@ type RegisteredSourceInfo struct {
 	// the MongoDB source.
 	MongodbParams *MongoDBConnectParams `json:"mongodbParams,omitempty"`
 
-	// nas mount credentials
-	NasMountCredentials *RegisteredSourceInfoNasMountCredentials `json:"nasMountCredentials,omitempty"`
+	// NAS Server Credentials.
+	//
+	// Specifies the credentials required to mount directories on the NetApp
+	// server if given.
+	NasMountCredentials struct {
+		NasMountCredentialParams
+	} `json:"nasMountCredentials,omitempty"`
 
 	// Contains all the additional params specified by the user while registering
 	// the Office 365 source.
@@ -605,17 +610,6 @@ func (m *RegisteredSourceInfo) validateMongodbParams(formats strfmt.Registry) er
 func (m *RegisteredSourceInfo) validateNasMountCredentials(formats strfmt.Registry) error {
 	if swag.IsZero(m.NasMountCredentials) { // not required
 		return nil
-	}
-
-	if m.NasMountCredentials != nil {
-		if err := m.NasMountCredentials.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("nasMountCredentials")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("nasMountCredentials")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -1124,22 +1118,6 @@ func (m *RegisteredSourceInfo) contextValidateMongodbParams(ctx context.Context,
 }
 
 func (m *RegisteredSourceInfo) contextValidateNasMountCredentials(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.NasMountCredentials != nil {
-
-		if swag.IsZero(m.NasMountCredentials) { // not required
-			return nil
-		}
-
-		if err := m.NasMountCredentials.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("nasMountCredentials")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("nasMountCredentials")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

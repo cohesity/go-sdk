@@ -86,8 +86,14 @@ type RemoteProtectionJobRunInformation struct {
 	// Specifies the name of the Protection Job on the original Cluster.
 	JobName *string `json:"jobName,omitempty"`
 
-	// job Uid
-	JobUID *RemoteProtectionJobRunInformationJobUID `json:"jobUid,omitempty"`
+	// Protection Job Uid.
+	//
+	// Specifies the globally unique id of the original Protection Job
+	// that archived the data to the Vault. This id is assigned by the
+	// original Cluster that archived the data.
+	JobUID struct {
+		UniversalID
+	} `json:"jobUid,omitempty"`
 
 	// Array of Protection Job Run Details.
 	//
@@ -300,17 +306,6 @@ func (m *RemoteProtectionJobRunInformation) validateJobUID(formats strfmt.Regist
 		return nil
 	}
 
-	if m.JobUID != nil {
-		if err := m.JobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("jobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("jobUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -359,22 +354,6 @@ func (m *RemoteProtectionJobRunInformation) ContextValidate(ctx context.Context,
 }
 
 func (m *RemoteProtectionJobRunInformation) contextValidateJobUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.JobUID != nil {
-
-		if swag.IsZero(m.JobUID) { // not required
-			return nil
-		}
-
-		if err := m.JobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("jobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("jobUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

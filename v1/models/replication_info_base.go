@@ -96,6 +96,9 @@ type ReplicationInfoBase struct {
 
 	// The name of the view that is being replicated.
 	ViewName *string `json:"viewName,omitempty"`
+
+	// Field to maintain the VMware adapter specific Rx cluster capabilities.
+	VmwareRxClusterCapability *VMwareRxClusterCapability `json:"vmwareRxClusterCapability,omitempty"`
 }
 
 // Validate validates this replication info base
@@ -115,6 +118,10 @@ func (m *ReplicationInfoBase) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateFilteredBackupTaskIDMap(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateVmwareRxClusterCapability(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -207,6 +214,25 @@ func (m *ReplicationInfoBase) validateFilteredBackupTaskIDMap(formats strfmt.Reg
 	return nil
 }
 
+func (m *ReplicationInfoBase) validateVmwareRxClusterCapability(formats strfmt.Registry) error {
+	if swag.IsZero(m.VmwareRxClusterCapability) { // not required
+		return nil
+	}
+
+	if m.VmwareRxClusterCapability != nil {
+		if err := m.VmwareRxClusterCapability.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("vmwareRxClusterCapability")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vmwareRxClusterCapability")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this replication info base based on the context it is used
 func (m *ReplicationInfoBase) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -224,6 +250,10 @@ func (m *ReplicationInfoBase) ContextValidate(ctx context.Context, formats strfm
 	}
 
 	if err := m.contextValidateFilteredBackupTaskIDMap(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateVmwareRxClusterCapability(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -316,6 +346,27 @@ func (m *ReplicationInfoBase) contextValidateFilteredBackupTaskIDMap(ctx context
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *ReplicationInfoBase) contextValidateVmwareRxClusterCapability(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.VmwareRxClusterCapability != nil {
+
+		if swag.IsZero(m.VmwareRxClusterCapability) { // not required
+			return nil
+		}
+
+		if err := m.VmwareRxClusterCapability.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("vmwareRxClusterCapability")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vmwareRxClusterCapability")
+			}
+			return err
+		}
 	}
 
 	return nil

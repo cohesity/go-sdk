@@ -81,8 +81,19 @@ type RestoreFilesTaskRequest struct {
 	// Specifies information regarding files and directories.
 	RestoredFileInfoList []*RestoredFileInfoList `json:"restoredFileInfoList"`
 
-	// source object info
-	SourceObjectInfo *RestoreFilesTaskRequestSourceObjectInfo `json:"sourceObjectInfo,omitempty"`
+	// Restore Object.
+	//
+	// Specifies information about the source object (such as a VM)
+	// that contains the files and folders to recover.
+	// In addition, it contains information about the Protection Job and Job
+	// Run that captured the snapshot to recover from.
+	// To specify a particular snapshot, you must specify a
+	// jobRunId and a startTimeUsecs.
+	// If jobRunId and startTimeUsecs are not specified,
+	// the last Job Run of the specified Job is used.
+	SourceObjectInfo struct {
+		RestoreObjectDetails
+	} `json:"sourceObjectInfo,omitempty"`
 
 	// Specifies the target host types to be restored.
 	// 'kLinux' indicates the Linux operating system.
@@ -250,17 +261,6 @@ func (m *RestoreFilesTaskRequest) validateSourceObjectInfo(formats strfmt.Regist
 		return nil
 	}
 
-	if m.SourceObjectInfo != nil {
-		if err := m.SourceObjectInfo.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("sourceObjectInfo")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("sourceObjectInfo")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -423,22 +423,6 @@ func (m *RestoreFilesTaskRequest) contextValidateRestoredFileInfoList(ctx contex
 }
 
 func (m *RestoreFilesTaskRequest) contextValidateSourceObjectInfo(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.SourceObjectInfo != nil {
-
-		if swag.IsZero(m.SourceObjectInfo) { // not required
-			return nil
-		}
-
-		if err := m.SourceObjectInfo.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("sourceObjectInfo")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("sourceObjectInfo")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

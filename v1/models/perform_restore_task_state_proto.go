@@ -282,6 +282,9 @@ type PerformRestoreTaskStateProto struct {
 	// kRecoverVMs.
 	RestoreKvmVmsParams *RestoreKVMVMsParams `json:"restoreKvmVmsParams,omitempty"`
 
+	// Indicates the customization options for the restore objects.
+	RestoreObjectCustomizations []*RestoreObjectCustomization `json:"restoreObjectCustomizations"`
+
 	// This field defines the one drive specific params for restore task of type
 	// kRecoverO365Drive.
 	RestoreOneDriveParams *RestoreOneDriveParams `json:"restoreOneDriveParams,omitempty"`
@@ -598,6 +601,10 @@ func (m *PerformRestoreTaskStateProto) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRestoreKvmVmsParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRestoreObjectCustomizations(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1327,6 +1334,32 @@ func (m *PerformRestoreTaskStateProto) validateRestoreKvmVmsParams(formats strfm
 	return nil
 }
 
+func (m *PerformRestoreTaskStateProto) validateRestoreObjectCustomizations(formats strfmt.Registry) error {
+	if swag.IsZero(m.RestoreObjectCustomizations) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.RestoreObjectCustomizations); i++ {
+		if swag.IsZero(m.RestoreObjectCustomizations[i]) { // not required
+			continue
+		}
+
+		if m.RestoreObjectCustomizations[i] != nil {
+			if err := m.RestoreObjectCustomizations[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("restoreObjectCustomizations" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("restoreObjectCustomizations" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *PerformRestoreTaskStateProto) validateRestoreOneDriveParams(formats strfmt.Registry) error {
 	if swag.IsZero(m.RestoreOneDriveParams) { // not required
 		return nil
@@ -1876,6 +1909,10 @@ func (m *PerformRestoreTaskStateProto) ContextValidate(ctx context.Context, form
 	}
 
 	if err := m.contextValidateRestoreKvmVmsParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRestoreObjectCustomizations(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -2652,6 +2689,31 @@ func (m *PerformRestoreTaskStateProto) contextValidateRestoreKvmVmsParams(ctx co
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *PerformRestoreTaskStateProto) contextValidateRestoreObjectCustomizations(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.RestoreObjectCustomizations); i++ {
+
+		if m.RestoreObjectCustomizations[i] != nil {
+
+			if swag.IsZero(m.RestoreObjectCustomizations[i]) { // not required
+				return nil
+			}
+
+			if err := m.RestoreObjectCustomizations[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("restoreObjectCustomizations" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("restoreObjectCustomizations" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

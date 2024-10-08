@@ -23,13 +23,20 @@ type NetworkMappingProto struct {
 	// RestoredObjectNetworkConfigProto.
 	DisableNetwork *bool `json:"disableNetwork,omitempty"`
 
+	// Source VMs network adapter name for which mapping is selected. Example:
+	// "Network adapter 1", "Network adapter 2".
+	NetworkAdapterName *string `json:"networkAdapterName,omitempty"`
+
+	// This will be populated for recovery of the VM to the VCD.
+	OrgVdcNetwork *OrgVDCNetwork `json:"orgVdcNetwork,omitempty"`
+
 	// VM's MAC address will be preserved on the new network. This value takes
 	// priority over the value in RestoredObjectNetworkConfigProto.
 	PreserveMacAddressOnNewNetwork *bool `json:"preserveMacAddressOnNewNetwork,omitempty"`
 
 	// The network entity (i.e, either a standard switch port group or a
-	// distributed port group in a VMware env) that is attached to
-	// one of the source object.
+	// distributed port group or Opaque network in a VMware env) that is attached
+	// to one of the source object.
 	SourceNetworkEntity *EntityProto `json:"sourceNetworkEntity,omitempty"`
 
 	// The network entity (i.e, either a standard switch port group or a
@@ -42,6 +49,10 @@ type NetworkMappingProto struct {
 func (m *NetworkMappingProto) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateOrgVdcNetwork(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateSourceNetworkEntity(formats); err != nil {
 		res = append(res, err)
 	}
@@ -53,6 +64,25 @@ func (m *NetworkMappingProto) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *NetworkMappingProto) validateOrgVdcNetwork(formats strfmt.Registry) error {
+	if swag.IsZero(m.OrgVdcNetwork) { // not required
+		return nil
+	}
+
+	if m.OrgVdcNetwork != nil {
+		if err := m.OrgVdcNetwork.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("orgVdcNetwork")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("orgVdcNetwork")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -98,6 +128,10 @@ func (m *NetworkMappingProto) validateTargetNetworkEntity(formats strfmt.Registr
 func (m *NetworkMappingProto) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateOrgVdcNetwork(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateSourceNetworkEntity(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -109,6 +143,27 @@ func (m *NetworkMappingProto) ContextValidate(ctx context.Context, formats strfm
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *NetworkMappingProto) contextValidateOrgVdcNetwork(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.OrgVdcNetwork != nil {
+
+		if swag.IsZero(m.OrgVdcNetwork) { // not required
+			return nil
+		}
+
+		if err := m.OrgVdcNetwork.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("orgVdcNetwork")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("orgVdcNetwork")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

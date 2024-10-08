@@ -193,8 +193,16 @@ type ProtectionJobRequestBody struct {
 	// the SLA time period specified for this backup schedule.
 	FullProtectionSLATimeMins *int64 `json:"fullProtectionSlaTimeMins,omitempty"`
 
-	// full protection start time
-	FullProtectionStartTime *ProtectionJobRequestBodyFullProtectionStartTime `json:"fullProtectionStartTime,omitempty"`
+	// Full (no CBT) Protection Schedule Start Time.
+	//
+	// Specifies the time of day to start the Full Protection Schedule.
+	// This is optional and only applicable if the Protection Policy defines
+	// a monthly or a daily Full (no CBT) Protection Schedule.
+	// Default value is 02:00 AM.
+	// deprecated: true
+	FullProtectionStartTime struct {
+		TimeOfDay
+	} `json:"fullProtectionStartTime,omitempty"`
 
 	// Specifies the errors which we can ignore from showing to the user.
 	IgnorableErrorsInErrorDb []int32 `json:"ignorableErrorsInErrorDb"`
@@ -206,8 +214,16 @@ type ProtectionJobRequestBody struct {
 	// the SLA time period specified for this backup schedule.
 	IncrementalProtectionSLATimeMins *int64 `json:"incrementalProtectionSlaTimeMins,omitempty"`
 
-	// incremental protection start time
-	IncrementalProtectionStartTime *ProtectionJobRequestBodyIncrementalProtectionStartTime `json:"incrementalProtectionStartTime,omitempty"`
+	// CBT-based Protection Schedule Start Time.
+	//
+	// Specifies the time of day to start the CBT-based Protection Schedule.
+	// This is optional and only applicable if the Protection Policy defines
+	// a monthly or a daily CBT-based Protection Schedule.
+	// Default value is 02:00 AM.
+	// deprecated: true
+	IncrementalProtectionStartTime struct {
+		TimeOfDay
+	} `json:"incrementalProtectionStartTime,omitempty"`
 
 	// Specifies the settings for indexing files found in an Object
 	// (such as a VM) so these files can be searched and recovered.
@@ -294,11 +310,20 @@ type ProtectionJobRequestBody struct {
 	// Required: true
 	PolicyID *string `json:"policyId"`
 
-	// post backup script
-	PostBackupScript *ProtectionJobRequestBodyPostBackupScript `json:"postBackupScript,omitempty"`
+	// Specifies the script associated with the backup job. This field must be
+	// specified for 'kPhysical' jobs. This script will be executed post backup
+	// run.
+	PostBackupScript struct {
+		BackupScript
+	} `json:"postBackupScript,omitempty"`
 
-	// pre backup script
-	PreBackupScript *ProtectionJobRequestBodyPreBackupScript `json:"preBackupScript,omitempty"`
+	// Specifies the script associated with the backup job. This field must be
+	// specified for 'kPhysical' jobs. This script will be executed pre backup
+	// run. The 'remoteScript' field will be used for remote adapter jobs and
+	// 'preBackupScript' field will be used for 'kPhysical' jobs.
+	PreBackupScript struct {
+		BackupScript
+	} `json:"preBackupScript,omitempty"`
 
 	// Specifies the priority of execution for a Protection Job.
 	// Cohesity supports concurrent backups but if the number of Jobs exceeds
@@ -330,8 +355,12 @@ type ProtectionJobRequestBody struct {
 	// on the guest Operating System.
 	Quiesce *bool `json:"quiesce,omitempty"`
 
-	// remote script
-	RemoteScript *ProtectionJobRequestBodyRemoteScript `json:"remoteScript,omitempty"`
+	// For a Remote Adapter 'kPuppeteer' Job, this field specifies the
+	// settings about the remote script that will be executed by this Job.
+	// Only specify this field for Remote Adapter 'kPuppeteer' Jobs.
+	RemoteScript struct {
+		RemoteJobScript
+	} `json:"remoteScript,omitempty"`
 
 	// Sepcifies the remote view names for the views that are being protected in
 	// the view job. Use this field only when job has a replication policy.
@@ -375,8 +404,15 @@ type ProtectionJobRequestBody struct {
 	// when IncludeSourceNames is set to true and the environment is O365.
 	Sources []*SourceInfo `json:"sources"`
 
-	// start time
-	StartTime *ProtectionJobRequestBodyStartTime `json:"startTime,omitempty"`
+	// Protection Schedule Start Time.
+	//
+	// Specifies the time of day to start the Protection Schedule.
+	// This is optional and only applicable if the Protection Policy defines
+	// a monthly or a daily Protection Schedule.
+	// Default value is 02:00 AM.
+	StartTime struct {
+		TimeOfDay
+	} `json:"startTime,omitempty"`
 
 	// Specifies task level timeouts for a job.
 	TaskTimeouts []*CancellationTimeoutParams `json:"taskTimeouts"`
@@ -818,34 +854,12 @@ func (m *ProtectionJobRequestBody) validateFullProtectionStartTime(formats strfm
 		return nil
 	}
 
-	if m.FullProtectionStartTime != nil {
-		if err := m.FullProtectionStartTime.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("fullProtectionStartTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("fullProtectionStartTime")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ProtectionJobRequestBody) validateIncrementalProtectionStartTime(formats strfmt.Registry) error {
 	if swag.IsZero(m.IncrementalProtectionStartTime) { // not required
 		return nil
-	}
-
-	if m.IncrementalProtectionStartTime != nil {
-		if err := m.IncrementalProtectionStartTime.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("incrementalProtectionStartTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("incrementalProtectionStartTime")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -893,34 +907,12 @@ func (m *ProtectionJobRequestBody) validatePostBackupScript(formats strfmt.Regis
 		return nil
 	}
 
-	if m.PostBackupScript != nil {
-		if err := m.PostBackupScript.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("postBackupScript")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("postBackupScript")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ProtectionJobRequestBody) validatePreBackupScript(formats strfmt.Registry) error {
 	if swag.IsZero(m.PreBackupScript) { // not required
 		return nil
-	}
-
-	if m.PreBackupScript != nil {
-		if err := m.PreBackupScript.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("preBackupScript")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("preBackupScript")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -1024,17 +1016,6 @@ func (m *ProtectionJobRequestBody) validateRemoteScript(formats strfmt.Registry)
 		return nil
 	}
 
-	if m.RemoteScript != nil {
-		if err := m.RemoteScript.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("remoteScript")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("remoteScript")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -1120,17 +1101,6 @@ func (m *ProtectionJobRequestBody) validateSources(formats strfmt.Registry) erro
 func (m *ProtectionJobRequestBody) validateStartTime(formats strfmt.Registry) error {
 	if swag.IsZero(m.StartTime) { // not required
 		return nil
-	}
-
-	if m.StartTime != nil {
-		if err := m.StartTime.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("startTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("startTime")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -1327,42 +1297,10 @@ func (m *ProtectionJobRequestBody) contextValidateEnvironmentParameters(ctx cont
 
 func (m *ProtectionJobRequestBody) contextValidateFullProtectionStartTime(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.FullProtectionStartTime != nil {
-
-		if swag.IsZero(m.FullProtectionStartTime) { // not required
-			return nil
-		}
-
-		if err := m.FullProtectionStartTime.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("fullProtectionStartTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("fullProtectionStartTime")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ProtectionJobRequestBody) contextValidateIncrementalProtectionStartTime(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.IncrementalProtectionStartTime != nil {
-
-		if swag.IsZero(m.IncrementalProtectionStartTime) { // not required
-			return nil
-		}
-
-		if err := m.IncrementalProtectionStartTime.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("incrementalProtectionStartTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("incrementalProtectionStartTime")
-			}
-			return err
-		}
-	}
 
 	return nil
 }
@@ -1390,63 +1328,15 @@ func (m *ProtectionJobRequestBody) contextValidateIndexingPolicy(ctx context.Con
 
 func (m *ProtectionJobRequestBody) contextValidatePostBackupScript(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.PostBackupScript != nil {
-
-		if swag.IsZero(m.PostBackupScript) { // not required
-			return nil
-		}
-
-		if err := m.PostBackupScript.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("postBackupScript")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("postBackupScript")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ProtectionJobRequestBody) contextValidatePreBackupScript(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.PreBackupScript != nil {
-
-		if swag.IsZero(m.PreBackupScript) { // not required
-			return nil
-		}
-
-		if err := m.PreBackupScript.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("preBackupScript")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("preBackupScript")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *ProtectionJobRequestBody) contextValidateRemoteScript(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RemoteScript != nil {
-
-		if swag.IsZero(m.RemoteScript) { // not required
-			return nil
-		}
-
-		if err := m.RemoteScript.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("remoteScript")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("remoteScript")
-			}
-			return err
-		}
-	}
 
 	return nil
 }
@@ -1527,22 +1417,6 @@ func (m *ProtectionJobRequestBody) contextValidateSources(ctx context.Context, f
 }
 
 func (m *ProtectionJobRequestBody) contextValidateStartTime(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.StartTime != nil {
-
-		if swag.IsZero(m.StartTime) { // not required
-			return nil
-		}
-
-		if err := m.StartTime.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("startTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("startTime")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

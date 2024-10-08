@@ -135,6 +135,15 @@ type GetProtectionJobsParams struct {
 	*/
 	IsLastRunSLAViolated *bool
 
+	/* MaxResultCount.
+
+	     Identifies the max number of items to be returned. This is specifically
+	to be used with pagination.
+
+	     Format: int64
+	*/
+	MaxResultCount *int64
+
 	/* Names.
 
 	   Filter by a list of Protection Job names.
@@ -154,6 +163,12 @@ type GetProtectionJobsParams struct {
 	returned. If not set, no data migration job will be returned.
 	*/
 	OnlyReturnDataMigrationJobs *bool
+
+	/* PaginationCookie.
+
+	   Pagination cookie to fetch the next set of results.
+	*/
+	PaginationCookie *string
 
 	/* PolicyIds.
 
@@ -329,6 +344,17 @@ func (o *GetProtectionJobsParams) SetIsLastRunSLAViolated(isLastRunSLAViolated *
 	o.IsLastRunSLAViolated = isLastRunSLAViolated
 }
 
+// WithMaxResultCount adds the maxResultCount to the get protection jobs params
+func (o *GetProtectionJobsParams) WithMaxResultCount(maxResultCount *int64) *GetProtectionJobsParams {
+	o.SetMaxResultCount(maxResultCount)
+	return o
+}
+
+// SetMaxResultCount adds the maxResultCount to the get protection jobs params
+func (o *GetProtectionJobsParams) SetMaxResultCount(maxResultCount *int64) {
+	o.MaxResultCount = maxResultCount
+}
+
 // WithNames adds the names to the get protection jobs params
 func (o *GetProtectionJobsParams) WithNames(names []string) *GetProtectionJobsParams {
 	o.SetNames(names)
@@ -360,6 +386,17 @@ func (o *GetProtectionJobsParams) WithOnlyReturnDataMigrationJobs(onlyReturnData
 // SetOnlyReturnDataMigrationJobs adds the onlyReturnDataMigrationJobs to the get protection jobs params
 func (o *GetProtectionJobsParams) SetOnlyReturnDataMigrationJobs(onlyReturnDataMigrationJobs *bool) {
 	o.OnlyReturnDataMigrationJobs = onlyReturnDataMigrationJobs
+}
+
+// WithPaginationCookie adds the paginationCookie to the get protection jobs params
+func (o *GetProtectionJobsParams) WithPaginationCookie(paginationCookie *string) *GetProtectionJobsParams {
+	o.SetPaginationCookie(paginationCookie)
+	return o
+}
+
+// SetPaginationCookie adds the paginationCookie to the get protection jobs params
+func (o *GetProtectionJobsParams) SetPaginationCookie(paginationCookie *string) {
+	o.PaginationCookie = paginationCookie
 }
 
 // WithPolicyIds adds the policyIds to the get protection jobs params
@@ -544,6 +581,23 @@ func (o *GetProtectionJobsParams) WriteToRequest(r runtime.ClientRequest, reg st
 		}
 	}
 
+	if o.MaxResultCount != nil {
+
+		// query param maxResultCount
+		var qrMaxResultCount int64
+
+		if o.MaxResultCount != nil {
+			qrMaxResultCount = *o.MaxResultCount
+		}
+		qMaxResultCount := swag.FormatInt64(qrMaxResultCount)
+		if qMaxResultCount != "" {
+
+			if err := r.SetQueryParam("maxResultCount", qMaxResultCount); err != nil {
+				return err
+			}
+		}
+	}
+
 	if o.Names != nil {
 
 		// binding items for names
@@ -584,6 +638,23 @@ func (o *GetProtectionJobsParams) WriteToRequest(r runtime.ClientRequest, reg st
 		if qOnlyReturnDataMigrationJobs != "" {
 
 			if err := r.SetQueryParam("onlyReturnDataMigrationJobs", qOnlyReturnDataMigrationJobs); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.PaginationCookie != nil {
+
+		// query param paginationCookie
+		var qrPaginationCookie string
+
+		if o.PaginationCookie != nil {
+			qrPaginationCookie = *o.PaginationCookie
+		}
+		qPaginationCookie := qrPaginationCookie
+		if qPaginationCookie != "" {
+
+			if err := r.SetQueryParam("paginationCookie", qPaginationCookie); err != nil {
 				return err
 			}
 		}

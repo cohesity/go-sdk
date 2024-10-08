@@ -21,8 +21,10 @@ import (
 // swagger:model CreatedRemoteVaultSearchJobUid
 type CreatedRemoteVaultSearchJobUID struct {
 
-	// search job Uid
-	SearchJobUID *CreatedRemoteVaultSearchJobUIDSearchJobUID `json:"searchJobUid,omitempty"`
+	// Specifies the unique id assigned for the search Job on the Cluster.
+	SearchJobUID struct {
+		UniversalID
+	} `json:"searchJobUid,omitempty"`
 }
 
 // Validate validates this created remote vault search job Uid
@@ -44,17 +46,6 @@ func (m *CreatedRemoteVaultSearchJobUID) validateSearchJobUID(formats strfmt.Reg
 		return nil
 	}
 
-	if m.SearchJobUID != nil {
-		if err := m.SearchJobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("searchJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("searchJobUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -73,22 +64,6 @@ func (m *CreatedRemoteVaultSearchJobUID) ContextValidate(ctx context.Context, fo
 }
 
 func (m *CreatedRemoteVaultSearchJobUID) contextValidateSearchJobUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.SearchJobUID != nil {
-
-		if swag.IsZero(m.SearchJobUID) { // not required
-			return nil
-		}
-
-		if err := m.SearchJobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("searchJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("searchJobUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

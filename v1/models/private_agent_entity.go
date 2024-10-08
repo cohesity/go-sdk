@@ -21,6 +21,9 @@ type PrivateAgentEntity struct {
 	// agent cert info
 	AgentCertInfo *AgentCertificateInformation `json:"agentCertInfo,omitempty"`
 
+	// Port on which agent is running.
+	AgentPort *int32 `json:"agentPort,omitempty"`
+
 	// The universal identifier of the object:
 	// this refers to the Agent's UID and the value is shared with
 	// physical::Entity objects if there are any.

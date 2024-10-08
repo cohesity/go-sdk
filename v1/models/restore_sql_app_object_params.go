@@ -71,6 +71,9 @@ type RestoreSQLAppObjectParams struct {
 	// not make sense to rename all databases in the owner.
 	NewDatabaseName *string `json:"newDatabaseName,omitempty"`
 
+	// If this is set to true, we will replay the entire last log without STOPAT.
+	ReplayEntireLastLog *bool `json:"replayEntireLastLog,omitempty"`
+
 	// The time to which the SQL database needs to be restored. This allows for
 	// granular recovery of SQL databases. If this is not set, the SQL database
 	// will be recovered to the full/incremental snapshot (specified in the

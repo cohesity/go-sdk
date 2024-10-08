@@ -20,8 +20,10 @@ import (
 // swagger:model StopRemoteVaultSearchJobParameters
 type StopRemoteVaultSearchJobParameters struct {
 
-	// search job Uid
-	SearchJobUID *StopRemoteVaultSearchJobParametersSearchJobUID `json:"searchJobUid,omitempty"`
+	// Specifies the unique id of the Remote Vault search job in progress.
+	SearchJobUID struct {
+		UniversalID
+	} `json:"searchJobUid,omitempty"`
 }
 
 // Validate validates this stop remote vault search job parameters
@@ -43,17 +45,6 @@ func (m *StopRemoteVaultSearchJobParameters) validateSearchJobUID(formats strfmt
 		return nil
 	}
 
-	if m.SearchJobUID != nil {
-		if err := m.SearchJobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("searchJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("searchJobUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -72,22 +63,6 @@ func (m *StopRemoteVaultSearchJobParameters) ContextValidate(ctx context.Context
 }
 
 func (m *StopRemoteVaultSearchJobParameters) contextValidateSearchJobUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.SearchJobUID != nil {
-
-		if swag.IsZero(m.SearchJobUID) { // not required
-			return nil
-		}
-
-		if err := m.SearchJobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("searchJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("searchJobUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

@@ -221,8 +221,13 @@ type RegisterProtectionSourceParameters struct {
 	// Enum: ["kOVirtManager"]
 	KvmType *string `json:"kvmType,omitempty"`
 
-	// nas mount credentials
-	NasMountCredentials *RegisterProtectionSourceParametersNasMountCredentials `json:"nasMountCredentials,omitempty"`
+	// NAS Server Credentials.
+	//
+	// Specifies the server credentials to connect to a NetApp server.
+	// This field is required for mounting SMB volumes on NetApp servers.
+	NasMountCredentials struct {
+		NasMountCredentialParams
+	} `json:"nasMountCredentials,omitempty"`
 
 	// Specifies the entity type such as 'kCluster,' if the environment is
 	// kNetapp.
@@ -304,8 +309,10 @@ type RegisterProtectionSourceParameters struct {
 	// input fields. All other fields provided as input will be ignored.
 	Subnets []*Subnet `json:"subnets"`
 
-	// throttling policy
-	ThrottlingPolicy *RegisterProtectionSourceParametersThrottlingPolicy `json:"throttlingPolicy,omitempty"`
+	// Specifies the throttling policy that should be applied to this Source.
+	ThrottlingPolicy struct {
+		ThrottlingPolicyParameters
+	} `json:"throttlingPolicy,omitempty"`
 
 	// Array of Throttling Policy Overrides for Datastores.
 	//
@@ -1147,17 +1154,6 @@ func (m *RegisterProtectionSourceParameters) validateNasMountCredentials(formats
 		return nil
 	}
 
-	if m.NasMountCredentials != nil {
-		if err := m.NasMountCredentials.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("nasMountCredentials")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("nasMountCredentials")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -1478,17 +1474,6 @@ func (m *RegisterProtectionSourceParameters) validateSubnets(formats strfmt.Regi
 func (m *RegisterProtectionSourceParameters) validateThrottlingPolicy(formats strfmt.Registry) error {
 	if swag.IsZero(m.ThrottlingPolicy) { // not required
 		return nil
-	}
-
-	if m.ThrottlingPolicy != nil {
-		if err := m.ThrottlingPolicy.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("throttlingPolicy")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("throttlingPolicy")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -1905,22 +1890,6 @@ func (m *RegisterProtectionSourceParameters) contextValidateKubernetesParams(ctx
 
 func (m *RegisterProtectionSourceParameters) contextValidateNasMountCredentials(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.NasMountCredentials != nil {
-
-		if swag.IsZero(m.NasMountCredentials) { // not required
-			return nil
-		}
-
-		if err := m.NasMountCredentials.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("nasMountCredentials")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("nasMountCredentials")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -2042,22 +2011,6 @@ func (m *RegisterProtectionSourceParameters) contextValidateSubnets(ctx context.
 }
 
 func (m *RegisterProtectionSourceParameters) contextValidateThrottlingPolicy(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.ThrottlingPolicy != nil {
-
-		if swag.IsZero(m.ThrottlingPolicy) { // not required
-			return nil
-		}
-
-		if err := m.ThrottlingPolicy.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("throttlingPolicy")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("throttlingPolicy")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

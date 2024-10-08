@@ -35,6 +35,9 @@ type ArchivalS3CompExternalTargetParams struct {
 
 	// Specifies if Forever Incremental Archival setting is enabled or not.
 	IsForeverIncrementalArchivalEnabled *bool `json:"isForeverIncrementalArchivalEnabled,omitempty"`
+
+	// Specifies the account Id of the S3 bucket owner.
+	BucketOwnerAccountID *string `json:"bucketOwnerAccountId,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -55,6 +58,8 @@ func (m *ArchivalS3CompExternalTargetParams) UnmarshalJSON(raw []byte) error {
 		IsIncrementalArchivalEnabled *bool `json:"isIncrementalArchivalEnabled,omitempty"`
 
 		IsForeverIncrementalArchivalEnabled *bool `json:"isForeverIncrementalArchivalEnabled,omitempty"`
+
+		BucketOwnerAccountID *string `json:"bucketOwnerAccountId,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -67,6 +72,8 @@ func (m *ArchivalS3CompExternalTargetParams) UnmarshalJSON(raw []byte) error {
 	m.IsIncrementalArchivalEnabled = dataAO1.IsIncrementalArchivalEnabled
 
 	m.IsForeverIncrementalArchivalEnabled = dataAO1.IsForeverIncrementalArchivalEnabled
+
+	m.BucketOwnerAccountID = dataAO1.BucketOwnerAccountID
 
 	return nil
 }
@@ -88,6 +95,8 @@ func (m ArchivalS3CompExternalTargetParams) MarshalJSON() ([]byte, error) {
 		IsIncrementalArchivalEnabled *bool `json:"isIncrementalArchivalEnabled,omitempty"`
 
 		IsForeverIncrementalArchivalEnabled *bool `json:"isForeverIncrementalArchivalEnabled,omitempty"`
+
+		BucketOwnerAccountID *string `json:"bucketOwnerAccountId,omitempty"`
 	}
 
 	dataAO1.StorageClass = m.StorageClass
@@ -97,6 +106,8 @@ func (m ArchivalS3CompExternalTargetParams) MarshalJSON() ([]byte, error) {
 	dataAO1.IsIncrementalArchivalEnabled = m.IsIncrementalArchivalEnabled
 
 	dataAO1.IsForeverIncrementalArchivalEnabled = m.IsForeverIncrementalArchivalEnabled
+
+	dataAO1.BucketOwnerAccountID = m.BucketOwnerAccountID
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {

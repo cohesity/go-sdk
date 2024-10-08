@@ -156,6 +156,9 @@ type BackupJobRunStateProto struct {
 	// Number of backup tasks that were successful in the run so far.
 	NumSuccessfulTasks *int64 `json:"numSuccessfulTasks,omitempty"`
 
+	// This will be set if this corresponds to a out-of-band backup run request.
+	OobUID *UniversalIDProto `json:"oobUid,omitempty"`
+
 	// The name of the original cluster on which this run executed.
 	OriginClusterName *string `json:"originClusterName,omitempty"`
 
@@ -275,6 +278,10 @@ func (m *BackupJobRunStateProto) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateLatestFinishedTasks(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateOobUID(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -533,6 +540,25 @@ func (m *BackupJobRunStateProto) validateLatestFinishedTasks(formats strfmt.Regi
 	return nil
 }
 
+func (m *BackupJobRunStateProto) validateOobUID(formats strfmt.Registry) error {
+	if swag.IsZero(m.OobUID) { // not required
+		return nil
+	}
+
+	if m.OobUID != nil {
+		if err := m.OobUID.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("oobUid")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("oobUid")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *BackupJobRunStateProto) validateRetentionPolicy(formats strfmt.Registry) error {
 	if swag.IsZero(m.RetentionPolicy) { // not required
 		return nil
@@ -709,6 +735,10 @@ func (m *BackupJobRunStateProto) ContextValidate(ctx context.Context, formats st
 	}
 
 	if err := m.contextValidateLatestFinishedTasks(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateOobUID(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -967,6 +997,27 @@ func (m *BackupJobRunStateProto) contextValidateLatestFinishedTasks(ctx context.
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *BackupJobRunStateProto) contextValidateOobUID(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.OobUID != nil {
+
+		if swag.IsZero(m.OobUID) { // not required
+			return nil
+		}
+
+		if err := m.OobUID.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("oobUid")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("oobUid")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -74,6 +74,12 @@ type GetRemoteClustersParams struct {
 	*/
 	ClusterNames []string
 
+	/* IncludeEncryptedCredentials.
+
+	   If true, the response will include encrypted password.
+	*/
+	IncludeEncryptedCredentials *bool
+
 	/* NodeAddresses.
 
 	   Specifies a list of Remote Cluster IPs to filter.
@@ -161,6 +167,17 @@ func (o *GetRemoteClustersParams) SetClusterNames(clusterNames []string) {
 	o.ClusterNames = clusterNames
 }
 
+// WithIncludeEncryptedCredentials adds the includeEncryptedCredentials to the get remote clusters params
+func (o *GetRemoteClustersParams) WithIncludeEncryptedCredentials(includeEncryptedCredentials *bool) *GetRemoteClustersParams {
+	o.SetIncludeEncryptedCredentials(includeEncryptedCredentials)
+	return o
+}
+
+// SetIncludeEncryptedCredentials adds the includeEncryptedCredentials to the get remote clusters params
+func (o *GetRemoteClustersParams) SetIncludeEncryptedCredentials(includeEncryptedCredentials *bool) {
+	o.IncludeEncryptedCredentials = includeEncryptedCredentials
+}
+
 // WithNodeAddresses adds the nodeAddresses to the get remote clusters params
 func (o *GetRemoteClustersParams) WithNodeAddresses(nodeAddresses []string) *GetRemoteClustersParams {
 	o.SetNodeAddresses(nodeAddresses)
@@ -210,6 +227,23 @@ func (o *GetRemoteClustersParams) WriteToRequest(r runtime.ClientRequest, reg st
 		// query array param clusterNames
 		if err := r.SetQueryParam("clusterNames", joinedClusterNames...); err != nil {
 			return err
+		}
+	}
+
+	if o.IncludeEncryptedCredentials != nil {
+
+		// query param includeEncryptedCredentials
+		var qrIncludeEncryptedCredentials bool
+
+		if o.IncludeEncryptedCredentials != nil {
+			qrIncludeEncryptedCredentials = *o.IncludeEncryptedCredentials
+		}
+		qIncludeEncryptedCredentials := swag.FormatBool(qrIncludeEncryptedCredentials)
+		if qIncludeEncryptedCredentials != "" {
+
+			if err := r.SetQueryParam("includeEncryptedCredentials", qIncludeEncryptedCredentials); err != nil {
+				return err
+			}
 		}
 	}
 

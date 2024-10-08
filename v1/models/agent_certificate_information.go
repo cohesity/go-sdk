@@ -20,6 +20,12 @@ type AgentCertificateInformation struct {
 	// cert type
 	CertType *int32 `json:"certType,omitempty"`
 
+	// cipher str
+	CipherStr *string `json:"cipherStr,omitempty"`
+
+	// cipher type
+	CipherType *int32 `json:"cipherType,omitempty"`
+
 	// Expiry time for the certificate.
 	ExpiryTimeEpoch *uint64 `json:"expiryTimeEpoch,omitempty"`
 }

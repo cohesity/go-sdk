@@ -33,6 +33,9 @@ type UpdateClusterParams struct {
 	// The subnet for Athena apps.
 	AppsSubnet *Subnet `json:"appsSubnet,omitempty"`
 
+	// To attempt agent connection on port 21213 first
+	AttemptAgentPortsUpgrade *bool `json:"attemptAgentPortsUpgrade,omitempty"`
+
 	// Specifies whether UI banner is enabled on the cluster or not. When banner
 	// is enabled, UI will make an additional API call to fetch the banner and
 	// show at the login page.
@@ -184,6 +187,9 @@ type UpdateClusterParams struct {
 
 	// Specifies if the cluster is in Turbo mode.
 	TurboMode *bool `json:"turboMode,omitempty"`
+
+	// To use default ports 50051 & 21213
+	UseDefaultAgentPorts *bool `json:"useDefaultAgentPorts,omitempty"`
 
 	// Specifies whether to enable Heimdall which tells whether services should
 	// use temporary fleet instances to mount disks by talking to Heimdall.

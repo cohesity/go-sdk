@@ -77,8 +77,12 @@ type RemoteVaultSearchJobResults struct {
 	// Enum: ["kJobRunning","kJobFinished","kJobFailed","kJobCanceled","kJobPaused"]
 	SearchJobStatus *string `json:"searchJobStatus,omitempty"`
 
-	// search job Uid
-	SearchJobUID *RemoteVaultSearchJobResultsSearchJobUID `json:"searchJobUid,omitempty"`
+	// Search Job Id.
+	//
+	// Specifies the unique id of the search Job assigned by the Cluster.
+	SearchJobUID struct {
+		UniversalID
+	} `json:"searchJobUid,omitempty"`
 
 	// Specifies the value of startTimeUsecs if it was set in the original
 	// search Job. Start time is recorded as a Unix epoch Timestamp
@@ -196,17 +200,6 @@ func (m *RemoteVaultSearchJobResults) validateSearchJobUID(formats strfmt.Regist
 		return nil
 	}
 
-	if m.SearchJobUID != nil {
-		if err := m.SearchJobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("searchJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("searchJobUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -254,22 +247,6 @@ func (m *RemoteVaultSearchJobResults) contextValidateProtectionJobs(ctx context.
 }
 
 func (m *RemoteVaultSearchJobResults) contextValidateSearchJobUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.SearchJobUID != nil {
-
-		if swag.IsZero(m.SearchJobUID) { // not required
-			return nil
-		}
-
-		if err := m.SearchJobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("searchJobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("searchJobUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

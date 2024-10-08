@@ -28,11 +28,24 @@ import (
 // swagger:model RestoreObjectDetails
 type RestoreObjectDetails struct {
 
-	// archival target
-	ArchivalTarget *RestoreObjectDetailsArchivalTarget `json:"archivalTarget,omitempty"`
+	// Archival Target.
+	//
+	// Specifies settings about the Archival Target (such as Tape or AWS).
+	// This field must be set if the object
+	// is being recovered or cloned from an archive or if files
+	// or folders are being restored from an archive.
+	ArchivalTarget struct {
+		ArchivalExternalTarget
+	} `json:"archivalTarget,omitempty"`
 
-	// cloud deploy target
-	CloudDeployTarget *RestoreObjectDetailsCloudDeployTarget `json:"cloudDeployTarget,omitempty"`
+	// CloudDeploy Target.
+	//
+	// Specifies settings about the Cloud Deploy target.
+	// This field must be set if the restore type is kDeployVMs and the object is
+	// to be deployed to cloud using a previously converted image.
+	CloudDeployTarget struct {
+		CloudDeployTargetDetails
+	} `json:"cloudDeployTarget,omitempty"`
 
 	// Specifies the type of the Protection Source.
 	// Supported environment types such as 'kView', 'kSQL', 'kVMware', etc.
@@ -98,8 +111,14 @@ type RestoreObjectDetails struct {
 	// Specifies the id of the Job Run that captured the snapshot.
 	JobRunID *int64 `json:"jobRunId,omitempty"`
 
-	// job Uid
-	JobUID *RestoreObjectDetailsJobUID `json:"jobUid,omitempty"`
+	// Universal Id.
+	//
+	// Specifies the universal id of the Protection Job that backed up
+	// the objects to recover or clone or the objects that contain the
+	// files or folders to recover.
+	JobUID struct {
+		UniversalID
+	} `json:"jobUid,omitempty"`
 
 	// Specifies the timestamp (in microseconds. from epoch) for recovering
 	// to a point-in-time in the past.
@@ -148,34 +167,12 @@ func (m *RestoreObjectDetails) validateArchivalTarget(formats strfmt.Registry) e
 		return nil
 	}
 
-	if m.ArchivalTarget != nil {
-		if err := m.ArchivalTarget.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("archivalTarget")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("archivalTarget")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *RestoreObjectDetails) validateCloudDeployTarget(formats strfmt.Registry) error {
 	if swag.IsZero(m.CloudDeployTarget) { // not required
 		return nil
-	}
-
-	if m.CloudDeployTarget != nil {
-		if err := m.CloudDeployTarget.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("cloudDeployTarget")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("cloudDeployTarget")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -363,17 +360,6 @@ func (m *RestoreObjectDetails) validateJobUID(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.JobUID != nil {
-		if err := m.JobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("jobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("jobUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -401,63 +387,15 @@ func (m *RestoreObjectDetails) ContextValidate(ctx context.Context, formats strf
 
 func (m *RestoreObjectDetails) contextValidateArchivalTarget(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.ArchivalTarget != nil {
-
-		if swag.IsZero(m.ArchivalTarget) { // not required
-			return nil
-		}
-
-		if err := m.ArchivalTarget.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("archivalTarget")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("archivalTarget")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *RestoreObjectDetails) contextValidateCloudDeployTarget(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.CloudDeployTarget != nil {
-
-		if swag.IsZero(m.CloudDeployTarget) { // not required
-			return nil
-		}
-
-		if err := m.CloudDeployTarget.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("cloudDeployTarget")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("cloudDeployTarget")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *RestoreObjectDetails) contextValidateJobUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.JobUID != nil {
-
-		if swag.IsZero(m.JobUID) { // not required
-			return nil
-		}
-
-		if err := m.JobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("jobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("jobUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

@@ -22,8 +22,7 @@ import (
 type AwsIAmRoleParams struct {
 
 	// Specifies the Account Id of the external target.
-	// Required: true
-	AccountID *string `json:"accountId"`
+	AccountID *string `json:"accountId,omitempty"`
 
 	// Specifies the I Am Role of the external target.
 	// Required: true
@@ -34,10 +33,6 @@ type AwsIAmRoleParams struct {
 func (m *AwsIAmRoleParams) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateAccountID(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateIAmRole(formats); err != nil {
 		res = append(res, err)
 	}
@@ -45,15 +40,6 @@ func (m *AwsIAmRoleParams) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *AwsIAmRoleParams) validateAccountID(formats strfmt.Registry) error {
-
-	if err := validate.Required("accountId", "body", m.AccountID); err != nil {
-		return err
-	}
-
 	return nil
 }
 

@@ -23,7 +23,7 @@ type EntitySizeInfo struct {
 	// and certain sources (agent based, NAS, VMs with guest tools). Other
 	// adapters can leave this blank.
 	//
-	// In windows, a 100GB volume can have a space usage of 30GB. In
+	// Example: In windows, a 100GB volume can have a space usage of 30GB. In
 	// that case, this value is set to 30GB.
 	//
 	// This suffers from the following two uncertainties:

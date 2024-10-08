@@ -49,8 +49,12 @@ type RemoteRestoreIndexingStatus struct {
 	// Enum: ["kJobRunning","kJobFinished","kJobFailed","kJobCanceled","kJobPaused"]
 	IndexingTaskStatus *string `json:"indexingTaskStatus,omitempty"`
 
-	// indexing task Uid
-	IndexingTaskUID *RemoteRestoreIndexingStatusIndexingTaskUID `json:"indexingTaskUid,omitempty"`
+	// Indexing Task Uid.
+	//
+	// Specifies the unique id of the indexing task assigned by this Cluster.
+	IndexingTaskUID struct {
+		UniversalID
+	} `json:"indexingTaskUid,omitempty"`
 
 	// For all the Snapshots retrieved by this Job, specifies the latest time
 	// when a Snapshot expires.
@@ -141,17 +145,6 @@ func (m *RemoteRestoreIndexingStatus) validateIndexingTaskUID(formats strfmt.Reg
 		return nil
 	}
 
-	if m.IndexingTaskUID != nil {
-		if err := m.IndexingTaskUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("indexingTaskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("indexingTaskUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -170,22 +163,6 @@ func (m *RemoteRestoreIndexingStatus) ContextValidate(ctx context.Context, forma
 }
 
 func (m *RemoteRestoreIndexingStatus) contextValidateIndexingTaskUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.IndexingTaskUID != nil {
-
-		if swag.IsZero(m.IndexingTaskUID) { // not required
-			return nil
-		}
-
-		if err := m.IndexingTaskUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("indexingTaskUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("indexingTaskUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

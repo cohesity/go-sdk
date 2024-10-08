@@ -96,6 +96,8 @@ type ClientService interface {
 
 	DeleteClusterPackage(params *DeleteClusterPackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteClusterPackageAccepted, error)
 
+	DeleteClusterSnapshotPolicy(params *DeleteClusterSnapshotPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteClusterSnapshotPolicyNoContent, error)
+
 	DeleteClusterVlan(params *DeleteClusterVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteClusterVlanNoContent, error)
 
 	DeleteHosts(params *DeleteHostsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteHostsNoContent, error)
@@ -125,6 +127,8 @@ type ClientService interface {
 	GetClusterLocalDomainSID(params *GetClusterLocalDomainSIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterLocalDomainSIDOK, error)
 
 	GetClusterPackages(params *GetClusterPackagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterPackagesOK, error)
+
+	GetClusterSnapshotPolicy(params *GetClusterSnapshotPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterSnapshotPolicyOK, error)
 
 	GetClusterState(params *GetClusterStateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterStateOK, error)
 
@@ -187,6 +191,8 @@ type ClientService interface {
 	UpdateChassisByID(params *UpdateChassisByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateChassisByIDOK, error)
 
 	UpdateCluster(params *UpdateClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateClusterOK, error)
+
+	UpdateClusterSnapshotPolicy(params *UpdateClusterSnapshotPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateClusterSnapshotPolicyOK, error)
 
 	UpdateClusterVlan(params *UpdateClusterVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateClusterVlanOK, error)
 
@@ -582,6 +588,46 @@ func (a *Client) DeleteClusterPackage(params *DeleteClusterPackageParams, authIn
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*DeleteClusterPackageDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+DeleteClusterSnapshotPolicy deletes cluster snapshot policy
+
+Delete cluster snapshot policy.
+*/
+func (a *Client) DeleteClusterSnapshotPolicy(params *DeleteClusterSnapshotPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteClusterSnapshotPolicyNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteClusterSnapshotPolicyParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DeleteClusterSnapshotPolicy",
+		Method:             "DELETE",
+		PathPattern:        "/clusters/snapshot-policy",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteClusterSnapshotPolicyReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteClusterSnapshotPolicyNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteClusterSnapshotPolicyDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -1182,6 +1228,46 @@ func (a *Client) GetClusterPackages(params *GetClusterPackagesParams, authInfo r
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetClusterPackagesDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+GetClusterSnapshotPolicy gets cluster snapshot policy
+
+Get cluster snapshot policy.
+*/
+func (a *Client) GetClusterSnapshotPolicy(params *GetClusterSnapshotPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterSnapshotPolicyOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetClusterSnapshotPolicyParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "GetClusterSnapshotPolicy",
+		Method:             "GET",
+		PathPattern:        "/clusters/snapshot-policy",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetClusterSnapshotPolicyReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetClusterSnapshotPolicyOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetClusterSnapshotPolicyDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -2422,6 +2508,46 @@ func (a *Client) UpdateCluster(params *UpdateClusterParams, authInfo runtime.Cli
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*UpdateClusterDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+UpdateClusterSnapshotPolicy updates cluster snapshot policy
+
+Update cluster snapshot policy.
+*/
+func (a *Client) UpdateClusterSnapshotPolicy(params *UpdateClusterSnapshotPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateClusterSnapshotPolicyOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateClusterSnapshotPolicyParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "UpdateClusterSnapshotPolicy",
+		Method:             "PUT",
+		PathPattern:        "/clusters/snapshot-policy",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateClusterSnapshotPolicyReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateClusterSnapshotPolicyOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateClusterSnapshotPolicyDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

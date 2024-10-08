@@ -29,8 +29,11 @@ type GetRegistrationInfoResponse struct {
 	// overrideDescription: true
 	RootNodes []*ProtectionSourceTreeInfo `json:"rootNodes"`
 
-	// stats
-	Stats *GetRegistrationInfoResponseStats `json:"stats,omitempty"`
+	// Specifies the sum of all the stats of protection of Protection Sources
+	// and views selected by the query parameters.
+	Stats struct {
+		ProtectionSummary
+	} `json:"stats,omitempty"`
 
 	// Specifies the breakdown of the stats by environment
 	// overrideDescription: true
@@ -88,17 +91,6 @@ func (m *GetRegistrationInfoResponse) validateRootNodes(formats strfmt.Registry)
 func (m *GetRegistrationInfoResponse) validateStats(formats strfmt.Registry) error {
 	if swag.IsZero(m.Stats) { // not required
 		return nil
-	}
-
-	if m.Stats != nil {
-		if err := m.Stats.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("stats")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -178,22 +170,6 @@ func (m *GetRegistrationInfoResponse) contextValidateRootNodes(ctx context.Conte
 }
 
 func (m *GetRegistrationInfoResponse) contextValidateStats(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Stats != nil {
-
-		if swag.IsZero(m.Stats) { // not required
-			return nil
-		}
-
-		if err := m.Stats.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("stats")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

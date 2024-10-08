@@ -23,7 +23,7 @@ type RegisteredEntityO365Params struct {
 	// Teams & Public Folders are supported. If this is not specified then all
 	// entities will be discovered.
 	//
-	// For discovery of only kUser & kSite entities, this vec should be
+	// Example: For discovery of only kUser & kSite entities, this vec should be
 	// set to [kUsers, kSites].
 	DiscoverableEntityTypeVec []int32 `json:"discoverableEntityTypeVec"`
 

@@ -19,6 +19,11 @@ import (
 // swagger:model AdditionalConnectorParams
 type AdditionalConnectorParams struct {
 
+	// If set, the cert_cache_ in ConnectorCertificateValidator will not be
+	// used for this connector conext.
+	// Specific to agent connector contexts.
+	DisableCertCache *bool `json:"disableCertCache,omitempty"`
+
 	// Endpoint URL for querying the MS graph token fetched from
 	// openid-configuration.
 	GraphTokenEndpoint *string `json:"graphTokenEndpoint,omitempty"`

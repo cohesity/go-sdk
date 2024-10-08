@@ -26,8 +26,10 @@ type UpdateProtectionJobRun struct {
 	// retention.
 	CopyRunTargets []*RunJobSnapshotTarget `json:"copyRunTargets"`
 
-	// job Uid
-	JobUID *UpdateProtectionJobRunJobUID `json:"jobUid,omitempty"`
+	// Specifies a unique universal id for the Job.
+	JobUID struct {
+		UniversalID
+	} `json:"jobUid,omitempty"`
 
 	// Specifies the start time of the Job Run to update. The start time
 	// is specified as a Unix epoch Timestamp (in microseconds).
@@ -91,17 +93,6 @@ func (m *UpdateProtectionJobRun) validateJobUID(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.JobUID != nil {
-		if err := m.JobUID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("jobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("jobUid")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -149,22 +140,6 @@ func (m *UpdateProtectionJobRun) contextValidateCopyRunTargets(ctx context.Conte
 }
 
 func (m *UpdateProtectionJobRun) contextValidateJobUID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.JobUID != nil {
-
-		if swag.IsZero(m.JobUID) { // not required
-			return nil
-		}
-
-		if err := m.JobUID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("jobUid")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("jobUid")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

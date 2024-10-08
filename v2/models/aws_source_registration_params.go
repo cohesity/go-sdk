@@ -27,6 +27,9 @@ type AwsSourceRegistrationParams struct {
 
 	// Specifies the parameters to register a commercial AWS.
 	StandardParams *StandardParams `json:"standardParams,omitempty"`
+
+	// Specifies the s3 specific parameters for source registration.
+	S3Params *S3SpecificParams `json:"s3Params,omitempty"`
 }
 
 // Validate validates this aws source registration params
@@ -38,6 +41,10 @@ func (m *AwsSourceRegistrationParams) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateStandardParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateS3Params(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -112,11 +119,34 @@ func (m *AwsSourceRegistrationParams) validateStandardParams(formats strfmt.Regi
 	return nil
 }
 
+func (m *AwsSourceRegistrationParams) validateS3Params(formats strfmt.Registry) error {
+	if swag.IsZero(m.S3Params) { // not required
+		return nil
+	}
+
+	if m.S3Params != nil {
+		if err := m.S3Params.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("s3Params")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("s3Params")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this aws source registration params based on the context it is used
 func (m *AwsSourceRegistrationParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateStandardParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateS3Params(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -139,6 +169,27 @@ func (m *AwsSourceRegistrationParams) contextValidateStandardParams(ctx context.
 				return ve.ValidateName("standardParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("standardParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *AwsSourceRegistrationParams) contextValidateS3Params(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.S3Params != nil {
+
+		if swag.IsZero(m.S3Params) { // not required
+			return nil
+		}
+
+		if err := m.S3Params.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("s3Params")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("s3Params")
 			}
 			return err
 		}

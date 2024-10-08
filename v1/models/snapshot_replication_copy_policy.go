@@ -104,8 +104,10 @@ type SnapshotReplicationCopyPolicy struct {
 	// Specifies a the source cluster id from which the data must be replicated.
 	SourceClusterID *int64 `json:"sourceClusterId,omitempty"`
 
-	// target
-	Target *SnapshotReplicationCopyPolicyTarget `json:"target,omitempty"`
+	// Specifies the replication target to copy the Snapshots to.
+	Target struct {
+		ReplicationTargetSettings
+	} `json:"target,omitempty"`
 }
 
 // Validate validates this snapshot replication copy policy
@@ -313,17 +315,6 @@ func (m *SnapshotReplicationCopyPolicy) validateTarget(formats strfmt.Registry) 
 		return nil
 	}
 
-	if m.Target != nil {
-		if err := m.Target.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("target")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("target")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -421,22 +412,6 @@ func (m *SnapshotReplicationCopyPolicy) contextValidateRunTimeouts(ctx context.C
 }
 
 func (m *SnapshotReplicationCopyPolicy) contextValidateTarget(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Target != nil {
-
-		if swag.IsZero(m.Target) { // not required
-			return nil
-		}
-
-		if err := m.Target.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("target")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("target")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

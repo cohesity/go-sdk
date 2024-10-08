@@ -21,17 +21,45 @@ import (
 // swagger:model BackupScript
 type BackupScript struct {
 
-	// full backup script
-	FullBackupScript *BackupScriptFullBackupScript `json:"fullBackupScript,omitempty"`
+	// Full (No CBT) Script.
+	//
+	// Specifies the script that should run for the Full (no CBT) backup schedule
+	// of a Remote Adapter 'kPuppeteer' Job.
+	// This field is mandatory if the Policy associated with this Job
+	// has a Full (no CBT) backup schedule and this is Remote Adapter
+	// 'kPuppeteer' Job.
+	FullBackupScript struct {
+		RemoteScriptPathAndParams
+	} `json:"fullBackupScript,omitempty"`
 
-	// incremental backup script
-	IncrementalBackupScript *BackupScriptIncrementalBackupScript `json:"incrementalBackupScript,omitempty"`
+	// CBT-based Script.
+	//
+	// Specifies the script that should run for the CBT-based backup
+	// schedule of a Remote Adapter 'kPuppeteer' Job. A CBT-based backup
+	// schedule is utilizing Change Block Tracking when capturing Snapshots.
+	// This field is mandatory if the Policy associated with this Job
+	// has a CBT-based backup schedule and this is Remote Adapter
+	// 'kPuppeteer' Job.
+	IncrementalBackupScript struct {
+		RemoteScriptPathAndParams
+	} `json:"incrementalBackupScript,omitempty"`
 
-	// log backup script
-	LogBackupScript *BackupScriptLogBackupScript `json:"logBackupScript,omitempty"`
+	// Log Script.
+	//
+	// Specifies the script that should run for the Log backup schedule
+	// of a Remote Adapter 'kPuppeteer' Job.
+	// This field is mandatory if the Policy associated with this Job
+	// has a Log backup schedule and this is Remote Adapter
+	// 'kPuppeteer' Job.
+	LogBackupScript struct {
+		RemoteScriptPathAndParams
+	} `json:"logBackupScript,omitempty"`
 
-	// remote host
-	RemoteHost *BackupScriptRemoteHost `json:"remoteHost,omitempty"`
+	// Specifies the remote host where the remote scripts are executed.
+	// This field must be set for Remote Adapter Jobs.
+	RemoteHost struct {
+		RemoteHost
+	} `json:"remoteHost,omitempty"`
 
 	// Specifies the username that will be used to login to the remote host.
 	// For host type 'kLinux', it is expected that user has setup the
@@ -70,34 +98,12 @@ func (m *BackupScript) validateFullBackupScript(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.FullBackupScript != nil {
-		if err := m.FullBackupScript.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("fullBackupScript")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("fullBackupScript")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *BackupScript) validateIncrementalBackupScript(formats strfmt.Registry) error {
 	if swag.IsZero(m.IncrementalBackupScript) { // not required
 		return nil
-	}
-
-	if m.IncrementalBackupScript != nil {
-		if err := m.IncrementalBackupScript.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("incrementalBackupScript")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("incrementalBackupScript")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -108,34 +114,12 @@ func (m *BackupScript) validateLogBackupScript(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.LogBackupScript != nil {
-		if err := m.LogBackupScript.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("logBackupScript")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("logBackupScript")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *BackupScript) validateRemoteHost(formats strfmt.Registry) error {
 	if swag.IsZero(m.RemoteHost) { // not required
 		return nil
-	}
-
-	if m.RemoteHost != nil {
-		if err := m.RemoteHost.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("remoteHost")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("remoteHost")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -169,84 +153,20 @@ func (m *BackupScript) ContextValidate(ctx context.Context, formats strfmt.Regis
 
 func (m *BackupScript) contextValidateFullBackupScript(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.FullBackupScript != nil {
-
-		if swag.IsZero(m.FullBackupScript) { // not required
-			return nil
-		}
-
-		if err := m.FullBackupScript.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("fullBackupScript")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("fullBackupScript")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *BackupScript) contextValidateIncrementalBackupScript(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.IncrementalBackupScript != nil {
-
-		if swag.IsZero(m.IncrementalBackupScript) { // not required
-			return nil
-		}
-
-		if err := m.IncrementalBackupScript.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("incrementalBackupScript")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("incrementalBackupScript")
-			}
-			return err
-		}
-	}
 
 	return nil
 }
 
 func (m *BackupScript) contextValidateLogBackupScript(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.LogBackupScript != nil {
-
-		if swag.IsZero(m.LogBackupScript) { // not required
-			return nil
-		}
-
-		if err := m.LogBackupScript.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("logBackupScript")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("logBackupScript")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *BackupScript) contextValidateRemoteHost(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.RemoteHost != nil {
-
-		if swag.IsZero(m.RemoteHost) { // not required
-			return nil
-		}
-
-		if err := m.RemoteHost.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("remoteHost")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("remoteHost")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

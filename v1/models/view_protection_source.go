@@ -22,8 +22,11 @@ import (
 // swagger:model ViewProtectionSource
 type ViewProtectionSource struct {
 
-	// id
-	ID *ViewProtectionSourceID `json:"id,omitempty"`
+	// Specifies a unique id of a Protection Source for a View.
+	// The id is unique across Cohesity Clusters.
+	ID struct {
+		UniversalID
+	} `json:"id,omitempty"`
 
 	// Specifies a human readable name of the Protection Source of a View.
 	Name *string `json:"name,omitempty"`
@@ -58,17 +61,6 @@ func (m *ViewProtectionSource) Validate(formats strfmt.Registry) error {
 func (m *ViewProtectionSource) validateID(formats strfmt.Registry) error {
 	if swag.IsZero(m.ID) { // not required
 		return nil
-	}
-
-	if m.ID != nil {
-		if err := m.ID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("id")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("id")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -131,22 +123,6 @@ func (m *ViewProtectionSource) ContextValidate(ctx context.Context, formats strf
 }
 
 func (m *ViewProtectionSource) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.ID != nil {
-
-		if swag.IsZero(m.ID) { // not required
-			return nil
-		}
-
-		if err := m.ID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("id")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("id")
-			}
-			return err
-		}
-	}
 
 	return nil
 }

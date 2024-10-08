@@ -35,16 +35,24 @@ type TimeOfAWeek struct {
 	// Specifies a day in a week such as 'kSunday', 'kMonday', etc.
 	Days []string `json:"days"`
 
-	// end time
-	EndTime *TimeOfAWeekEndTime `json:"endTime,omitempty"`
+	// End Time.
+	//
+	// Specifies the end time for the daily time period.
+	EndTime struct {
+		TimeOfDay
+	} `json:"endTime,omitempty"`
 
 	// All Day.
 	//
 	// Specifies that time range is applied for entire day.
 	IsAllDay *bool `json:"isAllDay,omitempty"`
 
-	// start time
-	StartTime *TimeOfAWeekStartTime `json:"startTime,omitempty"`
+	// Start Time.
+	//
+	// Specifies the start time for the daily time period.
+	StartTime struct {
+		TimeOfDay
+	} `json:"startTime,omitempty"`
 }
 
 // Validate validates this time of a week
@@ -110,34 +118,12 @@ func (m *TimeOfAWeek) validateEndTime(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if m.EndTime != nil {
-		if err := m.EndTime.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("endTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("endTime")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *TimeOfAWeek) validateStartTime(formats strfmt.Registry) error {
 	if swag.IsZero(m.StartTime) { // not required
 		return nil
-	}
-
-	if m.StartTime != nil {
-		if err := m.StartTime.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("startTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("startTime")
-			}
-			return err
-		}
 	}
 
 	return nil
@@ -163,42 +149,10 @@ func (m *TimeOfAWeek) ContextValidate(ctx context.Context, formats strfmt.Regist
 
 func (m *TimeOfAWeek) contextValidateEndTime(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.EndTime != nil {
-
-		if swag.IsZero(m.EndTime) { // not required
-			return nil
-		}
-
-		if err := m.EndTime.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("endTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("endTime")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
 func (m *TimeOfAWeek) contextValidateStartTime(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.StartTime != nil {
-
-		if swag.IsZero(m.StartTime) { // not required
-			return nil
-		}
-
-		if err := m.StartTime.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("startTime")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("startTime")
-			}
-			return err
-		}
-	}
 
 	return nil
 }
