@@ -1,6 +1,6 @@
 module github.com/cohesity/go-sdk
 
-go 1.22.5
+go 1.20
 
 require (
 	github.com/go-openapi/errors v0.22.0
