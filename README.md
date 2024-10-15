@@ -22,7 +22,8 @@ go get github.com/cohesity/go-sdk
 
 |Cluster Version| SDK Version|
 |---|--|
-|7.1.2_u2|7.1.2201|
+|7.1.2_u2|0.71.2201|
+|7.2.1|0.72.1001|
 ## <a name="howto"></a> How to Use: :mag_right:
 This SDK exposes all the functionality provided by *Cohesity REST API*.
 
