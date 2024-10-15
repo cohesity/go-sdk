@@ -28,6 +28,13 @@ type FileLevelDataLockConfig struct {
 	// milliseconds. Do not set if it is required to disable auto lock.
 	AutoLockAfterDurationIdle *uint64 `json:"autoLockAfterDurationIdle,omitempty"`
 
+	// Specified if files in the View can be locked in different modes.
+	// This property is immutable and
+	// can only be set when enabling File level datalock.
+	// If this property is set for an S3 View,
+	// S3 bucket Versioning should also be enabled.
+	CoexistingLockMode *bool `json:"coexistingLockMode,omitempty"`
+
 	// Specifies a global default retention duration for files in this view, if
 	// file lock is enabled for this view. Also, it is a required field if file
 	// lock is enabled. Set to -1 if the required default retention period is

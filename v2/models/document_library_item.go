@@ -27,6 +27,9 @@ type DocumentLibraryItem struct {
 	// Enum: ["File","Directory","Symlink"]
 	FileType *string `json:"fileType,omitempty"`
 
+	// Specifies the id of the document library item.
+	ItemID *string `json:"itemId,omitempty"`
+
 	// Specifies the size in bytes for the indexed item.
 	ItemSize *int64 `json:"itemSize,omitempty"`
 
@@ -53,6 +56,8 @@ func (m *DocumentLibraryItem) UnmarshalJSON(raw []byte) error {
 	var dataAO1 struct {
 		FileType *string `json:"fileType,omitempty"`
 
+		ItemID *string `json:"itemId,omitempty"`
+
 		ItemSize *int64 `json:"itemSize,omitempty"`
 
 		CreationTimeSecs *int64 `json:"creationTimeSecs,omitempty"`
@@ -66,6 +71,8 @@ func (m *DocumentLibraryItem) UnmarshalJSON(raw []byte) error {
 	}
 
 	m.FileType = dataAO1.FileType
+
+	m.ItemID = dataAO1.ItemID
 
 	m.ItemSize = dataAO1.ItemSize
 
@@ -90,6 +97,8 @@ func (m DocumentLibraryItem) MarshalJSON() ([]byte, error) {
 	var dataAO1 struct {
 		FileType *string `json:"fileType,omitempty"`
 
+		ItemID *string `json:"itemId,omitempty"`
+
 		ItemSize *int64 `json:"itemSize,omitempty"`
 
 		CreationTimeSecs *int64 `json:"creationTimeSecs,omitempty"`
@@ -100,6 +109,8 @@ func (m DocumentLibraryItem) MarshalJSON() ([]byte, error) {
 	}
 
 	dataAO1.FileType = m.FileType
+
+	dataAO1.ItemID = m.ItemID
 
 	dataAO1.ItemSize = m.ItemSize
 

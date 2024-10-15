@@ -100,7 +100,7 @@ type ClientService interface {
 /*
 	CancelDataTieringAnalysisGroupRun cancels data tiering analysis run
 
-	Cancel data tiering analysis run for given analysis group ID
+	**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>Cancel data tiering analysis run for given analysis group ID
 
 and run ID
 */
@@ -142,7 +142,7 @@ func (a *Client) CancelDataTieringAnalysisGroupRun(params *CancelDataTieringAnal
 /*
 CancelDataTieringTaskRun cancels data tiering task
 
-Cancel data tiering task run for given data tiering task id and run id.
+**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>Cancel data tiering task run for given data tiering task id and run id.
 */
 func (a *Client) CancelDataTieringTaskRun(params *CancelDataTieringTaskRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelDataTieringTaskRunAccepted, error) {
 	// TODO: Validate the params before sending
@@ -182,7 +182,7 @@ func (a *Client) CancelDataTieringTaskRun(params *CancelDataTieringTaskRunParams
 /*
 CreateDataTieringAnalysisGroup creates a data tiering analysis group
 
-Create a data tiering analysis group.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Create a data tiering analysis group.
 */
 func (a *Client) CreateDataTieringAnalysisGroup(params *CreateDataTieringAnalysisGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDataTieringAnalysisGroupCreated, error) {
 	// TODO: Validate the params before sending
@@ -222,7 +222,7 @@ func (a *Client) CreateDataTieringAnalysisGroup(params *CreateDataTieringAnalysi
 /*
 CreateDataTieringAnalysisGroupRun creates a data tiering analysis group run
 
-Create a data tiering analysis group run.
+**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>Create a data tiering analysis group run.
 */
 func (a *Client) CreateDataTieringAnalysisGroupRun(params *CreateDataTieringAnalysisGroupRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDataTieringAnalysisGroupRunAccepted, error) {
 	// TODO: Validate the params before sending
@@ -262,7 +262,7 @@ func (a *Client) CreateDataTieringAnalysisGroupRun(params *CreateDataTieringAnal
 /*
 CreateDataTieringTask creates a data tiering task
 
-Create a data tiering task.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Create a data tiering task.
 */
 func (a *Client) CreateDataTieringTask(params *CreateDataTieringTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDataTieringTaskCreated, error) {
 	// TODO: Validate the params before sending
@@ -302,7 +302,7 @@ func (a *Client) CreateDataTieringTask(params *CreateDataTieringTaskParams, auth
 /*
 CreateDataTieringTaskRun creates a data tiering tasks run
 
-Create a data tiering tasks run.
+**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>Create a data tiering tasks run.
 */
 func (a *Client) CreateDataTieringTaskRun(params *CreateDataTieringTaskRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDataTieringTaskRunAccepted, error) {
 	// TODO: Validate the params before sending
@@ -342,7 +342,7 @@ func (a *Client) CreateDataTieringTaskRun(params *CreateDataTieringTaskRunParams
 /*
 	DeleteDataTieringAnalysisGroup deletes data tiering analysis group
 
-	Returns NoContentResponse if the data tiering analysis group is
+	**Privileges:** ```PROTECTION_MODIFY``` <br><br>Returns NoContentResponse if the data tiering analysis group is
 
 deleted.
 */
@@ -384,7 +384,7 @@ func (a *Client) DeleteDataTieringAnalysisGroup(params *DeleteDataTieringAnalysi
 /*
 DeleteDataTieringTask deletes the data tiering task
 
-Returns Success if the data tiering task is deleted.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Returns Success if the data tiering task is deleted.
 */
 func (a *Client) DeleteDataTieringTask(params *DeleteDataTieringTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteDataTieringTaskNoContent, error) {
 	// TODO: Validate the params before sending
@@ -424,7 +424,7 @@ func (a *Client) DeleteDataTieringTask(params *DeleteDataTieringTaskParams, auth
 /*
 	GetCapacityTrendAnalysis gets capacity trend analysis for all sources or a specific source
 
-	Get capacity trend analysis for the given time range, and for the given
+	**Privileges:** ```PROTECTION_VIEW``` <br><br>Get capacity trend analysis for the given time range, and for the given
 
 source or set of sources.
 */
@@ -466,7 +466,7 @@ func (a *Client) GetCapacityTrendAnalysis(params *GetCapacityTrendAnalysisParams
 /*
 GetDataTieringAnalysisGroupByID gets data tiering analysis group by id
 
-Get data tiering analysis group by id.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get data tiering analysis group by id.
 */
 func (a *Client) GetDataTieringAnalysisGroupByID(params *GetDataTieringAnalysisGroupByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDataTieringAnalysisGroupByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -506,7 +506,7 @@ func (a *Client) GetDataTieringAnalysisGroupByID(params *GetDataTieringAnalysisG
 /*
 GetDataTieringAnalysisGroupRuns gets data tiering analysis group runs
 
-Get data tiering analysis group runs for an analysis group.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get data tiering analysis group runs for an analysis group.
 */
 func (a *Client) GetDataTieringAnalysisGroupRuns(params *GetDataTieringAnalysisGroupRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDataTieringAnalysisGroupRunsOK, error) {
 	// TODO: Validate the params before sending
@@ -546,7 +546,7 @@ func (a *Client) GetDataTieringAnalysisGroupRuns(params *GetDataTieringAnalysisG
 /*
 GetDataTieringAnalysisGroups gets the list of data tiering analysis groups
 
-Get list of all data tiering analysis groups.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get list of all data tiering analysis groups.
 */
 func (a *Client) GetDataTieringAnalysisGroups(params *GetDataTieringAnalysisGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDataTieringAnalysisGroupsOK, error) {
 	// TODO: Validate the params before sending
@@ -586,7 +586,7 @@ func (a *Client) GetDataTieringAnalysisGroups(params *GetDataTieringAnalysisGrou
 /*
 	GetDataTieringAnalysisGroupsDefaultConfig gets the default config of data tiering analysis groups
 
-	Get default grouping configuration for data tiering
+	**Privileges:** ```PROTECTION_VIEW``` <br><br>Get default grouping configuration for data tiering
 
 analysis groups.
 */
@@ -628,7 +628,7 @@ func (a *Client) GetDataTieringAnalysisGroupsDefaultConfig(params *GetDataTierin
 /*
 GetDataTieringTaskByID gets data tiering task by id
 
-Get data tiering task by id.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get data tiering task by id.
 */
 func (a *Client) GetDataTieringTaskByID(params *GetDataTieringTaskByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDataTieringTaskByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -668,7 +668,7 @@ func (a *Client) GetDataTieringTaskByID(params *GetDataTieringTaskByIDParams, au
 /*
 GetDataTieringTasks gets the list of data tiering tasks
 
-Get the list of data tiering tasks.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get the list of data tiering tasks.
 */
 func (a *Client) GetDataTieringTasks(params *GetDataTieringTasksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDataTieringTasksOK, error) {
 	// TODO: Validate the params before sending
@@ -708,7 +708,7 @@ func (a *Client) GetDataTieringTasks(params *GetDataTieringTasksParams, authInfo
 /*
 UpdateDataTieringAnalysisGroup updates a data tiering analysis group currently it supports updating sources and schedule only
 
-Update a data tiering analysis group.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Update a data tiering analysis group.
 */
 func (a *Client) UpdateDataTieringAnalysisGroup(params *UpdateDataTieringAnalysisGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDataTieringAnalysisGroupOK, error) {
 	// TODO: Validate the params before sending
@@ -748,7 +748,7 @@ func (a *Client) UpdateDataTieringAnalysisGroup(params *UpdateDataTieringAnalysi
 /*
 UpdateDataTieringAnalysisGroupTagsConfig updates data tiering analysis group config
 
-Update data tiering analysis group config.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Update data tiering analysis group config.
 */
 func (a *Client) UpdateDataTieringAnalysisGroupTagsConfig(params *UpdateDataTieringAnalysisGroupTagsConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDataTieringAnalysisGroupTagsConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -788,7 +788,7 @@ func (a *Client) UpdateDataTieringAnalysisGroupTagsConfig(params *UpdateDataTier
 /*
 	UpdateDataTieringAnalysisGroupsState updates data tiering analysis groups state
 
-	Perform actions like pause or resume on the data tiering analysis
+	**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>Perform actions like pause or resume on the data tiering analysis
 
 groups for the specified sources.
 */
@@ -830,7 +830,7 @@ func (a *Client) UpdateDataTieringAnalysisGroupsState(params *UpdateDataTieringA
 /*
 UpdateDataTieringTask updates a data tiering task
 
-Update a data tiering task.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Update a data tiering task.
 */
 func (a *Client) UpdateDataTieringTask(params *UpdateDataTieringTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDataTieringTaskOK, error) {
 	// TODO: Validate the params before sending
@@ -870,7 +870,7 @@ func (a *Client) UpdateDataTieringTask(params *UpdateDataTieringTaskParams, auth
 /*
 UpdateDataTieringTasksState updates data tiering source analysis tasks state
 
-Perform actions like pause or resume on the data tiering tasks.
+**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>Perform actions like pause or resume on the data tiering tasks.
 */
 func (a *Client) UpdateDataTieringTasksState(params *UpdateDataTieringTasksStateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDataTieringTasksStateOK, error) {
 	// TODO: Validate the params before sending

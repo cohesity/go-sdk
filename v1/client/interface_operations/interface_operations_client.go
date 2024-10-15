@@ -63,6 +63,8 @@ type ClientService interface {
 
 /*
 ListInterface shows network interfaces
+
+**Privileges:** ```CLUSTER_CREATE, CLUSTER_VIEW``` <br><br>
 */
 func (a *Client) ListInterface(params *ListInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListInterfaceOK, error) {
 	// TODO: Validate the params before sending
@@ -102,7 +104,7 @@ func (a *Client) ListInterface(params *ListInterfaceParams, authInfo runtime.Cli
 /*
 UpdateInterface updates an interface
 
-Returns the update status upon completion.
+**Privileges:** ```CLUSTER_CREATE, CLUSTER_MODIFY``` <br><br>Returns the update status upon completion.
 */
 func (a *Client) UpdateInterface(params *UpdateInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateInterfaceOK, error) {
 	// TODO: Validate the params before sending

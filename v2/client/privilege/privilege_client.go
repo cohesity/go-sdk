@@ -62,7 +62,7 @@ type ClientService interface {
 /*
 GetPrivileges gets privileges
 
-Get Privileges.
+**Privileges:** ```PRINCIPAL_VIEW``` <br><br>Get Privileges.
 */
 func (a *Client) GetPrivileges(params *GetPrivilegesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPrivilegesOK, error) {
 	// TODO: Validate the params before sending

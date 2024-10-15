@@ -70,13 +70,21 @@ type SnapshotInfo struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies the relative directory path from root path where the snapshot
@@ -118,7 +126,7 @@ var snapshotInfoTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -151,123 +159,6 @@ const (
 
 	// SnapshotInfoEnvironmentKNimble captures enum value "kNimble"
 	SnapshotInfoEnvironmentKNimble string = "kNimble"
-
-	// SnapshotInfoEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	SnapshotInfoEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// SnapshotInfoEnvironmentKAzure captures enum value "kAzure"
-	SnapshotInfoEnvironmentKAzure string = "kAzure"
-
-	// SnapshotInfoEnvironmentKNetapp captures enum value "kNetapp"
-	SnapshotInfoEnvironmentKNetapp string = "kNetapp"
-
-	// SnapshotInfoEnvironmentKAgent captures enum value "kAgent"
-	SnapshotInfoEnvironmentKAgent string = "kAgent"
-
-	// SnapshotInfoEnvironmentKGenericNas captures enum value "kGenericNas"
-	SnapshotInfoEnvironmentKGenericNas string = "kGenericNas"
-
-	// SnapshotInfoEnvironmentKAcropolis captures enum value "kAcropolis"
-	SnapshotInfoEnvironmentKAcropolis string = "kAcropolis"
-
-	// SnapshotInfoEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	SnapshotInfoEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// SnapshotInfoEnvironmentKIsilon captures enum value "kIsilon"
-	SnapshotInfoEnvironmentKIsilon string = "kIsilon"
-
-	// SnapshotInfoEnvironmentKGPFS captures enum value "kGPFS"
-	SnapshotInfoEnvironmentKGPFS string = "kGPFS"
-
-	// SnapshotInfoEnvironmentKKVM captures enum value "kKVM"
-	SnapshotInfoEnvironmentKKVM string = "kKVM"
-
-	// SnapshotInfoEnvironmentKAWS captures enum value "kAWS"
-	SnapshotInfoEnvironmentKAWS string = "kAWS"
-
-	// SnapshotInfoEnvironmentKExchange captures enum value "kExchange"
-	SnapshotInfoEnvironmentKExchange string = "kExchange"
-
-	// SnapshotInfoEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	SnapshotInfoEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// SnapshotInfoEnvironmentKOracle captures enum value "kOracle"
-	SnapshotInfoEnvironmentKOracle string = "kOracle"
-
-	// SnapshotInfoEnvironmentKGCP captures enum value "kGCP"
-	SnapshotInfoEnvironmentKGCP string = "kGCP"
-
-	// SnapshotInfoEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	SnapshotInfoEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// SnapshotInfoEnvironmentKAWSNative captures enum value "kAWSNative"
-	SnapshotInfoEnvironmentKAWSNative string = "kAWSNative"
-
-	// SnapshotInfoEnvironmentKO365 captures enum value "kO365"
-	SnapshotInfoEnvironmentKO365 string = "kO365"
-
-	// SnapshotInfoEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	SnapshotInfoEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// SnapshotInfoEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	SnapshotInfoEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// SnapshotInfoEnvironmentKGCPNative captures enum value "kGCPNative"
-	SnapshotInfoEnvironmentKGCPNative string = "kGCPNative"
-
-	// SnapshotInfoEnvironmentKAzureNative captures enum value "kAzureNative"
-	SnapshotInfoEnvironmentKAzureNative string = "kAzureNative"
-
-	// SnapshotInfoEnvironmentKKubernetes captures enum value "kKubernetes"
-	SnapshotInfoEnvironmentKKubernetes string = "kKubernetes"
-
-	// SnapshotInfoEnvironmentKElastifile captures enum value "kElastifile"
-	SnapshotInfoEnvironmentKElastifile string = "kElastifile"
-
-	// SnapshotInfoEnvironmentKAD captures enum value "kAD"
-	SnapshotInfoEnvironmentKAD string = "kAD"
-
-	// SnapshotInfoEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	SnapshotInfoEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// SnapshotInfoEnvironmentKCassandra captures enum value "kCassandra"
-	SnapshotInfoEnvironmentKCassandra string = "kCassandra"
-
-	// SnapshotInfoEnvironmentKMongoDB captures enum value "kMongoDB"
-	SnapshotInfoEnvironmentKMongoDB string = "kMongoDB"
-
-	// SnapshotInfoEnvironmentKCouchbase captures enum value "kCouchbase"
-	SnapshotInfoEnvironmentKCouchbase string = "kCouchbase"
-
-	// SnapshotInfoEnvironmentKHdfs captures enum value "kHdfs"
-	SnapshotInfoEnvironmentKHdfs string = "kHdfs"
-
-	// SnapshotInfoEnvironmentKHive captures enum value "kHive"
-	SnapshotInfoEnvironmentKHive string = "kHive"
-
-	// SnapshotInfoEnvironmentKHBase captures enum value "kHBase"
-	SnapshotInfoEnvironmentKHBase string = "kHBase"
-
-	// SnapshotInfoEnvironmentKUDA captures enum value "kUDA"
-	SnapshotInfoEnvironmentKUDA string = "kUDA"
-
-	// SnapshotInfoEnvironmentKO365Teams captures enum value "kO365Teams"
-	SnapshotInfoEnvironmentKO365Teams string = "kO365Teams"
-
-	// SnapshotInfoEnvironmentKO365Group captures enum value "kO365Group"
-	SnapshotInfoEnvironmentKO365Group string = "kO365Group"
-
-	// SnapshotInfoEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	SnapshotInfoEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// SnapshotInfoEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	SnapshotInfoEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// SnapshotInfoEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	SnapshotInfoEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// SnapshotInfoEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	SnapshotInfoEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

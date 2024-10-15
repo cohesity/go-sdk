@@ -57,7 +57,7 @@ type CommonRecoverObjectSnapshotParams struct {
 
 	// Status of the Recovery. 'Running' indicates that the Recovery is still running. 'Canceled' indicates that the Recovery has been cancelled. 'Canceling' indicates that the Recovery is in the process of being cancelled. 'Failed' indicates that the Recovery has failed. 'Succeeded' indicates that the Recovery has finished successfully. 'SucceededWithWarning' indicates that the Recovery finished successfully, but there were some warning messages. 'Skipped' indicates that the Recovery task was skipped.
 	// Read Only: true
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]
 	Status *string `json:"status,omitempty"`
 
 	// Specifies the start time of the Recovery in Unix timestamp epoch in microseconds.
@@ -179,7 +179,7 @@ var commonRecoverObjectSnapshotParamsTypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -221,6 +221,9 @@ const (
 
 	// CommonRecoverObjectSnapshotParamsStatusSkipped captures enum value "Skipped"
 	CommonRecoverObjectSnapshotParamsStatusSkipped string = "Skipped"
+
+	// CommonRecoverObjectSnapshotParamsStatusLegalHold captures enum value "LegalHold"
+	CommonRecoverObjectSnapshotParamsStatusLegalHold string = "LegalHold"
 )
 
 // prop value enum

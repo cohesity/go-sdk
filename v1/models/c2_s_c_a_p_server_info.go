@@ -28,16 +28,16 @@ type C2SCAPServerInfo struct {
 	Agency *string `json:"agency,omitempty"`
 
 	// The base url of C2S CAP server.
-	BaseURL *string `json:"base_url,omitempty"`
+	BaseURL *string `json:"baseUrl,omitempty"`
 
 	// Client Certificate.
-	ClientCertificate *string `json:"client_certificate,omitempty"`
+	ClientCertificate *string `json:"clientCertificate,omitempty"`
 
 	// Client private key.
-	ClientPrivateKey *string `json:"client_private_key,omitempty"`
+	ClientPrivateKey *string `json:"clientPrivateKey,omitempty"`
 
 	// Decrypted or plain text password.
-	DecryptedPassword *string `json:"decrypted_password,omitempty"`
+	DecryptedPassword *string `json:"decryptedPassword,omitempty"`
 
 	// Name of the mission. For example "Backup".
 	Mission *string `json:"mission,omitempty"`
@@ -50,7 +50,7 @@ type C2SCAPServerInfo struct {
 	Role *string `json:"role,omitempty"`
 
 	// Server CA certificate.
-	ServerCaCertificate *string `json:"server_ca_certificate,omitempty"`
+	ServerCaCertificate *string `json:"serverCaCertificate,omitempty"`
 }
 
 // Validate validates this c2 s c a p server info

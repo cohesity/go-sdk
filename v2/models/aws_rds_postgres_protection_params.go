@@ -24,7 +24,7 @@ type AwsRdsPostgresProtectionParams struct {
 
 	// Specifies the objects to be protected.
 	// Unique: true
-	Objects []*AwsRdsPostgresObjectLevelParams `json:"objects"`
+	Objects []*AwsObjectLevelParams `json:"objects"`
 
 	// Specifies the id of the source of the objects.
 	// Read Only: true

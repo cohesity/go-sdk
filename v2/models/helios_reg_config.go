@@ -28,6 +28,9 @@ type HeliosRegConfig struct {
 
 	// Specifies the Rigel Registration Config.
 	RigelRegConfig *RigelRegConfig `json:"rigelRegConfig,omitempty"`
+
+	// cohesion reg config
+	CohesionRegConfig *CohesionRegistrationConfig `json:"cohesionRegConfig,omitempty"`
 }
 
 // Validate validates this helios reg config
@@ -39,6 +42,10 @@ func (m *HeliosRegConfig) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRigelRegConfig(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateCohesionRegConfig(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -115,11 +122,34 @@ func (m *HeliosRegConfig) validateRigelRegConfig(formats strfmt.Registry) error 
 	return nil
 }
 
+func (m *HeliosRegConfig) validateCohesionRegConfig(formats strfmt.Registry) error {
+	if swag.IsZero(m.CohesionRegConfig) { // not required
+		return nil
+	}
+
+	if m.CohesionRegConfig != nil {
+		if err := m.CohesionRegConfig.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cohesionRegConfig")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cohesionRegConfig")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this helios reg config based on the context it is used
 func (m *HeliosRegConfig) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateRigelRegConfig(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateCohesionRegConfig(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -142,6 +172,27 @@ func (m *HeliosRegConfig) contextValidateRigelRegConfig(ctx context.Context, for
 				return ve.ValidateName("rigelRegConfig")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("rigelRegConfig")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *HeliosRegConfig) contextValidateCohesionRegConfig(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CohesionRegConfig != nil {
+
+		if swag.IsZero(m.CohesionRegConfig) { // not required
+			return nil
+		}
+
+		if err := m.CohesionRegConfig.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cohesionRegConfig")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cohesionRegConfig")
 			}
 			return err
 		}

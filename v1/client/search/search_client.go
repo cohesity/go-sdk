@@ -62,7 +62,7 @@ type ClientService interface {
 }
 
 /*
-	SearchProtectionRuns Returns the information of latest snapshot of a particular object across
+	SearchProtectionRuns **Privileges:** ```OBJECT_SEARCH``` <br><br>Returns the information of latest snapshot of a particular object across
 
 all snapshot target locations.
 */
@@ -104,7 +104,7 @@ func (a *Client) SearchProtectionRuns(params *SearchProtectionRunsParams, authIn
 /*
 SearchProtectionSources performs search on all the objects which are registered to a cluster
 
-Returns list of all the objects along with the protection status information.
+**Privileges:** ```OBJECT_SEARCH``` <br><br>Returns list of all the objects along with the protection status information.
 */
 func (a *Client) SearchProtectionSources(params *SearchProtectionSourcesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SearchProtectionSourcesOK, error) {
 	// TODO: Validate the params before sending

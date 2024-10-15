@@ -82,7 +82,7 @@ type ClientService interface {
 /*
 AddSyslogServer adds syslog server
 
-Add a new syslog server
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Add a new syslog server
 */
 func (a *Client) AddSyslogServer(params *AddSyslogServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AddSyslogServerCreated, error) {
 	// TODO: Validate the params before sending
@@ -122,7 +122,7 @@ func (a *Client) AddSyslogServer(params *AddSyslogServerParams, authInfo runtime
 /*
 GetSupportedSyslogProgramNames gets supported program names
 
-Get supported program names to configure for a syslog server.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get supported program names to configure for a syslog server.
 */
 func (a *Client) GetSupportedSyslogProgramNames(params *GetSupportedSyslogProgramNamesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSupportedSyslogProgramNamesOK, error) {
 	// TODO: Validate the params before sending
@@ -162,7 +162,7 @@ func (a *Client) GetSupportedSyslogProgramNames(params *GetSupportedSyslogProgra
 /*
 GetSyslogAuditTags gets cluster audit tags
 
-Get cluster audit tags.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get cluster audit tags.
 */
 func (a *Client) GetSyslogAuditTags(params *GetSyslogAuditTagsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSyslogAuditTagsOK, error) {
 	// TODO: Validate the params before sending
@@ -202,7 +202,7 @@ func (a *Client) GetSyslogAuditTags(params *GetSyslogAuditTagsParams, authInfo r
 /*
 GetSyslogServerByID gets a syslog server by id
 
-Get a syslog server by id.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get a syslog server by id.
 */
 func (a *Client) GetSyslogServerByID(params *GetSyslogServerByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSyslogServerByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -242,7 +242,7 @@ func (a *Client) GetSyslogServerByID(params *GetSyslogServerByIDParams, authInfo
 /*
 GetSyslogServerStatusByID gets a syslog server reachability status
 
-Check syslog server reachability by given Id.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Check syslog server reachability by given Id.
 */
 func (a *Client) GetSyslogServerStatusByID(params *GetSyslogServerStatusByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSyslogServerStatusByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -282,7 +282,7 @@ func (a *Client) GetSyslogServerStatusByID(params *GetSyslogServerStatusByIDPara
 /*
 GetSyslogServers gets list of syslog servers
 
-Get list of syslog servers.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get list of syslog servers.
 */
 func (a *Client) GetSyslogServers(params *GetSyslogServersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSyslogServersOK, error) {
 	// TODO: Validate the params before sending
@@ -322,7 +322,7 @@ func (a *Client) GetSyslogServers(params *GetSyslogServersParams, authInfo runti
 /*
 PatchSyslogServerByID patches a syslog server by id
 
-Patch syslog server by id.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Patch syslog server by id.
 */
 func (a *Client) PatchSyslogServerByID(params *PatchSyslogServerByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchSyslogServerByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -362,7 +362,7 @@ func (a *Client) PatchSyslogServerByID(params *PatchSyslogServerByIDParams, auth
 /*
 RemoveSyslogServer removes syslog server by id
 
-Delete syslog server by id.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Delete syslog server by id.
 */
 func (a *Client) RemoveSyslogServer(params *RemoveSyslogServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RemoveSyslogServerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -402,7 +402,7 @@ func (a *Client) RemoveSyslogServer(params *RemoveSyslogServerParams, authInfo r
 /*
 RemoveSyslogServers removes syslog servers
 
-Delete all syslog servers.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Delete all syslog servers.
 */
 func (a *Client) RemoveSyslogServers(params *RemoveSyslogServersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RemoveSyslogServersNoContent, error) {
 	// TODO: Validate the params before sending
@@ -442,7 +442,7 @@ func (a *Client) RemoveSyslogServers(params *RemoveSyslogServersParams, authInfo
 /*
 UpdateSyslogAuditTags updates cluster audit tags
 
-Update cluster audit tags.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update cluster audit tags.
 */
 func (a *Client) UpdateSyslogAuditTags(params *UpdateSyslogAuditTagsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateSyslogAuditTagsOK, error) {
 	// TODO: Validate the params before sending
@@ -482,7 +482,7 @@ func (a *Client) UpdateSyslogAuditTags(params *UpdateSyslogAuditTagsParams, auth
 /*
 UpdateSyslogServerByID updates a syslog server by id
 
-Update syslog server by id.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update syslog server by id.
 */
 func (a *Client) UpdateSyslogServerByID(params *UpdateSyslogServerByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateSyslogServerByIDOK, error) {
 	// TODO: Validate the params before sending

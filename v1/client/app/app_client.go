@@ -92,7 +92,7 @@ type ClientService interface {
 /*
 	GetApps lists the apps
 
-	Api provides the list of the apps which are available for the user to install
+	**Privileges:** ```APP_LAUNCH``` <br><br>Api provides the list of the apps which are available for the user to install
 
 or are already installed. App object provides basic app information along with
 app metadata.
@@ -135,7 +135,7 @@ func (a *Client) GetApps(params *GetAppsParams, authInfo runtime.ClientAuthInfoW
 /*
 InstallApp starts the application installation on the cluster
 
-Only purchased apps can be installed using this api.
+**Privileges:** ```APPS_MANAGEMENT``` <br><br>Only purchased apps can be installed using this api.
 */
 func (a *Client) InstallApp(params *InstallAppParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*InstallAppCreated, error) {
 	// TODO: Validate the params before sending
@@ -175,7 +175,7 @@ func (a *Client) InstallApp(params *InstallAppParams, authInfo runtime.ClientAut
 /*
 UninstallApp starts the application uninstall from the cluster
 
-App must already been installed for this api to work.
+**Privileges:** ```APPS_MANAGEMENT``` <br><br>App must already been installed for this api to work.
 */
 func (a *Client) UninstallApp(params *UninstallAppParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UninstallAppAccepted, error) {
 	// TODO: Validate the params before sending
@@ -215,7 +215,7 @@ func (a *Client) UninstallApp(params *UninstallAppParams, authInfo runtime.Clien
 /*
 	UploadApp uploads and install an app from image
 
-	Api provides the list of the apps which are available for the user to install
+	**Privileges:** ```APPS_MANAGEMENT``` <br><br>Api provides the list of the apps which are available for the user to install
 
 or are already installed. App object provides basic app information along with
 app metadata.

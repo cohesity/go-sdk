@@ -8,10 +8,8 @@ package models
 import (
 	"context"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // S3SpecificParams AWS S3 source register parameters
@@ -22,47 +20,14 @@ import (
 type S3SpecificParams struct {
 
 	// Specifies the ARN for S3 bucket where inventory reports are to be stored.
-	// Required: true
-	InventoryReportBucket *string `json:"inventoryReportBucket"`
+	InventoryReportBucket *string `json:"inventoryReportBucket,omitempty"`
 
 	// The inventory bucket prefix where inventory reports are to be stored.
-	// Required: true
-	InventoryReportPrefix *string `json:"inventoryReportPrefix"`
+	InventoryReportPrefix *string `json:"inventoryReportPrefix,omitempty"`
 }
 
 // Validate validates this s3 specific params
 func (m *S3SpecificParams) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateInventoryReportBucket(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateInventoryReportPrefix(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *S3SpecificParams) validateInventoryReportBucket(formats strfmt.Registry) error {
-
-	if err := validate.Required("inventoryReportBucket", "body", m.InventoryReportBucket); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *S3SpecificParams) validateInventoryReportPrefix(formats strfmt.Registry) error {
-
-	if err := validate.Required("inventoryReportPrefix", "body", m.InventoryReportPrefix); err != nil {
-		return err
-	}
-
 	return nil
 }
 

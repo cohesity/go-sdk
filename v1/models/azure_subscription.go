@@ -18,7 +18,7 @@ import (
 type AzureSubscription struct {
 
 	// Id of the Azure subscription.
-	SubscriptionID *string `json:"subscription_id,omitempty"`
+	SubscriptionID *string `json:"subscriptionId,omitempty"`
 }
 
 // Validate validates this azure subscription

@@ -45,6 +45,9 @@ type CopyBackupRunTaskStateProto struct {
 	// vm deploy.
 	CloudDeployViewName *string `json:"cloudDeployViewName,omitempty"`
 
+	// Cohesion copy job specific params.
+	CohesionCopyJobParams *CopyJobParams `json:"cohesionCopyJobParams,omitempty"`
+
 	// Whether to allow copy of partially successful run or not. If set to false,
 	// copy task is failed if the backup run does not finish successfully. Else,
 	// copy task copies successful tasks.
@@ -83,12 +86,12 @@ type CopyBackupRunTaskStateProto struct {
 	// A map that specifies expiry time overrides for specific entities. The key
 	// in the map is the id of an entity, and the value is the expiry time that
 	// should be used for that entity.
-	EntityExpiryTimeUsecsMap []*CopyBackupRunTaskStateProtoEntityExpiryTimeUsecsMapEntry `json:"entityExpiryTimeUsecsMap"`
+	EntityExpiryTimeUsecsMap interface{} `json:"entityExpiryTimeUsecsMap,omitempty"`
 
 	// A map that specifies legal hold status for specific entities. The key
 	// in the map is the id of an entity, and the value is the boolean indicating
 	// if the entity is on legal hold.
-	EntityLegalHoldMap []*CopyBackupRunTaskStateProtoEntityLegalHoldMapEntry `json:"entityLegalHoldMap"`
+	EntityLegalHoldMap interface{} `json:"entityLegalHoldMap,omitempty"`
 
 	// Will contain any error encountered by this task.
 	Error *PrivateErrorProto `json:"error,omitempty"`
@@ -115,11 +118,21 @@ type CopyBackupRunTaskStateProto struct {
 	// Whether this is an out of band (OOB) copy task triggered by the user.
 	IsOutOfBandTask *bool `json:"isOutOfBandTask,omitempty"`
 
+	// This field indicates whether the expiry time on this proto is artificially
+	// determined by the smart retention adjustment feature.
+	IsSmartRetentionSet *bool `json:"isSmartRetentionSet,omitempty"`
+
 	// The instance id of the backup run whose snapshots are to be copied.
 	JobInstanceID *int64 `json:"jobInstanceId,omitempty"`
 
 	// The globally unique id of the backup job whose snapshots are to be copied.
 	JobUID *UniversalIDProto `json:"jobUid,omitempty"`
+
+	// This is a run sequencer which will incremented whenever run reaches a new
+	// milestone. A milestone can be a change in state, or attempts, progress
+	// percentage incrementals (e.g. 10%), This will be used by Helios ETL to
+	// identify the latest copy of the backup run.
+	LastUpdateLogicalTimestamp *int64 `json:"lastUpdateLogicalTimestamp,omitempty"`
 
 	// If legal hold is set on the run, then this run is not deletable.
 	// expiry_time_usecs remain irrelevant while the run/objects are on
@@ -155,6 +168,18 @@ type CopyBackupRunTaskStateProto struct {
 	// Iris-facing task state. This field is stamped during the export except for
 	// archive task, i.e., this field is always stamped for archive task.
 	PublicStatus *int32 `json:"publicStatus,omitempty"`
+
+	// Specifies the time at which the latest snapshot on target was queued to
+	// schedule to copy from the local snapshot.
+	//
+	// Note:
+	// 1. Currently this is used for displaying queued time in the archival
+	// page.
+	// 2. This is set to backup run end time if this is part of the first copy
+	// run else is copied from queued time of previous unexpired copy task.
+	// If there is no previous unexpired copy task then it is set to that copy
+	// run start time.
+	QueuedTimestampUsecs *int64 `json:"queuedTimestampUsecs,omitempty"`
 
 	// If this is a replication task, this field will contain some basic info
 	// about the replication task.
@@ -232,19 +257,15 @@ func (m *CopyBackupRunTaskStateProto) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateCohesionCopyJobParams(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateCopyTaskObjectInfoVec(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateDataLockConstraints(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateEntityExpiryTimeUsecsMap(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateEntityLegalHoldMap(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -343,6 +364,25 @@ func (m *CopyBackupRunTaskStateProto) validateArchivalInfo(formats strfmt.Regist
 	return nil
 }
 
+func (m *CopyBackupRunTaskStateProto) validateCohesionCopyJobParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.CohesionCopyJobParams) { // not required
+		return nil
+	}
+
+	if m.CohesionCopyJobParams != nil {
+		if err := m.CohesionCopyJobParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cohesionCopyJobParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cohesionCopyJobParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *CopyBackupRunTaskStateProto) validateCopyTaskObjectInfoVec(formats strfmt.Registry) error {
 	if swag.IsZero(m.CopyTaskObjectInfoVec) { // not required
 		return nil
@@ -383,58 +423,6 @@ func (m *CopyBackupRunTaskStateProto) validateDataLockConstraints(formats strfmt
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *CopyBackupRunTaskStateProto) validateEntityExpiryTimeUsecsMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.EntityExpiryTimeUsecsMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.EntityExpiryTimeUsecsMap); i++ {
-		if swag.IsZero(m.EntityExpiryTimeUsecsMap[i]) { // not required
-			continue
-		}
-
-		if m.EntityExpiryTimeUsecsMap[i] != nil {
-			if err := m.EntityExpiryTimeUsecsMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("entityExpiryTimeUsecsMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("entityExpiryTimeUsecsMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *CopyBackupRunTaskStateProto) validateEntityLegalHoldMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.EntityLegalHoldMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.EntityLegalHoldMap); i++ {
-		if swag.IsZero(m.EntityLegalHoldMap[i]) { // not required
-			continue
-		}
-
-		if m.EntityLegalHoldMap[i] != nil {
-			if err := m.EntityLegalHoldMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("entityLegalHoldMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("entityLegalHoldMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil
@@ -675,19 +663,15 @@ func (m *CopyBackupRunTaskStateProto) ContextValidate(ctx context.Context, forma
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateCohesionCopyJobParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateCopyTaskObjectInfoVec(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.contextValidateDataLockConstraints(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateEntityExpiryTimeUsecsMap(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateEntityLegalHoldMap(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -787,6 +771,27 @@ func (m *CopyBackupRunTaskStateProto) contextValidateArchivalInfo(ctx context.Co
 	return nil
 }
 
+func (m *CopyBackupRunTaskStateProto) contextValidateCohesionCopyJobParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CohesionCopyJobParams != nil {
+
+		if swag.IsZero(m.CohesionCopyJobParams) { // not required
+			return nil
+		}
+
+		if err := m.CohesionCopyJobParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cohesionCopyJobParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cohesionCopyJobParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *CopyBackupRunTaskStateProto) contextValidateCopyTaskObjectInfoVec(ctx context.Context, formats strfmt.Registry) error {
 
 	for i := 0; i < len(m.CopyTaskObjectInfoVec); i++ {
@@ -828,56 +833,6 @@ func (m *CopyBackupRunTaskStateProto) contextValidateDataLockConstraints(ctx con
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *CopyBackupRunTaskStateProto) contextValidateEntityExpiryTimeUsecsMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.EntityExpiryTimeUsecsMap); i++ {
-
-		if m.EntityExpiryTimeUsecsMap[i] != nil {
-
-			if swag.IsZero(m.EntityExpiryTimeUsecsMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.EntityExpiryTimeUsecsMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("entityExpiryTimeUsecsMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("entityExpiryTimeUsecsMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *CopyBackupRunTaskStateProto) contextValidateEntityLegalHoldMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.EntityLegalHoldMap); i++ {
-
-		if m.EntityLegalHoldMap[i] != nil {
-
-			if swag.IsZero(m.EntityLegalHoldMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.EntityLegalHoldMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("entityLegalHoldMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("entityLegalHoldMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

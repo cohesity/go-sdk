@@ -23,6 +23,10 @@ type RestoreOutlookParams struct {
 	// folder name.
 	ArchiveRecoverableItemsPrefix *string `json:"archiveRecoverableItemsPrefix,omitempty"`
 
+	// Governs how items are restored to microsoft. See enum definitions for
+	// details.
+	ItemRecoveryMethod *int32 `json:"itemRecoveryMethod,omitempty"`
+
 	// In a RestoreJob , user will provide the list of mailboxes
 	// to be restored. Provision is there for restoring full AND
 	// partial mailbox recovery.

@@ -62,7 +62,7 @@ type ClientService interface {
 /*
 PasswordStrength gets the strength of a password
 
-Returns the strength of the input password.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the strength of the input password.
 */
 func (a *Client) PasswordStrength(params *PasswordStrengthParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PasswordStrengthOK, error) {
 	// TODO: Validate the params before sending

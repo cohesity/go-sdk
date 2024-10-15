@@ -7,11 +7,11 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // KeystoneACLProtoGrantees keystone ACL proto grantees
@@ -27,7 +27,7 @@ type KeystoneACLProtoGrantees struct {
 	ProjectIDVec []string `json:"projectIdVec"`
 
 	// project users map
-	ProjectUsersMap []*KeystoneACLProtoGranteesProjectUsersMapEntry `json:"projectUsersMap"`
+	ProjectUsersMap map[string]KeystoneACLProtoGranteesProjectUsers `json:"projectUsersMap,omitempty"`
 
 	// This field holds a list of Keystone roles for which any Keystone user
 	// with one (or more) of the roles on the project containing the swift
@@ -58,17 +58,17 @@ func (m *KeystoneACLProtoGrantees) validateProjectUsersMap(formats strfmt.Regist
 		return nil
 	}
 
-	for i := 0; i < len(m.ProjectUsersMap); i++ {
-		if swag.IsZero(m.ProjectUsersMap[i]) { // not required
-			continue
-		}
+	for k := range m.ProjectUsersMap {
 
-		if m.ProjectUsersMap[i] != nil {
-			if err := m.ProjectUsersMap[i].Validate(formats); err != nil {
+		if err := validate.Required("projectUsersMap"+"."+k, "body", m.ProjectUsersMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.ProjectUsersMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("projectUsersMap" + "." + strconv.Itoa(i))
+					return ve.ValidateName("projectUsersMap" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("projectUsersMap" + "." + strconv.Itoa(i))
+					return ce.ValidateName("projectUsersMap" + "." + k)
 				}
 				return err
 			}
@@ -95,20 +95,10 @@ func (m *KeystoneACLProtoGrantees) ContextValidate(ctx context.Context, formats 
 
 func (m *KeystoneACLProtoGrantees) contextValidateProjectUsersMap(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.ProjectUsersMap); i++ {
+	for k := range m.ProjectUsersMap {
 
-		if m.ProjectUsersMap[i] != nil {
-
-			if swag.IsZero(m.ProjectUsersMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.ProjectUsersMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("projectUsersMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("projectUsersMap" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.ProjectUsersMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

@@ -27,6 +27,9 @@ type AwsAuthenticationMethodsParams struct {
 	// i am role params
 	IAmRoleParams *AwsIAmRoleParams `json:"iAmRoleParams,omitempty"`
 
+	// i am roles anywhere params
+	IAmRolesAnywhereParams *AwsIAmRolesAnywhereParams `json:"iAmRolesAnywhereParams,omitempty"`
+
 	// use s t s params
 	UseSTSParams *AwsUseSTSParams `json:"useSTSParams,omitempty"`
 }
@@ -46,6 +49,8 @@ func (m *AwsAuthenticationMethodsParams) UnmarshalJSON(raw []byte) error {
 
 		IAmRoleParams *AwsIAmRoleParams `json:"iAmRoleParams,omitempty"`
 
+		IAmRolesAnywhereParams *AwsIAmRolesAnywhereParams `json:"iAmRolesAnywhereParams,omitempty"`
+
 		UseSTSParams *AwsUseSTSParams `json:"useSTSParams,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
@@ -55,6 +60,8 @@ func (m *AwsAuthenticationMethodsParams) UnmarshalJSON(raw []byte) error {
 	m.IAmUserParams = dataAO1.IAmUserParams
 
 	m.IAmRoleParams = dataAO1.IAmRoleParams
+
+	m.IAmRolesAnywhereParams = dataAO1.IAmRolesAnywhereParams
 
 	m.UseSTSParams = dataAO1.UseSTSParams
 
@@ -75,12 +82,16 @@ func (m AwsAuthenticationMethodsParams) MarshalJSON() ([]byte, error) {
 
 		IAmRoleParams *AwsIAmRoleParams `json:"iAmRoleParams,omitempty"`
 
+		IAmRolesAnywhereParams *AwsIAmRolesAnywhereParams `json:"iAmRolesAnywhereParams,omitempty"`
+
 		UseSTSParams *AwsUseSTSParams `json:"useSTSParams,omitempty"`
 	}
 
 	dataAO1.IAmUserParams = m.IAmUserParams
 
 	dataAO1.IAmRoleParams = m.IAmRoleParams
+
+	dataAO1.IAmRolesAnywhereParams = m.IAmRolesAnywhereParams
 
 	dataAO1.UseSTSParams = m.UseSTSParams
 
@@ -106,6 +117,10 @@ func (m *AwsAuthenticationMethodsParams) Validate(formats strfmt.Registry) error
 	}
 
 	if err := m.validateIAmRoleParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateIAmRolesAnywhereParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -159,6 +174,26 @@ func (m *AwsAuthenticationMethodsParams) validateIAmRoleParams(formats strfmt.Re
 	return nil
 }
 
+func (m *AwsAuthenticationMethodsParams) validateIAmRolesAnywhereParams(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.IAmRolesAnywhereParams) { // not required
+		return nil
+	}
+
+	if m.IAmRolesAnywhereParams != nil {
+		if err := m.IAmRolesAnywhereParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("iAmRolesAnywhereParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("iAmRolesAnywhereParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *AwsAuthenticationMethodsParams) validateUseSTSParams(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.UseSTSParams) { // not required
@@ -193,6 +228,10 @@ func (m *AwsAuthenticationMethodsParams) ContextValidate(ctx context.Context, fo
 	}
 
 	if err := m.contextValidateIAmRoleParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateIAmRolesAnywhereParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -240,6 +279,27 @@ func (m *AwsAuthenticationMethodsParams) contextValidateIAmRoleParams(ctx contex
 				return ve.ValidateName("iAmRoleParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("iAmRoleParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *AwsAuthenticationMethodsParams) contextValidateIAmRolesAnywhereParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.IAmRolesAnywhereParams != nil {
+
+		if swag.IsZero(m.IAmRolesAnywhereParams) { // not required
+			return nil
+		}
+
+		if err := m.IAmRolesAnywhereParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("iAmRolesAnywhereParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("iAmRolesAnywhereParams")
 			}
 			return err
 		}

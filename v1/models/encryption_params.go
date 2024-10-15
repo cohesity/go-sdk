@@ -8,7 +8,6 @@ package models
 import (
 	"context"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -18,13 +17,14 @@ import (
 // swagger:model EncryptionParams
 type EncryptionParams struct {
 
-	// String containing kms key arn in case of custom key option.
-	// Example: arn:aws:kms:<region>:<account_id>:key/<key_id>
-	CustomKmsKeyArn *string `json:"customKmsKeyArn,omitempty"`
-
-	// KMS key to be used to encrypt the restored volume. This is only
-	// valid for selection from dropdown.
-	KmsKey *EntityProto `json:"kmsKey,omitempty"`
+	// Encryption key to encrypt the restored volume. This will be set when
+	// should_encrypt is set as true. At any time, only one of the following
+	// fields can be populated.
+	//
+	// Types that are valid to be assigned to KmsKeyOneof:
+	// EncryptionParams_KmsKey
+	// EncryptionParams_CustomKmsKeyArn
+	KmsKeyOneof IsEncryptionParamsKmsKeyOneof `json:"KmsKeyOneof,omitempty"`
 
 	// Whether to encrypt the restored instance's volumes or not. For recovery to
 	// new location, this will be true by default.
@@ -33,69 +33,11 @@ type EncryptionParams struct {
 
 // Validate validates this encryption params
 func (m *EncryptionParams) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateKmsKey(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *EncryptionParams) validateKmsKey(formats strfmt.Registry) error {
-	if swag.IsZero(m.KmsKey) { // not required
-		return nil
-	}
-
-	if m.KmsKey != nil {
-		if err := m.KmsKey.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("kmsKey")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("kmsKey")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this encryption params based on the context it is used
+// ContextValidate validates this encryption params based on context it is used
 func (m *EncryptionParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateKmsKey(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *EncryptionParams) contextValidateKmsKey(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.KmsKey != nil {
-
-		if swag.IsZero(m.KmsKey) { // not required
-			return nil
-		}
-
-		if err := m.KmsKey.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("kmsKey")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("kmsKey")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

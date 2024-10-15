@@ -26,6 +26,12 @@ type Attachment struct {
 	// Is the attachment inline?
 	Inline *bool `json:"inline,omitempty"`
 
+	// The date and time the attachment was last changed.
+	LastModifiedDateTime *string `json:"lastModifiedDateTime,omitempty"`
+
+	// Media content type of attachment.
+	MediaContentType *string `json:"mediaContentType,omitempty"`
+
 	// Name of the attachment.
 	Name *string `json:"name,omitempty"`
 

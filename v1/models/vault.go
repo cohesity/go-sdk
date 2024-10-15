@@ -88,6 +88,9 @@ type Vault struct {
 	// Enum: ["kHomePartition","kDisk","kScribe","kScribeTable"]
 	DesiredWalLocation *string `json:"desiredWalLocation,omitempty"`
 
+	// Specifies whether object lock is enabled or not on the vault.
+	EnableObjectLock *bool `json:"enableObjectLock,omitempty"`
+
 	// Specifies if the encryption key file has been downloaded using the
 	// Cohesity Dashboard (Cohesity UI).
 	// If true, the encryption key has been downloaded using the Cohesity

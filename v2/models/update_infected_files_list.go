@@ -14,15 +14,15 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// UpdateInfectedFilesList Specifies a list of infected files.
+// UpdateInfectedFilesList Specifies a list of infected entities.
 //
 // swagger:model UpdateInfectedFilesList
 type UpdateInfectedFilesList struct {
 
-	// Specifies the list of infected files that are successfully updated.
+	// Specifies the list of infected entities that are successfully updated.
 	UpdateSucceededInfectedFiles []*InfectedFile `json:"updateSucceededInfectedFiles"`
 
-	// Specifies the list of infected files that failed update.
+	// Specifies the list of infected entities that failed update.
 	UpdateFailedInfectedFiles []*InfectedFile `json:"updateFailedInfectedFiles"`
 }
 

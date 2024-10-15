@@ -34,19 +34,33 @@ import (
 // CloudDeployInfoProto.CloudDeployEntity extension  Location         Extension
 // =============================================================================
 // aws::CloudDeployEntityInfo::aws_cloud_deploy_entity_info
+//
 // aws/aws.proto          100
+//
 // vmware::RestoreEntityInfo::vmware_cloud_deploy_entity_info
+//
 // vmware/vmware.proto    101
+//
 // azure::CloudDeployEntityInfo::azure_cloud_deploy_entity_info
+//
 // azure/azure.proto      102
+//
 // gcp::CloudDeployEntityInfo::gcp_cloud_deploy_entity_info
+//
 // gcp/gcp.proto          103
+//
 // hyperv::RestoreEntityInfo::hyperv_cloud_deploy_entity_info
+//
 // hyperv/hyperv.proto    104
+//
 // aws::ReplicationEntityInfo::aws_replication_entity_info
+//
 // aws/aws.proto          105
+//
 // aws::ReplicationEntityInfo::azure_replication_entity_info
+//
 // azure/azure.proto      106
+//
 // =============================================================================
 //
 // swagger:model CloudDeployInfoProto

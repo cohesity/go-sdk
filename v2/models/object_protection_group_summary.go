@@ -27,7 +27,7 @@ type ObjectProtectionGroupSummary struct {
 	ID *string `json:"id,omitempty"`
 
 	// Specifies the protection type of the job if any.
-	// Enum: ["kAgent","kNative","kSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsS3","kAwsRDSPostgresBackup","kAzureSQL","kFile","kVolume"]
+	// Enum: ["kAgent","kNative","kSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsS3","kAwsRDSPostgresBackup","kAwsAuroraPostgres","kAwsRDSPostgres","kAzureSQL","kFile","kVolume"]
 	ProtectionEnvType *string `json:"protectionEnvType,omitempty"`
 
 	// Specifies the policy name for this group.
@@ -40,15 +40,15 @@ type ObjectProtectionGroupSummary struct {
 	StorageDomainID *string `json:"storageDomainId,omitempty"`
 
 	// Specifies the status of last local back up run.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]
 	LastBackupRunStatus *string `json:"lastBackupRunStatus,omitempty"`
 
 	// Specifies the status of last archival run.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]
 	LastArchivalRunStatus *string `json:"lastArchivalRunStatus,omitempty"`
 
 	// Specifies the status of last replication run.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]
 	LastReplicationRunStatus *string `json:"lastReplicationRunStatus,omitempty"`
 
 	// Specifies if the sla is violated in last run.
@@ -85,7 +85,7 @@ var objectProtectionGroupSummaryTypeProtectionEnvTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kAgent","kNative","kSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsS3","kAwsRDSPostgresBackup","kAzureSQL","kFile","kVolume"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kAgent","kNative","kSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsS3","kAwsRDSPostgresBackup","kAwsAuroraPostgres","kAwsRDSPostgres","kAzureSQL","kFile","kVolume"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -115,6 +115,12 @@ const (
 
 	// ObjectProtectionGroupSummaryProtectionEnvTypeKAwsRDSPostgresBackup captures enum value "kAwsRDSPostgresBackup"
 	ObjectProtectionGroupSummaryProtectionEnvTypeKAwsRDSPostgresBackup string = "kAwsRDSPostgresBackup"
+
+	// ObjectProtectionGroupSummaryProtectionEnvTypeKAwsAuroraPostgres captures enum value "kAwsAuroraPostgres"
+	ObjectProtectionGroupSummaryProtectionEnvTypeKAwsAuroraPostgres string = "kAwsAuroraPostgres"
+
+	// ObjectProtectionGroupSummaryProtectionEnvTypeKAwsRDSPostgres captures enum value "kAwsRDSPostgres"
+	ObjectProtectionGroupSummaryProtectionEnvTypeKAwsRDSPostgres string = "kAwsRDSPostgres"
 
 	// ObjectProtectionGroupSummaryProtectionEnvTypeKAzureSQL captures enum value "kAzureSQL"
 	ObjectProtectionGroupSummaryProtectionEnvTypeKAzureSQL string = "kAzureSQL"
@@ -151,7 +157,7 @@ var objectProtectionGroupSummaryTypeLastBackupRunStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -193,6 +199,9 @@ const (
 
 	// ObjectProtectionGroupSummaryLastBackupRunStatusSkipped captures enum value "Skipped"
 	ObjectProtectionGroupSummaryLastBackupRunStatusSkipped string = "Skipped"
+
+	// ObjectProtectionGroupSummaryLastBackupRunStatusLegalHold captures enum value "LegalHold"
+	ObjectProtectionGroupSummaryLastBackupRunStatusLegalHold string = "LegalHold"
 )
 
 // prop value enum
@@ -220,7 +229,7 @@ var objectProtectionGroupSummaryTypeLastArchivalRunStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -262,6 +271,9 @@ const (
 
 	// ObjectProtectionGroupSummaryLastArchivalRunStatusSkipped captures enum value "Skipped"
 	ObjectProtectionGroupSummaryLastArchivalRunStatusSkipped string = "Skipped"
+
+	// ObjectProtectionGroupSummaryLastArchivalRunStatusLegalHold captures enum value "LegalHold"
+	ObjectProtectionGroupSummaryLastArchivalRunStatusLegalHold string = "LegalHold"
 )
 
 // prop value enum
@@ -289,7 +301,7 @@ var objectProtectionGroupSummaryTypeLastReplicationRunStatusPropEnum []interface
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -331,6 +343,9 @@ const (
 
 	// ObjectProtectionGroupSummaryLastReplicationRunStatusSkipped captures enum value "Skipped"
 	ObjectProtectionGroupSummaryLastReplicationRunStatusSkipped string = "Skipped"
+
+	// ObjectProtectionGroupSummaryLastReplicationRunStatusLegalHold captures enum value "LegalHold"
+	ObjectProtectionGroupSummaryLastReplicationRunStatusLegalHold string = "LegalHold"
 )
 
 // prop value enum

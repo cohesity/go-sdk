@@ -38,6 +38,9 @@ type RestoreOneDriveParams struct {
 	// The id of the drive in which items will be restored.
 	TargetDriveID *string `json:"targetDriveId,omitempty"`
 
+	// Quota details of the drive to which items will be restored.
+	TargetDriveQuota *Quota `json:"targetDriveQuota,omitempty"`
+
 	// All drives part of various users listed in drive_owner_vec will be
 	// restored to the drive belonging to target_user having id target_drive_id.
 	// Let's say drive_owner_vec is A and B; drive_vec of A and B is 111 and 222
@@ -58,6 +61,10 @@ func (m *RestoreOneDriveParams) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateDriveOwnerVec(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTargetDriveQuota(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -97,6 +104,25 @@ func (m *RestoreOneDriveParams) validateDriveOwnerVec(formats strfmt.Registry) e
 	return nil
 }
 
+func (m *RestoreOneDriveParams) validateTargetDriveQuota(formats strfmt.Registry) error {
+	if swag.IsZero(m.TargetDriveQuota) { // not required
+		return nil
+	}
+
+	if m.TargetDriveQuota != nil {
+		if err := m.TargetDriveQuota.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("targetDriveQuota")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("targetDriveQuota")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *RestoreOneDriveParams) validateTargetUser(formats strfmt.Registry) error {
 	if swag.IsZero(m.TargetUser) { // not required
 		return nil
@@ -121,6 +147,10 @@ func (m *RestoreOneDriveParams) ContextValidate(ctx context.Context, formats str
 	var res []error
 
 	if err := m.contextValidateDriveOwnerVec(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTargetDriveQuota(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -154,6 +184,27 @@ func (m *RestoreOneDriveParams) contextValidateDriveOwnerVec(ctx context.Context
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *RestoreOneDriveParams) contextValidateTargetDriveQuota(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.TargetDriveQuota != nil {
+
+		if swag.IsZero(m.TargetDriveQuota) { // not required
+			return nil
+		}
+
+		if err := m.TargetDriveQuota.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("targetDriveQuota")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("targetDriveQuota")
+			}
+			return err
+		}
 	}
 
 	return nil

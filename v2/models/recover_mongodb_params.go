@@ -29,6 +29,12 @@ type RecoverMongodbParams struct {
 
 	// A suffix that is to be applied to all recovered objects.
 	Suffix *string `json:"suffix,omitempty"`
+
+	// Specifies whether to recover User and roles at the time of recovery.
+	RecoverUserRoles *bool `json:"recoverUserRoles,omitempty"`
+
+	// Specifies whether to recover Zones/shard tags at the time of recovery.
+	RecoverZonesTags *bool `json:"recoverZonesTags,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -45,6 +51,10 @@ func (m *RecoverMongodbParams) UnmarshalJSON(raw []byte) error {
 		Snapshots []*RecoverMongodbSnapshotParams `json:"snapshots"`
 
 		Suffix *string `json:"suffix,omitempty"`
+
+		RecoverUserRoles *bool `json:"recoverUserRoles,omitempty"`
+
+		RecoverZonesTags *bool `json:"recoverZonesTags,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -53,6 +63,10 @@ func (m *RecoverMongodbParams) UnmarshalJSON(raw []byte) error {
 	m.Snapshots = dataAO1.Snapshots
 
 	m.Suffix = dataAO1.Suffix
+
+	m.RecoverUserRoles = dataAO1.RecoverUserRoles
+
+	m.RecoverZonesTags = dataAO1.RecoverZonesTags
 
 	return nil
 }
@@ -70,11 +84,19 @@ func (m RecoverMongodbParams) MarshalJSON() ([]byte, error) {
 		Snapshots []*RecoverMongodbSnapshotParams `json:"snapshots"`
 
 		Suffix *string `json:"suffix,omitempty"`
+
+		RecoverUserRoles *bool `json:"recoverUserRoles,omitempty"`
+
+		RecoverZonesTags *bool `json:"recoverZonesTags,omitempty"`
 	}
 
 	dataAO1.Snapshots = m.Snapshots
 
 	dataAO1.Suffix = m.Suffix
+
+	dataAO1.RecoverUserRoles = m.RecoverUserRoles
+
+	dataAO1.RecoverZonesTags = m.RecoverZonesTags
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {

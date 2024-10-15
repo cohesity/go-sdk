@@ -13,16 +13,16 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// AppCredentials Message that encapsulates the Application specific credentials.
+// AppCredentials Specifies the Application specific credentials.
 //
 // swagger:model AppCredentials
 type AppCredentials struct {
 
-	// Application specific credentials.
-	Credentials *PrivateCredentials `json:"credentials,omitempty"`
+	// Specifies the credentials.
+	Credentials *Credentials `json:"credentials,omitempty"`
 
-	// Application type to which the credentials apply.
-	EnvType *int32 `json:"envType,omitempty"`
+	// Specifies the Application type for which the credentials apply.
+	EnvironmentType *int32 `json:"environmentType,omitempty"`
 }
 
 // Validate validates this app credentials

@@ -21,7 +21,7 @@ import (
 type AwsSnapshotParams struct {
 
 	// Specifies the protection type of AWS snapshots.
-	// Enum: ["kAgent","kNative","kSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsS3","kAwsRDSPostgresBackup"]
+	// Enum: ["kAgent","kNative","kSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsS3","kAwsRDSPostgresBackup","kAwsAuroraPostgres","kAwsRDSPostgres"]
 	ProtectionType *string `json:"protectionType,omitempty"`
 }
 
@@ -43,7 +43,7 @@ var awsSnapshotParamsTypeProtectionTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kAgent","kNative","kSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsS3","kAwsRDSPostgresBackup"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kAgent","kNative","kSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsS3","kAwsRDSPostgresBackup","kAwsAuroraPostgres","kAwsRDSPostgres"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -73,6 +73,12 @@ const (
 
 	// AwsSnapshotParamsProtectionTypeKAwsRDSPostgresBackup captures enum value "kAwsRDSPostgresBackup"
 	AwsSnapshotParamsProtectionTypeKAwsRDSPostgresBackup string = "kAwsRDSPostgresBackup"
+
+	// AwsSnapshotParamsProtectionTypeKAwsAuroraPostgres captures enum value "kAwsAuroraPostgres"
+	AwsSnapshotParamsProtectionTypeKAwsAuroraPostgres string = "kAwsAuroraPostgres"
+
+	// AwsSnapshotParamsProtectionTypeKAwsRDSPostgres captures enum value "kAwsRDSPostgres"
+	AwsSnapshotParamsProtectionTypeKAwsRDSPostgres string = "kAwsRDSPostgres"
 )
 
 // prop value enum

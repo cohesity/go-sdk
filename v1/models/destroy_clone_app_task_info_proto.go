@@ -20,22 +20,32 @@ import (
 // Each available extension is listed below along with the location of the
 // proto file (relative to magneto/connectors) where it is defined.
 //
-// DestroyCloneAppTaskInfoProto extension
+// # DestroyCloneAppTaskInfoProto extension
+//
 // Location
 // Extension
+//
 // =============================================================================
 // sql::DestroyCloneTaskInfo::sql_destroy_clone_app_task_info
+//
 // sql/sql.proto
 // 100
+//
 // oracle::DestroyCloneTaskInfo::oracle_destroy_clone_app_task_info
+//
 // oracle/oracle.proto
 // 101
+//
 // ad::DestroyTaskInfo::ad_destroy_app_task_info
+//
 // ad/ad.proto
 // 102
+//
 // exchange::DestroyTaskInfo::exchange_destroy_app_task_info
+//
 // exchange/exchange.proto
 // 103
+//
 // =============================================================================
 //
 // swagger:model DestroyCloneAppTaskInfoProto

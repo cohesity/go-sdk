@@ -115,6 +115,9 @@ type ProtectionGroup struct {
 	// Specifies the parameters which are specific to Universal Data Adapter related Protection Groups.
 	UdaParams *UdaProtectionGroupParams `json:"udaParams,omitempty"`
 
+	// Specifies the parameters which are specific to SAP HANA related Protection Groups.
+	SapHanaParams *SapHanaProtectionGroupParams `json:"sapHanaParams,omitempty"`
+
 	// Specifies the parameters which are specific to SFDC Adapter related Protection Groups.
 	SfdcParams *SfdcProtectionGroupParams `json:"sfdcParams,omitempty"`
 }
@@ -194,6 +197,8 @@ func (m *ProtectionGroup) UnmarshalJSON(raw []byte) error {
 
 		UdaParams *UdaProtectionGroupParams `json:"udaParams,omitempty"`
 
+		SapHanaParams *SapHanaProtectionGroupParams `json:"sapHanaParams,omitempty"`
+
 		SfdcParams *SfdcProtectionGroupParams `json:"sfdcParams,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
@@ -263,6 +268,8 @@ func (m *ProtectionGroup) UnmarshalJSON(raw []byte) error {
 	m.HbaseParams = dataAO1.HbaseParams
 
 	m.UdaParams = dataAO1.UdaParams
+
+	m.SapHanaParams = dataAO1.SapHanaParams
 
 	m.SfdcParams = dataAO1.SfdcParams
 
@@ -343,6 +350,8 @@ func (m ProtectionGroup) MarshalJSON() ([]byte, error) {
 
 		UdaParams *UdaProtectionGroupParams `json:"udaParams,omitempty"`
 
+		SapHanaParams *SapHanaProtectionGroupParams `json:"sapHanaParams,omitempty"`
+
 		SfdcParams *SfdcProtectionGroupParams `json:"sfdcParams,omitempty"`
 	}
 
@@ -409,6 +418,8 @@ func (m ProtectionGroup) MarshalJSON() ([]byte, error) {
 	dataAO1.HbaseParams = m.HbaseParams
 
 	dataAO1.UdaParams = m.UdaParams
+
+	dataAO1.SapHanaParams = m.SapHanaParams
 
 	dataAO1.SfdcParams = m.SfdcParams
 
@@ -554,6 +565,10 @@ func (m *ProtectionGroup) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateUdaParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSapHanaParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1207,6 +1222,26 @@ func (m *ProtectionGroup) validateUdaParams(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *ProtectionGroup) validateSapHanaParams(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.SapHanaParams) { // not required
+		return nil
+	}
+
+	if m.SapHanaParams != nil {
+		if err := m.SapHanaParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sapHanaParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sapHanaParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *ProtectionGroup) validateSfdcParams(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.SfdcParams) { // not required
@@ -1361,6 +1396,10 @@ func (m *ProtectionGroup) ContextValidate(ctx context.Context, formats strfmt.Re
 	}
 
 	if err := m.contextValidateUdaParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSapHanaParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -2038,6 +2077,27 @@ func (m *ProtectionGroup) contextValidateUdaParams(ctx context.Context, formats 
 				return ve.ValidateName("udaParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("udaParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ProtectionGroup) contextValidateSapHanaParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.SapHanaParams != nil {
+
+		if swag.IsZero(m.SapHanaParams) { // not required
+			return nil
+		}
+
+		if err := m.SapHanaParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sapHanaParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sapHanaParams")
 			}
 			return err
 		}

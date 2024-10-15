@@ -38,6 +38,9 @@ type BackupSourceParams struct {
 	// This is applicable to sources of type kAWS with snapshot manager backup.
 	AwsSnapshotManagerParams *AWSSnapshotManagerBackupSourceParams `json:"awsSnapshotManagerParams,omitempty"`
 
+	// This is applicable to source of kAzure with native backup type.
+	AzureBackupSourceParams *AzureNativeBackupSourceParams `json:"azureBackupSourceParams,omitempty"`
+
 	// This is applicable to source type kGCP.
 	GcpNativeParams *GCPNativeObjectParams `json:"gcpNativeParams,omitempty"`
 
@@ -94,6 +97,10 @@ func (m *BackupSourceParams) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateAwsSnapshotManagerParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateAzureBackupSourceParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -192,6 +199,25 @@ func (m *BackupSourceParams) validateAwsSnapshotManagerParams(formats strfmt.Reg
 				return ve.ValidateName("awsSnapshotManagerParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("awsSnapshotManagerParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *BackupSourceParams) validateAzureBackupSourceParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.AzureBackupSourceParams) { // not required
+		return nil
+	}
+
+	if m.AzureBackupSourceParams != nil {
+		if err := m.AzureBackupSourceParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("azureBackupSourceParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("azureBackupSourceParams")
 			}
 			return err
 		}
@@ -406,6 +432,10 @@ func (m *BackupSourceParams) ContextValidate(ctx context.Context, formats strfmt
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateAzureBackupSourceParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateGcpNativeParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -507,6 +537,27 @@ func (m *BackupSourceParams) contextValidateAwsSnapshotManagerParams(ctx context
 				return ve.ValidateName("awsSnapshotManagerParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("awsSnapshotManagerParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *BackupSourceParams) contextValidateAzureBackupSourceParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.AzureBackupSourceParams != nil {
+
+		if swag.IsZero(m.AzureBackupSourceParams) { // not required
+			return nil
+		}
+
+		if err := m.AzureBackupSourceParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("azureBackupSourceParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("azureBackupSourceParams")
 			}
 			return err
 		}

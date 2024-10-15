@@ -13,9 +13,7 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// RetentionPolicyProto Retention Policy Proto.
-//
-// Message that specifies the retention policy for backup snapshots.
+// RetentionPolicyProto Message that specifies the retention policy for backup snapshots.
 //
 // swagger:model RetentionPolicyProto
 type RetentionPolicyProto struct {
@@ -24,7 +22,7 @@ type RetentionPolicyProto struct {
 	NumDaysToKeep *int64 `json:"numDaysToKeep,omitempty"`
 
 	// The number of seconds to keep the snapshots for a backup run.
-	NumSecsToKeep *int32 `json:"numSecsToKeep,omitempty"`
+	NumSecsToKeep *int64 `json:"numSecsToKeep,omitempty"`
 
 	// If the WORM lock is enabled on this policy, details of WORM policy.
 	// Absence of this field indicates WORM is not enabled on this policy.

@@ -24,7 +24,7 @@ import (
 type FileFolderInfo struct {
 
 	// Specifies the environment of the object.
-	// Enum: ["kVMware","kHyperV","kAzure","kKVM","kAWS","kAzureSQL","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kAzure","kKVM","kAWS","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies the parameters for Hdfs.
@@ -60,7 +60,7 @@ var fileFolderInfoTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kKVM","kAWS","kAzureSQL","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kKVM","kAWS","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -84,9 +84,6 @@ const (
 
 	// FileFolderInfoEnvironmentKAWS captures enum value "kAWS"
 	FileFolderInfoEnvironmentKAWS string = "kAWS"
-
-	// FileFolderInfoEnvironmentKAzureSQL captures enum value "kAzureSQL"
-	FileFolderInfoEnvironmentKAzureSQL string = "kAzureSQL"
 
 	// FileFolderInfoEnvironmentKAcropolis captures enum value "kAcropolis"
 	FileFolderInfoEnvironmentKAcropolis string = "kAcropolis"
@@ -168,6 +165,9 @@ const (
 
 	// FileFolderInfoEnvironmentKHBase captures enum value "kHBase"
 	FileFolderInfoEnvironmentKHBase string = "kHBase"
+
+	// FileFolderInfoEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	FileFolderInfoEnvironmentKSAPHANA string = "kSAPHANA"
 
 	// FileFolderInfoEnvironmentKUDA captures enum value "kUDA"
 	FileFolderInfoEnvironmentKUDA string = "kUDA"

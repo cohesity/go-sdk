@@ -64,8 +64,6 @@ type ClientService interface {
 
 	CreateVirtualCluster(params *CreateVirtualClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateVirtualClusterAccepted, error)
 
-	DestroyCluster(params *DestroyClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DestroyClusterNoContent, error)
-
 	DownloadSnmpMibs(params *DownloadSnmpMibsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DownloadSnmpMibsOK, error)
 
 	ExpandCloudCluster(params *ExpandCloudClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ExpandCloudClusterAccepted, error)
@@ -138,7 +136,7 @@ type ClientService interface {
 /*
 	ChangeServiceState changes the state of one or more services on a cohesity cluster
 
-	Sends a request to either stop, start, or restart one or more of the services
+	**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to either stop, start, or restart one or more of the services
 
 on a Cohesity Cluster and returns a message describing the result.
 
@@ -182,7 +180,7 @@ func (a *Client) ChangeServiceState(params *ChangeServiceStateParams, authInfo r
 /*
 ClusterListMasters tos fetch list of master nodes for all components
 
-Returns the list of master nodes for all components.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the list of master nodes for all components.
 */
 func (a *Client) ClusterListMasters(params *ClusterListMastersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ClusterListMastersOK, error) {
 	// TODO: Validate the params before sending
@@ -222,7 +220,7 @@ func (a *Client) ClusterListMasters(params *ClusterListMastersParams, authInfo r
 /*
 	CreateCloudCluster creates a new cloud edition cohesity cluster
 
-	Sends a request to create a new Cloud Edition Cohesity Cluster and returns
+	**Privileges:** ```CLUSTER_CREATE``` <br><br>Sends a request to create a new Cloud Edition Cohesity Cluster and returns
 
 the IDs, name, and software version of the new cluster. Also returns the
 status of each node.
@@ -265,7 +263,7 @@ func (a *Client) CreateCloudCluster(params *CreateCloudClusterParams, authInfo r
 /*
 	CreatePhysicalCluster creates a new physical edition cohesity cluster
 
-	Sends a request to create a new Physical Edition Cohesity Cluster and returns
+	**Privileges:** ```CLUSTER_CREATE``` <br><br>Sends a request to create a new Physical Edition Cohesity Cluster and returns
 
 the IDs, name, and software version of the new cluster. Also returns the
 status of each node.
@@ -308,7 +306,7 @@ func (a *Client) CreatePhysicalCluster(params *CreatePhysicalClusterParams, auth
 /*
 	CreateVirtualCluster creates a new virtual edition cohesity cluster
 
-	Sends a request to create a new Virtual Edition Cohesity Cluster and returns
+	**Privileges:** ```CLUSTER_CREATE``` <br><br>Sends a request to create a new Virtual Edition Cohesity Cluster and returns
 
 the IDs, name and software version of the new cluster.
 */
@@ -348,53 +346,9 @@ func (a *Client) CreateVirtualCluster(params *CreateVirtualClusterParams, authIn
 }
 
 /*
-	DestroyCluster destroys a cohesity cluster
-
-	Sends a request to destroy a Cohesity Cluster and returns some information
-
-about the operation and each Node.
-
-WARNING: This is a destructive operation.
-*/
-func (a *Client) DestroyCluster(params *DestroyClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DestroyClusterNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewDestroyClusterParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "DestroyCluster",
-		Method:             "DELETE",
-		PathPattern:        "/public/clusters",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &DestroyClusterReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*DestroyClusterNoContent)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*DestroyClusterDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 DownloadSnmpMibs downloads the s n m p mibs file from the cluster
 
-Returns the SNMP Mibs file from the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the SNMP Mibs file from the cluster.
 */
 func (a *Client) DownloadSnmpMibs(params *DownloadSnmpMibsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DownloadSnmpMibsOK, error) {
 	// TODO: Validate the params before sending
@@ -434,7 +388,7 @@ func (a *Client) DownloadSnmpMibs(params *DownloadSnmpMibsParams, authInfo runti
 /*
 	ExpandCloudCluster expands a cloud edition cohesity cluster
 
-	Sends a request to expand a Cloud Edition Cohesity Cluster and returns some
+	**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to expand a Cloud Edition Cohesity Cluster and returns some
 
 information about the request and each new Node.
 */
@@ -476,7 +430,7 @@ func (a *Client) ExpandCloudCluster(params *ExpandCloudClusterParams, authInfo r
 /*
 	ExpandPhysicalCluster expands a physical edition cohesity cluster
 
-	Sends a request to expand a Physical Edition Cohesity Cluster and returns some
+	**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to expand a Physical Edition Cohesity Cluster and returns some
 
 information about the request and each new Node.
 */
@@ -518,7 +472,7 @@ func (a *Client) ExpandPhysicalCluster(params *ExpandPhysicalClusterParams, auth
 /*
 GetBackgroundActivitySchedule gets the apollo throttling schedule
 
-Sends a request to get the apollo throttling settings applied for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Sends a request to get the apollo throttling settings applied for the cluster.
 */
 func (a *Client) GetBackgroundActivitySchedule(params *GetBackgroundActivityScheduleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetBackgroundActivityScheduleOK, error) {
 	// TODO: Validate the params before sending
@@ -558,7 +512,7 @@ func (a *Client) GetBackgroundActivitySchedule(params *GetBackgroundActivitySche
 /*
 GetClientSubnetWhitelist lists the client subnet whitelist for the cluster
 
-Returns the Client Subnet Whitelist for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the Client Subnet Whitelist for the cluster.
 */
 func (a *Client) GetClientSubnetWhitelist(params *GetClientSubnetWhitelistParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClientSubnetWhitelistOK, error) {
 	// TODO: Validate the params before sending
@@ -598,7 +552,7 @@ func (a *Client) GetClientSubnetWhitelist(params *GetClientSubnetWhitelistParams
 /*
 	GetClusterCreationProgress checks the progress of the creation of a new cohesity cluster
 
-	Sends a request to check the progress of the creation of a new Cohesity
+	**Privileges:** ```CLUSTER_CREATE, CLUSTER_VIEW``` <br><br>Sends a request to check the progress of the creation of a new Cohesity
 
 Cluster and returns some information about the creation process along
 with an estimated time remaining and completion percentage.
@@ -641,7 +595,7 @@ func (a *Client) GetClusterCreationProgress(params *GetClusterCreationProgressPa
 /*
 GetClusterKeys lists the public keys for the cluster
 
-Returns the Public Keys for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the Public Keys for the cluster.
 */
 func (a *Client) GetClusterKeys(params *GetClusterKeysParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterKeysOK, error) {
 	// TODO: Validate the params before sending
@@ -681,7 +635,7 @@ func (a *Client) GetClusterKeys(params *GetClusterKeysParams, authInfo runtime.C
 /*
 GetClusterPlatforms lists the cluster platform types for all nodes
 
-Returns the PlatformParam object for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the PlatformParam object for the cluster.
 */
 func (a *Client) GetClusterPlatforms(params *GetClusterPlatformsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterPlatformsOK, error) {
 	// TODO: Validate the params before sending
@@ -721,7 +675,7 @@ func (a *Client) GetClusterPlatforms(params *GetClusterPlatformsParams, authInfo
 /*
 GetClusterPublicKey lists the public key for the cluster
 
-Returns the Public Key for the cluster.
+**Privileges:** ```CLUSTER_VIEW, TENANT_VIEW``` <br><br>Returns the Public Key for the cluster.
 */
 func (a *Client) GetClusterPublicKey(params *GetClusterPublicKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterPublicKeyOK, error) {
 	// TODO: Validate the params before sending
@@ -761,7 +715,7 @@ func (a *Client) GetClusterPublicKey(params *GetClusterPublicKeyParams, authInfo
 /*
 GetClusterStats lists the cluster stats
 
-Returns the top level stats for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the top level stats for the cluster.
 */
 func (a *Client) GetClusterStats(params *GetClusterStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -801,7 +755,7 @@ func (a *Client) GetClusterStats(params *GetClusterStatsParams, authInfo runtime
 /*
 GetClusterSubnets lists the cluster subnet
 
-Returns the subnet object for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the subnet object for the cluster.
 */
 func (a *Client) GetClusterSubnets(params *GetClusterSubnetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterSubnetsOK, error) {
 	// TODO: Validate the params before sending
@@ -841,7 +795,7 @@ func (a *Client) GetClusterSubnets(params *GetClusterSubnetsParams, authInfo run
 /*
 GetClusterUpgradeStatus lists the cluster upgrade status
 
-Returns the upgrade status for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the upgrade status for the cluster.
 */
 func (a *Client) GetClusterUpgradeStatus(params *GetClusterUpgradeStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterUpgradeStatusOK, error) {
 	// TODO: Validate the params before sending
@@ -881,7 +835,7 @@ func (a *Client) GetClusterUpgradeStatus(params *GetClusterUpgradeStatusParams, 
 /*
 GetExternalClientSubnets lists the external client subnets for the cluster
 
-Returns the external Client Subnets for the cluster.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Returns the external Client Subnets for the cluster.
 */
 func (a *Client) GetExternalClientSubnets(params *GetExternalClientSubnetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetExternalClientSubnetsOK, error) {
 	// TODO: Validate the params before sending
@@ -921,7 +875,7 @@ func (a *Client) GetExternalClientSubnets(params *GetExternalClientSubnetsParams
 /*
 GetIoPreferentialTier lists the i o preferential tier for the cluster
 
-Returns the IO Preferential Tier for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the IO Preferential Tier for the cluster.
 */
 func (a *Client) GetIoPreferentialTier(params *GetIoPreferentialTierParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIoPreferentialTierOK, error) {
 	// TODO: Validate the params before sending
@@ -961,7 +915,7 @@ func (a *Client) GetIoPreferentialTier(params *GetIoPreferentialTierParams, auth
 /*
 GetIoPreferentialTierMixin0 returns the i o preferential tiers of the cluster
 
-Get the IO preferential tiers of the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get the IO preferential tiers of the cluster.
 */
 func (a *Client) GetIoPreferentialTierMixin0(params *GetIoPreferentialTierMixin0Params, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIoPreferentialTierMixin0OK, error) {
 	// TODO: Validate the params before sending
@@ -1001,7 +955,7 @@ func (a *Client) GetIoPreferentialTierMixin0(params *GetIoPreferentialTierMixin0
 /*
 GetNFSExportPaths lists the n f s export path list for the cluster
 
-Returns the NFS Export Path List for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the NFS Export Path List for the cluster.
 */
 func (a *Client) GetNFSExportPaths(params *GetNFSExportPathsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNFSExportPathsOK, error) {
 	// TODO: Validate the params before sending
@@ -1041,7 +995,7 @@ func (a *Client) GetNFSExportPaths(params *GetNFSExportPathsParams, authInfo run
 /*
 GetNtpServers lists the n t p servers for the cluster
 
-Returns the NTP Servers for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the NTP Servers for the cluster.
 */
 func (a *Client) GetNtpServers(params *GetNtpServersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNtpServersOK, error) {
 	// TODO: Validate the params before sending
@@ -1081,7 +1035,7 @@ func (a *Client) GetNtpServers(params *GetNtpServersParams, authInfo runtime.Cli
 /*
 GetProxyServers lists the proxy servers for the cluster
 
-Returns the Proxy Servers for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the Proxy Servers for the cluster.
 */
 func (a *Client) GetProxyServers(params *GetProxyServersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProxyServersOK, error) {
 	// TODO: Validate the params before sending
@@ -1121,7 +1075,7 @@ func (a *Client) GetProxyServers(params *GetProxyServersParams, authInfo runtime
 /*
 GetServiceGflag gets the gflags of a cohesity cluster
 
-Sends a request to get the gflags of the current Cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Sends a request to get the gflags of the current Cluster.
 */
 func (a *Client) GetServiceGflag(params *GetServiceGflagParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetServiceGflagOK, error) {
 	// TODO: Validate the params before sending
@@ -1161,7 +1115,7 @@ func (a *Client) GetServiceGflag(params *GetServiceGflagParams, authInfo runtime
 /*
 ListServiceStates lists the states of the services on the cluster
 
-Sends a request to list the states of all of the services on a Cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Sends a request to list the states of all of the services on a Cluster.
 */
 func (a *Client) ListServiceStates(params *ListServiceStatesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListServiceStatesOK, error) {
 	// TODO: Validate the params before sending
@@ -1201,7 +1155,7 @@ func (a *Client) ListServiceStates(params *ListServiceStatesParams, authInfo run
 /*
 PutIoPreferentialTier updates the i o preferential tiers and return the updated i o preferential tiers of the cluster
 
-Update the IO preferential tiers of the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update the IO preferential tiers of the cluster.
 */
 func (a *Client) PutIoPreferentialTier(params *PutIoPreferentialTierParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PutIoPreferentialTierOK, error) {
 	// TODO: Validate the params before sending
@@ -1241,7 +1195,7 @@ func (a *Client) PutIoPreferentialTier(params *PutIoPreferentialTierParams, auth
 /*
 	RemoveNode removes a node from a cohesity cluster
 
-	Sends a request to remove a Node from a Cohesity Cluster.
+	**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to remove a Node from a Cohesity Cluster.
 
 WARNING: This is a destructive operation.
 */
@@ -1283,7 +1237,7 @@ func (a *Client) RemoveNode(params *RemoveNodeParams, authInfo runtime.ClientAut
 /*
 RemoveProxyServer removes specified proxy server from the cluster
 
-Returns delete status upon completion.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns delete status upon completion.
 */
 func (a *Client) RemoveProxyServer(params *RemoveProxyServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RemoveProxyServerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1323,7 +1277,7 @@ func (a *Client) RemoveProxyServer(params *RemoveProxyServerParams, authInfo run
 /*
 	UpdateBackgroundActivitySchedule updates the apollo throttling schedule
 
-	Sends a request to update the apollo throttling settings for the cluster.
+	**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to update the apollo throttling settings for the cluster.
 
 Returns the updated apollo throttling settings of the cluster.
 */
@@ -1365,7 +1319,7 @@ func (a *Client) UpdateBackgroundActivitySchedule(params *UpdateBackgroundActivi
 /*
 UpdateClientSubnetWhitelist updates the client subnet whitelist of the cluster
 
-Returns the updated Client Subnet Whitelist of the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the updated Client Subnet Whitelist of the cluster.
 */
 func (a *Client) UpdateClientSubnetWhitelist(params *UpdateClientSubnetWhitelistParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateClientSubnetWhitelistOK, error) {
 	// TODO: Validate the params before sending
@@ -1405,7 +1359,7 @@ func (a *Client) UpdateClientSubnetWhitelist(params *UpdateClientSubnetWhitelist
 /*
 UpdateClusterSubnets updates the cluster subnets
 
-Returns the updated Cluster Subnets.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the updated Cluster Subnets.
 */
 func (a *Client) UpdateClusterSubnets(params *UpdateClusterSubnetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateClusterSubnetsOK, error) {
 	// TODO: Validate the params before sending
@@ -1445,7 +1399,7 @@ func (a *Client) UpdateClusterSubnets(params *UpdateClusterSubnetsParams, authIn
 /*
 UpdateExternalClientSubnets updates the external client subnet of the cluster
 
-Returns the updated external Client Subnets of the cluster.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Returns the updated external Client Subnets of the cluster.
 */
 func (a *Client) UpdateExternalClientSubnets(params *UpdateExternalClientSubnetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateExternalClientSubnetsOK, error) {
 	// TODO: Validate the params before sending
@@ -1485,7 +1439,7 @@ func (a *Client) UpdateExternalClientSubnets(params *UpdateExternalClientSubnets
 /*
 UpdateIoPreferentialTier updates the i o preferential tier of the cluster
 
-Returns the updated IO Preferential Tier of the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the updated IO Preferential Tier of the cluster.
 */
 func (a *Client) UpdateIoPreferentialTier(params *UpdateIoPreferentialTierParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateIoPreferentialTierOK, error) {
 	// TODO: Validate the params before sending
@@ -1525,7 +1479,7 @@ func (a *Client) UpdateIoPreferentialTier(params *UpdateIoPreferentialTierParams
 /*
 UpdateNtpServers updates the n t p servers of the cluster
 
-Returns the updated NTP Servers of the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the updated NTP Servers of the cluster.
 */
 func (a *Client) UpdateNtpServers(params *UpdateNtpServersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNtpServersOK, error) {
 	// TODO: Validate the params before sending
@@ -1565,7 +1519,7 @@ func (a *Client) UpdateNtpServers(params *UpdateNtpServersParams, authInfo runti
 /*
 UpdateProxyServer updates the proxy servers of the cluster
 
-Returns the updated Proxy Server on the cluster.
+```Unknown Privileges``` <br><br>Returns the updated Proxy Server on the cluster.
 */
 func (a *Client) UpdateProxyServer(params *UpdateProxyServerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProxyServerOK, error) {
 	// TODO: Validate the params before sending
@@ -1605,7 +1559,7 @@ func (a *Client) UpdateProxyServer(params *UpdateProxyServerParams, authInfo run
 /*
 UpdateServiceFlag updates the service flag on all the nodes of the cluster
 
-Returns the service flag update response of all the nodes on the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the service flag update response of all the nodes on the cluster.
 */
 func (a *Client) UpdateServiceFlag(params *UpdateServiceFlagParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateServiceFlagOK, error) {
 	// TODO: Validate the params before sending
@@ -1645,7 +1599,7 @@ func (a *Client) UpdateServiceFlag(params *UpdateServiceFlagParams, authInfo run
 /*
 UpdateServiceGflag updates the gflags of a cohesity cluster
 
-Sends a request to update the gflags of the current Cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to update the gflags of the current Cluster.
 */
 func (a *Client) UpdateServiceGflag(params *UpdateServiceGflagParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateServiceGflagOK, error) {
 	// TODO: Validate the params before sending
@@ -1685,7 +1639,7 @@ func (a *Client) UpdateServiceGflag(params *UpdateServiceGflagParams, authInfo r
 /*
 	UpgradeCluster upgrades a cohesity cluster
 
-	Sends a request to upgrade the software version of a Cohesity Cluster
+	**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to upgrade the software version of a Cohesity Cluster
 
 and returns a message specifying the result. Before using this, you need to
 use the /public/packages endpoint to upload a new package to the Cluster.

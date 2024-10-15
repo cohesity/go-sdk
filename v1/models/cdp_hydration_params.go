@@ -45,6 +45,13 @@ type CdpHydrationParams struct {
 
 	// CDP Directory in which logs are placed in SnapFS.
 	LogViewDir *string `json:"logViewDir,omitempty"`
+
+	// The start time of the base run.
+	RunStartTimeUsecs *int64 `json:"runStartTimeUsecs,omitempty"`
+
+	// The VADP snapshot or CDP hydration time, starting from which the log(s)
+	// needs to be applied.
+	SnapshotStartTimeUsecs *int64 `json:"snapshotStartTimeUsecs,omitempty"`
 }
 
 // Validate validates this cdp hydration params

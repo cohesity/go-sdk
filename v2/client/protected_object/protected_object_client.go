@@ -66,7 +66,7 @@ type ClientService interface {
 /*
 PerformActionOnProtectObjects performs actions on protect objects
 
-Perform actions on Protected Objects.
+**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>Perform actions on Protected Objects.
 */
 func (a *Client) PerformActionOnProtectObjects(params *PerformActionOnProtectObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PerformActionOnProtectObjectsMultiStatus, error) {
 	// TODO: Validate the params before sending
@@ -106,7 +106,7 @@ func (a *Client) PerformActionOnProtectObjects(params *PerformActionOnProtectObj
 /*
 ProtectObjectsOfAnyType creates object backup
 
-Create Protect Objects Backup.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Create Protect Objects Backup.
 */
 func (a *Client) ProtectObjectsOfAnyType(params *ProtectObjectsOfAnyTypeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProtectObjectsOfAnyTypeMultiStatus, error) {
 	// TODO: Validate the params before sending
@@ -146,7 +146,7 @@ func (a *Client) ProtectObjectsOfAnyType(params *ProtectObjectsOfAnyTypeParams, 
 /*
 UpdateProtectedObjectsOfAnyType updates object backup
 
-Update Protected object backup configuration given a object id.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Update Protected object backup configuration given a object id.
 */
 func (a *Client) UpdateProtectedObjectsOfAnyType(params *UpdateProtectedObjectsOfAnyTypeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProtectedObjectsOfAnyTypeOK, error) {
 	// TODO: Validate the params before sending

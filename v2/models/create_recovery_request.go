@@ -99,6 +99,9 @@ type CreateRecoveryRequest struct {
 	// Specifies the parameters which are specific to Pure related Recovery.
 	PureParams *RecoverPureParams `json:"pureParams,omitempty"`
 
+	// Specifies the parameters which are specific to SAP HANA Recovery.
+	SapHanaParams *SapHanaParams `json:"sapHanaParams,omitempty"`
+
 	// Specifies the parameters which are specific to Salesforce related Recovery.
 	SfdcParams *RecoverSalesforceParams `json:"sfdcParams,omitempty"`
 
@@ -175,6 +178,8 @@ func (m *CreateRecoveryRequest) UnmarshalJSON(raw []byte) error {
 
 		PureParams *RecoverPureParams `json:"pureParams,omitempty"`
 
+		SapHanaParams *SapHanaParams `json:"sapHanaParams,omitempty"`
+
 		SfdcParams *RecoverSalesforceParams `json:"sfdcParams,omitempty"`
 
 		UdaParams *UdaParams `json:"udaParams,omitempty"`
@@ -238,6 +243,8 @@ func (m *CreateRecoveryRequest) UnmarshalJSON(raw []byte) error {
 	m.PhysicalParams = dataAO1.PhysicalParams
 
 	m.PureParams = dataAO1.PureParams
+
+	m.SapHanaParams = dataAO1.SapHanaParams
 
 	m.SfdcParams = dataAO1.SfdcParams
 
@@ -312,6 +319,8 @@ func (m CreateRecoveryRequest) MarshalJSON() ([]byte, error) {
 
 		PureParams *RecoverPureParams `json:"pureParams,omitempty"`
 
+		SapHanaParams *SapHanaParams `json:"sapHanaParams,omitempty"`
+
 		SfdcParams *RecoverSalesforceParams `json:"sfdcParams,omitempty"`
 
 		UdaParams *UdaParams `json:"udaParams,omitempty"`
@@ -372,6 +381,8 @@ func (m CreateRecoveryRequest) MarshalJSON() ([]byte, error) {
 	dataAO1.PhysicalParams = m.PhysicalParams
 
 	dataAO1.PureParams = m.PureParams
+
+	dataAO1.SapHanaParams = m.SapHanaParams
 
 	dataAO1.SfdcParams = m.SfdcParams
 
@@ -499,6 +510,10 @@ func (m *CreateRecoveryRequest) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validatePureParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSapHanaParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1044,6 +1059,26 @@ func (m *CreateRecoveryRequest) validatePureParams(formats strfmt.Registry) erro
 	return nil
 }
 
+func (m *CreateRecoveryRequest) validateSapHanaParams(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.SapHanaParams) { // not required
+		return nil
+	}
+
+	if m.SapHanaParams != nil {
+		if err := m.SapHanaParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sapHanaParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sapHanaParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *CreateRecoveryRequest) validateSfdcParams(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.SfdcParams) { // not required
@@ -1234,6 +1269,10 @@ func (m *CreateRecoveryRequest) ContextValidate(ctx context.Context, formats str
 	}
 
 	if err := m.contextValidatePureParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSapHanaParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1797,6 +1836,27 @@ func (m *CreateRecoveryRequest) contextValidatePureParams(ctx context.Context, f
 				return ve.ValidateName("pureParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("pureParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *CreateRecoveryRequest) contextValidateSapHanaParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.SapHanaParams != nil {
+
+		if swag.IsZero(m.SapHanaParams) { // not required
+			return nil
+		}
+
+		if err := m.SapHanaParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sapHanaParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sapHanaParams")
 			}
 			return err
 		}

@@ -17,14 +17,18 @@ import (
 // swagger:model AgentCertificateInformation
 type AgentCertificateInformation struct {
 
+	// We will store one of cipher_type enum or a full string of the cipher.
+	// In the common case, we do not want to bloat the magneto master state
+	// by storing these strings. So, we will use enums for commonly used
+	// ciphers. We will store the string itself for other rare ciphers.
+	//
+	// Types that are valid to be assigned to CipherOneof:
+	// AgentCertificateInformation_CipherType
+	// AgentCertificateInformation_CipherStr
+	CipherOneof IsAgentCertificateInformationCipherOneof `json:"CipherOneof,omitempty"`
+
 	// cert type
 	CertType *int32 `json:"certType,omitempty"`
-
-	// cipher str
-	CipherStr *string `json:"cipherStr,omitempty"`
-
-	// cipher type
-	CipherType *int32 `json:"cipherType,omitempty"`
 
 	// Expiry time for the certificate.
 	ExpiryTimeEpoch *uint64 `json:"expiryTimeEpoch,omitempty"`

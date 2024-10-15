@@ -70,6 +70,10 @@ type PerformRestoreTaskStateProto struct {
 	// slave.
 	CloudDeployInfo *CloudDeployInfoProto `json:"cloudDeployInfo,omitempty"`
 
+	// If this is a CAv2 restore job, the path of the cloud domain the snapshot
+	// belongs to.
+	CloudDomainPrefix *string `json:"cloudDomainPrefix,omitempty"`
+
 	// Whether to continue with the restore operation if restore of any object
 	// fails.
 	ContinueRestoreOnError *bool `json:"continueRestoreOnError,omitempty"`
@@ -282,6 +286,11 @@ type PerformRestoreTaskStateProto struct {
 	// kRecoverVMs.
 	RestoreKvmVmsParams *RestoreKVMVMsParams `json:"restoreKvmVmsParams,omitempty"`
 
+	// This field defines the params for triggering M365 Backup Storage API
+	// based recoveries. This is valid for kRecoverM365ExchangeCSM,
+	// kRecoverM365OneDriveCSM & kRecoverM365SharepointCSM.
+	RestoreM365CsmParams *RestoreM365CSMParams `json:"restoreM365CsmParams,omitempty"`
+
 	// Indicates the customization options for the restore objects.
 	RestoreObjectCustomizations []*RestoreObjectCustomization `json:"restoreObjectCustomizations"`
 
@@ -456,6 +465,9 @@ type PerformRestoreTaskStateProto struct {
 	// The view box id to which 'view_name' belongs to. In case the restore task
 	// corresponds to a backup job, this view box corresponds to the view box of
 	// the backup job.
+	//
+	// Reason for ignoring tenant migration check is that the view box is
+	// expected to change from source to destination cluster.
 	ViewBoxID *int64 `json:"viewBoxId,omitempty"`
 
 	// The view name as provided by the user for this restore operation.
@@ -601,6 +613,10 @@ func (m *PerformRestoreTaskStateProto) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRestoreKvmVmsParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRestoreM365CsmParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1334,6 +1350,25 @@ func (m *PerformRestoreTaskStateProto) validateRestoreKvmVmsParams(formats strfm
 	return nil
 }
 
+func (m *PerformRestoreTaskStateProto) validateRestoreM365CsmParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.RestoreM365CsmParams) { // not required
+		return nil
+	}
+
+	if m.RestoreM365CsmParams != nil {
+		if err := m.RestoreM365CsmParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("restoreM365CsmParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("restoreM365CsmParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *PerformRestoreTaskStateProto) validateRestoreObjectCustomizations(formats strfmt.Registry) error {
 	if swag.IsZero(m.RestoreObjectCustomizations) { // not required
 		return nil
@@ -1909,6 +1944,10 @@ func (m *PerformRestoreTaskStateProto) ContextValidate(ctx context.Context, form
 	}
 
 	if err := m.contextValidateRestoreKvmVmsParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRestoreM365CsmParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -2686,6 +2725,27 @@ func (m *PerformRestoreTaskStateProto) contextValidateRestoreKvmVmsParams(ctx co
 				return ve.ValidateName("restoreKvmVmsParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("restoreKvmVmsParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *PerformRestoreTaskStateProto) contextValidateRestoreM365CsmParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RestoreM365CsmParams != nil {
+
+		if swag.IsZero(m.RestoreM365CsmParams) { // not required
+			return nil
+		}
+
+		if err := m.RestoreM365CsmParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("restoreM365CsmParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("restoreM365CsmParams")
 			}
 			return err
 		}

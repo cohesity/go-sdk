@@ -61,6 +61,8 @@ type ClientService interface {
 
 /*
 CloneApp clones applications like SQL d bs
+
+**Privileges:** ```CLONE_MODIFY``` <br><br>
 */
 func (a *Client) CloneApp(params *CloneAppParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CloneAppOK, error) {
 	// TODO: Validate the params before sending

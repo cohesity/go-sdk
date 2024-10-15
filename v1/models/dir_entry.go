@@ -24,6 +24,10 @@ type DirEntry struct {
 	// FullPath is the full path of the file/directory.
 	FullPath *string `json:"fullPath,omitempty"`
 
+	// ItemId is the id of the file/directory. Currently only used in case of
+	// OneDrive files/directories.
+	ItemID *string `json:"itemId,omitempty"`
+
 	// Name is the name of the file or folder. For /test/file.txt, name will be
 	// file.txt.
 	Name *string `json:"name,omitempty"`

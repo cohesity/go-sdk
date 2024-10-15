@@ -78,7 +78,7 @@ type ClientService interface {
 /*
 	CreateVault creates a new vault external target
 
-	Returns the created Vault.
+	**Privileges:** ```CLUSTER_EXTERNAL_TARGET_MODIFY``` <br><br>Returns the created Vault.
 
 A Vault is equivalent to an External Target in the Cohesity Dashboard.
 */
@@ -120,7 +120,7 @@ func (a *Client) CreateVault(params *CreateVaultParams, authInfo runtime.ClientA
 /*
 	DeleteVault deletes a vault external target
 
-	Returns delete status upon completion.
+	**Privileges:** ```CLUSTER_EXTERNAL_TARGET_MODIFY``` <br><br>Returns delete status upon completion.
 
 A Vault is equivalent to an External Target in the Cohesity Dashboard.
 */
@@ -162,7 +162,7 @@ func (a *Client) DeleteVault(params *DeleteVaultParams, authInfo runtime.ClientA
 /*
 	GetArchiveMediaInfo lists the media information for the specified archive service
 
-	Returns the media information about the specified archive service uid
+	**Privileges:** ```RESTORE_VIEW``` <br><br>Returns the media information about the specified archive service uid
 
 (such as a QStar tape archive service).
 
@@ -208,7 +208,7 @@ func (a *Client) GetArchiveMediaInfo(params *GetArchiveMediaInfoParams, authInfo
 /*
 GetBandwidthSettings lists the upload and download bandwidth limit and bandwidth overrides settings
 
-Returns the upload and download bandwidth limits.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the upload and download bandwidth limits.
 */
 func (a *Client) GetBandwidthSettings(params *GetBandwidthSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetBandwidthSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -248,7 +248,7 @@ func (a *Client) GetBandwidthSettings(params *GetBandwidthSettingsParams, authIn
 /*
 	GetVaultByID lists details about a single vault external target
 
-	Returns the Vault corresponding to the specified Vault Id.
+	**Privileges:** ```CLUSTER_EXTERNAL_TARGET_VIEW``` <br><br>Returns the Vault corresponding to the specified Vault Id.
 
 A Vault is equivalent to an External Target in the Cohesity Dashboard.
 */
@@ -290,7 +290,7 @@ func (a *Client) GetVaultByID(params *GetVaultByIDParams, authInfo runtime.Clien
 /*
 	GetVaultEncryptionKey gets encryption information for a vault external target a vault is equivalent to an external target in the cohesity dashboard
 
-	Get encryption information (such as the encryption key)
+	**Privileges:** ```CLUSTER_MODIFY``` <br><br>Get encryption information (such as the encryption key)
 
 for the specified Vault (External Target).
 To restore data to a remote Cluster (for example to support a disaster
@@ -338,7 +338,7 @@ func (a *Client) GetVaultEncryptionKey(params *GetVaultEncryptionKeyParams, auth
 /*
 	GetVaults lists the vaults external targets registered on the cohesity cluster filtered by the specified parameters
 
-	If no parameters are specified, all Vaults (External Targets) currently
+	**Privileges:** ```CLUSTER_EXTERNAL_TARGET_VIEW``` <br><br>If no parameters are specified, all Vaults (External Targets) currently
 
 registered on the Cohesity Cluster are returned.
 Specifying parameters filters the results that are returned.
@@ -382,7 +382,7 @@ func (a *Client) GetVaults(params *GetVaultsParams, authInfo runtime.ClientAuthI
 /*
 UpdateBandwidthSettings updates bandwidth limits
 
-Returns the updated bandwidth limits.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the updated bandwidth limits.
 */
 func (a *Client) UpdateBandwidthSettings(params *UpdateBandwidthSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateBandwidthSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -422,7 +422,7 @@ func (a *Client) UpdateBandwidthSettings(params *UpdateBandwidthSettingsParams, 
 /*
 	UpdateVault updates a vault external target
 
-	Update the settings of a Vault.
+	**Privileges:** ```CLUSTER_EXTERNAL_TARGET_MODIFY``` <br><br>Update the settings of a Vault.
 
 A Vault is equivalent to an External Target in the Cohesity Dashboard.
 Returns the updated Vault.

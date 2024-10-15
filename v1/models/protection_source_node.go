@@ -31,6 +31,10 @@ type ProtectionSourceNode struct {
 	// SQL Server instances running on a VM.
 	ApplicationNodes []interface{} `json:"applicationNodes"`
 
+	// Specifies the Credential vector of the external metadata. Currently only postgres credentials
+	// for the aws entities are populated, can be extended to other usecase as well.
+	CredentialList []*AppCredentials `json:"credentialList"`
+
 	// Specifies the cursor based pagination parameters for Protection Source to
 	// fetch the next set of sources within a level. This parameter will only be
 	// present at the parent entity.
@@ -105,6 +109,10 @@ type ProtectionSourceNode struct {
 func (m *ProtectionSourceNode) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateCredentialList(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateEntityPaginationParameters(formats); err != nil {
 		res = append(res, err)
 	}
@@ -140,6 +148,32 @@ func (m *ProtectionSourceNode) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *ProtectionSourceNode) validateCredentialList(formats strfmt.Registry) error {
+	if swag.IsZero(m.CredentialList) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.CredentialList); i++ {
+		if swag.IsZero(m.CredentialList[i]) { // not required
+			continue
+		}
+
+		if m.CredentialList[i] != nil {
+			if err := m.CredentialList[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("credentialList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("credentialList" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -291,6 +325,10 @@ func (m *ProtectionSourceNode) validateUnprotectedSourcesSummary(formats strfmt.
 func (m *ProtectionSourceNode) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateCredentialList(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateEntityPaginationParameters(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -326,6 +364,31 @@ func (m *ProtectionSourceNode) ContextValidate(ctx context.Context, formats strf
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *ProtectionSourceNode) contextValidateCredentialList(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.CredentialList); i++ {
+
+		if m.CredentialList[i] != nil {
+
+			if swag.IsZero(m.CredentialList[i]) { // not required
+				return nil
+			}
+
+			if err := m.CredentialList[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("credentialList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("credentialList" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

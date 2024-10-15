@@ -18,6 +18,9 @@ import (
 // swagger:model RegisteredEntityO365Params
 type RegisteredEntityO365Params struct {
 
+	// Specifies the params for MSFT Backup Storage.
+	CsmParams *RegisteredEntityO365ParamsM365CSMParams `json:"csmParams,omitempty"`
+
 	// Specifies the array of container entities which are to be discovered
 	// within the O365 domain. Currently the discovery of Users, Sites, Groups,
 	// Teams & Public Folders are supported. If this is not specified then all
@@ -26,6 +29,12 @@ type RegisteredEntityO365Params struct {
 	// Example: For discovery of only kUser & kSite entities, this vec should be
 	// set to [kUsers, kSites].
 	DiscoverableEntityTypeVec []int32 `json:"discoverableEntityTypeVec"`
+
+	// Specifies whether the current source allows data backup through
+	// M365 Backup Storage APIs. Enabling this, data can be optionally backed up
+	// within either Cohesity or MSFT or both depending on the backup
+	// configuration.
+	EnableM365CsmBackup *bool `json:"enableM365CsmBackup,omitempty"`
 
 	// If set to true, sharepoint sites will be tagged with group site or teams
 	// channel site.
@@ -51,6 +60,10 @@ type RegisteredEntityO365Params struct {
 func (m *RegisteredEntityO365Params) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateCsmParams(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateTeamEntityAdditionalParams(formats); err != nil {
 		res = append(res, err)
 	}
@@ -62,6 +75,25 @@ func (m *RegisteredEntityO365Params) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *RegisteredEntityO365Params) validateCsmParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.CsmParams) { // not required
+		return nil
+	}
+
+	if m.CsmParams != nil {
+		if err := m.CsmParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("csmParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("csmParams")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -107,6 +139,10 @@ func (m *RegisteredEntityO365Params) validateUserEntityDiscoveryParams(formats s
 func (m *RegisteredEntityO365Params) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateCsmParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateTeamEntityAdditionalParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -118,6 +154,27 @@ func (m *RegisteredEntityO365Params) ContextValidate(ctx context.Context, format
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *RegisteredEntityO365Params) contextValidateCsmParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CsmParams != nil {
+
+		if swag.IsZero(m.CsmParams) { // not required
+			return nil
+		}
+
+		if err := m.CsmParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("csmParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("csmParams")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

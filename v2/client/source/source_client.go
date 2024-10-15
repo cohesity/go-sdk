@@ -58,11 +58,15 @@ type ClientService interface {
 
 	CreateOrUpdateAzureApplications(params *CreateOrUpdateAzureApplicationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrUpdateAzureApplicationsCreated, error)
 
+	DeleteM365SelfServiceConfig(params *DeleteM365SelfServiceConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteM365SelfServiceConfigNoContent, error)
+
 	DeleteProtectionSourceRegistration(params *DeleteProtectionSourceRegistrationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProtectionSourceRegistrationNoContent, error)
 
 	GenerateM365DeviceAccessToken(params *GenerateM365DeviceAccessTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GenerateM365DeviceAccessTokenCreated, error)
 
 	GenerateM365DeviceCode(params *GenerateM365DeviceCodeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GenerateM365DeviceCodeCreated, error)
+
+	GetMicrosoft365SelfServiceConfig(params *GetMicrosoft365SelfServiceConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetMicrosoft365SelfServiceConfigOK, error)
 
 	GetProtectionSourceRegistration(params *GetProtectionSourceRegistrationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionSourceRegistrationOK, error)
 
@@ -84,6 +88,8 @@ type ClientService interface {
 
 	TestConnectionProtectionSource(params *TestConnectionProtectionSourceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TestConnectionProtectionSourceOK, error)
 
+	UpdateM365SelfServiceConfig(params *UpdateM365SelfServiceConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateM365SelfServiceConfigOK, *UpdateM365SelfServiceConfigCreated, error)
+
 	UpdateProtectionSourceRegistration(params *UpdateProtectionSourceRegistrationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProtectionSourceRegistrationOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
@@ -92,7 +98,7 @@ type ClientService interface {
 /*
 CreateAzureApplications creates microsoft 365 azure applications for a given domain
 
-Creates Microsoft 365 Azure Applications
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Creates Microsoft 365 Azure Applications
 */
 func (a *Client) CreateAzureApplications(params *CreateAzureApplicationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateAzureApplicationsCreated, error) {
 	// TODO: Validate the params before sending
@@ -132,7 +138,7 @@ func (a *Client) CreateAzureApplications(params *CreateAzureApplicationsParams, 
 /*
 CreateOrUpdateAzureApplications creates update microsoft 365 azure applications for a given domain
 
-Creates/Updates Microsoft 365 Azure Applications
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Creates/Updates Microsoft 365 Azure Applications
 */
 func (a *Client) CreateOrUpdateAzureApplications(params *CreateOrUpdateAzureApplicationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateOrUpdateAzureApplicationsCreated, error) {
 	// TODO: Validate the params before sending
@@ -170,9 +176,49 @@ func (a *Client) CreateOrUpdateAzureApplications(params *CreateOrUpdateAzureAppl
 }
 
 /*
+DeleteM365SelfServiceConfig deletes the self service configuration for a microsoft365 source
+
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Delete the configuration for Self-Service for a Microsoft365 source. This includes deletion of both Mailbox & OneDrive workload configuration.
+*/
+func (a *Client) DeleteM365SelfServiceConfig(params *DeleteM365SelfServiceConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteM365SelfServiceConfigNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteM365SelfServiceConfigParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DeleteM365SelfServiceConfig",
+		Method:             "DELETE",
+		PathPattern:        "/data-protect/sources/microsoft365/self-service-config/{uuid}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteM365SelfServiceConfigReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteM365SelfServiceConfigNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteM365SelfServiceConfigDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
 DeleteProtectionSourceRegistration deletes protection source registration
 
-Delete Protection Source Registration.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Delete Protection Source Registration.
 */
 func (a *Client) DeleteProtectionSourceRegistration(params *DeleteProtectionSourceRegistrationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProtectionSourceRegistrationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -212,7 +258,7 @@ func (a *Client) DeleteProtectionSourceRegistration(params *DeleteProtectionSour
 /*
 GenerateM365DeviceAccessToken generates access token for microsoft365 device authorization grant flow
 
-Generates the access token if the device code has been granted authorization as part of device login flow.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Generates the access token if the device code has been granted authorization as part of device login flow.
 */
 func (a *Client) GenerateM365DeviceAccessToken(params *GenerateM365DeviceAccessTokenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GenerateM365DeviceAccessTokenCreated, error) {
 	// TODO: Validate the params before sending
@@ -252,7 +298,7 @@ func (a *Client) GenerateM365DeviceAccessToken(params *GenerateM365DeviceAccessT
 /*
 GenerateM365DeviceCode generates device code for microsoft365 device authorization grant flow
 
-Generates User and Device code for Microsoft365 Device Authorization Grant for a given domain.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Generates User and Device code for Microsoft365 Device Authorization Grant for a given domain.
 */
 func (a *Client) GenerateM365DeviceCode(params *GenerateM365DeviceCodeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GenerateM365DeviceCodeCreated, error) {
 	// TODO: Validate the params before sending
@@ -290,9 +336,49 @@ func (a *Client) GenerateM365DeviceCode(params *GenerateM365DeviceCodeParams, au
 }
 
 /*
+GetMicrosoft365SelfServiceConfig gets the list of microsoft365 self service configurations
+
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get the list of Self-Service configurations for all Microsoft365 sources for the given tenant ID.
+*/
+func (a *Client) GetMicrosoft365SelfServiceConfig(params *GetMicrosoft365SelfServiceConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetMicrosoft365SelfServiceConfigOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetMicrosoft365SelfServiceConfigParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "GetMicrosoft365SelfServiceConfig",
+		Method:             "GET",
+		PathPattern:        "/data-protect/sources/microsoft365/self-service-config",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetMicrosoft365SelfServiceConfigReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetMicrosoft365SelfServiceConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetMicrosoft365SelfServiceConfigDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
 GetProtectionSourceRegistration gets a protection source registration
 
-Get a Protection Source registration.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get a Protection Source registration.
 */
 func (a *Client) GetProtectionSourceRegistration(params *GetProtectionSourceRegistrationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionSourceRegistrationOK, error) {
 	// TODO: Validate the params before sending
@@ -332,7 +418,7 @@ func (a *Client) GetProtectionSourceRegistration(params *GetProtectionSourceRegi
 /*
 GetProtectionSources gets a list of protection sources
 
-Get a List of Protection Sources.
+```Unknown Privileges``` <br><br>Get a List of Protection Sources.
 */
 func (a *Client) GetProtectionSources(params *GetProtectionSourcesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionSourcesOK, error) {
 	// TODO: Validate the params before sending
@@ -372,7 +458,7 @@ func (a *Client) GetProtectionSources(params *GetProtectionSourcesParams, authIn
 /*
 GetSourceAttributeFilters lists attribute filters for a source
 
-Get a List of attribute filters for leaf entities within a a source
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get a List of attribute filters for leaf entities within a a source
 */
 func (a *Client) GetSourceAttributeFilters(params *GetSourceAttributeFiltersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSourceAttributeFiltersOK, error) {
 	// TODO: Validate the params before sending
@@ -412,7 +498,7 @@ func (a *Client) GetSourceAttributeFilters(params *GetSourceAttributeFiltersPara
 /*
 GetSourceRegistrations gets the list of protection source registrations
 
-Get the list of Protection Source registrations.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get the list of Protection Source registrations.
 */
 func (a *Client) GetSourceRegistrations(params *GetSourceRegistrationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSourceRegistrationsOK, error) {
 	// TODO: Validate the params before sending
@@ -452,7 +538,7 @@ func (a *Client) GetSourceRegistrations(params *GetSourceRegistrationsParams, au
 /*
 GetVdcDetails gets v d c details
 
-Get the details such as catelogs, Org networks associated with a VMware virtual datacenter (VDC).
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get the details such as catelogs, Org networks associated with a VMware virtual datacenter (VDC).
 */
 func (a *Client) GetVdcDetails(params *GetVdcDetailsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetVdcDetailsOK, error) {
 	// TODO: Validate the params before sending
@@ -492,7 +578,7 @@ func (a *Client) GetVdcDetails(params *GetVdcDetailsParams, authInfo runtime.Cli
 /*
 PatchProtectionSourceRegistration performs partial update on protection source registration currently this API is supported only for cassandra
 
-Patches a Protection Source.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Patches a Protection Source.
 */
 func (a *Client) PatchProtectionSourceRegistration(params *PatchProtectionSourceRegistrationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchProtectionSourceRegistrationOK, error) {
 	// TODO: Validate the params before sending
@@ -532,7 +618,7 @@ func (a *Client) PatchProtectionSourceRegistration(params *PatchProtectionSource
 /*
 ProtectionSourceByID gets a protection sources
 
-Get a Protection Source.
+```Unknown Privileges``` <br><br>Get a Protection Source.
 */
 func (a *Client) ProtectionSourceByID(params *ProtectionSourceByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProtectionSourceByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -572,7 +658,7 @@ func (a *Client) ProtectionSourceByID(params *ProtectionSourceByIDParams, authIn
 /*
 RefreshProtectionSourceByID refreshes a protection source
 
-Refresh a Protection Source.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Refresh a Protection Source.
 */
 func (a *Client) RefreshProtectionSourceByID(params *RefreshProtectionSourceByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RefreshProtectionSourceByIDNoContent, error) {
 	// TODO: Validate the params before sending
@@ -612,7 +698,7 @@ func (a *Client) RefreshProtectionSourceByID(params *RefreshProtectionSourceByID
 /*
 RegisterProtectionSource registers a protection source
 
-Register a Protection Source.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Register a Protection Source.
 */
 func (a *Client) RegisterProtectionSource(params *RegisterProtectionSourceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RegisterProtectionSourceCreated, error) {
 	// TODO: Validate the params before sending
@@ -652,7 +738,7 @@ func (a *Client) RegisterProtectionSource(params *RegisterProtectionSourceParams
 /*
 TestConnectionProtectionSource tests connection to a source
 
-Test connection to a source.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Test connection to a source.
 */
 func (a *Client) TestConnectionProtectionSource(params *TestConnectionProtectionSourceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TestConnectionProtectionSourceOK, error) {
 	// TODO: Validate the params before sending
@@ -690,9 +776,51 @@ func (a *Client) TestConnectionProtectionSource(params *TestConnectionProtection
 }
 
 /*
+UpdateM365SelfServiceConfig creates or update the self service configuration for a microsoft365 source
+
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Create or Update the configuration for enabling Self-Service for a Microsoft365 source through Security Groups. The configuration can be done for Mailbox & OneDrive workload only.
+*/
+func (a *Client) UpdateM365SelfServiceConfig(params *UpdateM365SelfServiceConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateM365SelfServiceConfigOK, *UpdateM365SelfServiceConfigCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateM365SelfServiceConfigParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "UpdateM365SelfServiceConfig",
+		Method:             "PUT",
+		PathPattern:        "/data-protect/sources/microsoft365/self-service-config/{uuid}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateM365SelfServiceConfigReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, nil, err
+	}
+	switch value := result.(type) {
+	case *UpdateM365SelfServiceConfigOK:
+		return value, nil, nil
+	case *UpdateM365SelfServiceConfigCreated:
+		return nil, value, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateM365SelfServiceConfigDefault)
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
 UpdateProtectionSourceRegistration updates protection source registration
 
-Update Protection Source registration.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Update Protection Source registration.
 */
 func (a *Client) UpdateProtectionSourceRegistration(params *UpdateProtectionSourceRegistrationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProtectionSourceRegistrationOK, error) {
 	// TODO: Validate the params before sending

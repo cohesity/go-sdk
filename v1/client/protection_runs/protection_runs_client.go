@@ -67,6 +67,8 @@ type ClientService interface {
 
 /*
 CancelProtectionJobRun cancels a protection job run
+
+**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>
 */
 func (a *Client) CancelProtectionJobRun(params *CancelProtectionJobRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelProtectionJobRunNoContent, error) {
 	// TODO: Validate the params before sending
@@ -106,7 +108,7 @@ func (a *Client) CancelProtectionJobRun(params *CancelProtectionJobRunParams, au
 /*
 	GetProtectionRunErrors lists protection job run errors filtered by the specified parameters
 
-	jobId, startTimeUsecs and taskId have to be provided to get the a list of
+	**Privileges:** ```PROTECTION_VIEW``` <br><br>jobId, startTimeUsecs and taskId have to be provided to get the a list of
 
 errors for a job run task.
 */
@@ -148,7 +150,7 @@ func (a *Client) GetProtectionRunErrors(params *GetProtectionRunErrorsParams, au
 /*
 	GetProtectionRuns lists protection job runs filtered by the specified parameters
 
-	If no parameters are specified, Job Runs currently
+	**Privileges:** ```PROTECTION_VIEW``` <br><br>If no parameters are specified, Job Runs currently
 
 on the Cohesity Cluster are returned. Both running and completed Job Runs
 are reported.
@@ -192,7 +194,7 @@ func (a *Client) GetProtectionRuns(params *GetProtectionRunsParams, authInfo run
 /*
 	UpdateProtectionRuns updates how long protection job runs and their snapshots are retained on the cohesity cluster
 
-	Update the expiration date (retention period) for the specified Protection
+	**Privileges:** ```PROTECTION_MODIFY``` <br><br>Update the expiration date (retention period) for the specified Protection
 
 Job Runs and their snapshots.
 After an expiration time is reached, the Job Run and its snapshots are deleted.

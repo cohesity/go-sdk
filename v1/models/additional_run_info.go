@@ -11,11 +11,21 @@ package models
 // AdditionalRunInfo extension                     Location               Extn
 // =============================================================================
 // oracle::OracleAdditionalRunInfo::             oracle/oracle.proto      100
+//
 // oracle_additional_run_info
+//
 // o365::O365AdditionalRunInfo::                 o365/o365.proto          101
+//
 // o365_additional_run_info
+//
 // sfdc::SfdcAdditionalRunInfo::                 sfdc/sfdc.proto          102
+//
 // sfdc_additional_run_info
+//
+// san::SanAdditionalRunInfo::                   san/san.proto            103
+//
+// san_additional_run_info
+//
 // =============================================================================
 //
 // swagger:model AdditionalRunInfo

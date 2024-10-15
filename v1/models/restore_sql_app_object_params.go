@@ -59,6 +59,10 @@ type RestoreSQLAppObjectParams struct {
 	// SQL instance.
 	LogFileDestination *string `json:"logFileDestination,omitempty"`
 
+	// 'log_with_clause' contains WITH clause to be used in native sql log
+	// restore command. This is only applicable for native log restore.
+	LogWithClause *string `json:"logWithClause,omitempty"`
+
 	// The following field is set if this is a sub task for a multi-stage SQL
 	// restore task. It captures the options specified for this sub-task.
 	//

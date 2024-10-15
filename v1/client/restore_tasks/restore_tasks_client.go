@@ -124,7 +124,7 @@ type ClientService interface {
 }
 
 /*
-	AdObjectsRestoreStatus Returns the Restore status of the AD objects which were restored from the
+	AdObjectsRestoreStatus **Privileges:** ```RESTORE_VIEW``` <br><br>Returns the Restore status of the AD objects which were restored from the
 
 snapshot AD to production AD as part of the restore task id specified in the
 parameters.
@@ -166,6 +166,8 @@ func (a *Client) AdObjectsRestoreStatus(params *AdObjectsRestoreStatusParams, au
 
 /*
 CancelRestoreTask cancels a recover or clone task with specified id
+
+**Privileges:** ```RESTORE_MODIFY, CLONE_MODIFY``` <br><br>
 */
 func (a *Client) CancelRestoreTask(params *CancelRestoreTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelRestoreTaskOK, error) {
 	// TODO: Validate the params before sending
@@ -205,7 +207,7 @@ func (a *Client) CancelRestoreTask(params *CancelRestoreTaskParams, authInfo run
 /*
 	CompareAdObjects compares the a d object from both snapshot and production a d and returns the attributes with status whether they differ or not
 
-	Returns the list of AD Objects after comparing attributes of AD Object from
+	**Privileges:** ```RESTORE_VIEW``` <br><br>Returns the list of AD Objects after comparing attributes of AD Object from
 
 both Snapshot and Production AD.
 */
@@ -247,7 +249,7 @@ func (a *Client) CompareAdObjects(params *CompareAdObjectsParams, authInfo runti
 /*
 CreateApplicationsCloneTask creates a restore task for cloning applications like SQL databases
 
-Returns the created Restore Task.
+**Privileges:** ```CLONE_MODIFY``` <br><br>Returns the created Restore Task.
 */
 func (a *Client) CreateApplicationsCloneTask(params *CreateApplicationsCloneTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateApplicationsCloneTaskCreated, error) {
 	// TODO: Validate the params before sending
@@ -287,7 +289,7 @@ func (a *Client) CreateApplicationsCloneTask(params *CreateApplicationsCloneTask
 /*
 CreateApplicationsRecoverTask creates a restore task for recovering applications like SQL databases
 
-Returns the created Restore Task.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Returns the created Restore Task.
 */
 func (a *Client) CreateApplicationsRecoverTask(params *CreateApplicationsRecoverTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateApplicationsRecoverTaskCreated, error) {
 	// TODO: Validate the params before sending
@@ -327,7 +329,7 @@ func (a *Client) CreateApplicationsRecoverTask(params *CreateApplicationsRecover
 /*
 CreateCloneTask creates a restore task for cloning v ms or a view
 
-Returns the created Restore Task that clones VMs or a View.
+**Privileges:** ```CLONE_MODIFY``` <br><br>Returns the created Restore Task that clones VMs or a View.
 */
 func (a *Client) CreateCloneTask(params *CreateCloneTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateCloneTaskCreated, error) {
 	// TODO: Validate the params before sending
@@ -367,7 +369,7 @@ func (a *Client) CreateCloneTask(params *CreateCloneTaskParams, authInfo runtime
 /*
 	CreateDeployTask creates a restore task for deploying v ms or a view on cloud
 
-	Returns the created Restore Task that deploys VMs on cloud. This operation
+	**Privileges:** ```RESTORE_MODIFY``` <br><br>Returns the created Restore Task that deploys VMs on cloud. This operation
 
 returns the target where cloud is deployed. Currently, VMs can be deployed
 in either AWS target or Azure target.
@@ -410,7 +412,7 @@ func (a *Client) CreateDeployTask(params *CreateDeployTaskParams, authInfo runti
 /*
 CreateDownloadFilesAndFolders creates a download task for downloading files and folders
 
-Returns the created download Task information that downloads files and folders.
+**Privileges:** ```RESTORE_DOWNLOAD``` <br><br>Returns the created download Task information that downloads files and folders.
 */
 func (a *Client) CreateDownloadFilesAndFolders(params *CreateDownloadFilesAndFoldersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDownloadFilesAndFoldersCreated, error) {
 	// TODO: Validate the params before sending
@@ -450,7 +452,7 @@ func (a *Client) CreateDownloadFilesAndFolders(params *CreateDownloadFilesAndFol
 /*
 	CreateRecoverTask creates a restore task for recovering v ms or instantly mounting volumes
 
-	Returns the created Restore Task. This operation returns the following
+	**Privileges:** ```RESTORE_MODIFY``` <br><br>Returns the created Restore Task. This operation returns the following
 
 types of Restore Tasks: 1) A Restore Task that recovers VMs back to the
 original location or a new location. 2) A Restore Task that mounts the
@@ -503,7 +505,7 @@ func (a *Client) CreateRecoverTask(params *CreateRecoverTaskParams, authInfo run
 /*
 CreateRestoreFilesTask creates a restore task for recovering files and folders
 
-Returns the created Restore Task that recovers files and folders.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Returns the created Restore Task that recovers files and folders.
 */
 func (a *Client) CreateRestoreFilesTask(params *CreateRestoreFilesTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateRestoreFilesTaskCreated, error) {
 	// TODO: Validate the params before sending
@@ -543,7 +545,7 @@ func (a *Client) CreateRestoreFilesTask(params *CreateRestoreFilesTaskParams, au
 /*
 GetAdDomainRootTopology gets root topology for an a d domain
 
-Returns the root topology for an AD domain.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Returns the root topology for an AD domain.
 */
 func (a *Client) GetAdDomainRootTopology(params *GetAdDomainRootTopologyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAdDomainRootTopologyOK, error) {
 	// TODO: Validate the params before sending
@@ -581,7 +583,7 @@ func (a *Client) GetAdDomainRootTopology(params *GetAdDomainRootTopologyParams, 
 }
 
 /*
-	GetAdObjects Search for AD objects to recover that match the specified search and filter criterias
+	GetAdObjects **Privileges:** ```RESTORE_VIEW``` <br><br>Search for AD objects to recover that match the specified search and filter criterias
 
 provided in the request.
 */
@@ -622,6 +624,8 @@ func (a *Client) GetAdObjects(params *GetAdObjectsParams, authInfo runtime.Clien
 
 /*
 GetFileFstatInformation gets the fstat information about file provided using query parameters
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) GetFileFstatInformation(params *GetFileFstatInformationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetFileFstatInformationOK, error) {
 	// TODO: Validate the params before sending
@@ -660,6 +664,8 @@ func (a *Client) GetFileFstatInformation(params *GetFileFstatInformationParams, 
 
 /*
 GetFileSnapshotsInformation gets the information about snapshots that contain the specified file or folder in addition information about the file or folder is provided
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) GetFileSnapshotsInformation(params *GetFileSnapshotsInformationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetFileSnapshotsInformationOK, error) {
 	// TODO: Validate the params before sending
@@ -699,7 +705,7 @@ func (a *Client) GetFileSnapshotsInformation(params *GetFileSnapshotsInformation
 /*
 	GetOneDriveDocuments returns the one drive files and folders
 
-	Search for OneDrive files and folder to recover that match the specified
+	**Privileges:** ```RESTORE_VIEW``` <br><br>Search for OneDrive files and folder to recover that match the specified
 
 search and filter criterias on the Cohesity cluster.
 */
@@ -741,7 +747,7 @@ func (a *Client) GetOneDriveDocuments(params *GetOneDriveDocumentsParams, authIn
 /*
 	GetOutlookEmails returns the outlook emails and folders containing emails
 
-	Search for Emails and Emails' folders to recover that match the specified
+	**Privileges:** ```RESTORE_VIEW``` <br><br>Search for Emails and Emails' folders to recover that match the specified
 
 search and filter criterias on the Cohesity cluster.
 */
@@ -783,7 +789,7 @@ func (a *Client) GetOutlookEmails(params *GetOutlookEmailsParams, authInfo runti
 /*
 GetRestoreJobByID lists details about a single restore job
 
-Returns the restore job object corresponding to the specified id.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Returns the restore job object corresponding to the specified id.
 */
 func (a *Client) GetRestoreJobByID(params *GetRestoreJobByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRestoreJobByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -823,7 +829,7 @@ func (a *Client) GetRestoreJobByID(params *GetRestoreJobByIDParams, authInfo run
 /*
 	GetRestoreJobs lists restore jobs filtered by the specified parameters
 
-	If no parameters are specified, all Restore Jobs currently
+	**Privileges:** ```RESTORE_VIEW``` <br><br>If no parameters are specified, all Restore Jobs currently
 
 on the Cohesity Cluster are returned.
 Specifying parameters filters the results that are returned.
@@ -866,7 +872,7 @@ func (a *Client) GetRestoreJobs(params *GetRestoreJobsParams, authInfo runtime.C
 /*
 GetRestorePointsForTimeRange lists restore points in a give time range
 
-Returns the snapshots in the time range specified.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Returns the snapshots in the time range specified.
 */
 func (a *Client) GetRestorePointsForTimeRange(params *GetRestorePointsForTimeRangeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRestorePointsForTimeRangeCreated, error) {
 	// TODO: Validate the params before sending
@@ -906,7 +912,7 @@ func (a *Client) GetRestorePointsForTimeRange(params *GetRestorePointsForTimeRan
 /*
 GetRestoreTaskByID lists details about a single restore task
 
-Returns the Restore Task corresponding to the specified Restore Task id.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Returns the Restore Task corresponding to the specified Restore Task id.
 */
 func (a *Client) GetRestoreTaskByID(params *GetRestoreTaskByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRestoreTaskByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -946,7 +952,7 @@ func (a *Client) GetRestoreTaskByID(params *GetRestoreTaskByIDParams, authInfo r
 /*
 	GetRestoreTasks lists the restore tasks filtered by the specified parameters
 
-	If no parameters are specified, all Restore Tasks found
+	**Privileges:** ```RESTORE_VIEW``` <br><br>If no parameters are specified, all Restore Tasks found
 
 on the Cohesity Cluster are returned. Both running and completed
 Restore Tasks are reported.
@@ -990,7 +996,7 @@ func (a *Client) GetRestoreTasks(params *GetRestoreTasksParams, authInfo runtime
 /*
 	GetSharepointDocuments returns the sharepoint site s files and folders
 
-	Search for Sharepoint files and folder to recover that match the specified
+	**Privileges:** ```RESTORE_VIEW``` <br><br>Search for Sharepoint files and folder to recover that match the specified
 
 search and filter criterias on the Cohesity cluster.
 */
@@ -1031,6 +1037,8 @@ func (a *Client) GetSharepointDocuments(params *GetSharepointDocumentsParams, au
 
 /*
 GetVirtualDiskInformation fetches information of virtual disk
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) GetVirtualDiskInformation(params *GetVirtualDiskInformationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetVirtualDiskInformationOK, error) {
 	// TODO: Validate the params before sending
@@ -1069,6 +1077,8 @@ func (a *Client) GetVirtualDiskInformation(params *GetVirtualDiskInformationPara
 
 /*
 GetVMDirectoryList gets the directory list based on the given directory name and other query parameters
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) GetVMDirectoryList(params *GetVMDirectoryListParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetVMDirectoryListOK, error) {
 	// TODO: Validate the params before sending
@@ -1108,7 +1118,7 @@ func (a *Client) GetVMDirectoryList(params *GetVMDirectoryListParams, authInfo r
 /*
 	GetVMVolumesInformation gets information about the logical volumes found in a VM
 
-	All required fields must be specified for this operation.
+	**Privileges:** ```RESTORE_VIEW``` <br><br>All required fields must be specified for this operation.
 
 To get values for these fields, invoke the GET /public/restore/objects
 operation.
@@ -1152,6 +1162,8 @@ func (a *Client) GetVMVolumesInformation(params *GetVMVolumesInformationParams, 
 
 /*
 ListOrgVdcNetworks returns the org v d c network under a v d c in a v mware environment
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) ListOrgVdcNetworks(params *ListOrgVdcNetworksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListOrgVdcNetworksOK, error) {
 	// TODO: Validate the params before sending
@@ -1190,6 +1202,8 @@ func (a *Client) ListOrgVdcNetworks(params *ListOrgVdcNetworksParams, authInfo r
 
 /*
 ListStorageProfiles fetches information of virtual disk
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) ListStorageProfiles(params *ListStorageProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListStorageProfilesOK, error) {
 	// TODO: Validate the params before sending
@@ -1228,6 +1242,8 @@ func (a *Client) ListStorageProfiles(params *ListStorageProfilesParams, authInfo
 
 /*
 PublicDestroyCloneTask destroys a clone task with specified id
+
+**Privileges:** ```CLONE_MODIFY``` <br><br>
 */
 func (a *Client) PublicDestroyCloneTask(params *PublicDestroyCloneTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PublicDestroyCloneTaskNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1267,7 +1283,7 @@ func (a *Client) PublicDestroyCloneTask(params *PublicDestroyCloneTaskParams, au
 /*
 	SearchAdObjects searches for a d objects in both production and snapshot a d from given search base dn and offset
 
-	Returns the list of AD Objects along with status whether they are missing in
+	**Privileges:** ```RESTORE_VIEW``` <br><br>Returns the list of AD Objects along with status whether they are missing in
 
 Production AD, equal or not equal.
 */
@@ -1309,7 +1325,7 @@ func (a *Client) SearchAdObjects(params *SearchAdObjectsParams, authInfo runtime
 /*
 	SearchObjects finds backup objects that match the specified search and filter criteria on the cohesity cluster
 
-	If no search pattern or filter parameters are specified, all backup objects
+	**Privileges:** ```RESTORE_VIEW``` <br><br>If no search pattern or filter parameters are specified, all backup objects
 
 currently found on the Cohesity Cluster are returned.
 Only leaf objects that have been protected by a Job are returned such as VMs,
@@ -1358,7 +1374,7 @@ func (a *Client) SearchObjects(params *SearchObjectsParams, authInfo runtime.Cli
 /*
 	SearchProductionAdObjects searches for a d objects that match the list of object guids sam account names and distinguished names provided in the request
 
-	Returns the list of AD Objects that match the list of object guids,
+	**Privileges:** ```RESTORE_VIEW``` <br><br>Returns the list of AD Objects that match the list of object guids,
 
 sam account names and distinguished names provided in the request.
 */
@@ -1400,7 +1416,7 @@ func (a *Client) SearchProductionAdObjects(params *SearchProductionAdObjectsPara
 /*
 	SearchRestoredFiles searches for files and folders to recover that match the specified search and filter criteria on the cohesity cluster
 
-	Use the files and folders returned by this operation to populate the
+	**Privileges:** ```RESTORE_VIEW``` <br><br>Use the files and folders returned by this operation to populate the
 
 list of files and folders to recover in the
 POST /public/restore/files operation.
@@ -1448,7 +1464,7 @@ func (a *Client) SearchRestoredFiles(params *SearchRestoredFilesParams, authInfo
 }
 
 /*
-	UpdateRestoreTask Updates an existing restore task with additional params which are needed for
+	UpdateRestoreTask **Privileges:** ```RESTORE_MODIFY``` <br><br>Updates an existing restore task with additional params which are needed for
 
 features like Hot-Standby.
 */

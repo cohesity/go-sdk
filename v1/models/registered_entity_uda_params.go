@@ -7,11 +7,11 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // RegisteredEntityUdaParams Contains all params specified by the user while registering a UDA
@@ -63,6 +63,14 @@ type RegisteredEntityUdaParams struct {
 	// Object levels.
 	ObjectTypes []string `json:"objectTypes"`
 
+	// These object types would be excluded from entity hierarchy expansion while
+	// expanding entities as part of a backup job run. For instance, when an
+	// object of excluded object type is encountered during EH expansion for
+	// backup, it would be treated as a leaf entity.
+	// Behaviour of other EH expansion operations would remain as is such as EH
+	// expansion when a source is refreshed.
+	ObjectTypesExcludedFromExpansion []string `json:"objectTypesExcludedFromExpansion"`
+
 	// Specifies whether the source supports parallel log backups.
 	// Must be used with a live log view.
 	ParallelLogBackups *bool `json:"parallelLogBackups,omitempty"`
@@ -85,7 +93,7 @@ type RegisteredEntityUdaParams struct {
 
 	// Map to store custom arguments which will be provided to the source
 	// registration scripts.
-	SourceArgumentsMap []*RegisteredEntityUdaParamsSourceArgumentsMapEntry `json:"sourceArgumentsMap"`
+	SourceArgumentsMap map[string]UdaCustomArgument `json:"sourceArgumentsMap,omitempty"`
 
 	// Universal Data Adapter (UDA) source type.
 	SourceType *string `json:"sourceType,omitempty"`
@@ -165,17 +173,17 @@ func (m *RegisteredEntityUdaParams) validateSourceArgumentsMap(formats strfmt.Re
 		return nil
 	}
 
-	for i := 0; i < len(m.SourceArgumentsMap); i++ {
-		if swag.IsZero(m.SourceArgumentsMap[i]) { // not required
-			continue
-		}
+	for k := range m.SourceArgumentsMap {
 
-		if m.SourceArgumentsMap[i] != nil {
-			if err := m.SourceArgumentsMap[i].Validate(formats); err != nil {
+		if err := validate.Required("sourceArgumentsMap"+"."+k, "body", m.SourceArgumentsMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.SourceArgumentsMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("sourceArgumentsMap" + "." + strconv.Itoa(i))
+					return ve.ValidateName("sourceArgumentsMap" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("sourceArgumentsMap" + "." + strconv.Itoa(i))
+					return ce.ValidateName("sourceArgumentsMap" + "." + k)
 				}
 				return err
 			}
@@ -252,20 +260,10 @@ func (m *RegisteredEntityUdaParams) contextValidateCredentials(ctx context.Conte
 
 func (m *RegisteredEntityUdaParams) contextValidateSourceArgumentsMap(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.SourceArgumentsMap); i++ {
+	for k := range m.SourceArgumentsMap {
 
-		if m.SourceArgumentsMap[i] != nil {
-
-			if swag.IsZero(m.SourceArgumentsMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.SourceArgumentsMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("sourceArgumentsMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("sourceArgumentsMap" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.SourceArgumentsMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

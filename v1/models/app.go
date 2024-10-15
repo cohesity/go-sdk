@@ -85,6 +85,9 @@ type App struct {
 	// kProtectedObjectAccess - Whether app requires read access to protected objects.
 	RequiredPrivileges []string `json:"requiredPrivileges"`
 
+	// ErrorMessage on failed installation.
+	StateDetail *string `json:"stateDetail,omitempty"`
+
 	// Specifies timestamp when the app was uninstalled.
 	UninstallTime *int64 `json:"uninstallTime,omitempty"`
 

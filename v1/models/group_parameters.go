@@ -37,8 +37,9 @@ type GroupParameters struct {
 
 	// Array of Roles.
 	//
-	// Specifies the Cohesity roles to associate with the group such as
-	// 'Admin', 'Ops' or 'View'.
+	// Specifies the Cohesity role names to associate with the group.
+	// role names can be viewed by GET /irisservices/api/v1/public/roles,
+	// example: COHESITY_VIEWER
 	// The Cohesity roles determine privileges on the Cohesity Cluster
 	// for all the users in this group.
 	Roles []string `json:"roles"`

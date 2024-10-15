@@ -24,6 +24,9 @@ import (
 // swagger:model RestoreFilesTaskRequest
 type RestoreFilesTaskRequest struct {
 
+	// Specifies the cloud credentials used to authenticate with cloud(Aws).
+	CloudCredentials *CloudCredentials `json:"cloudCredentials,omitempty"`
+
 	// Specifies if the Restore Task should continue even if the copy operation
 	// of some files and folders fails. If true, the Cohesity Cluster
 	// ignores intermittent errors and recovers as many files and folders
@@ -140,6 +143,10 @@ type RestoreFilesTaskRequest struct {
 func (m *RestoreFilesTaskRequest) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateCloudCredentials(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateFileRecoveryMethod(formats); err != nil {
 		res = append(res, err)
 	}
@@ -163,6 +170,25 @@ func (m *RestoreFilesTaskRequest) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *RestoreFilesTaskRequest) validateCloudCredentials(formats strfmt.Registry) error {
+	if swag.IsZero(m.CloudCredentials) { // not required
+		return nil
+	}
+
+	if m.CloudCredentials != nil {
+		if err := m.CloudCredentials.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -358,6 +384,10 @@ func (m *RestoreFilesTaskRequest) validateTargetHostType(formats strfmt.Registry
 func (m *RestoreFilesTaskRequest) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateCloudCredentials(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateFilterIPConfig(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -373,6 +403,27 @@ func (m *RestoreFilesTaskRequest) ContextValidate(ctx context.Context, formats s
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *RestoreFilesTaskRequest) contextValidateCloudCredentials(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CloudCredentials != nil {
+
+		if swag.IsZero(m.CloudCredentials) { // not required
+			return nil
+		}
+
+		if err := m.CloudCredentials.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

@@ -53,6 +53,15 @@ type KubernetesProtectionGroupParams struct {
 
 	// Specifies the VLAN preference that is selected by the user for doing backup.
 	VlanParams *VlanParams `json:"vlanParams,omitempty"`
+
+	// Specifies if indexing of files and folders is allowed or not while backing up namespace. If allowed files and folder can be recovered.
+	EnableIndexing *bool `json:"enableIndexing,omitempty"`
+
+	// Specifies whether to process with backup if volumes backup fails.
+	VolumeBackupFailure *bool `json:"volumeBackupFailure,omitempty"`
+
+	// Specifies if snapshot backup fails, non-snapshot backup will be proceeded.
+	NonSnapshotBackup *bool `json:"nonSnapshotBackup,omitempty"`
 }
 
 // Validate validates this kubernetes protection group params

@@ -28,6 +28,12 @@ type VmwareRecoverDisksTargetSourceConfig struct {
 	// Required: true
 	// Min Items: 1
 	Disks []*VmwareRecoverTargetSourceDiskParams `json:"disks"`
+
+	// Specifies the source name of the VM to which the disks will be restored.
+	SourceName *string `json:"sourceName,omitempty"`
+
+	// Specifies the name of the vm to which the disks will be restored.
+	Target *string `json:"target,omitempty"`
 }
 
 // Validate validates this vmware recover disks target source config

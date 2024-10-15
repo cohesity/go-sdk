@@ -7,11 +7,11 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // IsilonEnvParams Isilon Environment Parameters.
@@ -22,7 +22,7 @@ import (
 type IsilonEnvParams struct {
 
 	// Mapping from access zone name to configuration.
-	ZoneConfigMap []*IsilonEnvParamsZoneConfigMapEntry `json:"zoneConfigMap"`
+	ZoneConfigMap map[string]IsilonEnvParamsZoneConfig `json:"zoneConfigMap,omitempty"`
 }
 
 // Validate validates this isilon env params
@@ -44,17 +44,17 @@ func (m *IsilonEnvParams) validateZoneConfigMap(formats strfmt.Registry) error {
 		return nil
 	}
 
-	for i := 0; i < len(m.ZoneConfigMap); i++ {
-		if swag.IsZero(m.ZoneConfigMap[i]) { // not required
-			continue
-		}
+	for k := range m.ZoneConfigMap {
 
-		if m.ZoneConfigMap[i] != nil {
-			if err := m.ZoneConfigMap[i].Validate(formats); err != nil {
+		if err := validate.Required("zoneConfigMap"+"."+k, "body", m.ZoneConfigMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.ZoneConfigMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("zoneConfigMap" + "." + strconv.Itoa(i))
+					return ve.ValidateName("zoneConfigMap" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("zoneConfigMap" + "." + strconv.Itoa(i))
+					return ce.ValidateName("zoneConfigMap" + "." + k)
 				}
 				return err
 			}
@@ -81,20 +81,10 @@ func (m *IsilonEnvParams) ContextValidate(ctx context.Context, formats strfmt.Re
 
 func (m *IsilonEnvParams) contextValidateZoneConfigMap(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.ZoneConfigMap); i++ {
+	for k := range m.ZoneConfigMap {
 
-		if m.ZoneConfigMap[i] != nil {
-
-			if swag.IsZero(m.ZoneConfigMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.ZoneConfigMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("zoneConfigMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("zoneConfigMap" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.ZoneConfigMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

@@ -7,7 +7,6 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -19,10 +18,22 @@ import (
 // swagger:model LocalCopyInfoBase
 type LocalCopyInfoBase struct {
 
+	// In case this local copy was recreated from another remote copy, this field
+	// stores the recreated copy state. E.g.: If the local copy has expired
+	// magneto allows RecreateLocalCopy gRPC API to recreate the local copy by
+	// restoring from some other remote copy. RecreateLocalCopy API could be used
+	// by other services/clients for indexing (e.g., yoda and gaia) or for
+	// browsing (e.g., azure adapter).
+	//
+	// Note: Even if a recreated local copy eventually expires, it can again get
+	// recreated multiple times from any available unexpired remote copies of the
+	// backup snapshot.
+	RecreatedCopyState *LocalCopyInfoBaseRecreatedCopyState `json:"recreatedCopyState,omitempty"`
+
 	// If the flag magneto_master_notify_yoda_task_wise is set, magneto starts
 	// notifying yoda whenever a task completes. This field is used for storing
 	// task ids where were already yoda notified.
-	YodaNotifiedTaskIds []*LocalCopyInfoBaseYodaNotifiedTaskIdsEntry `json:"yodaNotifiedTaskIds"`
+	YodaNotifiedTaskIds interface{} `json:"yodaNotifiedTaskIds,omitempty"`
 
 	// This contains the value of flag magneto_master_notify_yoda_task_wise set
 	// at the beginning of this run.
@@ -33,7 +44,7 @@ type LocalCopyInfoBase struct {
 func (m *LocalCopyInfoBase) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateYodaNotifiedTaskIds(formats); err != nil {
+	if err := m.validateRecreatedCopyState(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -43,27 +54,20 @@ func (m *LocalCopyInfoBase) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *LocalCopyInfoBase) validateYodaNotifiedTaskIds(formats strfmt.Registry) error {
-	if swag.IsZero(m.YodaNotifiedTaskIds) { // not required
+func (m *LocalCopyInfoBase) validateRecreatedCopyState(formats strfmt.Registry) error {
+	if swag.IsZero(m.RecreatedCopyState) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.YodaNotifiedTaskIds); i++ {
-		if swag.IsZero(m.YodaNotifiedTaskIds[i]) { // not required
-			continue
-		}
-
-		if m.YodaNotifiedTaskIds[i] != nil {
-			if err := m.YodaNotifiedTaskIds[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("yodaNotifiedTaskIds" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("yodaNotifiedTaskIds" + "." + strconv.Itoa(i))
-				}
-				return err
+	if m.RecreatedCopyState != nil {
+		if err := m.RecreatedCopyState.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("recreatedCopyState")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("recreatedCopyState")
 			}
+			return err
 		}
-
 	}
 
 	return nil
@@ -73,7 +77,7 @@ func (m *LocalCopyInfoBase) validateYodaNotifiedTaskIds(formats strfmt.Registry)
 func (m *LocalCopyInfoBase) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidateYodaNotifiedTaskIds(ctx, formats); err != nil {
+	if err := m.contextValidateRecreatedCopyState(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -83,26 +87,22 @@ func (m *LocalCopyInfoBase) ContextValidate(ctx context.Context, formats strfmt.
 	return nil
 }
 
-func (m *LocalCopyInfoBase) contextValidateYodaNotifiedTaskIds(ctx context.Context, formats strfmt.Registry) error {
+func (m *LocalCopyInfoBase) contextValidateRecreatedCopyState(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.YodaNotifiedTaskIds); i++ {
+	if m.RecreatedCopyState != nil {
 
-		if m.YodaNotifiedTaskIds[i] != nil {
-
-			if swag.IsZero(m.YodaNotifiedTaskIds[i]) { // not required
-				return nil
-			}
-
-			if err := m.YodaNotifiedTaskIds[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("yodaNotifiedTaskIds" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("yodaNotifiedTaskIds" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
+		if swag.IsZero(m.RecreatedCopyState) { // not required
+			return nil
 		}
 
+		if err := m.RecreatedCopyState.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("recreatedCopyState")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("recreatedCopyState")
+			}
+			return err
+		}
 	}
 
 	return nil

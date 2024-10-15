@@ -76,7 +76,7 @@ type ClientService interface {
 /*
 GetNodeByID lists details about a single node
 
-Returns the Node corresponding to the specified Node Id.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the Node corresponding to the specified Node Id.
 */
 func (a *Client) GetNodeByID(params *GetNodeByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNodeByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -116,7 +116,7 @@ func (a *Client) GetNodeByID(params *GetNodeByIDParams, authInfo runtime.ClientA
 /*
 GetNodeStats lists details about node stats
 
-Returns the top level stats for the nodes in the clusters.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the top level stats for the nodes in the clusters.
 */
 func (a *Client) GetNodeStats(params *GetNodeStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNodeStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -155,6 +155,8 @@ func (a *Client) GetNodeStats(params *GetNodeStatsParams, authInfo runtime.Clien
 
 /*
 GetNodeStatus sends a request to a node to get the status of that node
+
+**Privileges:** ```CLUSTER_VIEW, NODE_VIEW``` <br><br>
 */
 func (a *Client) GetNodeStatus(params *GetNodeStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNodeStatusOK, error) {
 	// TODO: Validate the params before sending
@@ -194,7 +196,7 @@ func (a *Client) GetNodeStatus(params *GetNodeStatusParams, authInfo runtime.Cli
 /*
 	GetNodes lists nodes of the cluster
 
-	If no parameters are specified, all Nodes currently on the Cohesity Cluster are
+	**Privileges:** ```CLUSTER_VIEW``` <br><br>If no parameters are specified, all Nodes currently on the Cohesity Cluster are
 
 returned.
 Specifying parameters filters the results that are returned.
@@ -237,7 +239,7 @@ func (a *Client) GetNodes(params *GetNodesParams, authInfo runtime.ClientAuthInf
 /*
 	ListFreeNodes lists the free nodes present on a network
 
-	Sends a request to any Node to list all of the free Nodes that are present on
+	**Privileges:** ```CLUSTER_VIEW, CLUSTER_CREATE``` <br><br>Sends a request to any Node to list all of the free Nodes that are present on
 
 the network.
 */
@@ -279,7 +281,7 @@ func (a *Client) ListFreeNodes(params *ListFreeNodesParams, authInfo runtime.Cli
 /*
 MarkNodeForRemoval marks a node for removal
 
-Returns removal status upon completion.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns removal status upon completion.
 */
 func (a *Client) MarkNodeForRemoval(params *MarkNodeForRemovalParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*MarkNodeForRemovalAccepted, error) {
 	// TODO: Validate the params before sending
@@ -319,7 +321,7 @@ func (a *Client) MarkNodeForRemoval(params *MarkNodeForRemovalParams, authInfo r
 /*
 UpdateNode updates a node
 
-Returns the updated Node.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the updated Node.
 */
 func (a *Client) UpdateNode(params *UpdateNodeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNodeOK, error) {
 	// TODO: Validate the params before sending
@@ -359,7 +361,7 @@ func (a *Client) UpdateNode(params *UpdateNodeParams, authInfo runtime.ClientAut
 /*
 	UpgradeNode upgrades the software on a node
 
-	Sends a request to upgrade the software version of a Node. By default, the
+	**Privileges:** ```CLUSTER_CREATE``` <br><br>Sends a request to upgrade the software version of a Node. By default, the
 
 Node that the request is sent to is the only one upgraded, but the user can
 specify if they want to attempt to upgrade all free nodes on the network.

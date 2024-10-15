@@ -23,7 +23,7 @@ type PrivateUdaEntity struct {
 	AgentStatusVec []*HostAgentStatus `json:"agentStatusVec"`
 
 	// Information of a UDA cluster, only valid for an entity of type
-	// kCluster.
+	// kCluster or is an FCC root entity.
 	ClusterInfo *PrivateClusterInfo `json:"clusterInfo,omitempty"`
 
 	// Fully qualified name for the object. E.g: For a table this could be
@@ -31,7 +31,7 @@ type PrivateUdaEntity struct {
 	Name *string `json:"name,omitempty"`
 
 	// Information of a generic UDA entity. only valid for an entity
-	// of type kObject.
+	// of type kObject or an FCC non root entity.
 	ObjectInfo *ObjectInfo `json:"objectInfo,omitempty"`
 
 	// Universal Data Adapter (UDA) source type.

@@ -24,6 +24,12 @@ type ValidateRemoteClusterReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *ValidateRemoteClusterReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
+	case 200:
+		result := NewValidateRemoteClusterOK()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return result, nil
 	case 204:
 		result := NewValidateRemoteClusterNoContent()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -40,6 +46,76 @@ func (o *ValidateRemoteClusterReader) ReadResponse(response runtime.ClientRespon
 		}
 		return nil, result
 	}
+}
+
+// NewValidateRemoteClusterOK creates a ValidateRemoteClusterOK with default headers values
+func NewValidateRemoteClusterOK() *ValidateRemoteClusterOK {
+	return &ValidateRemoteClusterOK{}
+}
+
+/*
+ValidateRemoteClusterOK describes a response with status code 200, with default header values.
+
+Success
+*/
+type ValidateRemoteClusterOK struct {
+	Payload *models.RemoteClusterParams
+}
+
+// IsSuccess returns true when this validate remote cluster o k response has a 2xx status code
+func (o *ValidateRemoteClusterOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this validate remote cluster o k response has a 3xx status code
+func (o *ValidateRemoteClusterOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this validate remote cluster o k response has a 4xx status code
+func (o *ValidateRemoteClusterOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this validate remote cluster o k response has a 5xx status code
+func (o *ValidateRemoteClusterOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this validate remote cluster o k response a status code equal to that given
+func (o *ValidateRemoteClusterOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the validate remote cluster o k response
+func (o *ValidateRemoteClusterOK) Code() int {
+	return 200
+}
+
+func (o *ValidateRemoteClusterOK) Error() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /remote-clusters/validate][%d] validateRemoteClusterOK %s", 200, payload)
+}
+
+func (o *ValidateRemoteClusterOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /remote-clusters/validate][%d] validateRemoteClusterOK %s", 200, payload)
+}
+
+func (o *ValidateRemoteClusterOK) GetPayload() *models.RemoteClusterParams {
+	return o.Payload
+}
+
+func (o *ValidateRemoteClusterOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.RemoteClusterParams)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
 }
 
 // NewValidateRemoteClusterNoContent creates a ValidateRemoteClusterNoContent with default headers values

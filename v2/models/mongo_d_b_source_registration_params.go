@@ -55,6 +55,10 @@ type MongoDBSourceRegistrationParams struct {
 
 	// MongoDB Secondary node tag. Required only if 'useSecondaryForBackup' is true.The system will use this to identify the secondary nodes for reading backup data.
 	SecondaryNodeTag string `json:"secondaryNodeTag,omitempty"`
+
+	// Set this to true if you want the system to peform backups from fixed node.
+	// Required: true
+	UseFixedNodeForBackup *bool `json:"useFixedNodeForBackup"`
 }
 
 // Validate validates this mongo d b source registration params
@@ -74,6 +78,10 @@ func (m *MongoDBSourceRegistrationParams) Validate(formats strfmt.Registry) erro
 	}
 
 	if err := m.validateUseSecondaryForBackup(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateUseFixedNodeForBackup(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -163,6 +171,15 @@ func (m *MongoDBSourceRegistrationParams) validateIsSslRequired(formats strfmt.R
 func (m *MongoDBSourceRegistrationParams) validateUseSecondaryForBackup(formats strfmt.Registry) error {
 
 	if err := validate.Required("useSecondaryForBackup", "body", m.UseSecondaryForBackup); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *MongoDBSourceRegistrationParams) validateUseFixedNodeForBackup(formats strfmt.Registry) error {
+
+	if err := validate.Required("useFixedNodeForBackup", "body", m.UseFixedNodeForBackup); err != nil {
 		return err
 	}
 

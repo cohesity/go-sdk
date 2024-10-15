@@ -81,7 +81,7 @@ type CommonProtectionGroupResponseParams struct {
 	IsPaused *bool `json:"isPaused,omitempty"`
 
 	// Specifies the environment of the Protection Group.
-	// Enum: ["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsRDSPostgres","kAwsAuroraPostgres","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc","kO365ExchangeCSM","kO365OneDriveCSM","kO365SharepointCSM"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies information about the last run for this Protection Group.
@@ -321,7 +321,7 @@ var commonProtectionGroupResponseParamsTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsRDSPostgres","kAwsAuroraPostgres","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc","kO365ExchangeCSM","kO365OneDriveCSM","kO365SharepointCSM"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -372,6 +372,12 @@ const (
 
 	// CommonProtectionGroupResponseParamsEnvironmentKAwsRDSPostgresBackup captures enum value "kAwsRDSPostgresBackup"
 	CommonProtectionGroupResponseParamsEnvironmentKAwsRDSPostgresBackup string = "kAwsRDSPostgresBackup"
+
+	// CommonProtectionGroupResponseParamsEnvironmentKAwsRDSPostgres captures enum value "kAwsRDSPostgres"
+	CommonProtectionGroupResponseParamsEnvironmentKAwsRDSPostgres string = "kAwsRDSPostgres"
+
+	// CommonProtectionGroupResponseParamsEnvironmentKAwsAuroraPostgres captures enum value "kAwsAuroraPostgres"
+	CommonProtectionGroupResponseParamsEnvironmentKAwsAuroraPostgres string = "kAwsAuroraPostgres"
 
 	// CommonProtectionGroupResponseParamsEnvironmentKAzureNative captures enum value "kAzureNative"
 	CommonProtectionGroupResponseParamsEnvironmentKAzureNative string = "kAzureNative"
@@ -472,11 +478,23 @@ const (
 	// CommonProtectionGroupResponseParamsEnvironmentKHBase captures enum value "kHBase"
 	CommonProtectionGroupResponseParamsEnvironmentKHBase string = "kHBase"
 
+	// CommonProtectionGroupResponseParamsEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	CommonProtectionGroupResponseParamsEnvironmentKSAPHANA string = "kSAPHANA"
+
 	// CommonProtectionGroupResponseParamsEnvironmentKUDA captures enum value "kUDA"
 	CommonProtectionGroupResponseParamsEnvironmentKUDA string = "kUDA"
 
 	// CommonProtectionGroupResponseParamsEnvironmentKSfdc captures enum value "kSfdc"
 	CommonProtectionGroupResponseParamsEnvironmentKSfdc string = "kSfdc"
+
+	// CommonProtectionGroupResponseParamsEnvironmentKO365ExchangeCSM captures enum value "kO365ExchangeCSM"
+	CommonProtectionGroupResponseParamsEnvironmentKO365ExchangeCSM string = "kO365ExchangeCSM"
+
+	// CommonProtectionGroupResponseParamsEnvironmentKO365OneDriveCSM captures enum value "kO365OneDriveCSM"
+	CommonProtectionGroupResponseParamsEnvironmentKO365OneDriveCSM string = "kO365OneDriveCSM"
+
+	// CommonProtectionGroupResponseParamsEnvironmentKO365SharepointCSM captures enum value "kO365SharepointCSM"
+	CommonProtectionGroupResponseParamsEnvironmentKO365SharepointCSM string = "kO365SharepointCSM"
 )
 
 // prop value enum

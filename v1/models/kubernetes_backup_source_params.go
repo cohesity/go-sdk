@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -29,6 +30,9 @@ type KubernetesBackupSourceParams struct {
 	// the source. When set, this will override KubernetesEnvParams label based
 	// PVC filter.
 	IncludeParams *K8SFilterParams `json:"includeParams,omitempty"`
+
+	// List of groups to execute during PVC snapshots.
+	QuiesceGroups []*QuiesceGroup `json:"quiesceGroups"`
 }
 
 // Validate validates this kubernetes backup source params
@@ -40,6 +44,10 @@ func (m *KubernetesBackupSourceParams) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateIncludeParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateQuiesceGroups(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -87,6 +95,32 @@ func (m *KubernetesBackupSourceParams) validateIncludeParams(formats strfmt.Regi
 	return nil
 }
 
+func (m *KubernetesBackupSourceParams) validateQuiesceGroups(formats strfmt.Registry) error {
+	if swag.IsZero(m.QuiesceGroups) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.QuiesceGroups); i++ {
+		if swag.IsZero(m.QuiesceGroups[i]) { // not required
+			continue
+		}
+
+		if m.QuiesceGroups[i] != nil {
+			if err := m.QuiesceGroups[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("quiesceGroups" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("quiesceGroups" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 // ContextValidate validate this kubernetes backup source params based on the context it is used
 func (m *KubernetesBackupSourceParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -96,6 +130,10 @@ func (m *KubernetesBackupSourceParams) ContextValidate(ctx context.Context, form
 	}
 
 	if err := m.contextValidateIncludeParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateQuiesceGroups(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -142,6 +180,31 @@ func (m *KubernetesBackupSourceParams) contextValidateIncludeParams(ctx context.
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *KubernetesBackupSourceParams) contextValidateQuiesceGroups(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.QuiesceGroups); i++ {
+
+		if m.QuiesceGroups[i] != nil {
+
+			if swag.IsZero(m.QuiesceGroups[i]) { // not required
+				return nil
+			}
+
+			if err := m.QuiesceGroups[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("quiesceGroups" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("quiesceGroups" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

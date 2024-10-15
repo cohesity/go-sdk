@@ -27,8 +27,7 @@ type TargetOneDriveParam struct {
 	Name *string `json:"name,omitempty"`
 
 	// Specifies the path to the target folder.
-	// Required: true
-	TargetFolderPath *string `json:"targetFolderPath"`
+	TargetFolderPath *string `json:"targetFolderPath,omitempty"`
 
 	// Specifies the id of the domain for alternate domain recovery.
 	ParentSourceID *int64 `json:"parentSourceId,omitempty"`
@@ -39,24 +38,6 @@ type TargetOneDriveParam struct {
 
 // Validate validates this target one drive param
 func (m *TargetOneDriveParam) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateTargetFolderPath(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *TargetOneDriveParam) validateTargetFolderPath(formats strfmt.Registry) error {
-
-	if err := validate.Required("targetFolderPath", "body", m.TargetFolderPath); err != nil {
-		return err
-	}
-
 	return nil
 }
 

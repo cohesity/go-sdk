@@ -76,13 +76,21 @@ type CloudArchiveSummary struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	JobType *string `json:"jobType,omitempty"`
 
 	// Specifies the number of failed runs for a Protection Job.
@@ -120,7 +128,7 @@ var cloudArchiveSummaryTypeJobTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -153,123 +161,6 @@ const (
 
 	// CloudArchiveSummaryJobTypeKNimble captures enum value "kNimble"
 	CloudArchiveSummaryJobTypeKNimble string = "kNimble"
-
-	// CloudArchiveSummaryJobTypeKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	CloudArchiveSummaryJobTypeKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// CloudArchiveSummaryJobTypeKAzure captures enum value "kAzure"
-	CloudArchiveSummaryJobTypeKAzure string = "kAzure"
-
-	// CloudArchiveSummaryJobTypeKNetapp captures enum value "kNetapp"
-	CloudArchiveSummaryJobTypeKNetapp string = "kNetapp"
-
-	// CloudArchiveSummaryJobTypeKAgent captures enum value "kAgent"
-	CloudArchiveSummaryJobTypeKAgent string = "kAgent"
-
-	// CloudArchiveSummaryJobTypeKGenericNas captures enum value "kGenericNas"
-	CloudArchiveSummaryJobTypeKGenericNas string = "kGenericNas"
-
-	// CloudArchiveSummaryJobTypeKAcropolis captures enum value "kAcropolis"
-	CloudArchiveSummaryJobTypeKAcropolis string = "kAcropolis"
-
-	// CloudArchiveSummaryJobTypeKPhysicalFiles captures enum value "kPhysicalFiles"
-	CloudArchiveSummaryJobTypeKPhysicalFiles string = "kPhysicalFiles"
-
-	// CloudArchiveSummaryJobTypeKIsilon captures enum value "kIsilon"
-	CloudArchiveSummaryJobTypeKIsilon string = "kIsilon"
-
-	// CloudArchiveSummaryJobTypeKGPFS captures enum value "kGPFS"
-	CloudArchiveSummaryJobTypeKGPFS string = "kGPFS"
-
-	// CloudArchiveSummaryJobTypeKKVM captures enum value "kKVM"
-	CloudArchiveSummaryJobTypeKKVM string = "kKVM"
-
-	// CloudArchiveSummaryJobTypeKAWS captures enum value "kAWS"
-	CloudArchiveSummaryJobTypeKAWS string = "kAWS"
-
-	// CloudArchiveSummaryJobTypeKExchange captures enum value "kExchange"
-	CloudArchiveSummaryJobTypeKExchange string = "kExchange"
-
-	// CloudArchiveSummaryJobTypeKHyperVVSS captures enum value "kHyperVVSS"
-	CloudArchiveSummaryJobTypeKHyperVVSS string = "kHyperVVSS"
-
-	// CloudArchiveSummaryJobTypeKOracle captures enum value "kOracle"
-	CloudArchiveSummaryJobTypeKOracle string = "kOracle"
-
-	// CloudArchiveSummaryJobTypeKGCP captures enum value "kGCP"
-	CloudArchiveSummaryJobTypeKGCP string = "kGCP"
-
-	// CloudArchiveSummaryJobTypeKFlashBlade captures enum value "kFlashBlade"
-	CloudArchiveSummaryJobTypeKFlashBlade string = "kFlashBlade"
-
-	// CloudArchiveSummaryJobTypeKAWSNative captures enum value "kAWSNative"
-	CloudArchiveSummaryJobTypeKAWSNative string = "kAWSNative"
-
-	// CloudArchiveSummaryJobTypeKO365 captures enum value "kO365"
-	CloudArchiveSummaryJobTypeKO365 string = "kO365"
-
-	// CloudArchiveSummaryJobTypeKO365Outlook captures enum value "kO365Outlook"
-	CloudArchiveSummaryJobTypeKO365Outlook string = "kO365Outlook"
-
-	// CloudArchiveSummaryJobTypeKHyperFlex captures enum value "kHyperFlex"
-	CloudArchiveSummaryJobTypeKHyperFlex string = "kHyperFlex"
-
-	// CloudArchiveSummaryJobTypeKGCPNative captures enum value "kGCPNative"
-	CloudArchiveSummaryJobTypeKGCPNative string = "kGCPNative"
-
-	// CloudArchiveSummaryJobTypeKAzureNative captures enum value "kAzureNative"
-	CloudArchiveSummaryJobTypeKAzureNative string = "kAzureNative"
-
-	// CloudArchiveSummaryJobTypeKKubernetes captures enum value "kKubernetes"
-	CloudArchiveSummaryJobTypeKKubernetes string = "kKubernetes"
-
-	// CloudArchiveSummaryJobTypeKElastifile captures enum value "kElastifile"
-	CloudArchiveSummaryJobTypeKElastifile string = "kElastifile"
-
-	// CloudArchiveSummaryJobTypeKAD captures enum value "kAD"
-	CloudArchiveSummaryJobTypeKAD string = "kAD"
-
-	// CloudArchiveSummaryJobTypeKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	CloudArchiveSummaryJobTypeKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// CloudArchiveSummaryJobTypeKCassandra captures enum value "kCassandra"
-	CloudArchiveSummaryJobTypeKCassandra string = "kCassandra"
-
-	// CloudArchiveSummaryJobTypeKMongoDB captures enum value "kMongoDB"
-	CloudArchiveSummaryJobTypeKMongoDB string = "kMongoDB"
-
-	// CloudArchiveSummaryJobTypeKCouchbase captures enum value "kCouchbase"
-	CloudArchiveSummaryJobTypeKCouchbase string = "kCouchbase"
-
-	// CloudArchiveSummaryJobTypeKHdfs captures enum value "kHdfs"
-	CloudArchiveSummaryJobTypeKHdfs string = "kHdfs"
-
-	// CloudArchiveSummaryJobTypeKHive captures enum value "kHive"
-	CloudArchiveSummaryJobTypeKHive string = "kHive"
-
-	// CloudArchiveSummaryJobTypeKHBase captures enum value "kHBase"
-	CloudArchiveSummaryJobTypeKHBase string = "kHBase"
-
-	// CloudArchiveSummaryJobTypeKUDA captures enum value "kUDA"
-	CloudArchiveSummaryJobTypeKUDA string = "kUDA"
-
-	// CloudArchiveSummaryJobTypeKO365Teams captures enum value "kO365Teams"
-	CloudArchiveSummaryJobTypeKO365Teams string = "kO365Teams"
-
-	// CloudArchiveSummaryJobTypeKO365Group captures enum value "kO365Group"
-	CloudArchiveSummaryJobTypeKO365Group string = "kO365Group"
-
-	// CloudArchiveSummaryJobTypeKO365Exchange captures enum value "kO365Exchange"
-	CloudArchiveSummaryJobTypeKO365Exchange string = "kO365Exchange"
-
-	// CloudArchiveSummaryJobTypeKO365OneDrive captures enum value "kO365OneDrive"
-	CloudArchiveSummaryJobTypeKO365OneDrive string = "kO365OneDrive"
-
-	// CloudArchiveSummaryJobTypeKO365Sharepoint captures enum value "kO365Sharepoint"
-	CloudArchiveSummaryJobTypeKO365Sharepoint string = "kO365Sharepoint"
-
-	// CloudArchiveSummaryJobTypeKO365PublicFolders captures enum value "kO365PublicFolders"
-	CloudArchiveSummaryJobTypeKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

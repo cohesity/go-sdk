@@ -38,6 +38,9 @@ type Cluster struct {
 	// To attempt agent connection on port 21213 first
 	AttemptAgentPortsUpgrade *bool `json:"attemptAgentPortsUpgrade,omitempty"`
 
+	// Bool specifying if cluster can support authHeaders for upgrade
+	AuthSupportForPkgDownloads *bool `json:"authSupportForPkgDownloads,omitempty"`
+
 	// Information about storage available for metadata
 	AvailableMetadataSpace *int64 `json:"availableMetadataSpace,omitempty"`
 
@@ -337,6 +340,9 @@ type Cluster struct {
 	// Specifies the timezone to use for showing time in emails, reports,
 	// filer audit logs, etc.
 	Timezone *string `json:"timezone,omitempty"`
+
+	// Specifies if the TLS is enabled on the remote cluster.
+	TLSEnabled *bool `json:"tlsEnabled,omitempty"`
 
 	// Trust Domain.
 	TrustDomain *string `json:"trustDomain,omitempty"`

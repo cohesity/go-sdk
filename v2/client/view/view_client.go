@@ -130,7 +130,7 @@ type ClientService interface {
 /*
 AddViewUserQuotaOverrides adds user quota overrides
 
-Specifies the parameters to override the user quota on the view. User quota on the view should be enabled before setting a user override.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Specifies the parameters to override the user quota on the view. User quota on the view should be enabled before setting a user override.
 */
 func (a *Client) AddViewUserQuotaOverrides(params *AddViewUserQuotaOverridesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AddViewUserQuotaOverridesCreated, error) {
 	// TODO: Validate the params before sending
@@ -170,7 +170,7 @@ func (a *Client) AddViewUserQuotaOverrides(params *AddViewUserQuotaOverridesPara
 /*
 ClearNlmLocks clears n l m locks
 
-Clear NLM locks that match the filter criteria specified using parameters
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Clear NLM locks that match the filter criteria specified using parameters
 */
 func (a *Client) ClearNlmLocks(params *ClearNlmLocksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ClearNlmLocksNoContent, error) {
 	// TODO: Validate the params before sending
@@ -210,7 +210,7 @@ func (a *Client) ClearNlmLocks(params *ClearNlmLocksParams, authInfo runtime.Cli
 /*
 CloneView clones view
 
-Clone View.
+**Privileges:** ```STORAGE_MODIFY, CLONE_MODIFY``` <br><br>Clone View.
 */
 func (a *Client) CloneView(params *CloneViewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CloneViewCreated, error) {
 	// TODO: Validate the params before sending
@@ -250,7 +250,7 @@ func (a *Client) CloneView(params *CloneViewParams, authInfo runtime.ClientAuthI
 /*
 CloneViewDirectory clones view directory
 
-Clone View Directory.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Clone View Directory.
 */
 func (a *Client) CloneViewDirectory(params *CloneViewDirectoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CloneViewDirectoryNoContent, error) {
 	// TODO: Validate the params before sending
@@ -290,7 +290,7 @@ func (a *Client) CloneViewDirectory(params *CloneViewDirectoryParams, authInfo r
 /*
 CloseSmbFileOpen closes s m b file open
 
-Close an active SMB file open.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Close an active SMB file open.
 */
 func (a *Client) CloseSmbFileOpen(params *CloseSmbFileOpenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CloseSmbFileOpenNoContent, error) {
 	// TODO: Validate the params before sending
@@ -330,7 +330,7 @@ func (a *Client) CloseSmbFileOpen(params *CloseSmbFileOpenParams, authInfo runti
 /*
 CreateShare creates a share
 
-Create a Share.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Create a Share.
 */
 func (a *Client) CreateShare(params *CreateShareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateShareCreated, error) {
 	// TODO: Validate the params before sending
@@ -370,7 +370,7 @@ func (a *Client) CreateShare(params *CreateShareParams, authInfo runtime.ClientA
 /*
 CreateView creates a view
 
-Creates a View.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Creates a View.
 */
 func (a *Client) CreateView(params *CreateViewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateViewCreated, error) {
 	// TODO: Validate the params before sending
@@ -410,7 +410,7 @@ func (a *Client) CreateView(params *CreateViewParams, authInfo runtime.ClientAut
 /*
 CreateViewTemplate creates a view template
 
-Creates a View Template.
+**Privileges:** ```STORAGE_DOMAIN_MODIFY``` <br><br>Creates a View Template.
 */
 func (a *Client) CreateViewTemplate(params *CreateViewTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateViewTemplateCreated, error) {
 	// TODO: Validate the params before sending
@@ -450,7 +450,7 @@ func (a *Client) CreateViewTemplate(params *CreateViewTemplateParams, authInfo r
 /*
 DeleteShare deletes a share
 
-Delete a Share.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Delete a Share.
 */
 func (a *Client) DeleteShare(params *DeleteShareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteShareNoContent, error) {
 	// TODO: Validate the params before sending
@@ -490,7 +490,7 @@ func (a *Client) DeleteShare(params *DeleteShareParams, authInfo runtime.ClientA
 /*
 DeleteView deletes a view
 
-Deletes a View based on given id.
+```No Privileges Required``` <br><br>Deletes a View based on given id.
 */
 func (a *Client) DeleteView(params *DeleteViewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteViewNoContent, error) {
 	// TODO: Validate the params before sending
@@ -530,7 +530,7 @@ func (a *Client) DeleteView(params *DeleteViewParams, authInfo runtime.ClientAut
 /*
 DeleteViewDirectoryQuota deletes directory quota for the view
 
-Delete directory quota for the View.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Delete directory quota for the View.
 */
 func (a *Client) DeleteViewDirectoryQuota(params *DeleteViewDirectoryQuotaParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteViewDirectoryQuotaNoContent, error) {
 	// TODO: Validate the params before sending
@@ -570,7 +570,7 @@ func (a *Client) DeleteViewDirectoryQuota(params *DeleteViewDirectoryQuotaParams
 /*
 DeleteViewTemplate deletes a view template
 
-Deletes a view template based on given template id.
+**Privileges:** ```STORAGE_DOMAIN_MODIFY``` <br><br>Deletes a view template based on given template id.
 */
 func (a *Client) DeleteViewTemplate(params *DeleteViewTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteViewTemplateNoContent, error) {
 	// TODO: Validate the params before sending
@@ -610,7 +610,7 @@ func (a *Client) DeleteViewTemplate(params *DeleteViewTemplateParams, authInfo r
 /*
 DeleteViewUserQuotaOverrides deletes user quota overrides
 
-Specifies the parameters to delete user quotas on the view.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Specifies the parameters to delete user quotas on the view.
 */
 func (a *Client) DeleteViewUserQuotaOverrides(params *DeleteViewUserQuotaOverridesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteViewUserQuotaOverridesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -650,7 +650,7 @@ func (a *Client) DeleteViewUserQuotaOverrides(params *DeleteViewUserQuotaOverrid
 /*
 GetFileLockStatus gets file lock status
 
-Get the lock status of a file in a view.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get the lock status of a file in a view.
 */
 func (a *Client) GetFileLockStatus(params *GetFileLockStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetFileLockStatusOK, error) {
 	// TODO: Validate the params before sending
@@ -690,7 +690,7 @@ func (a *Client) GetFileLockStatus(params *GetFileLockStatusParams, authInfo run
 /*
 GetNlmLocks gets n l m locks
 
-Get the list of NLM locks in the views.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get the list of NLM locks in the views.
 */
 func (a *Client) GetNlmLocks(params *GetNlmLocksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNlmLocksOK, error) {
 	// TODO: Validate the params before sending
@@ -730,7 +730,7 @@ func (a *Client) GetNlmLocks(params *GetNlmLocksParams, authInfo runtime.ClientA
 /*
 GetQosPolicies gets qo s policies
 
-Get the list of QoS policies on the Cohesity cluster.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get the list of QoS policies on the Cohesity cluster.
 */
 func (a *Client) GetQosPolicies(params *GetQosPoliciesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetQosPoliciesOK, error) {
 	// TODO: Validate the params before sending
@@ -770,7 +770,7 @@ func (a *Client) GetQosPolicies(params *GetQosPoliciesParams, authInfo runtime.C
 /*
 GetShares gets shares
 
-If no parameters are specified, all shares on the Cohesity Cluster are returned. Specifying share name/prefix filters the results that are returned. NOTE: If maxCount is set and the number of Shares returned exceeds the maxCount, there are more Share to return. To get the next set of Views, send another request and specify the pagination cookie from the previous response. If maxCount is not specified, the first 2000 Shares.
+**Privileges:** ```STORAGE_VIEW``` <br><br>If no parameters are specified, all shares on the Cohesity Cluster are returned. Specifying share name/prefix filters the results that are returned. NOTE: If maxCount is set and the number of Shares returned exceeds the maxCount, there are more Share to return. To get the next set of Views, send another request and specify the pagination cookie from the previous response. If maxCount is not specified, the first 2000 Shares.
 */
 func (a *Client) GetShares(params *GetSharesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSharesOK, error) {
 	// TODO: Validate the params before sending
@@ -810,7 +810,7 @@ func (a *Client) GetShares(params *GetSharesParams, authInfo runtime.ClientAuthI
 /*
 GetViewByID gets a view by Id
 
-Get a View based on given Id.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get a View based on given Id.
 */
 func (a *Client) GetViewByID(params *GetViewByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetViewByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -850,7 +850,7 @@ func (a *Client) GetViewByID(params *GetViewByIDParams, authInfo runtime.ClientA
 /*
 GetViewClients gets view clients
 
-Get View Clients.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get View Clients.
 */
 func (a *Client) GetViewClients(params *GetViewClientsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetViewClientsOK, error) {
 	// TODO: Validate the params before sending
@@ -890,7 +890,7 @@ func (a *Client) GetViewClients(params *GetViewClientsParams, authInfo runtime.C
 /*
 GetViewClientsSummary gets view clients summary
 
-Get View Clients Summary.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get View Clients Summary.
 */
 func (a *Client) GetViewClientsSummary(params *GetViewClientsSummaryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetViewClientsSummaryOK, error) {
 	// TODO: Validate the params before sending
@@ -930,7 +930,7 @@ func (a *Client) GetViewClientsSummary(params *GetViewClientsSummaryParams, auth
 /*
 GetViewDirectoryQuotas gets directory quotas for the view
 
-Get directory quotas for the View.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get directory quotas for the View.
 */
 func (a *Client) GetViewDirectoryQuotas(params *GetViewDirectoryQuotasParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetViewDirectoryQuotasOK, error) {
 	// TODO: Validate the params before sending
@@ -970,7 +970,7 @@ func (a *Client) GetViewDirectoryQuotas(params *GetViewDirectoryQuotasParams, au
 /*
 GetViewUserQuotas gets view user quotas
 
-Get user quotas for the View.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get user quotas for the View.
 */
 func (a *Client) GetViewUserQuotas(params *GetViewUserQuotasParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetViewUserQuotasOK, error) {
 	// TODO: Validate the params before sending
@@ -1010,7 +1010,7 @@ func (a *Client) GetViewUserQuotas(params *GetViewUserQuotasParams, authInfo run
 /*
 	GetViews lists views
 
-	If no parameters are specified, all Views on the Cohesity Cluster are returned.
+	**Privileges:** ```STORAGE_VIEW``` <br><br>If no parameters are specified, all Views on the Cohesity Cluster are returned.
 
 Specifying parameters filters the results that are returned.
 NOTE: If maxCount is set and the number of Views returned exceeds the maxCount,
@@ -1056,7 +1056,7 @@ func (a *Client) GetViews(params *GetViewsParams, authInfo runtime.ClientAuthInf
 /*
 GetViewsSummary gets views summary
 
-Get Views summary.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get Views summary.
 */
 func (a *Client) GetViewsSummary(params *GetViewsSummaryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetViewsSummaryOK, error) {
 	// TODO: Validate the params before sending
@@ -1096,7 +1096,7 @@ func (a *Client) GetViewsSummary(params *GetViewsSummaryParams, authInfo runtime
 /*
 ListSmbFileOpens gets s m b file opens
 
-Get SMB active file opens on a Cohesity View.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get SMB active file opens on a Cohesity View.
 */
 func (a *Client) ListSmbFileOpens(params *ListSmbFileOpensParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListSmbFileOpensOK, error) {
 	// TODO: Validate the params before sending
@@ -1136,7 +1136,7 @@ func (a *Client) ListSmbFileOpens(params *ListSmbFileOpensParams, authInfo runti
 /*
 LockFile creates a file lock
 
-Locks a file in a view and returns the lock status of the file.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Locks a file in a view and returns the lock status of the file.
 */
 func (a *Client) LockFile(params *LockFileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*LockFileCreated, error) {
 	// TODO: Validate the params before sending
@@ -1176,7 +1176,7 @@ func (a *Client) LockFile(params *LockFileParams, authInfo runtime.ClientAuthInf
 /*
 OverwriteView overwrites view
 
-Overwrite View.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Overwrite View.
 */
 func (a *Client) OverwriteView(params *OverwriteViewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*OverwriteViewNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1216,7 +1216,7 @@ func (a *Client) OverwriteView(params *OverwriteViewParams, authInfo runtime.Cli
 /*
 ReadViewTemplateByID reads a view template by Id
 
-Reads a view template based on given template id.
+**Privileges:** ```STORAGE_DOMAIN_VIEW``` <br><br>Reads a view template based on given template id.
 */
 func (a *Client) ReadViewTemplateByID(params *ReadViewTemplateByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ReadViewTemplateByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -1256,7 +1256,7 @@ func (a *Client) ReadViewTemplateByID(params *ReadViewTemplateByIDParams, authIn
 /*
 	ReadViewTemplates lists view templates
 
-	All view templates on the Cohesity Cluster are returned.
+	**Privileges:** ```STORAGE_DOMAIN_VIEW``` <br><br>All view templates on the Cohesity Cluster are returned.
 
 Specifying parameters filters the results that are returned.
 */
@@ -1298,7 +1298,7 @@ func (a *Client) ReadViewTemplates(params *ReadViewTemplatesParams, authInfo run
 /*
 UpdateShare updates a share
 
-Update a Share.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Update a Share.
 */
 func (a *Client) UpdateShare(params *UpdateShareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateShareOK, error) {
 	// TODO: Validate the params before sending
@@ -1338,7 +1338,7 @@ func (a *Client) UpdateShare(params *UpdateShareParams, authInfo runtime.ClientA
 /*
 UpdateView updates a view
 
-Updates a View based on given id.
+```No Privileges Required``` <br><br>Updates a View based on given id.
 */
 func (a *Client) UpdateView(params *UpdateViewParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateViewOK, error) {
 	// TODO: Validate the params before sending
@@ -1378,7 +1378,7 @@ func (a *Client) UpdateView(params *UpdateViewParams, authInfo runtime.ClientAut
 /*
 UpdateViewDirectoryQuota updates directory quota for the view
 
-Update directory quota for the View.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Update directory quota for the View.
 */
 func (a *Client) UpdateViewDirectoryQuota(params *UpdateViewDirectoryQuotaParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateViewDirectoryQuotaOK, error) {
 	// TODO: Validate the params before sending
@@ -1418,7 +1418,7 @@ func (a *Client) UpdateViewDirectoryQuota(params *UpdateViewDirectoryQuotaParams
 /*
 UpdateViewTemplate updates a view template
 
-Updates a View Template.
+**Privileges:** ```STORAGE_DOMAIN_MODIFY``` <br><br>Updates a View Template.
 */
 func (a *Client) UpdateViewTemplate(params *UpdateViewTemplateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateViewTemplateOK, error) {
 	// TODO: Validate the params before sending
@@ -1458,7 +1458,7 @@ func (a *Client) UpdateViewTemplate(params *UpdateViewTemplateParams, authInfo r
 /*
 UpdateViewUserQuotaOverride updates user quota override
 
-Update user quota. To use this API, User quota settings should be enabled on the View and there should be a user quota override added for this user.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Update user quota. To use this API, User quota settings should be enabled on the View and there should be a user quota override added for this user.
 */
 func (a *Client) UpdateViewUserQuotaOverride(params *UpdateViewUserQuotaOverrideParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateViewUserQuotaOverrideOK, error) {
 	// TODO: Validate the params before sending
@@ -1498,7 +1498,7 @@ func (a *Client) UpdateViewUserQuotaOverride(params *UpdateViewUserQuotaOverride
 /*
 UpdateViewUserQuotaSettings updates view user quota settings
 
-Specifies parameters to update View user quota settings.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Specifies parameters to update View user quota settings.
 */
 func (a *Client) UpdateViewUserQuotaSettings(params *UpdateViewUserQuotaSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateViewUserQuotaSettingsOK, error) {
 	// TODO: Validate the params before sending

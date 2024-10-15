@@ -61,6 +61,8 @@ type ClientService interface {
 
 /*
 RecoverVms recovers v ms
+
+**Privileges:** ```RESTORE_MODIFY``` <br><br>
 */
 func (a *Client) RecoverVms(params *RecoverVmsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RecoverVmsOK, error) {
 	// TODO: Validate the params before sending

@@ -7,7 +7,6 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -61,7 +60,7 @@ type ReplicationInfoBase struct {
 	// the Rx cluster (e.g., because they might have been replicated earlier).
 	// The key of the task is the id of the backup task, and the value is a bool
 	// that indicates whether that backup task should be filtered or not.
-	FilteredBackupTaskIDMap []*ReplicationInfoBaseFilteredBackupTaskIDMapEntry `json:"filteredBackupTaskIdMap"`
+	FilteredBackupTaskIDMap interface{} `json:"filteredBackupTaskIdMap,omitempty"`
 
 	// True, if this is a full replication. False, if incremental.
 	IsFullReplication *bool `json:"isFullReplication,omitempty"`
@@ -114,10 +113,6 @@ func (m *ReplicationInfoBase) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateExistingWormRetentionOnRx(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateFilteredBackupTaskIDMap(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -188,32 +183,6 @@ func (m *ReplicationInfoBase) validateExistingWormRetentionOnRx(formats strfmt.R
 	return nil
 }
 
-func (m *ReplicationInfoBase) validateFilteredBackupTaskIDMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.FilteredBackupTaskIDMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.FilteredBackupTaskIDMap); i++ {
-		if swag.IsZero(m.FilteredBackupTaskIDMap[i]) { // not required
-			continue
-		}
-
-		if m.FilteredBackupTaskIDMap[i] != nil {
-			if err := m.FilteredBackupTaskIDMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("filteredBackupTaskIdMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("filteredBackupTaskIdMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 func (m *ReplicationInfoBase) validateVmwareRxClusterCapability(formats strfmt.Registry) error {
 	if swag.IsZero(m.VmwareRxClusterCapability) { // not required
 		return nil
@@ -246,10 +215,6 @@ func (m *ReplicationInfoBase) ContextValidate(ctx context.Context, formats strfm
 	}
 
 	if err := m.contextValidateExistingWormRetentionOnRx(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateFilteredBackupTaskIDMap(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -321,31 +286,6 @@ func (m *ReplicationInfoBase) contextValidateExistingWormRetentionOnRx(ctx conte
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *ReplicationInfoBase) contextValidateFilteredBackupTaskIDMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.FilteredBackupTaskIDMap); i++ {
-
-		if m.FilteredBackupTaskIDMap[i] != nil {
-
-			if swag.IsZero(m.FilteredBackupTaskIDMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.FilteredBackupTaskIDMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("filteredBackupTaskIdMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("filteredBackupTaskIdMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

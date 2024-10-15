@@ -72,13 +72,24 @@ type UpdateApplicationServerParameters struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
 	Applications []string `json:"applications"`
+
+	// Specifies the cloud credentials used to authenticate with cloud(Aws).
+	CloudCredentials *CloudCredentials `json:"cloudCredentials,omitempty"`
 
 	// If set, user has encrypted the credential with 'user_ecryption_key'.
 	// It is assumed that credentials are first encrypted using
@@ -123,6 +134,10 @@ func (m *UpdateApplicationServerParameters) Validate(formats strfmt.Registry) er
 		res = append(res, err)
 	}
 
+	if err := m.validateCloudCredentials(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -133,7 +148,7 @@ var updateApplicationServerParametersApplicationsItemsEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -165,8 +180,57 @@ func (m *UpdateApplicationServerParameters) validateApplications(formats strfmt.
 	return nil
 }
 
-// ContextValidate validates this update application server parameters based on context it is used
+func (m *UpdateApplicationServerParameters) validateCloudCredentials(formats strfmt.Registry) error {
+	if swag.IsZero(m.CloudCredentials) { // not required
+		return nil
+	}
+
+	if m.CloudCredentials != nil {
+		if err := m.CloudCredentials.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this update application server parameters based on the context it is used
 func (m *UpdateApplicationServerParameters) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateCloudCredentials(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *UpdateApplicationServerParameters) contextValidateCloudCredentials(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CloudCredentials != nil {
+
+		if swag.IsZero(m.CloudCredentials) { // not required
+			return nil
+		}
+
+		if err := m.CloudCredentials.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

@@ -16,12 +16,12 @@ import (
 
 // RecoverRDSPostgresCustomServerConfig Recover RDS Postgres New Source Config.
 //
-// Specifies the configuration for recovering RDS Postgres instance to the known target.
+// Specifies the configuration for recovering RDS Objects to the custom target.
 //
 // swagger:model RecoverRDSPostgresCustomServerConfig
 type RecoverRDSPostgresCustomServerConfig struct {
 
-	// Specifies the Ip in which to deploy the Rds instance.
+	// Specifies the Ip in which to deploy the Rds objects.
 	// Required: true
 	IP *string `json:"ip"`
 
@@ -33,9 +33,12 @@ type RecoverRDSPostgresCustomServerConfig struct {
 	// Required: true
 	StandardCredentials *Credentials `json:"standardCredentials"`
 
-	// Specifies the region in which to deploy the Rds instance.
+	// Specifies the region in which to deploy the Rds objects.
 	// Required: true
 	Region *RecoveryObjectIdentifier `json:"region"`
+
+	// Specifies the parent source ID in which to recover RDS Objects.
+	Source *RecoveryObjectIdentifier `json:"source,omitempty"`
 }
 
 // Validate validates this recover r d s postgres custom server config
@@ -55,6 +58,10 @@ func (m *RecoverRDSPostgresCustomServerConfig) Validate(formats strfmt.Registry)
 	}
 
 	if err := m.validateRegion(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSource(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -122,6 +129,25 @@ func (m *RecoverRDSPostgresCustomServerConfig) validateRegion(formats strfmt.Reg
 	return nil
 }
 
+func (m *RecoverRDSPostgresCustomServerConfig) validateSource(formats strfmt.Registry) error {
+	if swag.IsZero(m.Source) { // not required
+		return nil
+	}
+
+	if m.Source != nil {
+		if err := m.Source.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("source")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("source")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this recover r d s postgres custom server config based on the context it is used
 func (m *RecoverRDSPostgresCustomServerConfig) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -131,6 +157,10 @@ func (m *RecoverRDSPostgresCustomServerConfig) ContextValidate(ctx context.Conte
 	}
 
 	if err := m.contextValidateRegion(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSource(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -166,6 +196,27 @@ func (m *RecoverRDSPostgresCustomServerConfig) contextValidateRegion(ctx context
 				return ve.ValidateName("region")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("region")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *RecoverRDSPostgresCustomServerConfig) contextValidateSource(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Source != nil {
+
+		if swag.IsZero(m.Source) { // not required
+			return nil
+		}
+
+		if err := m.Source.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("source")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("source")
 			}
 			return err
 		}

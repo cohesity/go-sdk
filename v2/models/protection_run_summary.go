@@ -30,7 +30,7 @@ type ProtectionRunSummary struct {
 	ProtectionGroupName *string `json:"protectionGroupName,omitempty"`
 
 	// Specifies the environment type of the Protection Group.
-	// Enum: ["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsRDSPostgres","kAwsAuroraPostgres","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc","kO365ExchangeCSM","kO365OneDriveCSM","kO365SharepointCSM"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Indicated if SLA has been violated for this run.
@@ -43,7 +43,7 @@ type ProtectionRunSummary struct {
 	EndTimeUsecs *int64 `json:"endTimeUsecs,omitempty"`
 
 	// Status of the backup run. 'Running' indicates that the run is still running. 'Canceled' indicates that the run has been canceled. 'Canceling' indicates that the run is in the process of being canceled. 'Paused' indicates that the ongoing run has been paused. 'Failed' indicates that the run has failed. 'Missed' indicates that the run was unable to take place at the scheduled time because the previous run was still happening. 'Succeeded' indicates that the run has finished successfully. 'SucceededWithWarning' indicates that the run finished successfully, but there were some warning messages. 'Skipped' indicates that the run was skipped.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]
 	Status *string `json:"status,omitempty"`
 
 	// Specifies if the protection run is a full run.
@@ -84,7 +84,7 @@ var protectionRunSummaryTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsRDSPostgres","kAwsAuroraPostgres","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc","kO365ExchangeCSM","kO365OneDriveCSM","kO365SharepointCSM"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -135,6 +135,12 @@ const (
 
 	// ProtectionRunSummaryEnvironmentKAwsRDSPostgresBackup captures enum value "kAwsRDSPostgresBackup"
 	ProtectionRunSummaryEnvironmentKAwsRDSPostgresBackup string = "kAwsRDSPostgresBackup"
+
+	// ProtectionRunSummaryEnvironmentKAwsRDSPostgres captures enum value "kAwsRDSPostgres"
+	ProtectionRunSummaryEnvironmentKAwsRDSPostgres string = "kAwsRDSPostgres"
+
+	// ProtectionRunSummaryEnvironmentKAwsAuroraPostgres captures enum value "kAwsAuroraPostgres"
+	ProtectionRunSummaryEnvironmentKAwsAuroraPostgres string = "kAwsAuroraPostgres"
 
 	// ProtectionRunSummaryEnvironmentKAzureNative captures enum value "kAzureNative"
 	ProtectionRunSummaryEnvironmentKAzureNative string = "kAzureNative"
@@ -235,11 +241,23 @@ const (
 	// ProtectionRunSummaryEnvironmentKHBase captures enum value "kHBase"
 	ProtectionRunSummaryEnvironmentKHBase string = "kHBase"
 
+	// ProtectionRunSummaryEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	ProtectionRunSummaryEnvironmentKSAPHANA string = "kSAPHANA"
+
 	// ProtectionRunSummaryEnvironmentKUDA captures enum value "kUDA"
 	ProtectionRunSummaryEnvironmentKUDA string = "kUDA"
 
 	// ProtectionRunSummaryEnvironmentKSfdc captures enum value "kSfdc"
 	ProtectionRunSummaryEnvironmentKSfdc string = "kSfdc"
+
+	// ProtectionRunSummaryEnvironmentKO365ExchangeCSM captures enum value "kO365ExchangeCSM"
+	ProtectionRunSummaryEnvironmentKO365ExchangeCSM string = "kO365ExchangeCSM"
+
+	// ProtectionRunSummaryEnvironmentKO365OneDriveCSM captures enum value "kO365OneDriveCSM"
+	ProtectionRunSummaryEnvironmentKO365OneDriveCSM string = "kO365OneDriveCSM"
+
+	// ProtectionRunSummaryEnvironmentKO365SharepointCSM captures enum value "kO365SharepointCSM"
+	ProtectionRunSummaryEnvironmentKO365SharepointCSM string = "kO365SharepointCSM"
 )
 
 // prop value enum
@@ -267,7 +285,7 @@ var protectionRunSummaryTypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -309,6 +327,9 @@ const (
 
 	// ProtectionRunSummaryStatusSkipped captures enum value "Skipped"
 	ProtectionRunSummaryStatusSkipped string = "Skipped"
+
+	// ProtectionRunSummaryStatusLegalHold captures enum value "LegalHold"
+	ProtectionRunSummaryStatusLegalHold string = "LegalHold"
 
 	// ProtectionRunSummaryStatusPaused captures enum value "Paused"
 	ProtectionRunSummaryStatusPaused string = "Paused"

@@ -7,11 +7,11 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // Condition Protobuf that describes the condition.
@@ -25,7 +25,7 @@ type Condition struct {
 	// This field describes the condition keys and the values specified for that
 	// key. An example of key is "s3:x-amz-acl" with values like "public-read",
 	// meaning that the request should include "public-read" in the ACL header.
-	ConditionKeyValuesMap []*ConditionConditionKeyValuesMapEntry `json:"conditionKeyValuesMap"`
+	ConditionKeyValuesMap map[string]ConditionKeyValues `json:"conditionKeyValuesMap,omitempty"`
 
 	// This field describes whether the condition matches all of the input values
 	// matches against any at least one of the values in
@@ -61,17 +61,17 @@ func (m *Condition) validateConditionKeyValuesMap(formats strfmt.Registry) error
 		return nil
 	}
 
-	for i := 0; i < len(m.ConditionKeyValuesMap); i++ {
-		if swag.IsZero(m.ConditionKeyValuesMap[i]) { // not required
-			continue
-		}
+	for k := range m.ConditionKeyValuesMap {
 
-		if m.ConditionKeyValuesMap[i] != nil {
-			if err := m.ConditionKeyValuesMap[i].Validate(formats); err != nil {
+		if err := validate.Required("conditionKeyValuesMap"+"."+k, "body", m.ConditionKeyValuesMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.ConditionKeyValuesMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("conditionKeyValuesMap" + "." + strconv.Itoa(i))
+					return ve.ValidateName("conditionKeyValuesMap" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("conditionKeyValuesMap" + "." + strconv.Itoa(i))
+					return ce.ValidateName("conditionKeyValuesMap" + "." + k)
 				}
 				return err
 			}
@@ -98,20 +98,10 @@ func (m *Condition) ContextValidate(ctx context.Context, formats strfmt.Registry
 
 func (m *Condition) contextValidateConditionKeyValuesMap(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.ConditionKeyValuesMap); i++ {
+	for k := range m.ConditionKeyValuesMap {
 
-		if m.ConditionKeyValuesMap[i] != nil {
-
-			if swag.IsZero(m.ConditionKeyValuesMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.ConditionKeyValuesMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("conditionKeyValuesMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("conditionKeyValuesMap" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.ConditionKeyValuesMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

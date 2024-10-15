@@ -22,7 +22,7 @@ import (
 // swagger:model RecoverKubernetesNamespaceParams
 type RecoverKubernetesNamespaceParams struct {
 
-	// Specifies the environment of the recovery target. The corresponding params below must be filled out.
+	// Specifies the environment of the recovery target. The corresponding params below must be filled out. As of now only kubernetes target environment is supported.
 	// Required: true
 	// Enum: ["kKubernetes"]
 	TargetEnvironment *string `json:"targetEnvironment"`

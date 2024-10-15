@@ -65,7 +65,7 @@ type UpdateInfectedFilesParams struct {
 
 	/* Body.
 
-	   Specifies the parameters of infected files to be updated.
+	   Specifies the parameters of infected entities to be updated.
 	*/
 	Body *models.UpdateInfectedFilesParameters
 

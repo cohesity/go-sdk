@@ -74,6 +74,12 @@ type BackupJobRunStateProto struct {
 	// we will backup all objects within the source).
 	EnvBackupParams *EnvBackupParams `json:"envBackupParams,omitempty"`
 
+	// Whether copy run proto is published in change log on rx cluster. If true,
+	// ETL should  ignore the backup run info.
+	// This is added as part of ENG-388025, to fix a Day0 issue where copy
+	// runs were not published in changelog on rx.
+	EtlIgnoreBackupRun *bool `json:"etlIgnoreBackupRun,omitempty"`
+
 	// The list of all finished attempts corresponding to this backup run.
 	FinishedAttempts []*BackupJobAttemptStateProto `json:"finishedAttempts"`
 
@@ -83,6 +89,9 @@ type BackupJobRunStateProto struct {
 
 	// Whether this run has been triggered by a failover operation.
 	IsFailoverRun *bool `json:"isFailoverRun,omitempty"`
+
+	// Whether this is the first run for the object.
+	IsFirstRunForTheObject *bool `json:"isFirstRunForTheObject,omitempty"`
 
 	// Whether this is a missed run created due to scheduling constraints.
 	IsMissedRun *bool `json:"isMissedRun,omitempty"`
@@ -167,6 +176,10 @@ type BackupJobRunStateProto struct {
 	// 1) kLocal: This is a local run.
 	// 2) kRemote: This is a remote replicated run.
 	// 3) kArchival: This run was remote restored by Icebox.
+	//
+	// Reason for ignoring tenant migration checks is because on the source
+	// cluster originator_type will be kLocal but on the destination cluster it
+	// will be kArchival.
 	OriginatorType *int32 `json:"originatorType,omitempty"`
 
 	// Retention policy that applies to this run.
@@ -207,6 +220,11 @@ type BackupJobRunStateProto struct {
 	// deleted (due to either retention policies or because the user asked us
 	// to). The metadata for such backup runs might still be preserved in the
 	// master's state (unless the 'metadata_deleted' field is also set to true).
+	//
+	// Reason for ignoring tenant migration checks is because on the destination
+	// cluster except for the latest snapshot none of the other snapshots for an
+	// object will be downloaded, only the metadata for those snapshots will be
+	// downloaded.
 	SnapshotsDeleted *bool `json:"snapshotsDeleted,omitempty"`
 
 	// This will be populated with the timestamp at which the run was marked as

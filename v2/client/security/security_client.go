@@ -96,7 +96,7 @@ type ClientService interface {
 /*
 CreateClientcsr creates certificate signing requests on the cluster
 
-Create two Certificate Signing Request on the cluster with the given details one each for client and server. Each service can have at most one outstanding pair of CSR.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Create two Certificate Signing Request on the cluster with the given details one each for client and server. Each service can have at most one outstanding pair of CSR.
 */
 func (a *Client) CreateClientcsr(params *CreateClientcsrParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateClientcsrCreated, error) {
 	// TODO: Validate the params before sending
@@ -136,7 +136,7 @@ func (a *Client) CreateClientcsr(params *CreateClientcsrParams, authInfo runtime
 /*
 CreateCsr creates a certificate signing request on the cluster
 
-Create a Certificate Signing Request on the cluster with the given details. Each service has at most one outstanding CSR.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Create a Certificate Signing Request on the cluster with the given details. Each service has at most one outstanding CSR.
 */
 func (a *Client) CreateCsr(params *CreateCsrParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateCsrCreated, error) {
 	// TODO: Validate the params before sending
@@ -176,7 +176,7 @@ func (a *Client) CreateCsr(params *CreateCsrParams, authInfo runtime.ClientAuthI
 /*
 DeleteCsr deletes a certificate signing request on the cluster
 
-Delete a Certificate Signing Request on the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Delete a Certificate Signing Request on the cluster.
 */
 func (a *Client) DeleteCsr(params *DeleteCsrParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteCsrNoContent, error) {
 	// TODO: Validate the params before sending
@@ -216,7 +216,7 @@ func (a *Client) DeleteCsr(params *DeleteCsrParams, authInfo runtime.ClientAuthI
 /*
 GetCiphers gets the list of ciphers enabled on the cluster
 
-Gets the list of ciphers enabled on the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Gets the list of ciphers enabled on the cluster.
 */
 func (a *Client) GetCiphers(params *GetCiphersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetCiphersOK, error) {
 	// TODO: Validate the params before sending
@@ -256,7 +256,7 @@ func (a *Client) GetCiphers(params *GetCiphersParams, authInfo runtime.ClientAut
 /*
 GetCsrByID lists the specified certificate signing request
 
-List the specified Certificate Signing Request.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>List the specified Certificate Signing Request.
 */
 func (a *Client) GetCsrByID(params *GetCsrByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetCsrByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -296,7 +296,7 @@ func (a *Client) GetCsrByID(params *GetCsrByIDParams, authInfo runtime.ClientAut
 /*
 GetCsrList lists certificate signing requests on the cluster
 
-List Certificate Signing Requests on the cluster with service name filtering.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>List Certificate Signing Requests on the cluster with service name filtering.
 */
 func (a *Client) GetCsrList(params *GetCsrListParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetCsrListOK, error) {
 	// TODO: Validate the params before sending
@@ -336,7 +336,7 @@ func (a *Client) GetCsrList(params *GetCsrListParams, authInfo runtime.ClientAut
 /*
 GetObjectStoreCiphers gets the list of object store ciphers enabled on the cluster
 
-Gets the list of object store ciphers enabled on the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Gets the list of object store ciphers enabled on the cluster.
 */
 func (a *Client) GetObjectStoreCiphers(params *GetObjectStoreCiphersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetObjectStoreCiphersOK, error) {
 	// TODO: Validate the params before sending
@@ -376,7 +376,7 @@ func (a *Client) GetObjectStoreCiphers(params *GetObjectStoreCiphersParams, auth
 /*
 GetSecurityConfig gets cluster security settings
 
-Get cluster security settings.
+**Privileges:** ```SECURITY_ADVISOR_VIEW``` <br><br>Get cluster security settings.
 */
 func (a *Client) GetSecurityConfig(params *GetSecurityConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSecurityConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -416,7 +416,7 @@ func (a *Client) GetSecurityConfig(params *GetSecurityConfigParams, authInfo run
 /*
 ImportCertificateByClientcsr imports the signed certificates on the cluster after the certificate signing requests are created
 
-Import the signed certificates on the cluster after the Certificate Signing Requests are created.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Import the signed certificates on the cluster after the Certificate Signing Requests are created.
 */
 func (a *Client) ImportCertificateByClientcsr(params *ImportCertificateByClientcsrParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ImportCertificateByClientcsrOK, error) {
 	// TODO: Validate the params before sending
@@ -456,7 +456,7 @@ func (a *Client) ImportCertificateByClientcsr(params *ImportCertificateByClientc
 /*
 ListTrustedCaByID lists the specified certificate
 
-List the specified Certificate.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>List the specified Certificate.
 */
 func (a *Client) ListTrustedCaByID(params *ListTrustedCaByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListTrustedCaByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -496,7 +496,7 @@ func (a *Client) ListTrustedCaByID(params *ListTrustedCaByIDParams, authInfo run
 /*
 ListTrustedCas lists all certificates with cluster trust store
 
-List all trusted certificates in cluster trust store.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>List all trusted certificates in cluster trust store.
 */
 func (a *Client) ListTrustedCas(params *ListTrustedCasParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListTrustedCasOK, error) {
 	// TODO: Validate the params before sending
@@ -536,7 +536,7 @@ func (a *Client) ListTrustedCas(params *ListTrustedCasParams, authInfo runtime.C
 /*
 ModifyCiphers enables disable a list of ciphers on the cluster iris must be restarted for the change to take effect
 
-Enable/Disable a list of ciphers on the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Enable/Disable a list of ciphers on the cluster.
 */
 func (a *Client) ModifyCiphers(params *ModifyCiphersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ModifyCiphersOK, error) {
 	// TODO: Validate the params before sending
@@ -576,7 +576,7 @@ func (a *Client) ModifyCiphers(params *ModifyCiphersParams, authInfo runtime.Cli
 /*
 ModifyObjectStoreCiphers enables disable a list of object store ciphers on the cluster bridge must be restarted for the change to take effect
 
-Enable/Disable a list of object store ciphers on the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Enable/Disable a list of object store ciphers on the cluster.
 */
 func (a *Client) ModifyObjectStoreCiphers(params *ModifyObjectStoreCiphersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ModifyObjectStoreCiphersOK, error) {
 	// TODO: Validate the params before sending
@@ -616,7 +616,7 @@ func (a *Client) ModifyObjectStoreCiphers(params *ModifyObjectStoreCiphersParams
 /*
 RegisterTrustedCas registers c a certificate to the cluster trust store
 
-Register CA Certificate to the cluster trust store.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Register CA Certificate to the cluster trust store.
 */
 func (a *Client) RegisterTrustedCas(params *RegisterTrustedCasParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RegisterTrustedCasCreated, error) {
 	// TODO: Validate the params before sending
@@ -656,7 +656,7 @@ func (a *Client) RegisterTrustedCas(params *RegisterTrustedCasParams, authInfo r
 /*
 UnregisterTrustedCa unregisters c a certificate from the cluster trust store
 
-Unregister CA Certificate from the cluster trust store.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Unregister CA Certificate from the cluster trust store.
 */
 func (a *Client) UnregisterTrustedCa(params *UnregisterTrustedCaParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnregisterTrustedCaNoContent, error) {
 	// TODO: Validate the params before sending
@@ -696,7 +696,7 @@ func (a *Client) UnregisterTrustedCa(params *UnregisterTrustedCaParams, authInfo
 /*
 UpdateCertificateByCsr updates the signed certificate on the cluster after a certificate signing request is created
 
-Update the signed certificate on the cluster after a Certificate Signing Request is created.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update the signed certificate on the cluster after a Certificate Signing Request is created.
 */
 func (a *Client) UpdateCertificateByCsr(params *UpdateCertificateByCsrParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateCertificateByCsrOK, error) {
 	// TODO: Validate the params before sending
@@ -736,7 +736,7 @@ func (a *Client) UpdateCertificateByCsr(params *UpdateCertificateByCsrParams, au
 /*
 UpdateSecurityConfig updates cluster security settings
 
-Update cluster security settings.
+**Privileges:** ```SECURITY_ADVISOR_MODIFY``` <br><br>Update cluster security settings.
 */
 func (a *Client) UpdateSecurityConfig(params *UpdateSecurityConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateSecurityConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -776,7 +776,7 @@ func (a *Client) UpdateSecurityConfig(params *UpdateSecurityConfigParams, authIn
 /*
 ValidateTrustedCaByID validates c a certificate
 
-Certificate will be checked for Expiration and Revocation.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Certificate will be checked for Expiration and Revocation.
 */
 func (a *Client) ValidateTrustedCaByID(params *ValidateTrustedCaByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ValidateTrustedCaByIDOK, error) {
 	// TODO: Validate the params before sending

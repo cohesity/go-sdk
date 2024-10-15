@@ -98,7 +98,7 @@ type ClientService interface {
 /*
 ApplyPatches applies patches
 
-Apply a service patch and its dependencies.
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Apply a service patch and its dependencies.
 */
 func (a *Client) ApplyPatches(params *ApplyPatchesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ApplyPatchesCreated, error) {
 	// TODO: Validate the params before sending
@@ -138,7 +138,7 @@ func (a *Client) ApplyPatches(params *ApplyPatchesParams, authInfo runtime.Clien
 /*
 GetAppliedPatches gets applied patches
 
-Returns a list of currently applied patches that are running on the cluster.
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Returns a list of currently applied patches that are running on the cluster.
 */
 func (a *Client) GetAppliedPatches(params *GetAppliedPatchesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAppliedPatchesOK, error) {
 	// TODO: Validate the params before sending
@@ -178,7 +178,7 @@ func (a *Client) GetAppliedPatches(params *GetAppliedPatchesParams, authInfo run
 /*
 GetAvailablePatches gets available patches
 
-Returns a list of patches that are available and ready to apply on the cluster.
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Returns a list of patches that are available and ready to apply on the cluster.
 */
 func (a *Client) GetAvailablePatches(params *GetAvailablePatchesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAvailablePatchesOK, error) {
 	// TODO: Validate the params before sending
@@ -218,7 +218,7 @@ func (a *Client) GetAvailablePatches(params *GetAvailablePatchesParams, authInfo
 /*
 GetPatchOperationStatus gets patch operation status
 
-Returns the status of the current or the last patch operation. There can be only one active patch operation at any given time.
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Returns the status of the current or the last patch operation. There can be only one active patch operation at any given time.
 */
 func (a *Client) GetPatchOperationStatus(params *GetPatchOperationStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPatchOperationStatusOK, error) {
 	// TODO: Validate the params before sending
@@ -258,7 +258,7 @@ func (a *Client) GetPatchOperationStatus(params *GetPatchOperationStatusParams, 
 /*
 GetPatchesHistory gets patches history
 
-Get the history of all the patch management operations.
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Get the history of all the patch management operations.
 */
 func (a *Client) GetPatchesHistory(params *GetPatchesHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPatchesHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -298,7 +298,7 @@ func (a *Client) GetPatchesHistory(params *GetPatchesHistoryParams, authInfo run
 /*
 ImportPatches imports patches
 
-Import a patch or a hotfix to the cluster.
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Import a patch or a hotfix to the cluster.
 */
 func (a *Client) ImportPatches(params *ImportPatchesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ImportPatchesCreated, error) {
 	// TODO: Validate the params before sending
@@ -338,7 +338,7 @@ func (a *Client) ImportPatches(params *ImportPatchesParams, authInfo runtime.Cli
 /*
 RevertPatches reverts patches
 
-Revert an applied service patch and its dependencies.
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Revert an applied service patch and its dependencies.
 */
 func (a *Client) RevertPatches(params *RevertPatchesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RevertPatchesCreated, error) {
 	// TODO: Validate the params before sending

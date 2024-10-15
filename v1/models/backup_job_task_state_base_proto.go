@@ -62,7 +62,7 @@ type BackupJobTaskStateBaseProto struct {
 	// Map from entity id to cancellation reason. This map contains the entity
 	// ids of object which need to be cancel. If multiple cancellation requests
 	// with different sets of entity ids will be added in this map.
-	EntityIdsToCancel []*BackupJobTaskStateBaseProtoEntityIdsToCancelEntry `json:"entityIdsToCancel"`
+	EntityIdsToCancel interface{} `json:"entityIdsToCancel,omitempty"`
 
 	// The error encountered by this job or task instance (if any). Only valid if
 	// the status of the job is kFinished.
@@ -103,6 +103,12 @@ type BackupJobTaskStateBaseProto struct {
 
 	// The globally unique id of the job whose data this proto represents.
 	JobUID *UniversalIDProto `json:"jobUid,omitempty"`
+
+	// This is a run sequencer which will incremented whenever run reaches a new
+	// milestone. A milestone can be a change in state, or attempts, progress
+	// percentage incrementals (e.g. 10%), This will be used by Helios ETL to
+	// identify the latest copy of the backup run.
+	LastUpdateLogicalTimestamp *int64 `json:"lastUpdateLogicalTimestamp,omitempty"`
 
 	// Network realm id associated with the task.
 	NetworkRealmID *int64 `json:"networkRealmId,omitempty"`
@@ -178,7 +184,7 @@ type BackupJobTaskStateBaseProto struct {
 	// key of map is subtask id  and value is time when the permit was granted to
 	// subtask.
 	// TODO(prem): Get rid after removing all references.
-	SubtaskToPermitGrantTimeUsecsMapDEPRECATED []*BackupJobTaskStateBaseProtoSubtaskToPermitGrantTimeUsecsMapDEPRECATEDEntry `json:"subtaskToPermitGrantTimeUsecsMap_DEPRECATED"`
+	SubtaskToPermitGrantTimeUsecsMapDEPRECATED interface{} `json:"subtaskToPermitGrantTimeUsecsMap_DEPRECATED,omitempty"`
 
 	// List of successfully protected entities by the task.
 	SuccessfullyProtectedEntities []*PrivateEntityProto `json:"successfullyProtectedEntities"`
@@ -272,10 +278,6 @@ type BackupJobTaskStateBaseProto struct {
 func (m *BackupJobTaskStateBaseProto) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateEntityIdsToCancel(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateError(formats); err != nil {
 		res = append(res, err)
 	}
@@ -304,10 +306,6 @@ func (m *BackupJobTaskStateBaseProto) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateSubtaskToPermitGrantTimeUsecsMapDEPRECATED(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateSuccessfullyProtectedEntities(formats); err != nil {
 		res = append(res, err)
 	}
@@ -319,32 +317,6 @@ func (m *BackupJobTaskStateBaseProto) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *BackupJobTaskStateBaseProto) validateEntityIdsToCancel(formats strfmt.Registry) error {
-	if swag.IsZero(m.EntityIdsToCancel) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.EntityIdsToCancel); i++ {
-		if swag.IsZero(m.EntityIdsToCancel[i]) { // not required
-			continue
-		}
-
-		if m.EntityIdsToCancel[i] != nil {
-			if err := m.EntityIdsToCancel[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("entityIdsToCancel" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("entityIdsToCancel" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 
@@ -488,32 +460,6 @@ func (m *BackupJobTaskStateBaseProto) validateSources(formats strfmt.Registry) e
 	return nil
 }
 
-func (m *BackupJobTaskStateBaseProto) validateSubtaskToPermitGrantTimeUsecsMapDEPRECATED(formats strfmt.Registry) error {
-	if swag.IsZero(m.SubtaskToPermitGrantTimeUsecsMapDEPRECATED) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.SubtaskToPermitGrantTimeUsecsMapDEPRECATED); i++ {
-		if swag.IsZero(m.SubtaskToPermitGrantTimeUsecsMapDEPRECATED[i]) { // not required
-			continue
-		}
-
-		if m.SubtaskToPermitGrantTimeUsecsMapDEPRECATED[i] != nil {
-			if err := m.SubtaskToPermitGrantTimeUsecsMapDEPRECATED[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("subtaskToPermitGrantTimeUsecsMap_DEPRECATED" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("subtaskToPermitGrantTimeUsecsMap_DEPRECATED" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 func (m *BackupJobTaskStateBaseProto) validateSuccessfullyProtectedEntities(formats strfmt.Registry) error {
 	if swag.IsZero(m.SuccessfullyProtectedEntities) { // not required
 		return nil
@@ -570,10 +516,6 @@ func (m *BackupJobTaskStateBaseProto) validateWarnings(formats strfmt.Registry) 
 func (m *BackupJobTaskStateBaseProto) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidateEntityIdsToCancel(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.contextValidateError(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -602,10 +544,6 @@ func (m *BackupJobTaskStateBaseProto) ContextValidate(ctx context.Context, forma
 		res = append(res, err)
 	}
 
-	if err := m.contextValidateSubtaskToPermitGrantTimeUsecsMapDEPRECATED(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.contextValidateSuccessfullyProtectedEntities(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -617,31 +555,6 @@ func (m *BackupJobTaskStateBaseProto) ContextValidate(ctx context.Context, forma
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *BackupJobTaskStateBaseProto) contextValidateEntityIdsToCancel(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.EntityIdsToCancel); i++ {
-
-		if m.EntityIdsToCancel[i] != nil {
-
-			if swag.IsZero(m.EntityIdsToCancel[i]) { // not required
-				return nil
-			}
-
-			if err := m.EntityIdsToCancel[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("entityIdsToCancel" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("entityIdsToCancel" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 
@@ -786,31 +699,6 @@ func (m *BackupJobTaskStateBaseProto) contextValidateSources(ctx context.Context
 					return ve.ValidateName("sources" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("sources" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *BackupJobTaskStateBaseProto) contextValidateSubtaskToPermitGrantTimeUsecsMapDEPRECATED(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.SubtaskToPermitGrantTimeUsecsMapDEPRECATED); i++ {
-
-		if m.SubtaskToPermitGrantTimeUsecsMapDEPRECATED[i] != nil {
-
-			if swag.IsZero(m.SubtaskToPermitGrantTimeUsecsMapDEPRECATED[i]) { // not required
-				return nil
-			}
-
-			if err := m.SubtaskToPermitGrantTimeUsecsMapDEPRECATED[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("subtaskToPermitGrantTimeUsecsMap_DEPRECATED" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("subtaskToPermitGrantTimeUsecsMap_DEPRECATED" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

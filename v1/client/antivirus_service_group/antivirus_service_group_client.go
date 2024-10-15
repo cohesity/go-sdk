@@ -78,7 +78,7 @@ type ClientService interface {
 /*
 AntivirusServiceGroupState changes the state of an antivirus service group
 
-Returns the state of an antivirus service group upon completion.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the state of an antivirus service group upon completion.
 */
 func (a *Client) AntivirusServiceGroupState(params *AntivirusServiceGroupStateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AntivirusServiceGroupStateOK, error) {
 	// TODO: Validate the params before sending
@@ -118,7 +118,7 @@ func (a *Client) AntivirusServiceGroupState(params *AntivirusServiceGroupStatePa
 /*
 CreateAntivirusServiceGroup creates an antivirus service group
 
-Returns the created Antivirus service group.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the created Antivirus service group.
 */
 func (a *Client) CreateAntivirusServiceGroup(params *CreateAntivirusServiceGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateAntivirusServiceGroupCreated, error) {
 	// TODO: Validate the params before sending
@@ -158,7 +158,7 @@ func (a *Client) CreateAntivirusServiceGroup(params *CreateAntivirusServiceGroup
 /*
 DeleteAntivirusServiceGroup deletes an antivirus service group corresponding to the specified antivirus service group Id
 
-Returns delete status upon completion.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns delete status upon completion.
 */
 func (a *Client) DeleteAntivirusServiceGroup(params *DeleteAntivirusServiceGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteAntivirusServiceGroupNoContent, error) {
 	// TODO: Validate the params before sending
@@ -198,7 +198,7 @@ func (a *Client) DeleteAntivirusServiceGroup(params *DeleteAntivirusServiceGroup
 /*
 DeleteInfectedFiles deletes the list of infected files
 
-Returns the list of delete succeeded and delete failed infected files.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the list of delete succeeded and delete failed infected files.
 */
 func (a *Client) DeleteInfectedFiles(params *DeleteInfectedFilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteInfectedFilesOK, error) {
 	// TODO: Validate the params before sending
@@ -238,7 +238,7 @@ func (a *Client) DeleteInfectedFiles(params *DeleteInfectedFilesParams, authInfo
 /*
 GetAntivirusServiceGroup lists the antivirus service groups
 
-Returns all the antivirus service group.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns all the antivirus service group.
 */
 func (a *Client) GetAntivirusServiceGroup(params *GetAntivirusServiceGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAntivirusServiceGroupOK, error) {
 	// TODO: Validate the params before sending
@@ -278,7 +278,7 @@ func (a *Client) GetAntivirusServiceGroup(params *GetAntivirusServiceGroupParams
 /*
 GetIcapConnectionStatus checks the icap server connection status
 
-Returns the list of succeeded and failed connection statuses of Icap servers.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the list of succeeded and failed connection statuses of Icap servers.
 */
 func (a *Client) GetIcapConnectionStatus(params *GetIcapConnectionStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIcapConnectionStatusOK, error) {
 	// TODO: Validate the params before sending
@@ -318,7 +318,7 @@ func (a *Client) GetIcapConnectionStatus(params *GetIcapConnectionStatusParams, 
 /*
 GetInfectedFiles lists the infected files
 
-Returns all the infected files matching with query parameters.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns all the infected files matching with query parameters.
 */
 func (a *Client) GetInfectedFiles(params *GetInfectedFilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetInfectedFilesOK, error) {
 	// TODO: Validate the params before sending
@@ -358,7 +358,7 @@ func (a *Client) GetInfectedFiles(params *GetInfectedFilesParams, authInfo runti
 /*
 UpdateAntivirusServiceGroup updates an antivirus service group
 
-Returns the updated antivirus service group.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the updated antivirus service group.
 */
 func (a *Client) UpdateAntivirusServiceGroup(params *UpdateAntivirusServiceGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAntivirusServiceGroupOK, error) {
 	// TODO: Validate the params before sending
@@ -398,7 +398,7 @@ func (a *Client) UpdateAntivirusServiceGroup(params *UpdateAntivirusServiceGroup
 /*
 UpdateInfectedFiles updates the list of infected files
 
-Returns the list of update succeeded and update failed infected files.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the list of update succeeded and update failed infected files.
 */
 func (a *Client) UpdateInfectedFiles(params *UpdateInfectedFilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateInfectedFilesOK, error) {
 	// TODO: Validate the params before sending

@@ -36,7 +36,7 @@ type TieringInfo struct {
 	//  successfully, but there were some warning messages.
 	// 'OnHold' indicates that the run has On hold.
 	// 'Skipped' indicates that the run was skipped.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]
 	Status *string `json:"status,omitempty"`
 
 	// Specifies the stats of data tiering task.
@@ -88,7 +88,7 @@ var tieringInfoTypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -130,6 +130,9 @@ const (
 
 	// TieringInfoStatusSkipped captures enum value "Skipped"
 	TieringInfoStatusSkipped string = "Skipped"
+
+	// TieringInfoStatusLegalHold captures enum value "LegalHold"
+	TieringInfoStatusLegalHold string = "LegalHold"
 )
 
 // prop value enum

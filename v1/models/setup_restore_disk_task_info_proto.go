@@ -21,25 +21,32 @@ import (
 // Each available extension is listed below along with the location of the
 // proto file (relative to magneto/connectors) where it is defined.
 //
-// SetupRestoreDiskTaskInfoProto
+// # SetupRestoreDiskTaskInfoProto
+//
 // extension, extension_number
 // Location
+//
 // =============================================================================
 // vmware::SetupRestoreDiskTaskInfo
+//
 // vmware_setup_restore_disk_task_info, 100
 // connectors/vmware/vmware_setup_restore_disks.proto.proto
 //
-// AgentSetupRestoreDiskTaskInfo
+// # AgentSetupRestoreDiskTaskInfo
+//
 // agent_setup_restore_disk_task_info, 101
 // base/agent.proto
 //
 // app_file::SetupRestoreTaskInfo
+//
 // app_file_setup_restore_task_info, 102
 // connectors/app_file/app_file_setup_restore.proto
 //
 // hyperv::SetupRestoreDiskTaskInfo
+//
 // hyperv_setup_restore_disk_task_info, 103
 // connectors/hyperv/hyperv_setup_restore_disks.proto
+//
 // =============================================================================
 //
 // swagger:model SetupRestoreDiskTaskInfoProto

@@ -69,6 +69,11 @@ type RestoreTaskStateBaseProto struct {
 	Status *int32 `json:"status,omitempty"`
 
 	// A unique id for this task within the cluster.
+	//
+	// Reason for ignoring in tenant migration checks is that on the destination
+	// cluster the restore task id will be regenerated. So, the task id of a
+	// restore task on the source and destination cluster will not remain the
+	// same.
 	TaskID *int64 `json:"taskId,omitempty"`
 
 	// A global unique id for this task. Note that currently it is used to

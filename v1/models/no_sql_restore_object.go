@@ -7,9 +7,7 @@ package models
 
 import (
 	"context"
-	"strconv"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -21,7 +19,7 @@ type NoSQLRestoreObject struct {
 
 	// Key-Value pair for properties to apply on restore object.
 	// Ex. Compaction for cassandra or ShardKeyJson for Mongo.
-	ObjectRestorePropertiesMap []*NoSQLRestoreObjectObjectRestorePropertiesMapEntry `json:"objectRestorePropertiesMap"`
+	ObjectRestorePropertiesMap map[string]string `json:"objectRestorePropertiesMap,omitempty"`
 
 	// Uuid of the object to be restored.
 	ObjectUUID *string `json:"objectUuid,omitempty"`
@@ -32,80 +30,11 @@ type NoSQLRestoreObject struct {
 
 // Validate validates this no Sql restore object
 func (m *NoSQLRestoreObject) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateObjectRestorePropertiesMap(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *NoSQLRestoreObject) validateObjectRestorePropertiesMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.ObjectRestorePropertiesMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.ObjectRestorePropertiesMap); i++ {
-		if swag.IsZero(m.ObjectRestorePropertiesMap[i]) { // not required
-			continue
-		}
-
-		if m.ObjectRestorePropertiesMap[i] != nil {
-			if err := m.ObjectRestorePropertiesMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("objectRestorePropertiesMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("objectRestorePropertiesMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this no Sql restore object based on the context it is used
+// ContextValidate validates this no Sql restore object based on context it is used
 func (m *NoSQLRestoreObject) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateObjectRestorePropertiesMap(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *NoSQLRestoreObject) contextValidateObjectRestorePropertiesMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.ObjectRestorePropertiesMap); i++ {
-
-		if m.ObjectRestorePropertiesMap[i] != nil {
-
-			if swag.IsZero(m.ObjectRestorePropertiesMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.ObjectRestorePropertiesMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("objectRestorePropertiesMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("objectRestorePropertiesMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

@@ -65,6 +65,8 @@ type ClientService interface {
 
 /*
 GetUserPreferences lists the preferences of the session user
+
+```No Privileges Required``` <br><br>
 */
 func (a *Client) GetUserPreferences(params *GetUserPreferencesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUserPreferencesOK, error) {
 	// TODO: Validate the params before sending
@@ -104,7 +106,7 @@ func (a *Client) GetUserPreferences(params *GetUserPreferencesParams, authInfo r
 /*
 PatchUserPreferences updates specific preferences of the session user
 
-Returns the updated user preferences.
+```No Privileges Required``` <br><br>Returns the updated user preferences.
 */
 func (a *Client) PatchUserPreferences(params *PatchUserPreferencesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PatchUserPreferencesOK, error) {
 	// TODO: Validate the params before sending
@@ -144,7 +146,7 @@ func (a *Client) PatchUserPreferences(params *PatchUserPreferencesParams, authIn
 /*
 UpdateUserPreferences updates the preferences of the session user
 
-Returns the updated user preferences.
+```No Privileges Required``` <br><br>Returns the updated user preferences.
 */
 func (a *Client) UpdateUserPreferences(params *UpdateUserPreferencesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateUserPreferencesOK, error) {
 	// TODO: Validate the params before sending

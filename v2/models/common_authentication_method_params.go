@@ -24,7 +24,7 @@ type CommonAuthenticationMethodParams struct {
 
 	// Specifies the AWS External Target Authentication type.
 	// Required: true
-	// Enum: ["kUseIAMUser","kUseIAMRole","kUseSTS","kUseHelios"]
+	// Enum: ["kUseIAMUser","kUseIAMRole","kUseIAMRolesAnywhere","kUseSTS","kUseHelios","kUseInstanceProfile"]
 	AuthenticationType *string `json:"authenticationType"`
 }
 
@@ -46,7 +46,7 @@ var commonAuthenticationMethodParamsTypeAuthenticationTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kUseIAMUser","kUseIAMRole","kUseSTS","kUseHelios"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kUseIAMUser","kUseIAMRole","kUseIAMRolesAnywhere","kUseSTS","kUseHelios","kUseInstanceProfile"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -62,11 +62,17 @@ const (
 	// CommonAuthenticationMethodParamsAuthenticationTypeKUseIAMRole captures enum value "kUseIAMRole"
 	CommonAuthenticationMethodParamsAuthenticationTypeKUseIAMRole string = "kUseIAMRole"
 
+	// CommonAuthenticationMethodParamsAuthenticationTypeKUseIAMRolesAnywhere captures enum value "kUseIAMRolesAnywhere"
+	CommonAuthenticationMethodParamsAuthenticationTypeKUseIAMRolesAnywhere string = "kUseIAMRolesAnywhere"
+
 	// CommonAuthenticationMethodParamsAuthenticationTypeKUseSTS captures enum value "kUseSTS"
 	CommonAuthenticationMethodParamsAuthenticationTypeKUseSTS string = "kUseSTS"
 
 	// CommonAuthenticationMethodParamsAuthenticationTypeKUseHelios captures enum value "kUseHelios"
 	CommonAuthenticationMethodParamsAuthenticationTypeKUseHelios string = "kUseHelios"
+
+	// CommonAuthenticationMethodParamsAuthenticationTypeKUseInstanceProfile captures enum value "kUseInstanceProfile"
+	CommonAuthenticationMethodParamsAuthenticationTypeKUseInstanceProfile string = "kUseInstanceProfile"
 )
 
 // prop value enum

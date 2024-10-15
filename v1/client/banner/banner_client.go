@@ -64,7 +64,7 @@ type ClientService interface {
 /*
 	GetBanner lists the banner for a persona
 
-	Currently it returns a cluster specific banner for all requests. Later,
+	```No Privileges Required``` <br><br>Currently it returns a cluster specific banner for all requests. Later,
 
 depending on who is requesting it (which can be inferred from the URL),
 we would like to return most appropriate banner if set by the cluster
@@ -108,7 +108,7 @@ func (a *Client) GetBanner(params *GetBannerParams, authInfo runtime.ClientAuthI
 /*
 UpdateBanner updates an existing banner on the cohesity cluster
 
-Returns the banner that was updated on the Cohesity Cluster.
+```Unknown Privileges``` <br><br>Returns the banner that was updated on the Cohesity Cluster.
 */
 func (a *Client) UpdateBanner(params *UpdateBannerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateBannerOK, error) {
 	// TODO: Validate the params before sending

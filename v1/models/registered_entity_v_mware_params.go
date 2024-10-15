@@ -34,6 +34,10 @@ type RegisteredEntityVMwareParams struct {
 	// Storage snapshot providers source entities associated with this vCenter.
 	StorageSnapshotProviders []*PrivateEntityProto `json:"storageSnapshotProviders"`
 
+	// If this is set to true, Cohesity will update the last backup attempt time
+	// and backup status for the VMs on the vCenter.
+	UpdateLastBackupDetails *bool `json:"updateLastBackupDetails,omitempty"`
+
 	// This option is specified for VMware environment where it is instructed to
 	// use VM BIOS UUID instead of the vCenter UUID to track uniqueness of the
 	// VMs.

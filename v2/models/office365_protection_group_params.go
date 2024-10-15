@@ -176,7 +176,7 @@ var office365ProtectionGroupParamsProtectionTypesItemsEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kMailbox","kOneDrive","kSharePoint","kPublicFolders","kGroups","kTeams"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kMailbox","kOneDrive","kSharePoint","kPublicFolders","kGroups","kTeams","kMailboxCSM","kOneDriveCSM","kSharePointCSM"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

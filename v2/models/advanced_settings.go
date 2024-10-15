@@ -43,6 +43,12 @@ type AdvancedSettings struct {
 	// Whether to skip backup for read-only SQL databases.
 	// Enum: ["kError","kWarn","kIgnore"]
 	ReadOnlyDbBackupStatus *string `json:"readOnlyDbBackupStatus,omitempty"`
+
+	// If set to true, out of band incremental backup will be started when the log chain is broken and it would be started at the end of the log backup. Default value is false.
+	LogChainBreakAutoTriggerOobIncrBackup *bool `json:"logChainBreakAutoTriggerOobIncrBackup,omitempty"`
+
+	// If set to true, out of band incremental backup will be triggered when a new database is found and it would be started at the end of the log backup. Default value is false.
+	NewDatabaseAutoTriggerOobIncrBackup *bool `json:"newDatabaseAutoTriggerOobIncrBackup,omitempty"`
 }
 
 // Validate validates this advanced settings

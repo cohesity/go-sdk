@@ -70,7 +70,7 @@ type ClientService interface {
 /*
 GetKerberosProviderByID gets the registered kerberos provider by id
 
-Get the Registered Kerberos Provider by id.
+**Privileges:** ```KERBEROS_VIEW``` <br><br>Get the Registered Kerberos Provider by id.
 */
 func (a *Client) GetKerberosProviderByID(params *GetKerberosProviderByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetKerberosProviderByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -110,7 +110,7 @@ func (a *Client) GetKerberosProviderByID(params *GetKerberosProviderByIDParams, 
 /*
 GetKerberosProviders gets the list of kerberos providers
 
-Get the list of Kerberos Authentication Providers.
+**Privileges:** ```KERBEROS_VIEW``` <br><br>Get the list of Kerberos Authentication Providers.
 */
 func (a *Client) GetKerberosProviders(params *GetKerberosProvidersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetKerberosProvidersOK, error) {
 	// TODO: Validate the params before sending
@@ -150,7 +150,7 @@ func (a *Client) GetKerberosProviders(params *GetKerberosProvidersParams, authIn
 /*
 RegisterKerberosProvider registers a kerberos authentication provider
 
-Register a Kerberos Authentication Provider.
+**Privileges:** ```KERBEROS_MODIFY``` <br><br>Register a Kerberos Authentication Provider.
 */
 func (a *Client) RegisterKerberosProvider(params *RegisterKerberosProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RegisterKerberosProviderCreated, error) {
 	// TODO: Validate the params before sending
@@ -190,7 +190,7 @@ func (a *Client) RegisterKerberosProvider(params *RegisterKerberosProviderParams
 /*
 UnregisterKerberosProvider unregisters a kerberos provider
 
-Unregister a Kerberos Provider.
+**Privileges:** ```KERBEROS_MODIFY``` <br><br>Unregister a Kerberos Provider.
 */
 func (a *Client) UnregisterKerberosProvider(params *UnregisterKerberosProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnregisterKerberosProviderOK, error) {
 	// TODO: Validate the params before sending
@@ -230,7 +230,7 @@ func (a *Client) UnregisterKerberosProvider(params *UnregisterKerberosProviderPa
 /*
 UpdateKerberosProvider updates the kerberos provider registration
 
-Update the Kerberos Provider Registration.
+**Privileges:** ```KERBEROS_MODIFY``` <br><br>Update the Kerberos Provider Registration.
 */
 func (a *Client) UpdateKerberosProvider(params *UpdateKerberosProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateKerberosProviderOK, error) {
 	// TODO: Validate the params before sending

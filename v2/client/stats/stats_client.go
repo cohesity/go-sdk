@@ -74,7 +74,7 @@ type ClientService interface {
 /*
 GetClusterStorageStats gets cluster storage stats
 
-Get Cluster Storage Stats.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get Cluster Storage Stats.
 */
 func (a *Client) GetClusterStorageStats(params *GetClusterStorageStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterStorageStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -114,7 +114,7 @@ func (a *Client) GetClusterStorageStats(params *GetClusterStorageStatsParams, au
 /*
 GetFilesStats gets stats of files
 
-Get Stats of files.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get Stats of files.
 */
 func (a *Client) GetFilesStats(params *GetFilesStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetFilesStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -154,7 +154,7 @@ func (a *Client) GetFilesStats(params *GetFilesStatsParams, authInfo runtime.Cli
 /*
 GetProtectionRunsStats gets statistics of protection runs
 
-Get statistics of protection runs.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get statistics of protection runs.
 */
 func (a *Client) GetProtectionRunsStats(params *GetProtectionRunsStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionRunsStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -194,7 +194,7 @@ func (a *Client) GetProtectionRunsStats(params *GetProtectionRunsStatsParams, au
 /*
 GetTimeSeriesStats gets time series stats
 
-Get Time Series Stats.
+**Privileges:** ```CLUSTER_VIEW, TENANT_VIEW, STORAGE_DOMAIN_VIEW, STORAGE_VIEW, PROTECTION_VIEW``` <br><br>Get Time Series Stats.
 */
 func (a *Client) GetTimeSeriesStats(params *GetTimeSeriesStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTimeSeriesStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -234,7 +234,7 @@ func (a *Client) GetTimeSeriesStats(params *GetTimeSeriesStatsParams, authInfo r
 /*
 GetViewClientStats gets stats of view clients
 
-Get Stats of View Clients.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get Stats of View Clients.
 */
 func (a *Client) GetViewClientStats(params *GetViewClientStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetViewClientStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -274,7 +274,7 @@ func (a *Client) GetViewClientStats(params *GetViewClientStatsParams, authInfo r
 /*
 GetViewsStats gets views stats
 
-Get Views Stats.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get Views Stats.
 */
 func (a *Client) GetViewsStats(params *GetViewsStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetViewsStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -314,7 +314,7 @@ func (a *Client) GetViewsStats(params *GetViewsStatsParams, authInfo runtime.Cli
 /*
 GetWorkloadStats gets workload stats schema
 
-Get Workload Stats Schema. API will provide the high level information about different Workloads on Cohesity cluster along with their Entity Ids.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get Workload Stats Schema. API will provide the high level information about different Workloads on Cohesity cluster along with their Entity Ids.
 */
 func (a *Client) GetWorkloadStats(params *GetWorkloadStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetWorkloadStatsOK, error) {
 	// TODO: Validate the params before sending

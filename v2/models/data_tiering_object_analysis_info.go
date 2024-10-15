@@ -37,7 +37,7 @@ type DataTieringObjectAnalysisInfo struct {
 	//  successfully, but there were some warning messages.
 	// 'OnHold' indicates that the run has On hold.
 	// 'Skipped' indicates that the run was skipped.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]
 	Status *string `json:"status,omitempty"`
 
 	// A message about the error if encountered while performing data
@@ -100,7 +100,7 @@ var dataTieringObjectAnalysisInfoTypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -142,6 +142,9 @@ const (
 
 	// DataTieringObjectAnalysisInfoStatusSkipped captures enum value "Skipped"
 	DataTieringObjectAnalysisInfoStatusSkipped string = "Skipped"
+
+	// DataTieringObjectAnalysisInfoStatusLegalHold captures enum value "LegalHold"
+	DataTieringObjectAnalysisInfoStatusLegalHold string = "LegalHold"
 )
 
 // prop value enum

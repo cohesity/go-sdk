@@ -24,12 +24,18 @@ import (
 // RestoreFilesInfoProto extension                  Location               Extn
 // =============================================================================
 // vmware::RestoreFilesInfo::vmware_restore_files_info
+//
 // vmware/vmware.proto     100
+//
 // AgentRestoreFilesInfo::agent_restore_files_info  base/agent.proto        101
 // file::RestoreFilesInfo::restore_files_info
+//
 // file/file.proto         102
+//
 // hyperv::RestoreFilesInfo::hyperv_restore_files_info
+//
 // hyperv/hyperv.proto     103
+//
 // =============================================================================
 //
 // swagger:model RestoreFilesInfoProto

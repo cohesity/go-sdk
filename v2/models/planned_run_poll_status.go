@@ -33,11 +33,11 @@ type PlannedRunPollStatus struct {
 	ProtectionGroupID *string `json:"protectionGroupId,omitempty"`
 
 	// Status of the backup job. 'Running' indicates that the run is still running. 'Canceled' indicates that the run has been canceled. 'Canceling' indicates that the run is in the process of being canceled. 'Paused' indicates that the ongoing run has been paused. 'Failed' indicates that the run has failed. 'Missed' indicates that the run was unable to take place at the scheduled time because the previous run was still happening. 'Succeeded' indicates that the run has finished successfully. 'SucceededWithWarning' indicates that the run finished successfully, but there were some warning messages. 'Skipped' indicates that the run was skipped.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]
 	BackupTaskStatus *string `json:"backupTaskStatus,omitempty"`
 
 	// Status of the OnPrem deploy task. 'Running' indicates that the run is still running. 'Canceled' indicates that the run has been canceled. 'Canceling' indicates that the run is in the process of being canceled. 'Paused' indicates that the ongoing run has been paused. 'Failed' indicates that the run has failed. 'Missed' indicates that the run was unable to take place at the scheduled time because the previous run was still happening. 'Succeeded' indicates that the run has finished successfully. 'SucceededWithWarning' indicates that the run finished successfully, but there were some warning messages. 'Skipped' indicates that the run was skipped.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]
 	OnPremDeployTaskStatus *string `json:"onPremDeployTaskStatus,omitempty"`
 }
 
@@ -63,7 +63,7 @@ var plannedRunPollStatusTypeBackupTaskStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -106,6 +106,9 @@ const (
 	// PlannedRunPollStatusBackupTaskStatusSkipped captures enum value "Skipped"
 	PlannedRunPollStatusBackupTaskStatusSkipped string = "Skipped"
 
+	// PlannedRunPollStatusBackupTaskStatusLegalHold captures enum value "LegalHold"
+	PlannedRunPollStatusBackupTaskStatusLegalHold string = "LegalHold"
+
 	// PlannedRunPollStatusBackupTaskStatusPaused captures enum value "Paused"
 	PlannedRunPollStatusBackupTaskStatusPaused string = "Paused"
 )
@@ -135,7 +138,7 @@ var plannedRunPollStatusTypeOnPremDeployTaskStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -177,6 +180,9 @@ const (
 
 	// PlannedRunPollStatusOnPremDeployTaskStatusSkipped captures enum value "Skipped"
 	PlannedRunPollStatusOnPremDeployTaskStatusSkipped string = "Skipped"
+
+	// PlannedRunPollStatusOnPremDeployTaskStatusLegalHold captures enum value "LegalHold"
+	PlannedRunPollStatusOnPremDeployTaskStatusLegalHold string = "LegalHold"
 
 	// PlannedRunPollStatusOnPremDeployTaskStatusPaused captures enum value "Paused"
 	PlannedRunPollStatusOnPremDeployTaskStatusPaused string = "Paused"

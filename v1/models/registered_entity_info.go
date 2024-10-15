@@ -25,7 +25,7 @@ type RegisteredEntityInfo struct {
 	// after authorizing with the database host, to access a database separate
 	// credentials are required).
 	// TODO(Vivek) : Move this to RegisteredEntityParams
-	AppCredentialsVec []*AppCredentials `json:"appCredentialsVec"`
+	AppCredentialsVec []*PrivateAppCredentials `json:"appCredentialsVec"`
 
 	// The applications environments that have been registered with this entity.
 	AppEnvVec []int32 `json:"appEnvVec"`
@@ -74,7 +74,7 @@ type RegisteredEntityInfo struct {
 
 	// Map from child entity id to dummy value. If this map is non-empty then
 	// magneto will work on only the entities specified in this map.
-	RestrictedObjectIDMap []*RegisteredEntityInfoRestrictedObjectIDMapEntry `json:"restrictedObjectIdMap"`
+	RestrictedObjectIDMap map[string]bool `json:"restrictedObjectIdMap,omitempty"`
 
 	// This controls whether to use source side dedup on the source or not.
 	// NOTE: This is only applicable to sources which support source side dedup
@@ -126,10 +126,6 @@ func (m *RegisteredEntityInfo) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRegisteredEntityParams(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRestrictedObjectIDMap(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -260,32 +256,6 @@ func (m *RegisteredEntityInfo) validateRegisteredEntityParams(formats strfmt.Reg
 	return nil
 }
 
-func (m *RegisteredEntityInfo) validateRestrictedObjectIDMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.RestrictedObjectIDMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.RestrictedObjectIDMap); i++ {
-		if swag.IsZero(m.RestrictedObjectIDMap[i]) { // not required
-			continue
-		}
-
-		if m.RestrictedObjectIDMap[i] != nil {
-			if err := m.RestrictedObjectIDMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("restrictedObjectIdMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("restrictedObjectIdMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 func (m *RegisteredEntityInfo) validateThrottlingPolicy(formats strfmt.Registry) error {
 	if swag.IsZero(m.ThrottlingPolicy) { // not required
 		return nil
@@ -371,10 +341,6 @@ func (m *RegisteredEntityInfo) ContextValidate(ctx context.Context, formats strf
 	}
 
 	if err := m.contextValidateRegisteredEntityParams(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateRestrictedObjectIDMap(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -504,31 +470,6 @@ func (m *RegisteredEntityInfo) contextValidateRegisteredEntityParams(ctx context
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *RegisteredEntityInfo) contextValidateRestrictedObjectIDMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.RestrictedObjectIDMap); i++ {
-
-		if m.RestrictedObjectIDMap[i] != nil {
-
-			if swag.IsZero(m.RestrictedObjectIDMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.RestrictedObjectIDMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("restrictedObjectIdMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("restrictedObjectIdMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

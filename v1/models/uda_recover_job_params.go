@@ -12,6 +12,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // UdaRecoverJobParams Contains recovery params at the job level applicable for uda environment.
@@ -56,7 +57,7 @@ type UdaRecoverJobParams struct {
 
 	// Map to store custom arguments which will be provided to the recovery job
 	// scripts.
-	RestoreJobArgumentsMap []*UdaRecoverJobParamsRestoreJobArgumentsMapEntry `json:"restoreJobArgumentsMap"`
+	RestoreJobArgumentsMap map[string]UdaCustomArgument `json:"restoreJobArgumentsMap,omitempty"`
 
 	// EntityProto for CreateRestoreTaskArg::restore_target_entity_id.
 	// Set in magneto.
@@ -78,7 +79,7 @@ type UdaRecoverJobParams struct {
 
 	// Map to store custom arguments which will be provided to the source
 	// registration scripts.
-	SourceArgumentsMap []*UdaRecoverJobParamsSourceArgumentsMapEntry `json:"sourceArgumentsMap"`
+	SourceArgumentsMap map[string]UdaCustomArgument `json:"sourceArgumentsMap,omitempty"`
 
 	// Universal Data Adapter source type for which recovery is being performed.
 	SourceType *string `json:"sourceType,omitempty"`
@@ -149,17 +150,17 @@ func (m *UdaRecoverJobParams) validateRestoreJobArgumentsMap(formats strfmt.Regi
 		return nil
 	}
 
-	for i := 0; i < len(m.RestoreJobArgumentsMap); i++ {
-		if swag.IsZero(m.RestoreJobArgumentsMap[i]) { // not required
-			continue
-		}
+	for k := range m.RestoreJobArgumentsMap {
 
-		if m.RestoreJobArgumentsMap[i] != nil {
-			if err := m.RestoreJobArgumentsMap[i].Validate(formats); err != nil {
+		if err := validate.Required("restoreJobArgumentsMap"+"."+k, "body", m.RestoreJobArgumentsMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.RestoreJobArgumentsMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("restoreJobArgumentsMap" + "." + strconv.Itoa(i))
+					return ve.ValidateName("restoreJobArgumentsMap" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("restoreJobArgumentsMap" + "." + strconv.Itoa(i))
+					return ce.ValidateName("restoreJobArgumentsMap" + "." + k)
 				}
 				return err
 			}
@@ -220,17 +221,17 @@ func (m *UdaRecoverJobParams) validateSourceArgumentsMap(formats strfmt.Registry
 		return nil
 	}
 
-	for i := 0; i < len(m.SourceArgumentsMap); i++ {
-		if swag.IsZero(m.SourceArgumentsMap[i]) { // not required
-			continue
-		}
+	for k := range m.SourceArgumentsMap {
 
-		if m.SourceArgumentsMap[i] != nil {
-			if err := m.SourceArgumentsMap[i].Validate(formats); err != nil {
+		if err := validate.Required("sourceArgumentsMap"+"."+k, "body", m.SourceArgumentsMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.SourceArgumentsMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("sourceArgumentsMap" + "." + strconv.Itoa(i))
+					return ve.ValidateName("sourceArgumentsMap" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("sourceArgumentsMap" + "." + strconv.Itoa(i))
+					return ce.ValidateName("sourceArgumentsMap" + "." + k)
 				}
 				return err
 			}
@@ -317,20 +318,10 @@ func (m *UdaRecoverJobParams) contextValidateCapabilities(ctx context.Context, f
 
 func (m *UdaRecoverJobParams) contextValidateRestoreJobArgumentsMap(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.RestoreJobArgumentsMap); i++ {
+	for k := range m.RestoreJobArgumentsMap {
 
-		if m.RestoreJobArgumentsMap[i] != nil {
-
-			if swag.IsZero(m.RestoreJobArgumentsMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.RestoreJobArgumentsMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("restoreJobArgumentsMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("restoreJobArgumentsMap" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.RestoreJobArgumentsMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}
@@ -388,20 +379,10 @@ func (m *UdaRecoverJobParams) contextValidateRestoreTargetEntityParents(ctx cont
 
 func (m *UdaRecoverJobParams) contextValidateSourceArgumentsMap(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.SourceArgumentsMap); i++ {
+	for k := range m.SourceArgumentsMap {
 
-		if m.SourceArgumentsMap[i] != nil {
-
-			if swag.IsZero(m.SourceArgumentsMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.SourceArgumentsMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("sourceArgumentsMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("sourceArgumentsMap" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.SourceArgumentsMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

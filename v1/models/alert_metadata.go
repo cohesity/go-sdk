@@ -76,7 +76,11 @@ type AlertMetadata struct {
 	// kCDP - Alert associated with Continuous Data Protection.
 	// kViewFailover - Alert associated with view Failover.
 	// kDisasterRecovery - Alert associated with Disaster Recovery.
-	// Enum: ["kDisk","kNode","kCluster","kChassis","kPowerSupply","kCPU","kMemory","kTemperature","kFan","kNIC","kFirmware","kNodeHealth","kOperatingSystem","kDataPath","kMetadata","kIndexing","kHelios","kAppMarketPlace","kSystemService","kLicense","kSecurity","kUpgrade","kClusterManagement","kAuditLog","kNetworking","kConfiguration","kStorageUsage","kFaultTolerance","kBackupRestore","kArchivalRestore","kRemoteReplication","kQuota","kCDP","kViewFailover","kDisasterRecovery"]
+	// kStorageDevice - Alert associated with storage hardware(tape drives & libraries, Fiber HBAs used to attach devices, etc).
+	// kStoragePool - Alert associated with storage pools -- logical groupings of similar kinds of storage hardware (disk, tape, etc) into which client data is stored.
+	// kGeneralSoftwareFailure - Alert associated with general software failures - that don't fall into any known categories.
+	// kAgent - Alert associated with agent based protection workloads.
+	// Enum: ["kDisk","kNode","kCluster","kChassis","kPowerSupply","kCPU","kMemory","kTemperature","kFan","kNIC","kFirmware","kNodeHealth","kOperatingSystem","kDataPath","kMetadata","kIndexing","kHelios","kAppMarketPlace","kSystemService","kLicense","kSecurity","kUpgrade","kClusterManagement","kAuditLog","kNetworking","kConfiguration","kStorageUsage","kFaultTolerance","kBackupRestore","kArchivalRestore","kRemoteReplication","kQuota","kCDP","kViewFailover","kDisasterRecovery","kStorageDevice","kStoragePool","kGeneralSoftwareFailure","kAgent"]
 	Category *string `json:"category,omitempty"`
 
 	// Specifies dedup interval in seconds. If the same alert is raised multiple
@@ -213,7 +217,7 @@ var alertMetadataTypeCategoryPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kDisk","kNode","kCluster","kChassis","kPowerSupply","kCPU","kMemory","kTemperature","kFan","kNIC","kFirmware","kNodeHealth","kOperatingSystem","kDataPath","kMetadata","kIndexing","kHelios","kAppMarketPlace","kSystemService","kLicense","kSecurity","kUpgrade","kClusterManagement","kAuditLog","kNetworking","kConfiguration","kStorageUsage","kFaultTolerance","kBackupRestore","kArchivalRestore","kRemoteReplication","kQuota","kCDP","kViewFailover","kDisasterRecovery"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kDisk","kNode","kCluster","kChassis","kPowerSupply","kCPU","kMemory","kTemperature","kFan","kNIC","kFirmware","kNodeHealth","kOperatingSystem","kDataPath","kMetadata","kIndexing","kHelios","kAppMarketPlace","kSystemService","kLicense","kSecurity","kUpgrade","kClusterManagement","kAuditLog","kNetworking","kConfiguration","kStorageUsage","kFaultTolerance","kBackupRestore","kArchivalRestore","kRemoteReplication","kQuota","kCDP","kViewFailover","kDisasterRecovery","kStorageDevice","kStoragePool","kGeneralSoftwareFailure","kAgent"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -327,6 +331,18 @@ const (
 
 	// AlertMetadataCategoryKDisasterRecovery captures enum value "kDisasterRecovery"
 	AlertMetadataCategoryKDisasterRecovery string = "kDisasterRecovery"
+
+	// AlertMetadataCategoryKStorageDevice captures enum value "kStorageDevice"
+	AlertMetadataCategoryKStorageDevice string = "kStorageDevice"
+
+	// AlertMetadataCategoryKStoragePool captures enum value "kStoragePool"
+	AlertMetadataCategoryKStoragePool string = "kStoragePool"
+
+	// AlertMetadataCategoryKGeneralSoftwareFailure captures enum value "kGeneralSoftwareFailure"
+	AlertMetadataCategoryKGeneralSoftwareFailure string = "kGeneralSoftwareFailure"
+
+	// AlertMetadataCategoryKAgent captures enum value "kAgent"
+	AlertMetadataCategoryKAgent string = "kAgent"
 )
 
 // prop value enum

@@ -43,28 +43,47 @@ import (
 // ad::SnapshotInfo::ad_snapshot_info             ad/ad.proto               115
 // MSGraph::SnapshotInfo::one_drive_snapshot_info ms_graph/graph.proto      116
 // kubernetes::SnapshotInfo:: kubernetes_snapshot_info
+//
 // kubernetes/kubernetes.proto
 // 117
+//
 // aws::RDSSnapshotInfo::rds_snapshot_info        aws/aws.proto             118
 // o365::SnapshotInfo::o365_snapshot_info         o365/o365.proto           119
 // exchange::SnapshotInfo::exchange_snapshot_info exchange/exchange.proto   120
 // o365::SharepointSnapshotInfo::sharepoint_snapshot_info
+//
 // o365/o365.proto           121
+//
 // MSGraph::SharepointListSnapshotInfo::sharepoint_list_snapshot_info
+//
 // ms_graph/graph.proto      122
+//
 // cdp::SnapshotInfo::cdp_snapshot_info           base/cdp.proto            123
 // imanis::SnapshotInfo::nosql_snapshot_info      imanis/nosql.proto        124
 // o365::PublicFolderSnapshotInfo::public_folder_snapshot_info
+//
 // o365/o365.proto           125
+//
 // SnapshotInfo::uda_snapshot_info                uda.proto                 126
 // o365::TeamsSnapshotInfo::teams_snapshot_info   o365/o365.proto           127
 // o365::O365GroupSnapshotInfo::o365_group_snapshot_info
+//
 // o365/o365.proto           128
+//
 // SnapshotInfo::sfdc_snapshot_info               sfdc_service.proto        129
-// san::GroupSnapshotInfo::group_snapshot_info    san/san.proto             130
+// san::GroupSnapshotInfo::san_group_snapshot_info
+//
+// san/san.proto             130
+//
 // rds::OracleRmanSnapshotInfo::rds_oracle_rman_snapshot_info
+//
 // rds/rds.proto             131
+//
 // o365::ChatsSnapshotInfo::chats_snapshot_info   o365/o365.proto           132
+// o365::M365CSMSnapshotInfo::m365_csm_snapshot_info
+//
+// o365/o365.proto           133
+//
 // =============================================================================
 //
 // swagger:model SnapshotInfoProto
@@ -158,6 +177,10 @@ type SnapshotInfoProto struct {
 
 	// Specifies the parameters required for Storage Snapshot provider.
 	StorageSnapshotProvider *StorageSnapshotProviderParams `json:"storageSnapshotProvider,omitempty"`
+
+	// The name of the rocksdb directory for success files seen during backup,
+	// stored in 'config' directory of the current view.
+	SuccessFilesRocksdbName *string `json:"successFilesRocksdbName,omitempty"`
 
 	// Specifies the target type for the task. The field is only valid if the
 	// task has got a permit.

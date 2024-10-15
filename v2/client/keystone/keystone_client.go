@@ -70,7 +70,7 @@ type ClientService interface {
 /*
 CreateKeystone creates a keystone configuration
 
-Create a Keystone configuration.
+**Privileges:** ```KEYSTONE_MODIFY``` <br><br>Create a Keystone configuration.
 */
 func (a *Client) CreateKeystone(params *CreateKeystoneParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateKeystoneCreated, error) {
 	// TODO: Validate the params before sending
@@ -110,7 +110,7 @@ func (a *Client) CreateKeystone(params *CreateKeystoneParams, authInfo runtime.C
 /*
 DeleteKeystone deletes a keystone configuration
 
-Delete a Keystone configuration.
+**Privileges:** ```KEYSTONE_MODIFY``` <br><br>Delete a Keystone configuration.
 */
 func (a *Client) DeleteKeystone(params *DeleteKeystoneParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteKeystoneNoContent, error) {
 	// TODO: Validate the params before sending
@@ -150,7 +150,7 @@ func (a *Client) DeleteKeystone(params *DeleteKeystoneParams, authInfo runtime.C
 /*
 GetKeystones gets keystones
 
-Get Keystones.
+**Privileges:** ```KEYSTONE_VIEW``` <br><br>Get Keystones.
 */
 func (a *Client) GetKeystones(params *GetKeystonesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetKeystonesOK, error) {
 	// TODO: Validate the params before sending
@@ -190,7 +190,7 @@ func (a *Client) GetKeystones(params *GetKeystonesParams, authInfo runtime.Clien
 /*
 GetKeystonesByID gets a keystone by its id
 
-Get a Keystone by its id.
+**Privileges:** ```KEYSTONE_VIEW``` <br><br>Get a Keystone by its id.
 */
 func (a *Client) GetKeystonesByID(params *GetKeystonesByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetKeystonesByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -230,7 +230,7 @@ func (a *Client) GetKeystonesByID(params *GetKeystonesByIDParams, authInfo runti
 /*
 UpdateKeystone updates a keystone configuration
 
-Update a Keystone configuration.
+**Privileges:** ```KEYSTONE_MODIFY``` <br><br>Update a Keystone configuration.
 */
 func (a *Client) UpdateKeystone(params *UpdateKeystoneParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateKeystoneOK, error) {
 	// TODO: Validate the params before sending

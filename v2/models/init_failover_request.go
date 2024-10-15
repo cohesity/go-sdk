@@ -29,7 +29,7 @@ type InitFailoverRequest struct {
 	ReplicationCluster *FailoverReplicaCluster `json:"replicationCluster,omitempty"`
 
 	// If this field is specified then protection groups will be looked up only for this specific environment
-	// Enum: ["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsRDSPostgres","kAwsAuroraPostgres","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc","kO365ExchangeCSM","kO365OneDriveCSM","kO365SharepointCSM"]
 	ProtectionGroupEnvironment *string `json:"protectionGroupEnvironment,omitempty"`
 }
 
@@ -97,7 +97,7 @@ var initFailoverRequestTypeProtectionGroupEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsRDSPostgres","kAwsAuroraPostgres","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc","kO365ExchangeCSM","kO365OneDriveCSM","kO365SharepointCSM"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -148,6 +148,12 @@ const (
 
 	// InitFailoverRequestProtectionGroupEnvironmentKAwsRDSPostgresBackup captures enum value "kAwsRDSPostgresBackup"
 	InitFailoverRequestProtectionGroupEnvironmentKAwsRDSPostgresBackup string = "kAwsRDSPostgresBackup"
+
+	// InitFailoverRequestProtectionGroupEnvironmentKAwsRDSPostgres captures enum value "kAwsRDSPostgres"
+	InitFailoverRequestProtectionGroupEnvironmentKAwsRDSPostgres string = "kAwsRDSPostgres"
+
+	// InitFailoverRequestProtectionGroupEnvironmentKAwsAuroraPostgres captures enum value "kAwsAuroraPostgres"
+	InitFailoverRequestProtectionGroupEnvironmentKAwsAuroraPostgres string = "kAwsAuroraPostgres"
 
 	// InitFailoverRequestProtectionGroupEnvironmentKAzureNative captures enum value "kAzureNative"
 	InitFailoverRequestProtectionGroupEnvironmentKAzureNative string = "kAzureNative"
@@ -248,11 +254,23 @@ const (
 	// InitFailoverRequestProtectionGroupEnvironmentKHBase captures enum value "kHBase"
 	InitFailoverRequestProtectionGroupEnvironmentKHBase string = "kHBase"
 
+	// InitFailoverRequestProtectionGroupEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	InitFailoverRequestProtectionGroupEnvironmentKSAPHANA string = "kSAPHANA"
+
 	// InitFailoverRequestProtectionGroupEnvironmentKUDA captures enum value "kUDA"
 	InitFailoverRequestProtectionGroupEnvironmentKUDA string = "kUDA"
 
 	// InitFailoverRequestProtectionGroupEnvironmentKSfdc captures enum value "kSfdc"
 	InitFailoverRequestProtectionGroupEnvironmentKSfdc string = "kSfdc"
+
+	// InitFailoverRequestProtectionGroupEnvironmentKO365ExchangeCSM captures enum value "kO365ExchangeCSM"
+	InitFailoverRequestProtectionGroupEnvironmentKO365ExchangeCSM string = "kO365ExchangeCSM"
+
+	// InitFailoverRequestProtectionGroupEnvironmentKO365OneDriveCSM captures enum value "kO365OneDriveCSM"
+	InitFailoverRequestProtectionGroupEnvironmentKO365OneDriveCSM string = "kO365OneDriveCSM"
+
+	// InitFailoverRequestProtectionGroupEnvironmentKO365SharepointCSM captures enum value "kO365SharepointCSM"
+	InitFailoverRequestProtectionGroupEnvironmentKO365SharepointCSM string = "kO365SharepointCSM"
 )
 
 // prop value enum

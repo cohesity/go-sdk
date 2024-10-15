@@ -28,6 +28,7 @@ import (
 // a given replica.
 //
 // NOTE: The replica information in an AAG gets updated differently from local
+//
 // and non local replica snapshots. So any changes to this proto also
 // need to be reconciled with the corresponding changes in SQL entity
 // hierarchy and entity hashing utilities.

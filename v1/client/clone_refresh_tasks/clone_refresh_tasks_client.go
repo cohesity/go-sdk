@@ -62,7 +62,7 @@ type ClientService interface {
 /*
 	CreateCloneRefreshTask creates a clone refresh task to refresh the clone with the new data
 
-	Returns the created Clone Refresh Task which refreshes the clone with specified
+	**Privileges:** ```CLONE_MODIFY``` <br><br>Returns the created Clone Refresh Task which refreshes the clone with specified
 
 data.
 */

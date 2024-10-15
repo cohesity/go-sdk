@@ -23,7 +23,7 @@ import (
 type ConstructMetaInfoResult struct {
 
 	// Specifies the environment type for fetching the meta Info.
-	// Enum: ["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsRDSPostgres","kAwsAuroraPostgres","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc","kO365ExchangeCSM","kO365OneDriveCSM","kO365SharepointCSM"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies 3 Maps required to fill pfile text box.
@@ -59,7 +59,7 @@ var constructMetaInfoResultTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsRDSPostgres","kAwsAuroraPostgres","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc","kO365ExchangeCSM","kO365OneDriveCSM","kO365SharepointCSM"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -110,6 +110,12 @@ const (
 
 	// ConstructMetaInfoResultEnvironmentKAwsRDSPostgresBackup captures enum value "kAwsRDSPostgresBackup"
 	ConstructMetaInfoResultEnvironmentKAwsRDSPostgresBackup string = "kAwsRDSPostgresBackup"
+
+	// ConstructMetaInfoResultEnvironmentKAwsRDSPostgres captures enum value "kAwsRDSPostgres"
+	ConstructMetaInfoResultEnvironmentKAwsRDSPostgres string = "kAwsRDSPostgres"
+
+	// ConstructMetaInfoResultEnvironmentKAwsAuroraPostgres captures enum value "kAwsAuroraPostgres"
+	ConstructMetaInfoResultEnvironmentKAwsAuroraPostgres string = "kAwsAuroraPostgres"
 
 	// ConstructMetaInfoResultEnvironmentKAzureNative captures enum value "kAzureNative"
 	ConstructMetaInfoResultEnvironmentKAzureNative string = "kAzureNative"
@@ -210,11 +216,23 @@ const (
 	// ConstructMetaInfoResultEnvironmentKHBase captures enum value "kHBase"
 	ConstructMetaInfoResultEnvironmentKHBase string = "kHBase"
 
+	// ConstructMetaInfoResultEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	ConstructMetaInfoResultEnvironmentKSAPHANA string = "kSAPHANA"
+
 	// ConstructMetaInfoResultEnvironmentKUDA captures enum value "kUDA"
 	ConstructMetaInfoResultEnvironmentKUDA string = "kUDA"
 
 	// ConstructMetaInfoResultEnvironmentKSfdc captures enum value "kSfdc"
 	ConstructMetaInfoResultEnvironmentKSfdc string = "kSfdc"
+
+	// ConstructMetaInfoResultEnvironmentKO365ExchangeCSM captures enum value "kO365ExchangeCSM"
+	ConstructMetaInfoResultEnvironmentKO365ExchangeCSM string = "kO365ExchangeCSM"
+
+	// ConstructMetaInfoResultEnvironmentKO365OneDriveCSM captures enum value "kO365OneDriveCSM"
+	ConstructMetaInfoResultEnvironmentKO365OneDriveCSM string = "kO365OneDriveCSM"
+
+	// ConstructMetaInfoResultEnvironmentKO365SharepointCSM captures enum value "kO365SharepointCSM"
+	ConstructMetaInfoResultEnvironmentKO365SharepointCSM string = "kO365SharepointCSM"
 )
 
 // prop value enum

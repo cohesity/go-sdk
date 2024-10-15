@@ -93,13 +93,21 @@ type RestoreObjectDetails struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Protection Job Id.
@@ -182,7 +190,7 @@ var restoreObjectDetailsTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -215,123 +223,6 @@ const (
 
 	// RestoreObjectDetailsEnvironmentKNimble captures enum value "kNimble"
 	RestoreObjectDetailsEnvironmentKNimble string = "kNimble"
-
-	// RestoreObjectDetailsEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	RestoreObjectDetailsEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// RestoreObjectDetailsEnvironmentKAzure captures enum value "kAzure"
-	RestoreObjectDetailsEnvironmentKAzure string = "kAzure"
-
-	// RestoreObjectDetailsEnvironmentKNetapp captures enum value "kNetapp"
-	RestoreObjectDetailsEnvironmentKNetapp string = "kNetapp"
-
-	// RestoreObjectDetailsEnvironmentKAgent captures enum value "kAgent"
-	RestoreObjectDetailsEnvironmentKAgent string = "kAgent"
-
-	// RestoreObjectDetailsEnvironmentKGenericNas captures enum value "kGenericNas"
-	RestoreObjectDetailsEnvironmentKGenericNas string = "kGenericNas"
-
-	// RestoreObjectDetailsEnvironmentKAcropolis captures enum value "kAcropolis"
-	RestoreObjectDetailsEnvironmentKAcropolis string = "kAcropolis"
-
-	// RestoreObjectDetailsEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	RestoreObjectDetailsEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// RestoreObjectDetailsEnvironmentKIsilon captures enum value "kIsilon"
-	RestoreObjectDetailsEnvironmentKIsilon string = "kIsilon"
-
-	// RestoreObjectDetailsEnvironmentKGPFS captures enum value "kGPFS"
-	RestoreObjectDetailsEnvironmentKGPFS string = "kGPFS"
-
-	// RestoreObjectDetailsEnvironmentKKVM captures enum value "kKVM"
-	RestoreObjectDetailsEnvironmentKKVM string = "kKVM"
-
-	// RestoreObjectDetailsEnvironmentKAWS captures enum value "kAWS"
-	RestoreObjectDetailsEnvironmentKAWS string = "kAWS"
-
-	// RestoreObjectDetailsEnvironmentKExchange captures enum value "kExchange"
-	RestoreObjectDetailsEnvironmentKExchange string = "kExchange"
-
-	// RestoreObjectDetailsEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	RestoreObjectDetailsEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// RestoreObjectDetailsEnvironmentKOracle captures enum value "kOracle"
-	RestoreObjectDetailsEnvironmentKOracle string = "kOracle"
-
-	// RestoreObjectDetailsEnvironmentKGCP captures enum value "kGCP"
-	RestoreObjectDetailsEnvironmentKGCP string = "kGCP"
-
-	// RestoreObjectDetailsEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	RestoreObjectDetailsEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// RestoreObjectDetailsEnvironmentKAWSNative captures enum value "kAWSNative"
-	RestoreObjectDetailsEnvironmentKAWSNative string = "kAWSNative"
-
-	// RestoreObjectDetailsEnvironmentKO365 captures enum value "kO365"
-	RestoreObjectDetailsEnvironmentKO365 string = "kO365"
-
-	// RestoreObjectDetailsEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	RestoreObjectDetailsEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// RestoreObjectDetailsEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	RestoreObjectDetailsEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// RestoreObjectDetailsEnvironmentKGCPNative captures enum value "kGCPNative"
-	RestoreObjectDetailsEnvironmentKGCPNative string = "kGCPNative"
-
-	// RestoreObjectDetailsEnvironmentKAzureNative captures enum value "kAzureNative"
-	RestoreObjectDetailsEnvironmentKAzureNative string = "kAzureNative"
-
-	// RestoreObjectDetailsEnvironmentKKubernetes captures enum value "kKubernetes"
-	RestoreObjectDetailsEnvironmentKKubernetes string = "kKubernetes"
-
-	// RestoreObjectDetailsEnvironmentKElastifile captures enum value "kElastifile"
-	RestoreObjectDetailsEnvironmentKElastifile string = "kElastifile"
-
-	// RestoreObjectDetailsEnvironmentKAD captures enum value "kAD"
-	RestoreObjectDetailsEnvironmentKAD string = "kAD"
-
-	// RestoreObjectDetailsEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	RestoreObjectDetailsEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// RestoreObjectDetailsEnvironmentKCassandra captures enum value "kCassandra"
-	RestoreObjectDetailsEnvironmentKCassandra string = "kCassandra"
-
-	// RestoreObjectDetailsEnvironmentKMongoDB captures enum value "kMongoDB"
-	RestoreObjectDetailsEnvironmentKMongoDB string = "kMongoDB"
-
-	// RestoreObjectDetailsEnvironmentKCouchbase captures enum value "kCouchbase"
-	RestoreObjectDetailsEnvironmentKCouchbase string = "kCouchbase"
-
-	// RestoreObjectDetailsEnvironmentKHdfs captures enum value "kHdfs"
-	RestoreObjectDetailsEnvironmentKHdfs string = "kHdfs"
-
-	// RestoreObjectDetailsEnvironmentKHive captures enum value "kHive"
-	RestoreObjectDetailsEnvironmentKHive string = "kHive"
-
-	// RestoreObjectDetailsEnvironmentKHBase captures enum value "kHBase"
-	RestoreObjectDetailsEnvironmentKHBase string = "kHBase"
-
-	// RestoreObjectDetailsEnvironmentKUDA captures enum value "kUDA"
-	RestoreObjectDetailsEnvironmentKUDA string = "kUDA"
-
-	// RestoreObjectDetailsEnvironmentKO365Teams captures enum value "kO365Teams"
-	RestoreObjectDetailsEnvironmentKO365Teams string = "kO365Teams"
-
-	// RestoreObjectDetailsEnvironmentKO365Group captures enum value "kO365Group"
-	RestoreObjectDetailsEnvironmentKO365Group string = "kO365Group"
-
-	// RestoreObjectDetailsEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	RestoreObjectDetailsEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// RestoreObjectDetailsEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	RestoreObjectDetailsEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// RestoreObjectDetailsEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	RestoreObjectDetailsEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// RestoreObjectDetailsEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	RestoreObjectDetailsEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

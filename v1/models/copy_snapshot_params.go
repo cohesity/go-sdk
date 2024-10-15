@@ -19,6 +19,9 @@ import (
 // swagger:model CopySnapshotParams
 type CopySnapshotParams struct {
 
+	// Cohesion copy job specific params.
+	CohesionCopyJobParams *CopyJobParams `json:"cohesionCopyJobParams,omitempty"`
+
 	// If this is true, then only snapshots from a fully successful
 	// run will be considered for being copied. If
 	// this is false, then snapshots from a partially successful
@@ -74,6 +77,10 @@ type CopySnapshotParams struct {
 func (m *CopySnapshotParams) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateCohesionCopyJobParams(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateRetentionPolicy(formats); err != nil {
 		res = append(res, err)
 	}
@@ -85,6 +92,25 @@ func (m *CopySnapshotParams) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *CopySnapshotParams) validateCohesionCopyJobParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.CohesionCopyJobParams) { // not required
+		return nil
+	}
+
+	if m.CohesionCopyJobParams != nil {
+		if err := m.CohesionCopyJobParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cohesionCopyJobParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cohesionCopyJobParams")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -130,6 +156,10 @@ func (m *CopySnapshotParams) validateSnapshotTarget(formats strfmt.Registry) err
 func (m *CopySnapshotParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateCohesionCopyJobParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateRetentionPolicy(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -141,6 +171,27 @@ func (m *CopySnapshotParams) ContextValidate(ctx context.Context, formats strfmt
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *CopySnapshotParams) contextValidateCohesionCopyJobParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CohesionCopyJobParams != nil {
+
+		if swag.IsZero(m.CohesionCopyJobParams) { // not required
+			return nil
+		}
+
+		if err := m.CohesionCopyJobParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cohesionCopyJobParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cohesionCopyJobParams")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

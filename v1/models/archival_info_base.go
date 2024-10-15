@@ -7,11 +7,11 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // ArchivalInfoBase archival info base
@@ -35,6 +35,10 @@ type ArchivalInfoBase struct {
 	// below field may not accurately represent the total bytes transferred.
 	BytesTransferred *int64 `json:"bytesTransferred,omitempty"`
 
+	// Folder of the cloud domain the snapshot resides in, if this is a
+	// cloud domain format archive.
+	CloudDomainFolder *string `json:"cloudDomainFolder,omitempty"`
+
 	// Time when this archival ended. If not set, then the archival has not ended
 	// yet.
 	EndTimeUsecs *int64 `json:"endTimeUsecs,omitempty"`
@@ -42,7 +46,7 @@ type ArchivalInfoBase struct {
 	// Mapping from global hash string id of protected entity to front end size
 	// info calculated by icebox during archival. Currently it only applies to
 	// object protection archive in DMaaS.
-	EntityStringIDToFrontEndSizeInfoMap []*ArchivalInfoBaseEntityStringIDToFrontEndSizeInfoMapEntry `json:"entityStringIdToFrontEndSizeInfoMap"`
+	EntityStringIDToFrontEndSizeInfoMap map[string]SizeInfo `json:"entityStringIdToFrontEndSizeInfoMap,omitempty"`
 
 	// If the archival has completed, the following indicates whether there was
 	// an error in its completion.
@@ -134,17 +138,17 @@ func (m *ArchivalInfoBase) validateEntityStringIDToFrontEndSizeInfoMap(formats s
 		return nil
 	}
 
-	for i := 0; i < len(m.EntityStringIDToFrontEndSizeInfoMap); i++ {
-		if swag.IsZero(m.EntityStringIDToFrontEndSizeInfoMap[i]) { // not required
-			continue
-		}
+	for k := range m.EntityStringIDToFrontEndSizeInfoMap {
 
-		if m.EntityStringIDToFrontEndSizeInfoMap[i] != nil {
-			if err := m.EntityStringIDToFrontEndSizeInfoMap[i].Validate(formats); err != nil {
+		if err := validate.Required("entityStringIdToFrontEndSizeInfoMap"+"."+k, "body", m.EntityStringIDToFrontEndSizeInfoMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.EntityStringIDToFrontEndSizeInfoMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("entityStringIdToFrontEndSizeInfoMap" + "." + strconv.Itoa(i))
+					return ve.ValidateName("entityStringIdToFrontEndSizeInfoMap" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("entityStringIdToFrontEndSizeInfoMap" + "." + strconv.Itoa(i))
+					return ce.ValidateName("entityStringIdToFrontEndSizeInfoMap" + "." + k)
 				}
 				return err
 			}
@@ -242,20 +246,10 @@ func (m *ArchivalInfoBase) contextValidateArchiveWormProperties(ctx context.Cont
 
 func (m *ArchivalInfoBase) contextValidateEntityStringIDToFrontEndSizeInfoMap(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.EntityStringIDToFrontEndSizeInfoMap); i++ {
+	for k := range m.EntityStringIDToFrontEndSizeInfoMap {
 
-		if m.EntityStringIDToFrontEndSizeInfoMap[i] != nil {
-
-			if swag.IsZero(m.EntityStringIDToFrontEndSizeInfoMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.EntityStringIDToFrontEndSizeInfoMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("entityStringIdToFrontEndSizeInfoMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("entityStringIdToFrontEndSizeInfoMap" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.EntityStringIDToFrontEndSizeInfoMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

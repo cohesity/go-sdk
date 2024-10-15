@@ -25,28 +25,35 @@ type PrivateAzureCredentials struct {
 
 	// Value of the active directory application id generated using the URL
 	// mentioned above.
-	ApplicationID *string `json:"application_id,omitempty"`
+	ApplicationID *string `json:"applicationId,omitempty"`
 
 	// Value of the active directory application key generated using the URL
 	// mentioned above.
-	ApplicationKey *string `json:"application_key,omitempty"`
+	ApplicationKey *string `json:"applicationKey,omitempty"`
 
 	// Represents the list of applications to be used to fetch a source.
 	Applications []*AzureApplication `json:"applications"`
 
+	// Authentication method to use while communicating with Azure.
+	AuthMethod *int32 `json:"authMethod,omitempty"`
+
 	// Azure stack hub domain name for where the given subscription is present.
-	AzureStackHubDomainName *string `json:"azure_stack_hub_domain_name,omitempty"`
+	AzureStackHubDomainName *string `json:"azureStackHubDomainName,omitempty"`
 
 	// Region in which the Azure Stack will be registered.
-	AzureStackRegion *string `json:"azure_stack_region,omitempty"`
+	AzureStackRegion *string `json:"azureStackRegion,omitempty"`
 
 	// Encrypted application key.
-	EncryptedApplicationKey []uint8 `json:"encrypted_application_key"`
+	EncryptedApplicationKey []uint8 `json:"encryptedApplicationKey"`
+
+	// Managed Identity's client id associated with the Virtual Machine using
+	// actions can be performed. Used in case of DMaaS's dataplane clusters.
+	ManagedIdentityClientID *string `json:"managedIdentityClientId,omitempty"`
 
 	// Subscription id inside a customer's Azure account. It represents
 	// sub-section within the Azure account where a customer allows us to
 	// create VMs, storage account etc.
-	SubscriptionID *string `json:"subscription_id,omitempty"`
+	SubscriptionID *string `json:"subscriptionId,omitempty"`
 
 	// Represents which type of subscription the credentials belong to. Depending
 	// upon the type of subscription, whether Azure Commercial or Azure
@@ -54,14 +61,14 @@ type PrivateAzureCredentials struct {
 	// Azure services. Refer to -
 	// https://docs.microsoft.com/en-us/azure/azure-government/
 	// documentation-government-developer-guide#endpoint-mapping
-	SubscriptionType *int32 `json:"subscription_type,omitempty"`
+	SubscriptionType *int32 `json:"subscriptionType,omitempty"`
 
 	// Represents the list of subscriptions to be fetched for a source.
 	Subscriptions []*AzureSubscription `json:"subscriptions"`
 
 	// Value of the customer's tenant id in the active directory. Please refer to
 	// the above URL for details.
-	TenantID *string `json:"tenant_id,omitempty"`
+	TenantID *string `json:"tenantId,omitempty"`
 }
 
 // Validate validates this private azure credentials

@@ -33,7 +33,7 @@ type CommonSourceRegistrationReponseParams struct {
 	SourceInfo *Object `json:"sourceInfo,omitempty"`
 
 	// Specifies the environment type of the Protection Source.
-	// Enum: ["kVMware","kHyperV","kAcropolis","kKVM","kAWS","kGCP","kAzure","kPhysical","kPure","kIbmFlashSystem","kNimble","kNetapp","kGenericNas","kIsilon","kFlashBlade","kGPFS","kElastifile","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSQL","kOracle","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kAcropolis","kKVM","kAWS","kGCP","kAzure","kPhysical","kPure","kIbmFlashSystem","kNimble","kNetapp","kGenericNas","kIsilon","kFlashBlade","kGPFS","kElastifile","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSQL","kOracle","kSfdc"]
 	Environment *string `json:"environment,omitempty"`
 
 	// The user specified name for this source.
@@ -219,7 +219,7 @@ var commonSourceRegistrationReponseParamsTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAcropolis","kKVM","kAWS","kGCP","kAzure","kPhysical","kPure","kIbmFlashSystem","kNimble","kNetapp","kGenericNas","kIsilon","kFlashBlade","kGPFS","kElastifile","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSQL","kOracle","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAcropolis","kKVM","kAWS","kGCP","kAzure","kPhysical","kPure","kIbmFlashSystem","kNimble","kNetapp","kGenericNas","kIsilon","kFlashBlade","kGPFS","kElastifile","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSQL","kOracle","kSfdc"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

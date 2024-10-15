@@ -74,7 +74,9 @@ type EntityHierarchyProto struct {
 	// are both children of this super root entity.
 	IsSuperRootEntity *bool `json:"isSuperRootEntity,omitempty"`
 
-	// Time (in usecs) when the hierarchy info of this entity last updated.
+	// Time when this entity info was last updated. This should only include the
+	// modifications due to SET APIs and not the update to object due to
+	// background refresh.
 	// Note: For the View entity, following used for CAS error check for parallel
 	// update in view_box hierarchy by refresh and view backup/restore related
 	// APIs.

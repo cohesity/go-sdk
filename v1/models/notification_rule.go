@@ -65,6 +65,10 @@ type NotificationRule struct {
 	// kCDP - Alert associated with Continuous Data Protection.
 	// kViewFailover - Alert associated with view Failover.
 	// kDisasterRecovery - Alert associated with Disaster Recovery.
+	// kStorageDevice - Alert associated with storage hardware(tape drives & libraries, Fiber HBAs used to attach devices, etc).
+	// kStoragePool - Alert associated with storage pools -- logical groupings of similar kinds of storage hardware (disk, tape, etc) into which client data is stored.
+	// kGeneralSoftwareFailure - Alert associated with general software failures - that don't fall into any known categories.
+	// kAgent - Alert associated with agent based protection workloads.
 	Categories []string `json:"categories"`
 
 	// Specifies email addresses to be notified when an alert matching this
@@ -130,7 +134,7 @@ var notificationRuleCategoriesItemsEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kDisk","kNode","kCluster","kChassis","kPowerSupply","kCPU","kMemory","kTemperature","kFan","kNIC","kFirmware","kNodeHealth","kOperatingSystem","kDataPath","kMetadata","kIndexing","kHelios","kAppMarketPlace","kSystemService","kLicense","kSecurity","kUpgrade","kClusterManagement","kAuditLog","kNetworking","kConfiguration","kStorageUsage","kFaultTolerance","kBackupRestore","kArchivalRestore","kRemoteReplication","kQuota","kCDP","kViewFailover","kDisasterRecovery"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kDisk","kNode","kCluster","kChassis","kPowerSupply","kCPU","kMemory","kTemperature","kFan","kNIC","kFirmware","kNodeHealth","kOperatingSystem","kDataPath","kMetadata","kIndexing","kHelios","kAppMarketPlace","kSystemService","kLicense","kSecurity","kUpgrade","kClusterManagement","kAuditLog","kNetworking","kConfiguration","kStorageUsage","kFaultTolerance","kBackupRestore","kArchivalRestore","kRemoteReplication","kQuota","kCDP","kViewFailover","kDisasterRecovery","kStorageDevice","kStoragePool","kGeneralSoftwareFailure","kAgent"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

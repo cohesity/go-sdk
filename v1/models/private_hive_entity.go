@@ -41,6 +41,10 @@ type PrivateHiveEntity struct {
 	// assigned by imanis backend. Example, UUID for a table can be the
 	// string <database_name>.<table_name>
 	UUID *string `json:"uuid,omitempty"`
+
+	// Information about a hive view, only valid for an entity of type
+	// kView.
+	ViewInfo ViewInfo `json:"viewInfo,omitempty"`
 }
 
 // Validate validates this private hive entity

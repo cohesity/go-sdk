@@ -65,6 +65,9 @@ type ProtectionPolicy struct {
 
 	// Specifies the last time this Policy was updated. If this is passed into a PUT request, then the backend will validate that the timestamp passed in matches the time that the policy was actually last modified. If the two timestamps do not match, then the request will be rejected with a stale error.
 	LastModificationTimeUsecs *int64 `json:"lastModificationTimeUsecs,omitempty"`
+
+	// Specifies whether smart local retention adjustment is enabled or not. If enabled, local retention would be extended upon failure of any outgoing replications or archivals. Later, if manual intervention causes the failed copies to succeed, retention would automatically be reduced.
+	EnableSmartLocalRetentionAdjustment *bool `json:"enableSmartLocalRetentionAdjustment,omitempty"`
 }
 
 // Validate validates this protection policy

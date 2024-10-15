@@ -37,6 +37,10 @@ type PrivateAzureEntity struct {
 	// Size of the resource, currently set for kSQLDatabase type entity.
 	CurrentSizeBytes *int64 `json:"currentSizeBytes,omitempty"`
 
+	// List of disks attached to the VM. Only applicable for entities of type
+	// kVirtualMachine.
+	DiskInfoVec []*DiskInfo `json:"diskInfoVec"`
+
 	// FQDN of the SQL Server. This is set for entities of type
 	// kSQLServer and kSQLManagedInstance.
 	Fqdn *string `json:"fqdn,omitempty"`
@@ -153,6 +157,10 @@ func (m *PrivateAzureEntity) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateDiskInfoVec(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateFrontEndSizeInfo(formats); err != nil {
 		res = append(res, err)
 	}
@@ -189,6 +197,32 @@ func (m *PrivateAzureEntity) validateCommonInfo(formats strfmt.Registry) error {
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *PrivateAzureEntity) validateDiskInfoVec(formats strfmt.Registry) error {
+	if swag.IsZero(m.DiskInfoVec) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.DiskInfoVec); i++ {
+		if swag.IsZero(m.DiskInfoVec[i]) { // not required
+			continue
+		}
+
+		if m.DiskInfoVec[i] != nil {
+			if err := m.DiskInfoVec[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("diskInfoVec" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("diskInfoVec" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -292,6 +326,10 @@ func (m *PrivateAzureEntity) ContextValidate(ctx context.Context, formats strfmt
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateDiskInfoVec(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateFrontEndSizeInfo(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -330,6 +368,31 @@ func (m *PrivateAzureEntity) contextValidateCommonInfo(ctx context.Context, form
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *PrivateAzureEntity) contextValidateDiskInfoVec(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.DiskInfoVec); i++ {
+
+		if m.DiskInfoVec[i] != nil {
+
+			if swag.IsZero(m.DiskInfoVec[i]) { // not required
+				return nil
+			}
+
+			if err := m.DiskInfoVec[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("diskInfoVec" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("diskInfoVec" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

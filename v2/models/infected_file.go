@@ -15,34 +15,38 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// InfectedFile Specifies an infected file.
+// InfectedFile Specifies an infected entity.
 //
 // swagger:model InfectedFile
 type InfectedFile struct {
 
-	// Specifies the infected file path.
+	// Specifies the infected entity path.
 	Path *string `json:"path,omitempty"`
 
-	// Specifies the entity id of the infected file.
+	// Specifies the entity id of the infected entity.
 	// Required: true
 	EntityID *int64 `json:"entityId"`
 
-	// Specifies the root inode id of the file system which the infected file belongs to.
+	// Specifies the type of the infected entity.
+	// Enum: ["kObject","kFile"]
+	EntityType *string `json:"entityType,omitempty"`
+
+	// Specifies the root inode id of the file system which the infected entity belongs to.
 	// Required: true
 	RootInodeID *int64 `json:"rootInodeId"`
 
-	// Specifies the view id which the infected file belongs to.
+	// Specifies the view id which the infected entity belongs to.
 	// Required: true
 	ViewID *int64 `json:"viewId"`
 
-	// Specifies the View name to which the infected file belongs to.
+	// Specifies the View name to which the infected entity belongs to.
 	ViewName *string `json:"viewName,omitempty"`
 
-	// Specifies the state of the infected file.
+	// Specifies the state of the infected entity.
 	// Enum: ["Quarantined","Unquarantined"]
 	State *string `json:"state,omitempty"`
 
-	// Specifies a list of virus threat descriptions found in the file.
+	// Specifies a list of virus threat descriptions found in the entity.
 	ThreatDescriptions []string `json:"threatDescriptions"`
 
 	// Specifies the timestamp in microseconds when inode was scanned for viruses.
@@ -51,7 +55,7 @@ type InfectedFile struct {
 	// Specifies the timestamp in microseconds when the threats were detected.
 	DetectedTimeUsecs *int64 `json:"detectedTimeUsecs,omitempty"`
 
-	// Specifies the timestamp in microseconds when this file was last modified.
+	// Specifies the timestamp in microseconds when this entity was last modified.
 	LastModifiedTimeUsecs *int64 `json:"lastModifiedTimeUsecs,omitempty"`
 
 	// Specifies the ICAP Uri of the Antivirus Service which detected the threats.
@@ -66,6 +70,10 @@ func (m *InfectedFile) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateEntityID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateEntityType(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -90,6 +98,48 @@ func (m *InfectedFile) Validate(formats strfmt.Registry) error {
 func (m *InfectedFile) validateEntityID(formats strfmt.Registry) error {
 
 	if err := validate.Required("entityId", "body", m.EntityID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var infectedFileTypeEntityTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["kObject","kFile"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		infectedFileTypeEntityTypePropEnum = append(infectedFileTypeEntityTypePropEnum, v)
+	}
+}
+
+const (
+
+	// InfectedFileEntityTypeKObject captures enum value "kObject"
+	InfectedFileEntityTypeKObject string = "kObject"
+
+	// InfectedFileEntityTypeKFile captures enum value "kFile"
+	InfectedFileEntityTypeKFile string = "kFile"
+)
+
+// prop value enum
+func (m *InfectedFile) validateEntityTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, infectedFileTypeEntityTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *InfectedFile) validateEntityType(formats strfmt.Registry) error {
+	if swag.IsZero(m.EntityType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateEntityTypeEnum("entityType", "body", *m.EntityType); err != nil {
 		return err
 	}
 

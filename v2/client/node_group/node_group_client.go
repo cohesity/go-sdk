@@ -58,8 +58,6 @@ type ClientService interface {
 
 	DeleteNodeGroup(params *DeleteNodeGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNodeGroupNoContent, error)
 
-	GetNodeGroupByName(params *GetNodeGroupByNameParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNodeGroupByNameOK, error)
-
 	GetNodeGroups(params *GetNodeGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNodeGroupsOK, error)
 
 	UpdateNodeGroup(params *UpdateNodeGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNodeGroupOK, error)
@@ -70,7 +68,7 @@ type ClientService interface {
 /*
 CreateNodeGroup creates a node group
 
-Create the Node Group and returns the newly created node group object.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Create the Node Group and returns the newly created node group object.
 */
 func (a *Client) CreateNodeGroup(params *CreateNodeGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateNodeGroupCreated, error) {
 	// TODO: Validate the params before sending
@@ -110,7 +108,7 @@ func (a *Client) CreateNodeGroup(params *CreateNodeGroupParams, authInfo runtime
 /*
 DeleteNodeGroup deletes a node group
 
-Deletes a Node Group based on given node group name.
+```Unknown Privileges``` <br><br>Deletes a Node Group based on given node group name.
 */
 func (a *Client) DeleteNodeGroup(params *DeleteNodeGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNodeGroupNoContent, error) {
 	// TODO: Validate the params before sending
@@ -148,49 +146,9 @@ func (a *Client) DeleteNodeGroup(params *DeleteNodeGroupParams, authInfo runtime
 }
 
 /*
-GetNodeGroupByName lists node groups for a given group name
-
-Returns Node Group for given Group Name.
-*/
-func (a *Client) GetNodeGroupByName(params *GetNodeGroupByNameParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNodeGroupByNameOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetNodeGroupByNameParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "GetNodeGroupByName",
-		Method:             "GET",
-		PathPattern:        "/node-groups/{groupName}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetNodeGroupByNameReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*GetNodeGroupByNameOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*GetNodeGroupByNameDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 GetNodeGroups lists node groups based on provided filtering parameters
 
-List node groups.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>List node groups.
 */
 func (a *Client) GetNodeGroups(params *GetNodeGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNodeGroupsOK, error) {
 	// TODO: Validate the params before sending
@@ -230,7 +188,7 @@ func (a *Client) GetNodeGroups(params *GetNodeGroupsParams, authInfo runtime.Cli
 /*
 UpdateNodeGroup updates a node group
 
-Specifies the request to update the existing Node Group. On successful update, returns the updated node group object.
+```Unknown Privileges``` <br><br>Specifies the request to update the existing Node Group. On successful update, returns the updated node group object.
 */
 func (a *Client) UpdateNodeGroup(params *UpdateNodeGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNodeGroupOK, error) {
 	// TODO: Validate the params before sending

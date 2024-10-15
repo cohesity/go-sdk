@@ -70,13 +70,21 @@ type ApplicationRestoreParameters struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	ApplicationEnvironment *string `json:"applicationEnvironment,omitempty"`
 
 	// Specifies the Application Server objects whose data should be restored.
@@ -122,7 +130,7 @@ var applicationRestoreParametersTypeApplicationEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -155,123 +163,6 @@ const (
 
 	// ApplicationRestoreParametersApplicationEnvironmentKNimble captures enum value "kNimble"
 	ApplicationRestoreParametersApplicationEnvironmentKNimble string = "kNimble"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	ApplicationRestoreParametersApplicationEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKAzure captures enum value "kAzure"
-	ApplicationRestoreParametersApplicationEnvironmentKAzure string = "kAzure"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKNetapp captures enum value "kNetapp"
-	ApplicationRestoreParametersApplicationEnvironmentKNetapp string = "kNetapp"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKAgent captures enum value "kAgent"
-	ApplicationRestoreParametersApplicationEnvironmentKAgent string = "kAgent"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKGenericNas captures enum value "kGenericNas"
-	ApplicationRestoreParametersApplicationEnvironmentKGenericNas string = "kGenericNas"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKAcropolis captures enum value "kAcropolis"
-	ApplicationRestoreParametersApplicationEnvironmentKAcropolis string = "kAcropolis"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	ApplicationRestoreParametersApplicationEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKIsilon captures enum value "kIsilon"
-	ApplicationRestoreParametersApplicationEnvironmentKIsilon string = "kIsilon"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKGPFS captures enum value "kGPFS"
-	ApplicationRestoreParametersApplicationEnvironmentKGPFS string = "kGPFS"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKKVM captures enum value "kKVM"
-	ApplicationRestoreParametersApplicationEnvironmentKKVM string = "kKVM"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKAWS captures enum value "kAWS"
-	ApplicationRestoreParametersApplicationEnvironmentKAWS string = "kAWS"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKExchange captures enum value "kExchange"
-	ApplicationRestoreParametersApplicationEnvironmentKExchange string = "kExchange"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	ApplicationRestoreParametersApplicationEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKOracle captures enum value "kOracle"
-	ApplicationRestoreParametersApplicationEnvironmentKOracle string = "kOracle"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKGCP captures enum value "kGCP"
-	ApplicationRestoreParametersApplicationEnvironmentKGCP string = "kGCP"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	ApplicationRestoreParametersApplicationEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKAWSNative captures enum value "kAWSNative"
-	ApplicationRestoreParametersApplicationEnvironmentKAWSNative string = "kAWSNative"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKO365 captures enum value "kO365"
-	ApplicationRestoreParametersApplicationEnvironmentKO365 string = "kO365"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	ApplicationRestoreParametersApplicationEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	ApplicationRestoreParametersApplicationEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKGCPNative captures enum value "kGCPNative"
-	ApplicationRestoreParametersApplicationEnvironmentKGCPNative string = "kGCPNative"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKAzureNative captures enum value "kAzureNative"
-	ApplicationRestoreParametersApplicationEnvironmentKAzureNative string = "kAzureNative"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKKubernetes captures enum value "kKubernetes"
-	ApplicationRestoreParametersApplicationEnvironmentKKubernetes string = "kKubernetes"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKElastifile captures enum value "kElastifile"
-	ApplicationRestoreParametersApplicationEnvironmentKElastifile string = "kElastifile"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKAD captures enum value "kAD"
-	ApplicationRestoreParametersApplicationEnvironmentKAD string = "kAD"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	ApplicationRestoreParametersApplicationEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKCassandra captures enum value "kCassandra"
-	ApplicationRestoreParametersApplicationEnvironmentKCassandra string = "kCassandra"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKMongoDB captures enum value "kMongoDB"
-	ApplicationRestoreParametersApplicationEnvironmentKMongoDB string = "kMongoDB"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKCouchbase captures enum value "kCouchbase"
-	ApplicationRestoreParametersApplicationEnvironmentKCouchbase string = "kCouchbase"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKHdfs captures enum value "kHdfs"
-	ApplicationRestoreParametersApplicationEnvironmentKHdfs string = "kHdfs"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKHive captures enum value "kHive"
-	ApplicationRestoreParametersApplicationEnvironmentKHive string = "kHive"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKHBase captures enum value "kHBase"
-	ApplicationRestoreParametersApplicationEnvironmentKHBase string = "kHBase"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKUDA captures enum value "kUDA"
-	ApplicationRestoreParametersApplicationEnvironmentKUDA string = "kUDA"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKO365Teams captures enum value "kO365Teams"
-	ApplicationRestoreParametersApplicationEnvironmentKO365Teams string = "kO365Teams"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKO365Group captures enum value "kO365Group"
-	ApplicationRestoreParametersApplicationEnvironmentKO365Group string = "kO365Group"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	ApplicationRestoreParametersApplicationEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	ApplicationRestoreParametersApplicationEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	ApplicationRestoreParametersApplicationEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// ApplicationRestoreParametersApplicationEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	ApplicationRestoreParametersApplicationEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

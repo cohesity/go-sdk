@@ -70,7 +70,7 @@ type ClientService interface {
 /*
 ApplyBaseosPatch applies the given baseos patch
 
-Applies the given baseos patch.
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Applies the given baseos patch.
 */
 func (a *Client) ApplyBaseosPatch(params *ApplyBaseosPatchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ApplyBaseosPatchOK, error) {
 	// TODO: Validate the params before sending
@@ -110,7 +110,7 @@ func (a *Client) ApplyBaseosPatch(params *ApplyBaseosPatchParams, authInfo runti
 /*
 DownloadBaseosPatch downloads the given baseos patch
 
-Downloads the given baseos patch.
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Downloads the given baseos patch.
 */
 func (a *Client) DownloadBaseosPatch(params *DownloadBaseosPatchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DownloadBaseosPatchOK, error) {
 	// TODO: Validate the params before sending
@@ -150,7 +150,7 @@ func (a *Client) DownloadBaseosPatch(params *DownloadBaseosPatchParams, authInfo
 /*
 GetBaseosPatchList gets available baseos patches
 
-Returns the available baseos patches
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Returns the available baseos patches
 */
 func (a *Client) GetBaseosPatchList(params *GetBaseosPatchListParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetBaseosPatchListOK, error) {
 	// TODO: Validate the params before sending
@@ -190,7 +190,7 @@ func (a *Client) GetBaseosPatchList(params *GetBaseosPatchListParams, authInfo r
 /*
 GetBaseosPatchLog gets baseos patch application log
 
-Returns the log and status of the mentioned patch.
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Returns the log and status of the mentioned patch.
 */
 func (a *Client) GetBaseosPatchLog(params *GetBaseosPatchLogParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetBaseosPatchLogOK, error) {
 	// TODO: Validate the params before sending
@@ -230,7 +230,7 @@ func (a *Client) GetBaseosPatchLog(params *GetBaseosPatchLogParams, authInfo run
 /*
 RemoveBaseosPatch cleans up the given baseos patch files
 
-Cleans up the given baseos patch files.
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Cleans up the given baseos patch files.
 */
 func (a *Client) RemoveBaseosPatch(params *RemoveBaseosPatchParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RemoveBaseosPatchOK, error) {
 	// TODO: Validate the params before sending

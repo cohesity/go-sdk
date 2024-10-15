@@ -87,7 +87,7 @@ type FileStubbingParams struct {
 
 	// The object's entity id to TargetViewData map where the data will be
 	// migrated.
-	TargetViewMap []*FileStubbingParamsTargetViewMapEntry `json:"targetViewMap"`
+	TargetViewMap interface{} `json:"targetViewMap,omitempty"`
 
 	// The target view name to which the data will be migrated.
 	TargetViewName *string `json:"targetViewName,omitempty"`
@@ -127,10 +127,6 @@ func (m *FileStubbingParams) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateModTimeBuckets(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateTargetViewMap(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -289,32 +285,6 @@ func (m *FileStubbingParams) validateModTimeBuckets(formats strfmt.Registry) err
 	return nil
 }
 
-func (m *FileStubbingParams) validateTargetViewMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.TargetViewMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.TargetViewMap); i++ {
-		if swag.IsZero(m.TargetViewMap[i]) { // not required
-			continue
-		}
-
-		if m.TargetViewMap[i] != nil {
-			if err := m.TargetViewMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("targetViewMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("targetViewMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 // ContextValidate validate this file stubbing params based on the context it is used
 func (m *FileStubbingParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -340,10 +310,6 @@ func (m *FileStubbingParams) ContextValidate(ctx context.Context, formats strfmt
 	}
 
 	if err := m.contextValidateModTimeBuckets(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateTargetViewMap(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -489,31 +455,6 @@ func (m *FileStubbingParams) contextValidateModTimeBuckets(ctx context.Context, 
 					return ve.ValidateName("modTimeBuckets" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("modTimeBuckets" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *FileStubbingParams) contextValidateTargetViewMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.TargetViewMap); i++ {
-
-		if m.TargetViewMap[i] != nil {
-
-			if swag.IsZero(m.TargetViewMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.TargetViewMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("targetViewMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("targetViewMap" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

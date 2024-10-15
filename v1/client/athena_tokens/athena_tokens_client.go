@@ -62,7 +62,7 @@ type ClientService interface {
 /*
 	GenerateAthenaToken generates an athena access token
 
-	Before making other REST API requests, your REST client must make a
+	```No Privileges Required``` <br><br>Before making other REST API requests, your REST client must make a
 
 'POST /athenaToken' request with a valid Cohesity user and App information.
 This POST request returns an access token and type in the response that is

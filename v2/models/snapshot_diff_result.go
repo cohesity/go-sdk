@@ -23,7 +23,7 @@ type SnapshotDiffResult struct {
 
 	// status
 	// Required: true
-	// Enum: ["kRunning","kCompleted","kError"]
+	// Enum: ["kRunning","kCompleted","kError","kSnapshotExpired","kSnapshotNotFound","kObjectNotFound"]
 	Status *string `json:"status"`
 
 	// file operations
@@ -52,7 +52,7 @@ var snapshotDiffResultTypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kRunning","kCompleted","kError"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kRunning","kCompleted","kError","kSnapshotExpired","kSnapshotNotFound","kObjectNotFound"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -70,6 +70,15 @@ const (
 
 	// SnapshotDiffResultStatusKError captures enum value "kError"
 	SnapshotDiffResultStatusKError string = "kError"
+
+	// SnapshotDiffResultStatusKSnapshotExpired captures enum value "kSnapshotExpired"
+	SnapshotDiffResultStatusKSnapshotExpired string = "kSnapshotExpired"
+
+	// SnapshotDiffResultStatusKSnapshotNotFound captures enum value "kSnapshotNotFound"
+	SnapshotDiffResultStatusKSnapshotNotFound string = "kSnapshotNotFound"
+
+	// SnapshotDiffResultStatusKObjectNotFound captures enum value "kObjectNotFound"
+	SnapshotDiffResultStatusKObjectNotFound string = "kObjectNotFound"
 )
 
 // prop value enum

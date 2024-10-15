@@ -41,7 +41,7 @@ type BackupAttempt struct {
 	SnapshotCreationTimeUsecs *int64 `json:"snapshotCreationTimeUsecs,omitempty"`
 
 	// Status of the attempt for an object. 'Running' indicates that the run is still running. 'Canceled' indicates that the run has been canceled. 'Canceling' indicates that the run is in the process of being canceled. 'Paused' indicates that the ongoing run has been paused. 'Pausing' indicates that the ongoing run is in the process of being paused. 'Resuming' indicates that the already paused run is in the process of being running again. 'Failed' indicates that the run has failed. 'Missed' indicates that the run was unable to take place at the scheduled time because the previous run was still happening. 'Succeeded' indicates that the run has finished successfully. 'SucceededWithWarning' indicates that the run finished successfully, but there were some warning messages. 'Skipped' indicates that the run was skipped.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]
 	Status *string `json:"status,omitempty"`
 
 	// Statistics about backup data for an object.
@@ -76,7 +76,7 @@ var backupAttemptTypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -118,6 +118,9 @@ const (
 
 	// BackupAttemptStatusSkipped captures enum value "Skipped"
 	BackupAttemptStatusSkipped string = "Skipped"
+
+	// BackupAttemptStatusLegalHold captures enum value "LegalHold"
+	BackupAttemptStatusLegalHold string = "LegalHold"
 
 	// BackupAttemptStatusPaused captures enum value "Paused"
 	BackupAttemptStatusPaused string = "Paused"

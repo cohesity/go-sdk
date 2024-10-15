@@ -15,7 +15,7 @@ import (
 
 // RecoverRDSPostgresToKnownSourceConfig Recover RDS Postgres Known Source Config.
 //
-// Specifies the configuration for recovering RDS Postgres instance to the known target.
+// Specifies the configuration for recovering RDS Postgres objects to the known target.
 //
 // swagger:model RecoverRDSPostgresToKnownSourceConfig
 type RecoverRDSPostgresToKnownSourceConfig struct {
@@ -23,10 +23,10 @@ type RecoverRDSPostgresToKnownSourceConfig struct {
 	// Specifies the parameter whether the recovery should be performed to a new target.
 	RecoverToNewSource *bool `json:"recoverToNewSource,omitempty"`
 
-	// Specifies the instance in which to deploy the Rds instance.
+	// Specifies the instance in which to deploy the Rds objects.
 	Instance *RecoveryObjectIdentifier `json:"instance,omitempty"`
 
-	// Specifies the AWS region in which to deploy the Rds instance.
+	// Specifies the AWS region in which to deploy the Rds objects.
 	Region *RecoveryObjectIdentifier `json:"region,omitempty"`
 
 	// Specifies the target source details where RDS Postgres database will be recovered. This source id should be a RDS Postgres target instance id were databases could be restored.

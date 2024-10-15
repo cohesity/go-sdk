@@ -140,15 +140,6 @@ type GetBackupJobsSummaryParams struct {
 	*/
 	IsLastRunSLAViolated *bool
 
-	/* MaxResultCount.
-
-	     Specifies the max number of items to be returned. This is to be used
-	with the pagination params only.
-
-	     Format: int64
-	*/
-	MaxResultCount *int64
-
 	/* MaxRuns.
 
 	     MaxRuns specifies the maximum number of job runs. If specified, only the
@@ -195,12 +186,6 @@ type GetBackupJobsSummaryParams struct {
 	default is json.
 	*/
 	OutputFormat *string
-
-	/* PaginationCookie.
-
-	   Pagination cookie to fetch the next set of results.
-	*/
-	PaginationCookie *string
 
 	/* PolicyIds.
 
@@ -424,17 +409,6 @@ func (o *GetBackupJobsSummaryParams) SetIsLastRunSLAViolated(isLastRunSLAViolate
 	o.IsLastRunSLAViolated = isLastRunSLAViolated
 }
 
-// WithMaxResultCount adds the maxResultCount to the get backup jobs summary params
-func (o *GetBackupJobsSummaryParams) WithMaxResultCount(maxResultCount *int64) *GetBackupJobsSummaryParams {
-	o.SetMaxResultCount(maxResultCount)
-	return o
-}
-
-// SetMaxResultCount adds the maxResultCount to the get backup jobs summary params
-func (o *GetBackupJobsSummaryParams) SetMaxResultCount(maxResultCount *int64) {
-	o.MaxResultCount = maxResultCount
-}
-
 // WithMaxRuns adds the maxRuns to the get backup jobs summary params
 func (o *GetBackupJobsSummaryParams) WithMaxRuns(maxRuns *int64) *GetBackupJobsSummaryParams {
 	o.SetMaxRuns(maxRuns)
@@ -499,17 +473,6 @@ func (o *GetBackupJobsSummaryParams) WithOutputFormat(outputFormat *string) *Get
 // SetOutputFormat adds the outputFormat to the get backup jobs summary params
 func (o *GetBackupJobsSummaryParams) SetOutputFormat(outputFormat *string) {
 	o.OutputFormat = outputFormat
-}
-
-// WithPaginationCookie adds the paginationCookie to the get backup jobs summary params
-func (o *GetBackupJobsSummaryParams) WithPaginationCookie(paginationCookie *string) *GetBackupJobsSummaryParams {
-	o.SetPaginationCookie(paginationCookie)
-	return o
-}
-
-// SetPaginationCookie adds the paginationCookie to the get backup jobs summary params
-func (o *GetBackupJobsSummaryParams) SetPaginationCookie(paginationCookie *string) {
-	o.PaginationCookie = paginationCookie
 }
 
 // WithPolicyIds adds the policyIds to the get backup jobs summary params
@@ -772,23 +735,6 @@ func (o *GetBackupJobsSummaryParams) WriteToRequest(r runtime.ClientRequest, reg
 		}
 	}
 
-	if o.MaxResultCount != nil {
-
-		// query param maxResultCount
-		var qrMaxResultCount int64
-
-		if o.MaxResultCount != nil {
-			qrMaxResultCount = *o.MaxResultCount
-		}
-		qMaxResultCount := swag.FormatInt64(qrMaxResultCount)
-		if qMaxResultCount != "" {
-
-			if err := r.SetQueryParam("maxResultCount", qMaxResultCount); err != nil {
-				return err
-			}
-		}
-	}
-
 	if o.MaxRuns != nil {
 
 		// query param maxRuns
@@ -880,23 +826,6 @@ func (o *GetBackupJobsSummaryParams) WriteToRequest(r runtime.ClientRequest, reg
 		if qOutputFormat != "" {
 
 			if err := r.SetQueryParam("outputFormat", qOutputFormat); err != nil {
-				return err
-			}
-		}
-	}
-
-	if o.PaginationCookie != nil {
-
-		// query param paginationCookie
-		var qrPaginationCookie string
-
-		if o.PaginationCookie != nil {
-			qrPaginationCookie = *o.PaginationCookie
-		}
-		qPaginationCookie := qrPaginationCookie
-		if qPaginationCookie != "" {
-
-			if err := r.SetQueryParam("paginationCookie", qPaginationCookie); err != nil {
 				return err
 			}
 		}

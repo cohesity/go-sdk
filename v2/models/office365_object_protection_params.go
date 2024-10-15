@@ -22,7 +22,7 @@ type Office365ObjectProtectionParams struct {
 
 	// Specifies the Microsoft 365 Object Protection type.
 	// Required: true
-	// Enum: ["kMailbox","kOneDrive","kSharePoint","kPublicFolders","kGroups","kTeams"]
+	// Enum: ["kMailbox","kOneDrive","kSharePoint","kPublicFolders","kGroups","kTeams","kMailboxCSM","kOneDriveCSM","kSharePointCSM"]
 	ObjectProtectionType *string `json:"objectProtectionType"`
 
 	// Specifies the User Mailbox Object Protection params.
@@ -79,7 +79,7 @@ var office365ObjectProtectionParamsTypeObjectProtectionTypePropEnum []interface{
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kMailbox","kOneDrive","kSharePoint","kPublicFolders","kGroups","kTeams"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kMailbox","kOneDrive","kSharePoint","kPublicFolders","kGroups","kTeams","kMailboxCSM","kOneDriveCSM","kSharePointCSM"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -106,6 +106,15 @@ const (
 
 	// Office365ObjectProtectionParamsObjectProtectionTypeKTeams captures enum value "kTeams"
 	Office365ObjectProtectionParamsObjectProtectionTypeKTeams string = "kTeams"
+
+	// Office365ObjectProtectionParamsObjectProtectionTypeKMailboxCSM captures enum value "kMailboxCSM"
+	Office365ObjectProtectionParamsObjectProtectionTypeKMailboxCSM string = "kMailboxCSM"
+
+	// Office365ObjectProtectionParamsObjectProtectionTypeKOneDriveCSM captures enum value "kOneDriveCSM"
+	Office365ObjectProtectionParamsObjectProtectionTypeKOneDriveCSM string = "kOneDriveCSM"
+
+	// Office365ObjectProtectionParamsObjectProtectionTypeKSharePointCSM captures enum value "kSharePointCSM"
+	Office365ObjectProtectionParamsObjectProtectionTypeKSharePointCSM string = "kSharePointCSM"
 )
 
 // prop value enum

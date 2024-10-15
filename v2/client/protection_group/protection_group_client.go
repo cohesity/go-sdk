@@ -78,7 +78,7 @@ type ClientService interface {
 
 	GetRunDebugLogsForObject(params *GetRunDebugLogsForObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunDebugLogsForObjectOK, error)
 
-	GetRunErrorsReport(params *GetRunErrorsReportParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunErrorsReportOK, error)
+	GetRunMessagesReport(params *GetRunMessagesReportParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunMessagesReportOK, error)
 
 	GetRunsReport(params *GetRunsReportParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunsReportOK, error)
 
@@ -96,7 +96,7 @@ type ClientService interface {
 /*
 CreateProtectionGroup creates a protection group
 
-Create a Protection Group.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Create a Protection Group.
 */
 func (a *Client) CreateProtectionGroup(params *CreateProtectionGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProtectionGroupCreated, error) {
 	// TODO: Validate the params before sending
@@ -136,7 +136,7 @@ func (a *Client) CreateProtectionGroup(params *CreateProtectionGroupParams, auth
 /*
 CreateProtectionGroupRun creates a new protection run
 
-Create a new protection run. This can be used to start a run for a Protection Group on demand, ignoring the schedule and retention specified in the protection policy.
+**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>Create a new protection run. This can be used to start a run for a Protection Group on demand, ignoring the schedule and retention specified in the protection policy.
 */
 func (a *Client) CreateProtectionGroupRun(params *CreateProtectionGroupRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProtectionGroupRunAccepted, error) {
 	// TODO: Validate the params before sending
@@ -176,7 +176,7 @@ func (a *Client) CreateProtectionGroupRun(params *CreateProtectionGroupRunParams
 /*
 DeleteProtectionGroup deletes a protection group
 
-Returns Success if the Protection Group is deleted.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Returns Success if the Protection Group is deleted.
 */
 func (a *Client) DeleteProtectionGroup(params *DeleteProtectionGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProtectionGroupNoContent, error) {
 	// TODO: Validate the params before sending
@@ -216,7 +216,7 @@ func (a *Client) DeleteProtectionGroup(params *DeleteProtectionGroupParams, auth
 /*
 GetProtectionGroupByID lists details about single protection group
 
-Returns the Protection Group corresponding to the specified Group id.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns the Protection Group corresponding to the specified Group id.
 */
 func (a *Client) GetProtectionGroupByID(params *GetProtectionGroupByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionGroupByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -256,7 +256,7 @@ func (a *Client) GetProtectionGroupByID(params *GetProtectionGroupByIDParams, au
 /*
 GetProtectionGroupRun gets a run for a protection group
 
-Get a run for a particular Protection Group.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get a run for a particular Protection Group.
 */
 func (a *Client) GetProtectionGroupRun(params *GetProtectionGroupRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionGroupRunOK, error) {
 	// TODO: Validate the params before sending
@@ -296,7 +296,7 @@ func (a *Client) GetProtectionGroupRun(params *GetProtectionGroupRunParams, auth
 /*
 GetProtectionGroupRuns gets the list of runs for a protection group
 
-Get the runs for a particular Protection Group.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get the runs for a particular Protection Group.
 */
 func (a *Client) GetProtectionGroupRuns(params *GetProtectionGroupRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionGroupRunsOK, error) {
 	// TODO: Validate the params before sending
@@ -336,7 +336,7 @@ func (a *Client) GetProtectionGroupRuns(params *GetProtectionGroupRunsParams, au
 /*
 GetProtectionGroups gets the list of protection groups
 
-Get the list of Protection Groups.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get the list of Protection Groups.
 */
 func (a *Client) GetProtectionGroups(params *GetProtectionGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionGroupsOK, error) {
 	// TODO: Validate the params before sending
@@ -376,7 +376,7 @@ func (a *Client) GetProtectionGroups(params *GetProtectionGroupsParams, authInfo
 /*
 GetProtectionRunProgress gets the progress of a run
 
-Get the progress of a run.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get the progress of a run.
 */
 func (a *Client) GetProtectionRunProgress(params *GetProtectionRunProgressParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionRunProgressOK, error) {
 	// TODO: Validate the params before sending
@@ -416,7 +416,7 @@ func (a *Client) GetProtectionRunProgress(params *GetProtectionRunProgressParams
 /*
 GetProtectionRunStats gets the stats for a run
 
-Get the stats for a run.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get the stats for a run.
 */
 func (a *Client) GetProtectionRunStats(params *GetProtectionRunStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionRunStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -456,7 +456,7 @@ func (a *Client) GetProtectionRunStats(params *GetProtectionRunStatsParams, auth
 /*
 GetProtectionRuns gets the list of runs
 
-Get a list of protection runs.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get a list of protection runs.
 */
 func (a *Client) GetProtectionRuns(params *GetProtectionRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionRunsOK, error) {
 	// TODO: Validate the params before sending
@@ -496,7 +496,7 @@ func (a *Client) GetProtectionRuns(params *GetProtectionRunsParams, authInfo run
 /*
 GetRunDebugLogs gets the debug logs for a run from a protection group
 
-Get the debug logs for all objects of a run for a particular Protection Group.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get the debug logs for all objects of a run for a particular Protection Group.
 */
 func (a *Client) GetRunDebugLogs(params *GetRunDebugLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunDebugLogsOK, error) {
 	// TODO: Validate the params before sending
@@ -536,7 +536,7 @@ func (a *Client) GetRunDebugLogs(params *GetRunDebugLogsParams, authInfo runtime
 /*
 GetRunDebugLogsForObject gets the debug logs for a particular object in a run from a protection group
 
-Get the debug logs for a particular object of a run for a particular Protection Group.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get the debug logs for a particular object of a run for a particular Protection Group.
 */
 func (a *Client) GetRunDebugLogsForObject(params *GetRunDebugLogsForObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunDebugLogsForObjectOK, error) {
 	// TODO: Validate the params before sending
@@ -574,24 +574,24 @@ func (a *Client) GetRunDebugLogsForObject(params *GetRunDebugLogsForObjectParams
 }
 
 /*
-GetRunErrorsReport gets the c s v of errors warnings for a given run and an object
+GetRunMessagesReport gets the c s v of various proto messages for a given run and an object
 
-Get an CSV error report for given objectId and run id. Each row in CSV report contains the File Path, error/warning code and error/warning message.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get an CSV report for given objectId and run id. Each row in CSV report contains the fields from correspoinding proto message.
 */
-func (a *Client) GetRunErrorsReport(params *GetRunErrorsReportParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunErrorsReportOK, error) {
+func (a *Client) GetRunMessagesReport(params *GetRunMessagesReportParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunMessagesReportOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewGetRunErrorsReportParams()
+		params = NewGetRunMessagesReportParams()
 	}
 	op := &runtime.ClientOperation{
-		ID:                 "GetRunErrorsReport",
+		ID:                 "GetRunMessagesReport",
 		Method:             "GET",
 		PathPattern:        "/data-protect/protection-groups/{id}/runs/{runId}/objects/{objectId}/download-messages",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
-		Reader:             &GetRunErrorsReportReader{formats: a.formats},
+		Reader:             &GetRunMessagesReportReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -604,19 +604,19 @@ func (a *Client) GetRunErrorsReport(params *GetRunErrorsReportParams, authInfo r
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*GetRunErrorsReportOK)
+	success, ok := result.(*GetRunMessagesReportOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*GetRunErrorsReportDefault)
+	unexpectedSuccess := result.(*GetRunMessagesReportDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
 GetRunsReport gets the c s v of errors warnings for a given run and an object
 
-Get an CSV report for given objectId and run id. Report will depend on the query parameter fileType, default will be: success_files_list where each row contains the name of file backedup successfully.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get an CSV report for given objectId and run id. Report will depend on the query parameter fileType, default will be: success_files_list where each row contains the name of file backedup successfully.
 */
 func (a *Client) GetRunsReport(params *GetRunsReportParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunsReportOK, error) {
 	// TODO: Validate the params before sending
@@ -656,7 +656,7 @@ func (a *Client) GetRunsReport(params *GetRunsReportParams, authInfo runtime.Cli
 /*
 PerformActionOnProtectionGroupRun actions on protection group run
 
-Perform various actions on a Protection Group run.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Perform various actions on a Protection Group run.
 */
 func (a *Client) PerformActionOnProtectionGroupRun(params *PerformActionOnProtectionGroupRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PerformActionOnProtectionGroupRunAccepted, error) {
 	// TODO: Validate the params before sending
@@ -696,7 +696,7 @@ func (a *Client) PerformActionOnProtectionGroupRun(params *PerformActionOnProtec
 /*
 UpdateProtectionGroup updates a protection group
 
-Update the specified Protection Group.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Update the specified Protection Group.
 */
 func (a *Client) UpdateProtectionGroup(params *UpdateProtectionGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProtectionGroupOK, error) {
 	// TODO: Validate the params before sending
@@ -736,7 +736,7 @@ func (a *Client) UpdateProtectionGroup(params *UpdateProtectionGroupParams, auth
 /*
 UpdateProtectionGroupRun updates runs for a particular protection group
 
-Update runs for a particular Protection Group. A user can perform the following actions: 1. Extend or reduce retention of a local, replication and archival snapshots. 2. Can perform resync operation on failed copy snapshots attempts in this Run. 3. Add new replication and archival snapshot targets to the Run. 4. Add or remove legal hold on the snapshots. Only a user with DSO role can perform this operation. 5. Delete the snapshots that were created as a part of this Run. 6. Apply datalock on existing snapshots where a user cannot manually delete snapshots before the expiry time.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Update runs for a particular Protection Group. A user can perform the following actions: 1. Extend or reduce retention of a local, replication and archival snapshots. 2. Can perform resync operation on failed copy snapshots attempts in this Run. 3. Add new replication and archival snapshot targets to the Run. 4. Add or remove legal hold on the snapshots. Only a user with DSO role can perform this operation. 5. Delete the snapshots that were created as a part of this Run. 6. Apply datalock on existing snapshots where a user cannot manually delete snapshots before the expiry time.
 */
 func (a *Client) UpdateProtectionGroupRun(params *UpdateProtectionGroupRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProtectionGroupRunMultiStatus, error) {
 	// TODO: Validate the params before sending
@@ -776,7 +776,7 @@ func (a *Client) UpdateProtectionGroupRun(params *UpdateProtectionGroupRunParams
 /*
 UpdateProtectionGroupsState performs an action like pause resume active deactivate on all specified protection groups
 
-Perform an action like pause, resume, active, deactivate on all specified Protection Groups. Note that the pause or resume actions will take effect from next Protection Run. Also, user can specify only one type of action on all the Protection Groups. Deactivate and activate actions are independent of pause and resume state. Deactivate and activate actions are useful in case of failover situations. Returns success if the state of all the Protection Groups state is changed successfully.
+**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>Perform an action like pause, resume, active, deactivate on all specified Protection Groups. Note that the pause or resume actions will take effect from next Protection Run. Also, user can specify only one type of action on all the Protection Groups. Deactivate and activate actions are independent of pause and resume state. Deactivate and activate actions are useful in case of failover situations. Returns success if the state of all the Protection Groups state is changed successfully.
 */
 func (a *Client) UpdateProtectionGroupsState(params *UpdateProtectionGroupsStateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProtectionGroupsStateOK, error) {
 	// TODO: Validate the params before sending

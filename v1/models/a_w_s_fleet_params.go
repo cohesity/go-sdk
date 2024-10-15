@@ -12,6 +12,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // AWSFleetParams Params for AWS fleets deployment.
@@ -32,7 +33,7 @@ type AWSFleetParams struct {
 
 	// Map for a region to network params, as network params can be defined
 	// per region. Only set when kCustom fleet subnet type is being used.
-	NetworkParamsMap []*AWSFleetParamsNetworkParamsMapEntry `json:"networkParamsMap"`
+	NetworkParamsMap map[string]AWSFleetParamsNetworkParams `json:"networkParamsMap,omitempty"`
 
 	// Network information for the fleet. This will be only set when
 	// fleet_subnet_type is kCustom.
@@ -115,17 +116,17 @@ func (m *AWSFleetParams) validateNetworkParamsMap(formats strfmt.Registry) error
 		return nil
 	}
 
-	for i := 0; i < len(m.NetworkParamsMap); i++ {
-		if swag.IsZero(m.NetworkParamsMap[i]) { // not required
-			continue
-		}
+	for k := range m.NetworkParamsMap {
 
-		if m.NetworkParamsMap[i] != nil {
-			if err := m.NetworkParamsMap[i].Validate(formats); err != nil {
+		if err := validate.Required("networkParamsMap"+"."+k, "body", m.NetworkParamsMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.NetworkParamsMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("networkParamsMap" + "." + strconv.Itoa(i))
+					return ve.ValidateName("networkParamsMap" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("networkParamsMap" + "." + strconv.Itoa(i))
+					return ce.ValidateName("networkParamsMap" + "." + k)
 				}
 				return err
 			}
@@ -236,20 +237,10 @@ func (m *AWSFleetParams) contextValidateNetworkParams(ctx context.Context, forma
 
 func (m *AWSFleetParams) contextValidateNetworkParamsMap(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.NetworkParamsMap); i++ {
+	for k := range m.NetworkParamsMap {
 
-		if m.NetworkParamsMap[i] != nil {
-
-			if swag.IsZero(m.NetworkParamsMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.NetworkParamsMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("networkParamsMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("networkParamsMap" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.NetworkParamsMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

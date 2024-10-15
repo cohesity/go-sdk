@@ -62,7 +62,7 @@ type ClientService interface {
 /*
 	GenerateAccessToken generates an access token
 
-	Before making other REST API requests, your REST client must make a
+	```No Privileges Required``` <br><br>Before making other REST API requests, your REST client must make a
 
 'POST /public/accessToken' request with a valid Cohesity username and
 password. This POST request returns an access token and type

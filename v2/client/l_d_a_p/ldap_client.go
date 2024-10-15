@@ -70,7 +70,7 @@ type ClientService interface {
 /*
 CreateLdapProvider creates ldap provider
 
-Create Ldap provider with given parameters.
+**Privileges:** ```AD_LDAP_MODIFY``` <br><br>Create Ldap provider with given parameters.
 */
 func (a *Client) CreateLdapProvider(params *CreateLdapProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateLdapProviderCreated, error) {
 	// TODO: Validate the params before sending
@@ -110,7 +110,7 @@ func (a *Client) CreateLdapProvider(params *CreateLdapProviderParams, authInfo r
 /*
 DeleteLdapProvider deletes l d a p provider
 
-Delete LDAP provider which will be identified by given Id.
+**Privileges:** ```AD_LDAP_MODIFY``` <br><br>Delete LDAP provider which will be identified by given Id.
 */
 func (a *Client) DeleteLdapProvider(params *DeleteLdapProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteLdapProviderNoContent, error) {
 	// TODO: Validate the params before sending
@@ -150,7 +150,7 @@ func (a *Client) DeleteLdapProvider(params *DeleteLdapProviderParams, authInfo r
 /*
 GetLdapConnectionStatus gets l d a p connection status
 
-Get LDAP connection status.
+**Privileges:** ```AD_LDAP_VIEW``` <br><br>Get LDAP connection status.
 */
 func (a *Client) GetLdapConnectionStatus(params *GetLdapConnectionStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetLdapConnectionStatusOK, error) {
 	// TODO: Validate the params before sending
@@ -190,7 +190,7 @@ func (a *Client) GetLdapConnectionStatus(params *GetLdapConnectionStatusParams, 
 /*
 GetLdaps gets groups
 
-Get LDAPs.
+**Privileges:** ```AD_LDAP_VIEW``` <br><br>Get LDAPs.
 */
 func (a *Client) GetLdaps(params *GetLdapsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetLdapsOK, error) {
 	// TODO: Validate the params before sending
@@ -230,7 +230,7 @@ func (a *Client) GetLdaps(params *GetLdapsParams, authInfo runtime.ClientAuthInf
 /*
 UpdateLdapProvider updates ldap provider
 
-Modify Ldap provider with given parameters.
+**Privileges:** ```AD_LDAP_MODIFY``` <br><br>Modify Ldap provider with given parameters.
 */
 func (a *Client) UpdateLdapProvider(params *UpdateLdapProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateLdapProviderOK, error) {
 	// TODO: Validate the params before sending

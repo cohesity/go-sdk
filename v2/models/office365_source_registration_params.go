@@ -45,6 +45,9 @@ type Office365SourceRegistrationParams struct {
 
 	// Specifies whether to use existing Office365 credentials like password and client secret for app id's. This parameter is only valid in the case of updating the registered source.
 	UseExistingCredentials *bool `json:"useExistingCredentials,omitempty"`
+
+	// Specifies whether to enable M365 Storage Service API based(CSM) Backup for this M365 source.
+	EnableM365CSMBackup *bool `json:"enableM365CSMBackup,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -71,6 +74,8 @@ func (m *Office365SourceRegistrationParams) UnmarshalJSON(raw []byte) error {
 		O365ObjectsDiscoveryParams *ObjectsDiscoveryParams `json:"o365ObjectsDiscoveryParams,omitempty"`
 
 		UseExistingCredentials *bool `json:"useExistingCredentials,omitempty"`
+
+		EnableM365CSMBackup *bool `json:"enableM365CSMBackup,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -89,6 +94,8 @@ func (m *Office365SourceRegistrationParams) UnmarshalJSON(raw []byte) error {
 	m.O365ObjectsDiscoveryParams = dataAO1.O365ObjectsDiscoveryParams
 
 	m.UseExistingCredentials = dataAO1.UseExistingCredentials
+
+	m.EnableM365CSMBackup = dataAO1.EnableM365CSMBackup
 
 	return nil
 }
@@ -116,6 +123,8 @@ func (m Office365SourceRegistrationParams) MarshalJSON() ([]byte, error) {
 		O365ObjectsDiscoveryParams *ObjectsDiscoveryParams `json:"o365ObjectsDiscoveryParams,omitempty"`
 
 		UseExistingCredentials *bool `json:"useExistingCredentials,omitempty"`
+
+		EnableM365CSMBackup *bool `json:"enableM365CSMBackup,omitempty"`
 	}
 
 	dataAO1.Office365AppCredentialsList = m.Office365AppCredentialsList
@@ -131,6 +140,8 @@ func (m Office365SourceRegistrationParams) MarshalJSON() ([]byte, error) {
 	dataAO1.O365ObjectsDiscoveryParams = m.O365ObjectsDiscoveryParams
 
 	dataAO1.UseExistingCredentials = m.UseExistingCredentials
+
+	dataAO1.EnableM365CSMBackup = m.EnableM365CSMBackup
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {

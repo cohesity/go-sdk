@@ -62,7 +62,7 @@ type ObjectSnapshot struct {
 	RunType *string `json:"runType,omitempty"`
 
 	// Specifies the snapshot environment.
-	// Enum: ["kVMware","kHyperV","kAzure","kKVM","kAWS","kAzureSQL","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kAzure","kKVM","kAWS","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies the timestamp in Unix time epoch in microseconds when the snapshot is taken for the specified Object.
@@ -444,7 +444,7 @@ var objectSnapshotTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kKVM","kAWS","kAzureSQL","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kKVM","kAWS","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -468,9 +468,6 @@ const (
 
 	// ObjectSnapshotEnvironmentKAWS captures enum value "kAWS"
 	ObjectSnapshotEnvironmentKAWS string = "kAWS"
-
-	// ObjectSnapshotEnvironmentKAzureSQL captures enum value "kAzureSQL"
-	ObjectSnapshotEnvironmentKAzureSQL string = "kAzureSQL"
 
 	// ObjectSnapshotEnvironmentKAcropolis captures enum value "kAcropolis"
 	ObjectSnapshotEnvironmentKAcropolis string = "kAcropolis"
@@ -552,6 +549,9 @@ const (
 
 	// ObjectSnapshotEnvironmentKHBase captures enum value "kHBase"
 	ObjectSnapshotEnvironmentKHBase string = "kHBase"
+
+	// ObjectSnapshotEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	ObjectSnapshotEnvironmentKSAPHANA string = "kSAPHANA"
 
 	// ObjectSnapshotEnvironmentKUDA captures enum value "kUDA"
 	ObjectSnapshotEnvironmentKUDA string = "kUDA"

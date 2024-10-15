@@ -13,7 +13,10 @@ import (
 )
 
 // AdapterSpecificFlagsProto o365::AdapterSpecificFlags::sharepoint_adapter_flags
+//
 // o365/o365.proto           101
+//
+// san::AdapterSpecificFlags::san_adapter_flags    san/san.proto            102
 //
 // swagger:model AdapterSpecificFlagsProto
 type AdapterSpecificFlagsProto struct {

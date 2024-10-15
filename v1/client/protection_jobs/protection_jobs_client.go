@@ -78,7 +78,7 @@ type ClientService interface {
 /*
 	ChangeProtectionJobState pauses future runs or resume future runs of the specified protection job
 
-	If the Protection Job is currently running (not paused) and true is passed in,
+	**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>If the Protection Job is currently running (not paused) and true is passed in,
 
 this operation stops any new Runs of this Protection Job
 from stating and executing.
@@ -127,7 +127,7 @@ func (a *Client) ChangeProtectionJobState(params *ChangeProtectionJobStateParams
 /*
 CreateProtectionJob creates a protection job
 
-Returns the created Protection Job.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Returns the created Protection Job.
 */
 func (a *Client) CreateProtectionJob(params *CreateProtectionJobParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProtectionJobCreated, error) {
 	// TODO: Validate the params before sending
@@ -167,7 +167,7 @@ func (a *Client) CreateProtectionJob(params *CreateProtectionJobParams, authInfo
 /*
 DeleteProtectionJob deletes a protection job
 
-Returns Success if the Protection Job is deleted.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Returns Success if the Protection Job is deleted.
 */
 func (a *Client) DeleteProtectionJob(params *DeleteProtectionJobParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProtectionJobNoContent, error) {
 	// TODO: Validate the params before sending
@@ -207,7 +207,7 @@ func (a *Client) DeleteProtectionJob(params *DeleteProtectionJobParams, authInfo
 /*
 GetProtectionJobAudit lists a protection job audit
 
-Returns the audit of specific protection job edit history.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns the audit of specific protection job edit history.
 */
 func (a *Client) GetProtectionJobAudit(params *GetProtectionJobAuditParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionJobAuditOK, error) {
 	// TODO: Validate the params before sending
@@ -247,7 +247,7 @@ func (a *Client) GetProtectionJobAudit(params *GetProtectionJobAuditParams, auth
 /*
 GetProtectionJobByID lists details about single protection job
 
-Returns the Protection Job corresponding to the specified Job id.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns the Protection Job corresponding to the specified Job id.
 */
 func (a *Client) GetProtectionJobByID(params *GetProtectionJobByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionJobByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -287,7 +287,7 @@ func (a *Client) GetProtectionJobByID(params *GetProtectionJobByIDParams, authIn
 /*
 	GetProtectionJobs lists protections jobs filtered by the specified parameters
 
-	If no parameters are specified, all Protection Jobs currently
+	**Privileges:** ```PROTECTION_VIEW``` <br><br>If no parameters are specified, all Protection Jobs currently
 
 on the Cohesity Cluster are returned.
 Specifying parameters filters the results that are returned.
@@ -330,7 +330,7 @@ func (a *Client) GetProtectionJobs(params *GetProtectionJobsParams, authInfo run
 /*
 	RunProtectionJob immediatelies execute a single protection job run
 
-	Immediately execute a single Job Run and ignore the schedule defined
+	**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>Immediately execute a single Job Run and ignore the schedule defined
 
 in the Policy.
 A Protection Policy associated with the Job may define up to three
@@ -379,7 +379,7 @@ func (a *Client) RunProtectionJob(params *RunProtectionJobParams, authInfo runti
 /*
 UpdateProtectionJob updates a protection job
 
-Returns the updated Protection Job.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Returns the updated Protection Job.
 */
 func (a *Client) UpdateProtectionJob(params *UpdateProtectionJobParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProtectionJobOK, error) {
 	// TODO: Validate the params before sending
@@ -419,7 +419,7 @@ func (a *Client) UpdateProtectionJob(params *UpdateProtectionJobParams, authInfo
 /*
 	UpdateProtectionJobsState performs an action like pause resume activate deactivate on all the specified protection jobs
 
-	Note that the pause or resume actions will take effect from next Protection
+	**Privileges:** ```PROTECTION_JOB_OPERATE``` <br><br>Note that the pause or resume actions will take effect from next Protection
 
 Run. Also, user can specify only one type of action on all the Protection Jobs.
 Deactivate and activate actions are independent of pause and resume state.

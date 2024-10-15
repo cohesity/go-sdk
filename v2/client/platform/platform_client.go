@@ -94,27 +94,15 @@ type ClientService interface {
 
 	DeleteAMQPTargetConfig(params *DeleteAMQPTargetConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteAMQPTargetConfigNoContent, error)
 
-	DeleteClusterPackage(params *DeleteClusterPackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteClusterPackageAccepted, error)
-
 	DeleteClusterSnapshotPolicy(params *DeleteClusterSnapshotPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteClusterSnapshotPolicyNoContent, error)
 
-	DeleteClusterVlan(params *DeleteClusterVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteClusterVlanNoContent, error)
-
 	DeleteHosts(params *DeleteHostsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteHostsNoContent, error)
-
-	DeleteInterfaceGroup(params *DeleteInterfaceGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteInterfaceGroupNoContent, error)
-
-	DeleteRackByID(params *DeleteRackByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRackByIDNoContent, error)
-
-	DeleteRacks(params *DeleteRacksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRacksNoContent, error)
 
 	DiscoverDisks(params *DiscoverDisksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DiscoverDisksOK, error)
 
 	DiskIdentify(params *DiskIdentifyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DiskIdentifyOK, error)
 
 	DisksAssimilate(params *DisksAssimilateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DisksAssimilateOK, error)
-
-	ExpandClusterNodes(params *ExpandClusterNodesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ExpandClusterNodesAccepted, error)
 
 	GetAMQPTargetConfig(params *GetAMQPTargetConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAMQPTargetConfigOK, error)
 
@@ -131,16 +119,6 @@ type ClientService interface {
 	GetClusterSnapshotPolicy(params *GetClusterSnapshotPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterSnapshotPolicyOK, error)
 
 	GetClusterState(params *GetClusterStateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterStateOK, error)
-
-	GetClusterVlans(params *GetClusterVlansParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterVlansOK, error)
-
-	GetInterfaceGroups(params *GetInterfaceGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetInterfaceGroupsOK, error)
-
-	GetInterfaces(params *GetInterfacesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetInterfacesOK, error)
-
-	GetIpmiLanConfig(params *GetIpmiLanConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIpmiLanConfigOK, error)
-
-	GetIpmiUsers(params *GetIpmiUsersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIpmiUsersOK, error)
 
 	GetIsDMaaSCluster(params *GetIsDMaaSClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIsDMaaSClusterOK, error)
 
@@ -163,8 +141,6 @@ type ClientService interface {
 	ImportCrlFile(params *ImportCrlFileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ImportCrlFileNoContent, error)
 
 	ListDisks(params *ListDisksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDisksOK, error)
-
-	ListFeatureFlag(params *ListFeatureFlagParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListFeatureFlagOK, error)
 
 	ListFreeNodes(params *ListFreeNodesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListFreeNodesOK, error)
 
@@ -194,19 +170,9 @@ type ClientService interface {
 
 	UpdateClusterSnapshotPolicy(params *UpdateClusterSnapshotPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateClusterSnapshotPolicyOK, error)
 
-	UpdateClusterVlan(params *UpdateClusterVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateClusterVlanOK, error)
-
 	UpdateFeatureFlag(params *UpdateFeatureFlagParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateFeatureFlagOK, error)
 
 	UpdateHosts(params *UpdateHostsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateHostsOK, error)
-
-	UpdateInterface(params *UpdateInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateInterfaceOK, error)
-
-	UpdateInterfaceGroup(params *UpdateInterfaceGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateInterfaceGroupOK, error)
-
-	UpdateIpmiLanConfig(params *UpdateIpmiLanConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateIpmiLanConfigOK, error)
-
-	UpdateIpmiUsers(params *UpdateIpmiUsersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateIpmiUsersOK, error)
 
 	UpdateIsDMaaSCluster(params *UpdateIsDMaaSClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateIsDMaaSClusterOK, error)
 
@@ -224,8 +190,6 @@ type ClientService interface {
 
 	UpgradeClusterSoftware(params *UpgradeClusterSoftwareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpgradeClusterSoftwareAccepted, error)
 
-	UploadPackageByURL(params *UploadPackageByURLParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadPackageByURLAccepted, error)
-
 	ValidateSMTPConfiguration(params *ValidateSMTPConfigurationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ValidateSMTPConfigurationNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
@@ -234,7 +198,7 @@ type ClientService interface {
 /*
 AddHosts creates cluster host mappings
 
-Sends a request to add one or more new entries to the Cluster's /etc/hosts
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to add one or more new entries to the Cluster's /etc/hosts
 */
 func (a *Client) AddHosts(params *AddHostsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AddHostsCreated, error) {
 	// TODO: Validate the params before sending
@@ -274,7 +238,7 @@ func (a *Client) AddHosts(params *AddHostsParams, authInfo runtime.ClientAuthInf
 /*
 AddRemoteDisk adds remote disk
 
-Add a remote disk.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Add a remote disk.
 */
 func (a *Client) AddRemoteDisk(params *AddRemoteDiskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AddRemoteDiskCreated, error) {
 	// TODO: Validate the params before sending
@@ -314,7 +278,7 @@ func (a *Client) AddRemoteDisk(params *AddRemoteDiskParams, authInfo runtime.Cli
 /*
 ClearSMTPConfiguration clears SMTP configuration
 
-Clear cluster SMTP configuration.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Clear cluster SMTP configuration.
 */
 func (a *Client) ClearSMTPConfiguration(params *ClearSMTPConfigurationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ClearSMTPConfigurationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -354,7 +318,7 @@ func (a *Client) ClearSMTPConfiguration(params *ClearSMTPConfigurationParams, au
 /*
 CreateCluster creates a cluster
 
-Create a cluster with given network and cluster configuration.
+**Privileges:** ```CLUSTER_CREATE``` <br><br>Create a cluster with given network and cluster configuration.
 */
 func (a *Client) CreateCluster(params *CreateClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateClusterCreated, error) {
 	// TODO: Validate the params before sending
@@ -394,7 +358,7 @@ func (a *Client) CreateCluster(params *CreateClusterParams, authInfo runtime.Cli
 /*
 CreateClusterVlan creates vlan
 
-Create a vlan on the cluster.
+```Unknown Privileges``` <br><br>Create a vlan on the cluster.
 */
 func (a *Client) CreateClusterVlan(params *CreateClusterVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateClusterVlanCreated, error) {
 	// TODO: Validate the params before sending
@@ -434,7 +398,7 @@ func (a *Client) CreateClusterVlan(params *CreateClusterVlanParams, authInfo run
 /*
 CreateInterfaceGroup creates interface group
 
-Create an interface group on the cluster.
+```Unknown Privileges``` <br><br>Create an interface group on the cluster.
 */
 func (a *Client) CreateInterfaceGroup(params *CreateInterfaceGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateInterfaceGroupCreated, error) {
 	// TODO: Validate the params before sending
@@ -474,7 +438,7 @@ func (a *Client) CreateInterfaceGroup(params *CreateInterfaceGroupParams, authIn
 /*
 CreateRacks creates racks
 
-Create list of racks and optionally also assign list of chassis to each rack
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Create list of racks and optionally also assign list of chassis to each rack
 */
 func (a *Client) CreateRacks(params *CreateRacksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateRacksCreated, error) {
 	// TODO: Validate the params before sending
@@ -514,7 +478,7 @@ func (a *Client) CreateRacks(params *CreateRacksParams, authInfo runtime.ClientA
 /*
 DeleteAMQPTargetConfig deletes a m q p target config
 
-Delete AMQP target config on the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Delete AMQP target config on the cluster.
 */
 func (a *Client) DeleteAMQPTargetConfig(params *DeleteAMQPTargetConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteAMQPTargetConfigNoContent, error) {
 	// TODO: Validate the params before sending
@@ -552,49 +516,9 @@ func (a *Client) DeleteAMQPTargetConfig(params *DeleteAMQPTargetConfigParams, au
 }
 
 /*
-DeleteClusterPackage deletes package
-
-Delete a software package on the cluster.
-*/
-func (a *Client) DeleteClusterPackage(params *DeleteClusterPackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteClusterPackageAccepted, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewDeleteClusterPackageParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "DeleteClusterPackage",
-		Method:             "DELETE",
-		PathPattern:        "/clusters/packages/{versionName}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &DeleteClusterPackageReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*DeleteClusterPackageAccepted)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*DeleteClusterPackageDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 DeleteClusterSnapshotPolicy deletes cluster snapshot policy
 
-Delete cluster snapshot policy.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Delete cluster snapshot policy.
 */
 func (a *Client) DeleteClusterSnapshotPolicy(params *DeleteClusterSnapshotPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteClusterSnapshotPolicyNoContent, error) {
 	// TODO: Validate the params before sending
@@ -632,49 +556,9 @@ func (a *Client) DeleteClusterSnapshotPolicy(params *DeleteClusterSnapshotPolicy
 }
 
 /*
-DeleteClusterVlan deletes vlan
-
-Delete a vlan on the cluster.
-*/
-func (a *Client) DeleteClusterVlan(params *DeleteClusterVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteClusterVlanNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewDeleteClusterVlanParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "DeleteClusterVlan",
-		Method:             "DELETE",
-		PathPattern:        "/network/vlans/{interfaceName}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &DeleteClusterVlanReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*DeleteClusterVlanNoContent)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*DeleteClusterVlanDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 DeleteHosts deletes multiple host mappings within the cluster
 
-Delete one or more Host Mappings within the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Delete one or more Host Mappings within the cluster.
 */
 func (a *Client) DeleteHosts(params *DeleteHostsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteHostsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -712,129 +596,9 @@ func (a *Client) DeleteHosts(params *DeleteHostsParams, authInfo runtime.ClientA
 }
 
 /*
-DeleteInterfaceGroup deletes interface group
-
-Delete an interface group on the cluster.
-*/
-func (a *Client) DeleteInterfaceGroup(params *DeleteInterfaceGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteInterfaceGroupNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewDeleteInterfaceGroupParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "DeleteInterfaceGroup",
-		Method:             "DELETE",
-		PathPattern:        "/network/interface-groups/{id}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &DeleteInterfaceGroupReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*DeleteInterfaceGroupNoContent)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*DeleteInterfaceGroupDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-DeleteRackByID deletes a rack by id
-
-Delete a given rack by id.
-*/
-func (a *Client) DeleteRackByID(params *DeleteRackByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRackByIDNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewDeleteRackByIDParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "DeleteRackById",
-		Method:             "DELETE",
-		PathPattern:        "/racks/{id}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &DeleteRackByIDReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*DeleteRackByIDNoContent)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*DeleteRackByIDDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-DeleteRacks deletes all the racks
-
-Delete all the racks.
-*/
-func (a *Client) DeleteRacks(params *DeleteRacksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRacksNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewDeleteRacksParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "DeleteRacks",
-		Method:             "DELETE",
-		PathPattern:        "/racks",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &DeleteRacksReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*DeleteRacksNoContent)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*DeleteRacksDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 DiscoverDisks discovers new disks
 
-Discover disks that are ready for activation
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Discover disks that are ready for activation
 */
 func (a *Client) DiscoverDisks(params *DiscoverDisksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DiscoverDisksOK, error) {
 	// TODO: Validate the params before sending
@@ -874,7 +638,7 @@ func (a *Client) DiscoverDisks(params *DiscoverDisksParams, authInfo runtime.Cli
 /*
 DiskIdentify identifies a disk
 
-Turn on/off led light of a disk.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Turn on/off led light of a disk.
 */
 func (a *Client) DiskIdentify(params *DiskIdentifyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DiskIdentifyOK, error) {
 	// TODO: Validate the params before sending
@@ -914,7 +678,7 @@ func (a *Client) DiskIdentify(params *DiskIdentifyParams, authInfo runtime.Clien
 /*
 DisksAssimilate assimilates disks
 
-Assimilate list of disks from one or more nodes of cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Assimilate list of disks from one or more nodes of cluster.
 */
 func (a *Client) DisksAssimilate(params *DisksAssimilateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DisksAssimilateOK, error) {
 	// TODO: Validate the params before sending
@@ -952,49 +716,9 @@ func (a *Client) DisksAssimilate(params *DisksAssimilateParams, authInfo runtime
 }
 
 /*
-ExpandClusterNodes expands the cluster
-
-Expand the cluster by adding new nodes.
-*/
-func (a *Client) ExpandClusterNodes(params *ExpandClusterNodesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ExpandClusterNodesAccepted, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewExpandClusterNodesParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "ExpandClusterNodes",
-		Method:             "POST",
-		PathPattern:        "/clusters/nodes",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &ExpandClusterNodesReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*ExpandClusterNodesAccepted)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*ExpandClusterNodesDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 GetAMQPTargetConfig gets a m q p target config
 
-Fetch AMQP target config on the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Fetch AMQP target config on the cluster.
 */
 func (a *Client) GetAMQPTargetConfig(params *GetAMQPTargetConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAMQPTargetConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -1034,7 +758,7 @@ func (a *Client) GetAMQPTargetConfig(params *GetAMQPTargetConfigParams, authInfo
 /*
 GetChassis gets list of chassis
 
-Get list of all chassis info that are part of cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get list of all chassis info that are part of cluster.
 */
 func (a *Client) GetChassis(params *GetChassisParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetChassisOK, error) {
 	// TODO: Validate the params before sending
@@ -1074,7 +798,7 @@ func (a *Client) GetChassis(params *GetChassisParams, authInfo runtime.ClientAut
 /*
 GetChassisByID gets a chassis by chassis id
 
-Get a chassis info by id.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get a chassis info by id.
 */
 func (a *Client) GetChassisByID(params *GetChassisByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetChassisByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -1114,7 +838,7 @@ func (a *Client) GetChassisByID(params *GetChassisByIDParams, authInfo runtime.C
 /*
 GetCluster retrieves cluster configuration
 
-Retrieve some summary information about the Cluster Configuration.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Retrieve some summary information about the Cluster Configuration.
 */
 func (a *Client) GetCluster(params *GetClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterOK, error) {
 	// TODO: Validate the params before sending
@@ -1154,7 +878,7 @@ func (a *Client) GetCluster(params *GetClusterParams, authInfo runtime.ClientAut
 /*
 GetClusterLocalDomainSID gets cluster local domain s ID
 
-Fetch SID of cluster local domain.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Fetch SID of cluster local domain.
 */
 func (a *Client) GetClusterLocalDomainSID(params *GetClusterLocalDomainSIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterLocalDomainSIDOK, error) {
 	// TODO: Validate the params before sending
@@ -1194,7 +918,7 @@ func (a *Client) GetClusterLocalDomainSID(params *GetClusterLocalDomainSIDParams
 /*
 GetClusterPackages gets packages
 
-Get software packages on the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get software packages on the cluster.
 */
 func (a *Client) GetClusterPackages(params *GetClusterPackagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterPackagesOK, error) {
 	// TODO: Validate the params before sending
@@ -1234,7 +958,7 @@ func (a *Client) GetClusterPackages(params *GetClusterPackagesParams, authInfo r
 /*
 GetClusterSnapshotPolicy gets cluster snapshot policy
 
-Get cluster snapshot policy.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get cluster snapshot policy.
 */
 func (a *Client) GetClusterSnapshotPolicy(params *GetClusterSnapshotPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterSnapshotPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -1274,7 +998,7 @@ func (a *Client) GetClusterSnapshotPolicy(params *GetClusterSnapshotPolicyParams
 /*
 GetClusterState gets cluster state
 
-Get the current state of the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get the current state of the cluster.
 */
 func (a *Client) GetClusterState(params *GetClusterStateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterStateOK, error) {
 	// TODO: Validate the params before sending
@@ -1312,209 +1036,9 @@ func (a *Client) GetClusterState(params *GetClusterStateParams, authInfo runtime
 }
 
 /*
-GetClusterVlans gets vlans
-
-Get vlans on the cluster.
-*/
-func (a *Client) GetClusterVlans(params *GetClusterVlansParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterVlansOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetClusterVlansParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "GetClusterVlans",
-		Method:             "GET",
-		PathPattern:        "/network/vlans",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetClusterVlansReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*GetClusterVlansOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*GetClusterVlansDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-GetInterfaceGroups gets interface groups
-
-Get a list of interface groups configured on the cluster.
-*/
-func (a *Client) GetInterfaceGroups(params *GetInterfaceGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetInterfaceGroupsOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetInterfaceGroupsParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "GetInterfaceGroups",
-		Method:             "GET",
-		PathPattern:        "/network/interface-groups",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetInterfaceGroupsReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*GetInterfaceGroupsOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*GetInterfaceGroupsDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-GetInterfaces gets interfaces
-
-Get interfaces on a cluster or free node.
-*/
-func (a *Client) GetInterfaces(params *GetInterfacesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetInterfacesOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetInterfacesParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "GetInterfaces",
-		Method:             "GET",
-		PathPattern:        "/network/interfaces",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetInterfacesReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*GetInterfacesOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*GetInterfacesDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-GetIpmiLanConfig gets IP m i l a n configuration
-
-Get cluster and node level IPMI LAN configuration.
-*/
-func (a *Client) GetIpmiLanConfig(params *GetIpmiLanConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIpmiLanConfigOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetIpmiLanConfigParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "GetIpmiLanConfig",
-		Method:             "GET",
-		PathPattern:        "/network/ipmi/lan",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetIpmiLanConfigReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*GetIpmiLanConfigOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*GetIpmiLanConfigDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-GetIpmiUsers gets IP m i users
-
-Get cluster and node level IPMI users.
-*/
-func (a *Client) GetIpmiUsers(params *GetIpmiUsersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIpmiUsersOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetIpmiUsersParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "GetIpmiUsers",
-		Method:             "GET",
-		PathPattern:        "/network/ipmi/users",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetIpmiUsersReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*GetIpmiUsersOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*GetIpmiUsersDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 GetIsDMaaSCluster gets whether the cluster is a d maa s cluster
 
-Get whether the cluster is a DMaaS cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get whether the cluster is a DMaaS cluster.
 */
 func (a *Client) GetIsDMaaSCluster(params *GetIsDMaaSClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIsDMaaSClusterOK, error) {
 	// TODO: Validate the params before sending
@@ -1554,7 +1078,7 @@ func (a *Client) GetIsDMaaSCluster(params *GetIsDMaaSClusterParams, authInfo run
 /*
 GetNetworkInterfaces gets list of interfaces
 
-Get a list of interfaces present on the node or cluster.
+**Privileges:** ```CLUSTER_VIEW, CLUSTER_CREATE``` <br><br>Get a list of interfaces present on the node or cluster.
 */
 func (a *Client) GetNetworkInterfaces(params *GetNetworkInterfacesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkInterfacesOK, error) {
 	// TODO: Validate the params before sending
@@ -1594,7 +1118,7 @@ func (a *Client) GetNetworkInterfaces(params *GetNetworkInterfacesParams, authIn
 /*
 GetNodes lists nodes of the cluster
 
-Gets the list of Nodes in a cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Gets the list of Nodes in a cluster.
 */
 func (a *Client) GetNodes(params *GetNodesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNodesOK, error) {
 	// TODO: Validate the params before sending
@@ -1634,7 +1158,7 @@ func (a *Client) GetNodes(params *GetNodesParams, authInfo runtime.ClientAuthInf
 /*
 GetRackByID gets a rack by rack id
 
-Get a rack info by id.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get a rack info by id.
 */
 func (a *Client) GetRackByID(params *GetRackByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRackByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -1674,7 +1198,7 @@ func (a *Client) GetRackByID(params *GetRackByIDParams, authInfo runtime.ClientA
 /*
 GetRacks gets list of racks
 
-Get list of all racks that are part of cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get list of all racks that are part of cluster.
 */
 func (a *Client) GetRacks(params *GetRacksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRacksOK, error) {
 	// TODO: Validate the params before sending
@@ -1714,7 +1238,7 @@ func (a *Client) GetRacks(params *GetRacksParams, authInfo runtime.ClientAuthInf
 /*
 GetRemoteDisks gets remote disks
 
-Get remote disks.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get remote disks.
 */
 func (a *Client) GetRemoteDisks(params *GetRemoteDisksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRemoteDisksOK, error) {
 	// TODO: Validate the params before sending
@@ -1754,7 +1278,7 @@ func (a *Client) GetRemoteDisks(params *GetRemoteDisksParams, authInfo runtime.C
 /*
 GetSMTPConfiguration gets SMTP configuration
 
-Get the SMTP cluster configuration.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get the SMTP cluster configuration.
 */
 func (a *Client) GetSMTPConfiguration(params *GetSMTPConfigurationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSMTPConfigurationOK, error) {
 	// TODO: Validate the params before sending
@@ -1794,7 +1318,7 @@ func (a *Client) GetSMTPConfiguration(params *GetSMTPConfigurationParams, authIn
 /*
 GetSupportChannelConfig gets support channel configuration
 
-Get support channel configuration.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get support channel configuration.
 */
 func (a *Client) GetSupportChannelConfig(params *GetSupportChannelConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSupportChannelConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -1834,7 +1358,7 @@ func (a *Client) GetSupportChannelConfig(params *GetSupportChannelConfigParams, 
 /*
 IdentifyNode identifies node
 
-Turn on/off LED light of a node to identify.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Turn on/off LED light of a node to identify.
 */
 func (a *Client) IdentifyNode(params *IdentifyNodeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*IdentifyNodeOK, error) {
 	// TODO: Validate the params before sending
@@ -1874,7 +1398,7 @@ func (a *Client) IdentifyNode(params *IdentifyNodeParams, authInfo runtime.Clien
 /*
 ImportCrlFile imports crl file
 
-Import a Crl file into the cluster.
+**Privileges:** ```CLUSTER_MAINTENANCE``` <br><br>Import a Crl file into the cluster.
 */
 func (a *Client) ImportCrlFile(params *ImportCrlFileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ImportCrlFileNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1914,7 +1438,7 @@ func (a *Client) ImportCrlFile(params *ImportCrlFileParams, authInfo runtime.Cli
 /*
 ListDisks gets list of disks
 
-Get list of local disks.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get list of local disks.
 */
 func (a *Client) ListDisks(params *ListDisksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDisksOK, error) {
 	// TODO: Validate the params before sending
@@ -1952,49 +1476,9 @@ func (a *Client) ListDisks(params *ListDisksParams, authInfo runtime.ClientAuthI
 }
 
 /*
-ListFeatureFlag gets feature flag overrides list
-
-Get the list of feature flag overrides defined on cluster.
-*/
-func (a *Client) ListFeatureFlag(params *ListFeatureFlagParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListFeatureFlagOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewListFeatureFlagParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "ListFeatureFlag",
-		Method:             "GET",
-		PathPattern:        "/clusters/feature-flag",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &ListFeatureFlagReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*ListFeatureFlagOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*ListFeatureFlagDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 ListFreeNodes lists the free cohesity nodes present on a network
 
-Sends a request to any Node to list all of the free Nodes that are present on the network.
+**Privileges:** ```CLUSTER_VIEW, CLUSTER_CREATE``` <br><br>Sends a request to any Node to list all of the free Nodes that are present on the network.
 */
 func (a *Client) ListFreeNodes(params *ListFreeNodesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListFreeNodesOK, error) {
 	// TODO: Validate the params before sending
@@ -2034,7 +1518,7 @@ func (a *Client) ListFreeNodes(params *ListFreeNodesParams, authInfo runtime.Cli
 /*
 ListHosts lists host mappings
 
-Lists the host mappings in /etc/hosts of the nodes in a cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Lists the host mappings in /etc/hosts of the nodes in a cluster.
 */
 func (a *Client) ListHosts(params *ListHostsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListHostsOK, error) {
 	// TODO: Validate the params before sending
@@ -2074,7 +1558,7 @@ func (a *Client) ListHosts(params *ListHostsParams, authInfo runtime.ClientAuthI
 /*
 MarkBaseosUpgrade sets clears the base o s upgrade cluster operation
 
-Sets/clears the BaseOS upgrade cluster operation.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sets/clears the BaseOS upgrade cluster operation.
 */
 func (a *Client) MarkBaseosUpgrade(params *MarkBaseosUpgradeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*MarkBaseosUpgradeOK, error) {
 	// TODO: Validate the params before sending
@@ -2114,7 +1598,7 @@ func (a *Client) MarkBaseosUpgrade(params *MarkBaseosUpgradeParams, authInfo run
 /*
 MarkDiskRemoval marks disk for removal
 
-Mark disk for removal or cancel removal if a disk is already marked for removal.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Mark disk for removal or cancel removal if a disk is already marked for removal.
 */
 func (a *Client) MarkDiskRemoval(params *MarkDiskRemovalParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*MarkDiskRemovalOK, error) {
 	// TODO: Validate the params before sending
@@ -2154,7 +1638,7 @@ func (a *Client) MarkDiskRemoval(params *MarkDiskRemovalParams, authInfo runtime
 /*
 MarkNodeRemoval marks node for removal
 
-Mark node for removal or Cancel if a node is already marked for removal.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Mark node for removal or Cancel if a node is already marked for removal.
 */
 func (a *Client) MarkNodeRemoval(params *MarkNodeRemovalParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*MarkNodeRemovalOK, error) {
 	// TODO: Validate the params before sending
@@ -2194,7 +1678,7 @@ func (a *Client) MarkNodeRemoval(params *MarkNodeRemovalParams, authInfo runtime
 /*
 NodeInformation fetches node general information
 
-Fetch general information about the node to which the request is sent to.
+**Privileges:** ```CLUSTER_VIEW, NODE_VIEW``` <br><br>Fetch general information about the node to which the request is sent to.
 */
 func (a *Client) NodeInformation(params *NodeInformationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*NodeInformationOK, error) {
 	// TODO: Validate the params before sending
@@ -2234,7 +1718,7 @@ func (a *Client) NodeInformation(params *NodeInformationParams, authInfo runtime
 /*
 PublicKeyRequest gets the SSH public key
 
-Get the SSH public key corresponding to the private key used by workloads. For example, users may specify multiple scripts which are supposed to be executed on a remote machine at different progress states of a protection group run (for instance - running a script before the run starts and another after the run completes). The public key returned as part of this response should be added on the remote server where the script is to be executed as there is a specific private key used by the workload for remote login.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Get the SSH public key corresponding to the private key used by workloads. For example, users may specify multiple scripts which are supposed to be executed on a remote machine at different progress states of a protection group run (for instance - running a script before the run starts and another after the run completes). The public key returned as part of this response should be added on the remote server where the script is to be executed as there is a specific private key used by the workload for remote login.
 */
 func (a *Client) PublicKeyRequest(params *PublicKeyRequestParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PublicKeyRequestOK, error) {
 	// TODO: Validate the params before sending
@@ -2274,7 +1758,7 @@ func (a *Client) PublicKeyRequest(params *PublicKeyRequestParams, authInfo runti
 /*
 RemoveRemoteDisk removes remote disk
 
-Remove a remote disk.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Remove a remote disk.
 */
 func (a *Client) RemoveRemoteDisk(params *RemoveRemoteDiskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RemoveRemoteDiskNoContent, error) {
 	// TODO: Validate the params before sending
@@ -2314,7 +1798,7 @@ func (a *Client) RemoveRemoteDisk(params *RemoveRemoteDiskParams, authInfo runti
 /*
 SetNodePower reboots or shutdown nodes in cluster
 
-Reboot or shutdown nodes in cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Reboot or shutdown nodes in cluster.
 */
 func (a *Client) SetNodePower(params *SetNodePowerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SetNodePowerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -2354,7 +1838,7 @@ func (a *Client) SetNodePower(params *SetNodePowerParams, authInfo runtime.Clien
 /*
 UpdateAMQPTargetConfig updates a m q p target config
 
-Updates AMQP target config on the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Updates AMQP target config on the cluster.
 */
 func (a *Client) UpdateAMQPTargetConfig(params *UpdateAMQPTargetConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAMQPTargetConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -2394,7 +1878,7 @@ func (a *Client) UpdateAMQPTargetConfig(params *UpdateAMQPTargetConfigParams, au
 /*
 UpdateAirgapConfig updates airgap config
 
-Enable or Disable Airgap on the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Enable or Disable Airgap on the cluster.
 */
 func (a *Client) UpdateAirgapConfig(params *UpdateAirgapConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAirgapConfigAccepted, error) {
 	// TODO: Validate the params before sending
@@ -2434,7 +1918,7 @@ func (a *Client) UpdateAirgapConfig(params *UpdateAirgapConfigParams, authInfo r
 /*
 UpdateChassisByID updates a chassis by chassis id
 
-Update selected properties of chassis info by id.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update selected properties of chassis info by id.
 */
 func (a *Client) UpdateChassisByID(params *UpdateChassisByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateChassisByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -2474,7 +1958,7 @@ func (a *Client) UpdateChassisByID(params *UpdateChassisByIDParams, authInfo run
 /*
 UpdateCluster updates a cluster
 
-Update the Cluster with the given configuration.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update the Cluster with the given configuration.
 */
 func (a *Client) UpdateCluster(params *UpdateClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateClusterOK, error) {
 	// TODO: Validate the params before sending
@@ -2514,7 +1998,7 @@ func (a *Client) UpdateCluster(params *UpdateClusterParams, authInfo runtime.Cli
 /*
 UpdateClusterSnapshotPolicy updates cluster snapshot policy
 
-Update cluster snapshot policy.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update cluster snapshot policy.
 */
 func (a *Client) UpdateClusterSnapshotPolicy(params *UpdateClusterSnapshotPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateClusterSnapshotPolicyOK, error) {
 	// TODO: Validate the params before sending
@@ -2552,49 +2036,9 @@ func (a *Client) UpdateClusterSnapshotPolicy(params *UpdateClusterSnapshotPolicy
 }
 
 /*
-UpdateClusterVlan updates vlan
-
-Update a vlan on the cluster.
-*/
-func (a *Client) UpdateClusterVlan(params *UpdateClusterVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateClusterVlanOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUpdateClusterVlanParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "UpdateClusterVlan",
-		Method:             "PUT",
-		PathPattern:        "/network/vlans/{interfaceName}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UpdateClusterVlanReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*UpdateClusterVlanOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*UpdateClusterVlanDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 UpdateFeatureFlag updates feature flag override status
 
-Update a feature flag override status to cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update a feature flag override status to cluster.
 */
 func (a *Client) UpdateFeatureFlag(params *UpdateFeatureFlagParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateFeatureFlagOK, error) {
 	// TODO: Validate the params before sending
@@ -2634,7 +2078,7 @@ func (a *Client) UpdateFeatureFlag(params *UpdateFeatureFlagParams, authInfo run
 /*
 UpdateHosts updates host mappings
 
-Updates Host Mapping on the Cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Updates Host Mapping on the Cluster.
 */
 func (a *Client) UpdateHosts(params *UpdateHostsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateHostsOK, error) {
 	// TODO: Validate the params before sending
@@ -2672,169 +2116,9 @@ func (a *Client) UpdateHosts(params *UpdateHostsParams, authInfo runtime.ClientA
 }
 
 /*
-UpdateInterface updates interface
-
-Update network interface on a free node.
-*/
-func (a *Client) UpdateInterface(params *UpdateInterfaceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateInterfaceOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUpdateInterfaceParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "UpdateInterface",
-		Method:             "PUT",
-		PathPattern:        "/network/interfaces/{id}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UpdateInterfaceReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*UpdateInterfaceOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*UpdateInterfaceDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-UpdateInterfaceGroup updates interface group
-
-Update an interface group on the cluster.
-*/
-func (a *Client) UpdateInterfaceGroup(params *UpdateInterfaceGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateInterfaceGroupOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUpdateInterfaceGroupParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "UpdateInterfaceGroup",
-		Method:             "PUT",
-		PathPattern:        "/network/interface-groups/{id}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UpdateInterfaceGroupReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*UpdateInterfaceGroupOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*UpdateInterfaceGroupDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-UpdateIpmiLanConfig updates IP m i l a n configuration
-
-Update cluster and node level IPMI LAN configuration.
-*/
-func (a *Client) UpdateIpmiLanConfig(params *UpdateIpmiLanConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateIpmiLanConfigOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUpdateIpmiLanConfigParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "UpdateIpmiLanConfig",
-		Method:             "PATCH",
-		PathPattern:        "/network/ipmi/lan",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UpdateIpmiLanConfigReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*UpdateIpmiLanConfigOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*UpdateIpmiLanConfigDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-UpdateIpmiUsers updates IP m i users
-
-Update cluster and node level IPMI users.
-*/
-func (a *Client) UpdateIpmiUsers(params *UpdateIpmiUsersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateIpmiUsersOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUpdateIpmiUsersParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "UpdateIpmiUsers",
-		Method:             "PATCH",
-		PathPattern:        "/network/ipmi/users",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UpdateIpmiUsersReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*UpdateIpmiUsersOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*UpdateIpmiUsersDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 UpdateIsDMaaSCluster updates whether the cluster is a d maa s cluster
 
-Update whether the cluster is a DMaaS cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update whether the cluster is a DMaaS cluster.
 */
 func (a *Client) UpdateIsDMaaSCluster(params *UpdateIsDMaaSClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateIsDMaaSClusterOK, error) {
 	// TODO: Validate the params before sending
@@ -2872,7 +2156,7 @@ func (a *Client) UpdateIsDMaaSCluster(params *UpdateIsDMaaSClusterParams, authIn
 }
 
 /*
-UpdateRackByID Update selected properties of a rack given by id.
+UpdateRackByID **Privileges:** ```CLUSTER_MODIFY``` <br><br>Update selected properties of a rack given by id.
 */
 func (a *Client) UpdateRackByID(params *UpdateRackByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateRackByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -2912,7 +2196,7 @@ func (a *Client) UpdateRackByID(params *UpdateRackByIDParams, authInfo runtime.C
 /*
 UpdateRacks updates racks
 
-Updates list of racks with name, chassis list or/and location
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Updates list of racks with name, chassis list or/and location
 */
 func (a *Client) UpdateRacks(params *UpdateRacksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateRacksOK, error) {
 	// TODO: Validate the params before sending
@@ -2952,7 +2236,7 @@ func (a *Client) UpdateRacks(params *UpdateRacksParams, authInfo runtime.ClientA
 /*
 UpdateSMTPConfiguration updates SMTP configuration
 
-Update SMTP configuration.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update SMTP configuration.
 */
 func (a *Client) UpdateSMTPConfiguration(params *UpdateSMTPConfigurationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateSMTPConfigurationOK, error) {
 	// TODO: Validate the params before sending
@@ -2992,7 +2276,7 @@ func (a *Client) UpdateSMTPConfiguration(params *UpdateSMTPConfigurationParams, 
 /*
 UpdateSupportChannelConfig updates support channel configuration
 
-Update support channel configuration.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update support channel configuration.
 */
 func (a *Client) UpdateSupportChannelConfig(params *UpdateSupportChannelConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateSupportChannelConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -3032,7 +2316,7 @@ func (a *Client) UpdateSupportChannelConfig(params *UpdateSupportChannelConfigPa
 /*
 UpgradeCheckGetResults gets upgrade checks results
 
-Get upgrade checks results.
+```Unknown Privileges``` <br><br>Get upgrade checks results.
 */
 func (a *Client) UpgradeCheckGetResults(params *UpgradeCheckGetResultsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpgradeCheckGetResultsOK, error) {
 	// TODO: Validate the params before sending
@@ -3072,7 +2356,7 @@ func (a *Client) UpgradeCheckGetResults(params *UpgradeCheckGetResultsParams, au
 /*
 UpgradeCheckRunTests runs upgrade checks on cluster
 
-Run upgrade checks on cluster.
+```Unknown Privileges``` <br><br>Run upgrade checks on cluster.
 */
 func (a *Client) UpgradeCheckRunTests(params *UpgradeCheckRunTestsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpgradeCheckRunTestsOK, error) {
 	// TODO: Validate the params before sending
@@ -3112,7 +2396,7 @@ func (a *Client) UpgradeCheckRunTests(params *UpgradeCheckRunTestsParams, authIn
 /*
 UpgradeClusterSoftware upgrades cluster
 
-Upgrade the software on the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Upgrade the software on the cluster.
 */
 func (a *Client) UpgradeClusterSoftware(params *UpgradeClusterSoftwareParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpgradeClusterSoftwareAccepted, error) {
 	// TODO: Validate the params before sending
@@ -3150,49 +2434,9 @@ func (a *Client) UpgradeClusterSoftware(params *UpgradeClusterSoftwareParams, au
 }
 
 /*
-UploadPackageByURL uploads package by URL
-
-Upload a package to the cluster by providing the URL where the package is hosted.
-*/
-func (a *Client) UploadPackageByURL(params *UploadPackageByURLParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadPackageByURLAccepted, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUploadPackageByURLParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "UploadPackageByUrl",
-		Method:             "POST",
-		PathPattern:        "/clusters/packages/url",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UploadPackageByURLReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*UploadPackageByURLAccepted)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*UploadPackageByURLDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 ValidateSMTPConfiguration validates SMTP configuration
 
-Validate SMTP configuration by sending a test email.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Validate SMTP configuration by sending a test email.
 */
 func (a *Client) ValidateSMTPConfiguration(params *ValidateSMTPConfigurationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ValidateSMTPConfigurationNoContent, error) {
 	// TODO: Validate the params before sending

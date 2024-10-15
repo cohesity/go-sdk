@@ -61,6 +61,8 @@ type ClientService interface {
 
 /*
 RecoverApp recovers applications like SQL d bs
+
+**Privileges:** ```RESTORE_MODIFY``` <br><br>
 */
 func (a *Client) RecoverApp(params *RecoverAppParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RecoverAppOK, error) {
 	// TODO: Validate the params before sending

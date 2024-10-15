@@ -206,9 +206,13 @@ type PrivateVmwareEntity struct {
 	// another vCenter.
 	VMLinkingInfo *VMLinkingInfo `json:"vmLinkingInfo,omitempty"`
 
+	// The public cloud provider where VMC is hosted. This will be set for only
+	// vmc environment.
+	VmwareCloudProvider *int32 `json:"vmwareCloudProvider,omitempty"`
+
 	// Map storing custom key against its custom attributes information for a
 	// vCenter.
-	VmwareCustomAttributesMap []*EntityVmwareCustomAttributesMapEntry `json:"vmwareCustomAttributesMap"`
+	VmwareCustomAttributesMap interface{} `json:"vmwareCustomAttributesMap,omitempty"`
 
 	// The status of VMware tools on the guest (only if it is of type
 	// kVirtualMachine).
@@ -272,10 +276,6 @@ func (m *PrivateVmwareEntity) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateVMLinkingInfo(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateVmwareCustomAttributesMap(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -600,32 +600,6 @@ func (m *PrivateVmwareEntity) validateVMLinkingInfo(formats strfmt.Registry) err
 	return nil
 }
 
-func (m *PrivateVmwareEntity) validateVmwareCustomAttributesMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.VmwareCustomAttributesMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.VmwareCustomAttributesMap); i++ {
-		if swag.IsZero(m.VmwareCustomAttributesMap[i]) { // not required
-			continue
-		}
-
-		if m.VmwareCustomAttributesMap[i] != nil {
-			if err := m.VmwareCustomAttributesMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("vmwareCustomAttributesMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("vmwareCustomAttributesMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 // ContextValidate validate this private vmware entity based on the context it is used
 func (m *PrivateVmwareEntity) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -683,10 +657,6 @@ func (m *PrivateVmwareEntity) ContextValidate(ctx context.Context, formats strfm
 	}
 
 	if err := m.contextValidateVMLinkingInfo(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateVmwareCustomAttributesMap(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1013,31 +983,6 @@ func (m *PrivateVmwareEntity) contextValidateVMLinkingInfo(ctx context.Context, 
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *PrivateVmwareEntity) contextValidateVmwareCustomAttributesMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.VmwareCustomAttributesMap); i++ {
-
-		if m.VmwareCustomAttributesMap[i] != nil {
-
-			if swag.IsZero(m.VmwareCustomAttributesMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.VmwareCustomAttributesMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("vmwareCustomAttributesMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("vmwareCustomAttributesMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

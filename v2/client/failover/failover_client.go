@@ -84,7 +84,7 @@ type ClientService interface {
 /*
 CancelFailover cancels failover workflow
 
-Specifies the request to cancel failover workflow. The cancellation request should not be made if '/backupActivation' or '/backupDeactivaetion' are already called on replication or source cluster respectively.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Specifies the request to cancel failover workflow. The cancellation request should not be made if '/backupActivation' or '/backupDeactivaetion' are already called on replication or source cluster respectively.
 */
 func (a *Client) CancelFailover(params *CancelFailoverParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelFailoverCreated, error) {
 	// TODO: Validate the params before sending
@@ -124,7 +124,7 @@ func (a *Client) CancelFailover(params *CancelFailoverParams, authInfo runtime.C
 /*
 CancelViewFailover cancels view failover task
 
-Cancel an in progress view failover task.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Cancel an in progress view failover task.
 */
 func (a *Client) CancelViewFailover(params *CancelViewFailoverParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelViewFailoverNoContent, error) {
 	// TODO: Validate the params before sending
@@ -164,7 +164,7 @@ func (a *Client) CancelViewFailover(params *CancelViewFailoverParams, authInfo r
 /*
 CreatePlannedRun creates a planned run for backup and replication
 
-Specifies the configuration required for executing a special run as a part of failover workflow. This special run is triggered during palnned failover to sync the source cluster to replication cluster with minimum possible delta.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Specifies the configuration required for executing a special run as a part of failover workflow. This special run is triggered during palnned failover to sync the source cluster to replication cluster with minimum possible delta.
 */
 func (a *Client) CreatePlannedRun(params *CreatePlannedRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreatePlannedRunCreated, error) {
 	// TODO: Validate the params before sending
@@ -204,7 +204,7 @@ func (a *Client) CreatePlannedRun(params *CreatePlannedRunParams, authInfo runti
 /*
 CreateViewFailover creates view failover task
 
-Create a view failover task.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Create a view failover task.
 */
 func (a *Client) CreateViewFailover(params *CreateViewFailoverParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateViewFailoverCreated, error) {
 	// TODO: Validate the params before sending
@@ -244,7 +244,7 @@ func (a *Client) CreateViewFailover(params *CreateViewFailoverParams, authInfo r
 /*
 GetFailoverOps gets all the failover operations which can be performed on this view
 
-Gets all the failover operations which can be performed on this view.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Gets all the failover operations which can be performed on this view.
 */
 func (a *Client) GetFailoverOps(params *GetFailoverOpsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetFailoverOpsOK, error) {
 	// TODO: Validate the params before sending
@@ -284,7 +284,7 @@ func (a *Client) GetFailoverOps(params *GetFailoverOpsParams, authInfo runtime.C
 /*
 GetTrackingViewID gets tracking view Id
 
-Get tracking View Id
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get tracking View Id
 */
 func (a *Client) GetTrackingViewID(params *GetTrackingViewIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTrackingViewIDOK, error) {
 	// TODO: Validate the params before sending
@@ -324,7 +324,7 @@ func (a *Client) GetTrackingViewID(params *GetTrackingViewIDParams, authInfo run
 /*
 GetViewFailover gets view failover
 
-Get failover tasks of a View.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Get failover tasks of a View.
 */
 func (a *Client) GetViewFailover(params *GetViewFailoverParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetViewFailoverOK, error) {
 	// TODO: Validate the params before sending
@@ -364,7 +364,7 @@ func (a *Client) GetViewFailover(params *GetViewFailoverParams, authInfo runtime
 /*
 InitFailover initiates a failover request
 
-Initiate a failover request.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Initiate a failover request.
 */
 func (a *Client) InitFailover(params *InitFailoverParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*InitFailoverCreated, error) {
 	// TODO: Validate the params before sending
@@ -404,7 +404,7 @@ func (a *Client) InitFailover(params *InitFailoverParams, authInfo runtime.Clien
 /*
 ObjectLinkage linkings between replicated objects and failover objects
 
-Specifies the request to link failover objects on replication cluster to the replicated entity from source cluster. This linking need to be done after perforing recoveries for failed entities on replication cluster. This linkage will be useful when merging snapshots of object across replications and failovers.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Specifies the request to link failover objects on replication cluster to the replicated entity from source cluster. This linking need to be done after perforing recoveries for failed entities on replication cluster. This linkage will be useful when merging snapshots of object across replications and failovers.
 */
 func (a *Client) ObjectLinkage(params *ObjectLinkageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ObjectLinkageCreated, error) {
 	// TODO: Validate the params before sending
@@ -444,7 +444,7 @@ func (a *Client) ObjectLinkage(params *ObjectLinkageParams, authInfo runtime.Cli
 /*
 PollPlannedRuns gets the list of failover planned runs
 
-Poll to see whether planned run has been scheduled or not.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Poll to see whether planned run has been scheduled or not.
 */
 func (a *Client) PollPlannedRuns(params *PollPlannedRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PollPlannedRunsOK, error) {
 	// TODO: Validate the params before sending
@@ -484,7 +484,7 @@ func (a *Client) PollPlannedRuns(params *PollPlannedRunsParams, authInfo runtime
 /*
 ReplicationBackupActivation activates failover entity backup on replication clsuter
 
-Specifies the configuration required for activating backup for failover objects on replication cluster. Here orchastrator can call this API multiple times as long as full set of object are non-overlapping. They can also use the existing job if its compatible to backup failover objects.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Specifies the configuration required for activating backup for failover objects on replication cluster. Here orchastrator can call this API multiple times as long as full set of object are non-overlapping. They can also use the existing job if its compatible to backup failover objects.
 */
 func (a *Client) ReplicationBackupActivation(params *ReplicationBackupActivationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ReplicationBackupActivationCreated, error) {
 	// TODO: Validate the params before sending
@@ -524,7 +524,7 @@ func (a *Client) ReplicationBackupActivation(params *ReplicationBackupActivation
 /*
 SourceBackupDeactivation deactivates failover entity backup on source clsuter
 
-Specifies the configuration required for deactivating backup for failover entities on source cluster.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Specifies the configuration required for deactivating backup for failover entities on source cluster.
 */
 func (a *Client) SourceBackupDeactivation(params *SourceBackupDeactivationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SourceBackupDeactivationCreated, error) {
 	// TODO: Validate the params before sending

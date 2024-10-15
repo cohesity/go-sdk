@@ -31,6 +31,18 @@ type KubernetesTargetParamsForRecoverKubernetesNamespace struct {
 	// Specifies the list of pvc to be excluded from recovery.
 	ExcludedPvcs []*KubernetesPvcInfo `json:"excludedPvcs"`
 
+	// Specifies whether to recover PVCs only during recovery.
+	RecoverPvcsOnly *bool `json:"recoverPvcsOnly,omitempty"`
+
+	// Specifies the parameters to include objects (e.g.: volumes) attached to Kubernetes pods. If not populated, all objects are included unless specifically excluded otherwise.
+	IncludeParams *KubernetesFilterParams `json:"includeParams,omitempty"`
+
+	// Specifies the parameters to exclude objects attached to Kubernetes pods. Exclusion takes precedence over inclusion.
+	ExcludeParams *KubernetesFilterParams `json:"excludeParams,omitempty"`
+
+	// Specifies the storage class parameters for recovery of namespace.
+	StorageClass *KubernetesStorageClassParams `json:"storageClass,omitempty"`
+
 	// Specifies the recovery target configuration of the Namespace recovery.
 	// Required: true
 	RecoveryTargetConfig *KubernetesNamespaceRecoveryTargetConfig `json:"recoveryTargetConfig"`
@@ -52,6 +64,18 @@ func (m *KubernetesTargetParamsForRecoverKubernetesNamespace) Validate(formats s
 	}
 
 	if err := m.validateExcludedPvcs(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateIncludeParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateExcludeParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateStorageClass(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -147,6 +171,63 @@ func (m *KubernetesTargetParamsForRecoverKubernetesNamespace) validateExcludedPv
 	return nil
 }
 
+func (m *KubernetesTargetParamsForRecoverKubernetesNamespace) validateIncludeParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.IncludeParams) { // not required
+		return nil
+	}
+
+	if m.IncludeParams != nil {
+		if err := m.IncludeParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("includeParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("includeParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *KubernetesTargetParamsForRecoverKubernetesNamespace) validateExcludeParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.ExcludeParams) { // not required
+		return nil
+	}
+
+	if m.ExcludeParams != nil {
+		if err := m.ExcludeParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("excludeParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("excludeParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *KubernetesTargetParamsForRecoverKubernetesNamespace) validateStorageClass(formats strfmt.Registry) error {
+	if swag.IsZero(m.StorageClass) { // not required
+		return nil
+	}
+
+	if m.StorageClass != nil {
+		if err := m.StorageClass.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("storageClass")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("storageClass")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *KubernetesTargetParamsForRecoverKubernetesNamespace) validateRecoveryTargetConfig(formats strfmt.Registry) error {
 
 	if err := validate.Required("recoveryTargetConfig", "body", m.RecoveryTargetConfig); err != nil {
@@ -199,6 +280,18 @@ func (m *KubernetesTargetParamsForRecoverKubernetesNamespace) ContextValidate(ct
 	}
 
 	if err := m.contextValidateExcludedPvcs(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateIncludeParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateExcludeParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateStorageClass(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -286,6 +379,69 @@ func (m *KubernetesTargetParamsForRecoverKubernetesNamespace) contextValidateExc
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *KubernetesTargetParamsForRecoverKubernetesNamespace) contextValidateIncludeParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.IncludeParams != nil {
+
+		if swag.IsZero(m.IncludeParams) { // not required
+			return nil
+		}
+
+		if err := m.IncludeParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("includeParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("includeParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *KubernetesTargetParamsForRecoverKubernetesNamespace) contextValidateExcludeParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ExcludeParams != nil {
+
+		if swag.IsZero(m.ExcludeParams) { // not required
+			return nil
+		}
+
+		if err := m.ExcludeParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("excludeParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("excludeParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *KubernetesTargetParamsForRecoverKubernetesNamespace) contextValidateStorageClass(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.StorageClass != nil {
+
+		if swag.IsZero(m.StorageClass) { // not required
+			return nil
+		}
+
+		if err := m.StorageClass.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("storageClass")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("storageClass")
+			}
+			return err
+		}
 	}
 
 	return nil

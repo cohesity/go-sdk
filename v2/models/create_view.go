@@ -24,7 +24,8 @@ type CreateView struct {
 
 	// Specifies the id of the Storage Domain (View Box) where the View will be
 	// created.
-	StorageDomainID *int64 `json:"storageDomainId,omitempty"`
+	// Required: true
+	StorageDomainID *int64 `json:"storageDomainId"`
 
 	// Specifies whether to support case insensitive file/folder names. This
 	// parameter can only be set during create and cannot be changed.
@@ -54,7 +55,7 @@ type CreateView struct {
 func (m *CreateView) UnmarshalJSON(raw []byte) error {
 	// AO0
 	var dataAO0 struct {
-		StorageDomainID *int64 `json:"storageDomainId,omitempty"`
+		StorageDomainID *int64 `json:"storageDomainId"`
 
 		CaseInsensitiveNamesEnabled *bool `json:"caseInsensitiveNamesEnabled,omitempty"`
 
@@ -97,7 +98,7 @@ func (m CreateView) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
 	var dataAO0 struct {
-		StorageDomainID *int64 `json:"storageDomainId,omitempty"`
+		StorageDomainID *int64 `json:"storageDomainId"`
 
 		CaseInsensitiveNamesEnabled *bool `json:"caseInsensitiveNamesEnabled,omitempty"`
 
@@ -140,6 +141,10 @@ func (m CreateView) MarshalJSON() ([]byte, error) {
 func (m *CreateView) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateStorageDomainID(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateObjectServicesMappingConfig(formats); err != nil {
 		res = append(res, err)
 	}
@@ -160,6 +165,15 @@ func (m *CreateView) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *CreateView) validateStorageDomainID(formats strfmt.Registry) error {
+
+	if err := validate.Required("storageDomainId", "body", m.StorageDomainID); err != nil {
+		return err
+	}
+
 	return nil
 }
 

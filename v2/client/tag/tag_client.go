@@ -70,7 +70,7 @@ type ClientService interface {
 /*
 CreateTag creates a tag
 
-Creates a Tag.
+**Privileges:** ```TAGS_MODIFY``` <br><br>Creates a Tag.
 */
 func (a *Client) CreateTag(params *CreateTagParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateTagCreated, error) {
 	// TODO: Validate the params before sending
@@ -110,7 +110,7 @@ func (a *Client) CreateTag(params *CreateTagParams, authInfo runtime.ClientAuthI
 /*
 DeleteTag deletes a tag
 
-Deletes a Tag by id.
+**Privileges:** ```TAGS_MODIFY``` <br><br>Deletes a Tag by id.
 */
 func (a *Client) DeleteTag(params *DeleteTagParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteTagNoContent, error) {
 	// TODO: Validate the params before sending
@@ -150,7 +150,7 @@ func (a *Client) DeleteTag(params *DeleteTagParams, authInfo runtime.ClientAuthI
 /*
 GetTagByID gets tag by id
 
-Get Tag by id.
+**Privileges:** ```TAGS_VIEW``` <br><br>Get Tag by id.
 */
 func (a *Client) GetTagByID(params *GetTagByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTagByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -190,7 +190,7 @@ func (a *Client) GetTagByID(params *GetTagByIDParams, authInfo runtime.ClientAut
 /*
 	GetTags gets tags based on filters
 
-	If no parameters are specified, all tags are returned.
+	**Privileges:** ```TAGS_VIEW``` <br><br>If no parameters are specified, all tags are returned.
 
 Specifying parameters filters the results that are returned.
 */
@@ -232,7 +232,7 @@ func (a *Client) GetTags(params *GetTagsParams, authInfo runtime.ClientAuthInfoW
 /*
 UpdateTag updates a tag
 
-Updates a Tag by id.
+**Privileges:** ```TAGS_MODIFY``` <br><br>Updates a Tag by id.
 */
 func (a *Client) UpdateTag(params *UpdateTagParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateTagOK, error) {
 	// TODO: Validate the params before sending

@@ -12,6 +12,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // CrackedFileDocument cracked file document
@@ -104,7 +105,7 @@ type CrackedFileDocument struct {
 	SnapshotTagVec []string `json:"snapshotTagVec"`
 
 	// Map from index into snapshot tags to list of snapshot ranges.
-	SnapshotTagsAssociationMap []*CrackedFileDocumentSnapshotTagsAssociationMapEntry `json:"snapshotTagsAssociationMap"`
+	SnapshotTagsAssociationMap map[string]TaggedSnapshots `json:"snapshotTagsAssociationMap,omitempty"`
 
 	// Field to store document level tags.
 	TagVec []string `json:"tagVec"`
@@ -441,17 +442,17 @@ func (m *CrackedFileDocument) validateSnapshotTagsAssociationMap(formats strfmt.
 		return nil
 	}
 
-	for i := 0; i < len(m.SnapshotTagsAssociationMap); i++ {
-		if swag.IsZero(m.SnapshotTagsAssociationMap[i]) { // not required
-			continue
-		}
+	for k := range m.SnapshotTagsAssociationMap {
 
-		if m.SnapshotTagsAssociationMap[i] != nil {
-			if err := m.SnapshotTagsAssociationMap[i].Validate(formats); err != nil {
+		if err := validate.Required("snapshotTagsAssociationMap"+"."+k, "body", m.SnapshotTagsAssociationMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.SnapshotTagsAssociationMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("snapshotTagsAssociationMap" + "." + strconv.Itoa(i))
+					return ve.ValidateName("snapshotTagsAssociationMap" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("snapshotTagsAssociationMap" + "." + strconv.Itoa(i))
+					return ce.ValidateName("snapshotTagsAssociationMap" + "." + k)
 				}
 				return err
 			}
@@ -858,20 +859,10 @@ func (m *CrackedFileDocument) contextValidateSharepointMetadata(ctx context.Cont
 
 func (m *CrackedFileDocument) contextValidateSnapshotTagsAssociationMap(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.SnapshotTagsAssociationMap); i++ {
+	for k := range m.SnapshotTagsAssociationMap {
 
-		if m.SnapshotTagsAssociationMap[i] != nil {
-
-			if swag.IsZero(m.SnapshotTagsAssociationMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.SnapshotTagsAssociationMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("snapshotTagsAssociationMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("snapshotTagsAssociationMap" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.SnapshotTagsAssociationMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

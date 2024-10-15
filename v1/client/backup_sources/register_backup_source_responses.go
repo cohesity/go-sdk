@@ -50,9 +50,10 @@ func NewRegisterBackupSourceOK() *RegisterBackupSourceOK {
 /*
 RegisterBackupSourceOK describes a response with status code 200, with default header values.
 
-Success Response
+Success
 */
 type RegisterBackupSourceOK struct {
+	Payload *models.RegisterEntityResult
 }
 
 // IsSuccess returns true when this register backup source o k response has a 2xx status code
@@ -86,14 +87,27 @@ func (o *RegisterBackupSourceOK) Code() int {
 }
 
 func (o *RegisterBackupSourceOK) Error() string {
-	return fmt.Sprintf("[POST /backupsources][%d] registerBackupSourceOK", 200)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /backupsources][%d] registerBackupSourceOK %s", 200, payload)
 }
 
 func (o *RegisterBackupSourceOK) String() string {
-	return fmt.Sprintf("[POST /backupsources][%d] registerBackupSourceOK", 200)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /backupsources][%d] registerBackupSourceOK %s", 200, payload)
+}
+
+func (o *RegisterBackupSourceOK) GetPayload() *models.RegisterEntityResult {
+	return o.Payload
 }
 
 func (o *RegisterBackupSourceOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	o.Payload = new(models.RegisterEntityResult)
+
+	// response payload
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
 
 	return nil
 }

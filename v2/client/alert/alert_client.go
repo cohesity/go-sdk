@@ -62,7 +62,7 @@ type ClientService interface {
 /*
 GetAlertSummary gets alerts summary
 
-Get alerts summary grouped by category.
+**Privileges:** ```ALERT_VIEW``` <br><br>Get alerts summary grouped by category.
 */
 func (a *Client) GetAlertSummary(params *GetAlertSummaryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAlertSummaryOK, error) {
 	// TODO: Validate the params before sending

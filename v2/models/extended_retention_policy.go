@@ -35,7 +35,7 @@ type ExtendedRetentionPolicy struct {
 	// 'Full' indicates a full (no CBT) backup. A complete backup (all blocks) of the target protection objects are always captured and Change Block Tracking (CBT) is not utilized.
 	// 'Log' indicates a Database Log backup. Capture the database transaction logs to allow rolling back to a specific point in time.
 	// 'System' indicates a system backup. System backups are used to do bare metal recovery of the system to a specific point in time.
-	// Enum: ["Regular","Full","Log","System"]
+	// Enum: ["Regular","Full","Log","System","StorageArraySnapshot"]
 	RunType *string `json:"runType,omitempty"`
 
 	// Specifies the unique identifier for the target getting added. This field need to be passed olny when policies are updated.
@@ -108,7 +108,7 @@ var extendedRetentionPolicyTypeRunTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Regular","Full","Log","System"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Regular","Full","Log","System","StorageArraySnapshot"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -129,6 +129,9 @@ const (
 
 	// ExtendedRetentionPolicyRunTypeSystem captures enum value "System"
 	ExtendedRetentionPolicyRunTypeSystem string = "System"
+
+	// ExtendedRetentionPolicyRunTypeStorageArraySnapshot captures enum value "StorageArraySnapshot"
+	ExtendedRetentionPolicyRunTypeStorageArraySnapshot string = "StorageArraySnapshot"
 )
 
 // prop value enum

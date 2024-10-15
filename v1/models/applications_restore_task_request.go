@@ -72,14 +72,22 @@ type ApplicationsRestoreTaskRequest struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
 	// Required: true
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	ApplicationEnvironment *string `json:"applicationEnvironment"`
 
 	// Specifies the Application Server objects whose data should be restored
@@ -88,6 +96,9 @@ type ApplicationsRestoreTaskRequest struct {
 	// ProtectionSourceAndApplicationRestoreObjects.
 	// deprecated: true
 	ApplicationRestoreObjects []*ApplicationRestoreObject `json:"applicationRestoreObjects"`
+
+	// Specifies the cloud credentials used to authenticate with cloud(Aws).
+	CloudCredentials *CloudCredentials `json:"cloudCredentials,omitempty"`
 
 	// Specifies the restore information for the Protection Source object that
 	// registered and hosts the Application Servers. This provides the
@@ -129,6 +140,10 @@ func (m *ApplicationsRestoreTaskRequest) Validate(formats strfmt.Registry) error
 		res = append(res, err)
 	}
 
+	if err := m.validateCloudCredentials(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateHostingProtectionSource(formats); err != nil {
 		res = append(res, err)
 	}
@@ -155,7 +170,7 @@ var applicationsRestoreTaskRequestTypeApplicationEnvironmentPropEnum []interface
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -188,123 +203,6 @@ const (
 
 	// ApplicationsRestoreTaskRequestApplicationEnvironmentKNimble captures enum value "kNimble"
 	ApplicationsRestoreTaskRequestApplicationEnvironmentKNimble string = "kNimble"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKAzure captures enum value "kAzure"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKAzure string = "kAzure"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKNetapp captures enum value "kNetapp"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKNetapp string = "kNetapp"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKAgent captures enum value "kAgent"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKAgent string = "kAgent"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKGenericNas captures enum value "kGenericNas"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKGenericNas string = "kGenericNas"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKAcropolis captures enum value "kAcropolis"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKAcropolis string = "kAcropolis"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKIsilon captures enum value "kIsilon"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKIsilon string = "kIsilon"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKGPFS captures enum value "kGPFS"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKGPFS string = "kGPFS"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKKVM captures enum value "kKVM"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKKVM string = "kKVM"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKAWS captures enum value "kAWS"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKAWS string = "kAWS"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKExchange captures enum value "kExchange"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKExchange string = "kExchange"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKOracle captures enum value "kOracle"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKOracle string = "kOracle"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKGCP captures enum value "kGCP"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKGCP string = "kGCP"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKAWSNative captures enum value "kAWSNative"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKAWSNative string = "kAWSNative"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKO365 captures enum value "kO365"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKO365 string = "kO365"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKGCPNative captures enum value "kGCPNative"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKGCPNative string = "kGCPNative"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKAzureNative captures enum value "kAzureNative"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKAzureNative string = "kAzureNative"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKKubernetes captures enum value "kKubernetes"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKKubernetes string = "kKubernetes"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKElastifile captures enum value "kElastifile"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKElastifile string = "kElastifile"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKAD captures enum value "kAD"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKAD string = "kAD"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKCassandra captures enum value "kCassandra"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKCassandra string = "kCassandra"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKMongoDB captures enum value "kMongoDB"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKMongoDB string = "kMongoDB"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKCouchbase captures enum value "kCouchbase"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKCouchbase string = "kCouchbase"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKHdfs captures enum value "kHdfs"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKHdfs string = "kHdfs"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKHive captures enum value "kHive"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKHive string = "kHive"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKHBase captures enum value "kHBase"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKHBase string = "kHBase"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKUDA captures enum value "kUDA"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKUDA string = "kUDA"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKO365Teams captures enum value "kO365Teams"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKO365Teams string = "kO365Teams"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKO365Group captures enum value "kO365Group"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKO365Group string = "kO365Group"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// ApplicationsRestoreTaskRequestApplicationEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	ApplicationsRestoreTaskRequestApplicationEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum
@@ -350,6 +248,25 @@ func (m *ApplicationsRestoreTaskRequest) validateApplicationRestoreObjects(forma
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *ApplicationsRestoreTaskRequest) validateCloudCredentials(formats strfmt.Registry) error {
+	if swag.IsZero(m.CloudCredentials) { // not required
+		return nil
+	}
+
+	if m.CloudCredentials != nil {
+		if err := m.CloudCredentials.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
+			}
+			return err
+		}
 	}
 
 	return nil
@@ -437,6 +354,10 @@ func (m *ApplicationsRestoreTaskRequest) ContextValidate(ctx context.Context, fo
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateCloudCredentials(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateHostingProtectionSource(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -475,6 +396,27 @@ func (m *ApplicationsRestoreTaskRequest) contextValidateApplicationRestoreObject
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *ApplicationsRestoreTaskRequest) contextValidateCloudCredentials(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CloudCredentials != nil {
+
+		if swag.IsZero(m.CloudCredentials) { // not required
+			return nil
+		}
+
+		if err := m.CloudCredentials.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
+			}
+			return err
+		}
 	}
 
 	return nil

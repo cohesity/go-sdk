@@ -56,6 +56,9 @@ type RegisteredSourceInfo struct {
 	// the Cassandra source.
 	CassandraParams *CassandraConnectParams `json:"cassandraParams,omitempty"`
 
+	// Specifies the cloud credentials used to authenticate with cloud(Aws).
+	CloudCredentials *CloudCredentials `json:"cloudCredentials,omitempty"`
+
 	// Contains all the additional params specified by the user while registering
 	// the Couchbase source.
 	CouchbaseParams *CouchbaseConnectParams `json:"couchbaseParams,omitempty"`
@@ -111,12 +114,20 @@ type RegisteredSourceInfo struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
 	Environments []string `json:"environments"`
 
 	// Contains all the additional params specified by the user while registering
@@ -247,6 +258,10 @@ type RegisteredSourceInfo struct {
 	// the Universal Data Adapter source.
 	UdaParams *UdaConnectParams `json:"udaParams,omitempty"`
 
+	// Specifies if the last backup time and status should be updated for the
+	// VMs protected from the vCenter.
+	UpdateLastBackupDetails *bool `json:"updateLastBackupDetails,omitempty"`
+
 	// Specifies whether OAuth should be used for authentication in case of
 	// Exchange Online.
 	UseOAuthForExchangeOnline *bool `json:"useOAuthForExchangeOnline,omitempty"`
@@ -286,6 +301,10 @@ func (m *RegisteredSourceInfo) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateCassandraParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateCloudCredentials(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -457,6 +476,25 @@ func (m *RegisteredSourceInfo) validateCassandraParams(formats strfmt.Registry) 
 	return nil
 }
 
+func (m *RegisteredSourceInfo) validateCloudCredentials(formats strfmt.Registry) error {
+	if swag.IsZero(m.CloudCredentials) { // not required
+		return nil
+	}
+
+	if m.CloudCredentials != nil {
+		if err := m.CloudCredentials.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *RegisteredSourceInfo) validateCouchbaseParams(formats strfmt.Registry) error {
 	if swag.IsZero(m.CouchbaseParams) { // not required
 		return nil
@@ -480,7 +518,7 @@ var registeredSourceInfoEnvironmentsItemsEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -871,6 +909,10 @@ func (m *RegisteredSourceInfo) ContextValidate(ctx context.Context, formats strf
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateCloudCredentials(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateCouchbaseParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -983,6 +1025,27 @@ func (m *RegisteredSourceInfo) contextValidateCassandraParams(ctx context.Contex
 				return ve.ValidateName("cassandraParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("cassandraParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *RegisteredSourceInfo) contextValidateCloudCredentials(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CloudCredentials != nil {
+
+		if swag.IsZero(m.CloudCredentials) { // not required
+			return nil
+		}
+
+		if err := m.CloudCredentials.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
 			}
 			return err
 		}

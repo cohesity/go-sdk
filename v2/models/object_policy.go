@@ -28,7 +28,7 @@ type ObjectPolicy struct {
 
 	// Specifies the protection type.
 	// Required: true
-	// Enum: ["kNative","kSnapshotManager","kPhysical","kSQL","kOracle"]
+	// Enum: ["kNative","kSnapshotManager","kPhysical","kSQL","kOracle","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsAuroraPostgres","kAwsRDSPostgres"]
 	ProtectionType *string `json:"protectionType"`
 }
 
@@ -63,7 +63,7 @@ var objectPolicyTypeProtectionTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kNative","kSnapshotManager","kPhysical","kSQL","kOracle"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kNative","kSnapshotManager","kPhysical","kSQL","kOracle","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsAuroraPostgres","kAwsRDSPostgres"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -87,6 +87,21 @@ const (
 
 	// ObjectPolicyProtectionTypeKOracle captures enum value "kOracle"
 	ObjectPolicyProtectionTypeKOracle string = "kOracle"
+
+	// ObjectPolicyProtectionTypeKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
+	ObjectPolicyProtectionTypeKRDSSnapshotManager string = "kRDSSnapshotManager"
+
+	// ObjectPolicyProtectionTypeKAuroraSnapshotManager captures enum value "kAuroraSnapshotManager"
+	ObjectPolicyProtectionTypeKAuroraSnapshotManager string = "kAuroraSnapshotManager"
+
+	// ObjectPolicyProtectionTypeKAwsRDSPostgresBackup captures enum value "kAwsRDSPostgresBackup"
+	ObjectPolicyProtectionTypeKAwsRDSPostgresBackup string = "kAwsRDSPostgresBackup"
+
+	// ObjectPolicyProtectionTypeKAwsAuroraPostgres captures enum value "kAwsAuroraPostgres"
+	ObjectPolicyProtectionTypeKAwsAuroraPostgres string = "kAwsAuroraPostgres"
+
+	// ObjectPolicyProtectionTypeKAwsRDSPostgres captures enum value "kAwsRDSPostgres"
+	ObjectPolicyProtectionTypeKAwsRDSPostgres string = "kAwsRDSPostgres"
 )
 
 // prop value enum

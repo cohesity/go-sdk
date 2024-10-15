@@ -44,6 +44,10 @@ type RestoredFileInfo struct {
 	// disk and volume related details.
 	IsNonSimpleLdmVol *bool `json:"isNonSimpleLdmVol,omitempty"`
 
+	// Drive item id of the file to be restored. Currently will only be used for
+	// files. Only one of item_id or absolute path should be passed.
+	ItemID *string `json:"itemId,omitempty"`
+
 	// This must be set to a directory path if restore_to_original_paths is
 	// false and restore task has multiple files which are not desired to be
 	// restore to one common location. If this filed is populated,

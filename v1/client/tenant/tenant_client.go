@@ -94,7 +94,7 @@ type ClientService interface {
 /*
 	CreateTenant creates add a new tenant to the cohesity cluster
 
-	A tenant is required to support MultiTenant architecture for service provider
+	**Privileges:** ```ORGANIZATION_MODIFY``` <br><br>A tenant is required to support MultiTenant architecture for service provider
 
 (SP) to facilitate data and view segregations in the Cohesity Dashboard.
 
@@ -138,7 +138,7 @@ func (a *Client) CreateTenant(params *CreateTenantParams, authInfo runtime.Clien
 /*
 DeleteTenant deletes an existing tenant on the cohesity cluster
 
-Returns success if the specified tenant is deleted.
+**Privileges:** ```ORGANIZATION_MODIFY``` <br><br>Returns success if the specified tenant is deleted.
 */
 func (a *Client) DeleteTenant(params *DeleteTenantParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteTenantNoContent, error) {
 	// TODO: Validate the params before sending
@@ -178,7 +178,7 @@ func (a *Client) DeleteTenant(params *DeleteTenantParams, authInfo runtime.Clien
 /*
 DownloadTenantsProxy downloads the tenants proxy
 
-Returns the tenant proxy to be downloaded.
+**Privileges:** ```HYBRID_EXTENDER_DOWNLOAD, ORGANIZATION_MODIFY``` <br><br>Returns the tenant proxy to be downloaded.
 */
 func (a *Client) DownloadTenantsProxy(params *DownloadTenantsProxyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DownloadTenantsProxyOK, error) {
 	// TODO: Validate the params before sending
@@ -218,7 +218,7 @@ func (a *Client) DownloadTenantsProxy(params *DownloadTenantsProxyParams, authIn
 /*
 GetTenants lists the tenants on the cohesity cluster filtered by tenant ID prefixed to list tenants for the respective tenant admin
 
-Returns the list of tenants.
+**Privileges:** ```ORGANIZATION_VIEW``` <br><br>Returns the list of tenants.
 */
 func (a *Client) GetTenants(params *GetTenantsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTenantsOK, error) {
 	// TODO: Validate the params before sending
@@ -258,7 +258,7 @@ func (a *Client) GetTenants(params *GetTenantsParams, authInfo runtime.ClientAut
 /*
 GetTenantsProxies lists proxies for tenant which are running within tenant s environment
 
-Returns the list of proxies.
+**Privileges:** ```HYBRID_EXTENDER_VIEW, ORGANIZATION_VIEW``` <br><br>Returns the list of proxies.
 */
 func (a *Client) GetTenantsProxies(params *GetTenantsProxiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTenantsProxiesOK, error) {
 	// TODO: Validate the params before sending
@@ -298,7 +298,7 @@ func (a *Client) GetTenantsProxies(params *GetTenantsProxiesParams, authInfo run
 /*
 GetTenantsProxyConfig gets proxy config for tenant
 
-Returns the config for tenants proxy.
+**Privileges:** ```HYBRID_EXTENDER_DOWNLOAD, ORGANIZATION_MODIFY``` <br><br>Returns the config for tenants proxy.
 */
 func (a *Client) GetTenantsProxyConfig(params *GetTenantsProxyConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTenantsProxyConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -338,7 +338,7 @@ func (a *Client) GetTenantsProxyConfig(params *GetTenantsProxyConfigParams, auth
 /*
 UpdateTenant updates an existing tenant on the cohesity cluster
 
-Returns the tenant that was updated on the Cohesity Cluster.
+**Privileges:** ```ORGANIZATION_MODIFY``` <br><br>Returns the tenant that was updated on the Cohesity Cluster.
 */
 func (a *Client) UpdateTenant(params *UpdateTenantParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateTenantOK, error) {
 	// TODO: Validate the params before sending
@@ -378,7 +378,7 @@ func (a *Client) UpdateTenant(params *UpdateTenantParams, authInfo runtime.Clien
 /*
 	UpdateTenantActiveDirectory updates active directory for an existing tenant on the cohesity cluster
 
-	Returns success if the update for Active Directory is successful for specified
+	**Privileges:** ```ORGANIZATION_MODIFY, PRINCIPAL_MODIFY``` <br><br>Returns success if the update for Active Directory is successful for specified
 
 tenant.
 */
@@ -420,7 +420,7 @@ func (a *Client) UpdateTenantActiveDirectory(params *UpdateTenantActiveDirectory
 /*
 	UpdateTenantEntity updates entity permission for an existing tenant on the cohesity cluster
 
-	Returns success if the update for entity permission data is successful for
+	**Privileges:** ```ORGANIZATION_MODIFY, PROTECTION_SOURCE_MODIFY``` <br><br>Returns success if the update for entity permission data is successful for
 
 specified tenant.
 */
@@ -462,7 +462,7 @@ func (a *Client) UpdateTenantEntity(params *UpdateTenantEntityParams, authInfo r
 /*
 UpdateTenantGroups updates existing groups to an existing tenant on the cohesity cluster
 
-Returns success if the update for groups is successful for specified tenant.
+**Privileges:** ```ORGANIZATION_MODIFY, PRINCIPAL_MODIFY``` <br><br>Returns success if the update for groups is successful for specified tenant.
 */
 func (a *Client) UpdateTenantGroups(params *UpdateTenantGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateTenantGroupsOK, error) {
 	// TODO: Validate the params before sending
@@ -502,7 +502,7 @@ func (a *Client) UpdateTenantGroups(params *UpdateTenantGroupsParams, authInfo r
 /*
 	UpdateTenantLdapProvider updates ldap providers for an existing tenant on the cohesity cluster
 
-	Returns success if the update for Ldap Providers is successful for specified
+	**Privileges:** ```ORGANIZATION_MODIFY, PRINCIPAL_MODIFY``` <br><br>Returns success if the update for Ldap Providers is successful for specified
 
 tenant.
 */
@@ -544,7 +544,7 @@ func (a *Client) UpdateTenantLdapProvider(params *UpdateTenantLdapProviderParams
 /*
 	UpdateTenantProtectionJob updates protection job for an existing tenant on the cohesity cluster
 
-	Returns success if the update for protection job is successful for specified
+	**Privileges:** ```ORGANIZATION_MODIFY, PROTECTION_MODIFY``` <br><br>Returns success if the update for protection job is successful for specified
 
 tenant.
 */
@@ -586,7 +586,7 @@ func (a *Client) UpdateTenantProtectionJob(params *UpdateTenantProtectionJobPara
 /*
 	UpdateTenantProtectionPolicy updates protection policy permission for an existing tenant on the cohesity cluster
 
-	Returns success if the update for protection policy permission data is
+	**Privileges:** ```ORGANIZATION_MODIFY``` <br><br>Returns success if the update for protection policy permission data is
 
 successful for the specified tenant.
 */
@@ -628,7 +628,7 @@ func (a *Client) UpdateTenantProtectionPolicy(params *UpdateTenantProtectionPoli
 /*
 UpdateTenantUsers updates existing users to an existing tenant on the cohesity cluster
 
-Returns success if the update for users data is successful for specified tenant.
+**Privileges:** ```ORGANIZATION_MODIFY, PRINCIPAL_MODIFY``` <br><br>Returns success if the update for users data is successful for specified tenant.
 */
 func (a *Client) UpdateTenantUsers(params *UpdateTenantUsersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateTenantUsersOK, error) {
 	// TODO: Validate the params before sending
@@ -668,7 +668,7 @@ func (a *Client) UpdateTenantUsers(params *UpdateTenantUsersParams, authInfo run
 /*
 	UpdateTenantView updates views permission for an existing tenant on the cohesity cluster
 
-	Returns success if the update for views permission data is successful for
+	**Privileges:** ```ORGANIZATION_MODIFY``` <br><br>Returns success if the update for views permission data is successful for
 
 specified tenant.
 */
@@ -710,7 +710,7 @@ func (a *Client) UpdateTenantView(params *UpdateTenantViewParams, authInfo runti
 /*
 	UpdateTenantViewBox updates view box for an existing tenant on the cohesity cluster
 
-	Returns success if the update for view box data is successful for specified
+	**Privileges:** ```ORGANIZATION_MODIFY, STORAGE_DOMAIN_MODIFY``` <br><br>Returns success if the update for view box data is successful for specified
 
 tenant.
 */
@@ -752,7 +752,7 @@ func (a *Client) UpdateTenantViewBox(params *UpdateTenantViewBoxParams, authInfo
 /*
 UpdateTenantVlan updates vlan for an existing tenant on the cohesity cluster
 
-Returns success if the update for vlan data is successful for specified tenant.
+**Privileges:** ```ORGANIZATION_MODIFY, CLUSTER_MODIFY``` <br><br>Returns success if the update for vlan data is successful for specified tenant.
 */
 func (a *Client) UpdateTenantVlan(params *UpdateTenantVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateTenantVlanOK, error) {
 	// TODO: Validate the params before sending

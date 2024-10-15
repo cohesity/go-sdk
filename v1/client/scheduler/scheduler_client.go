@@ -68,7 +68,7 @@ type ClientService interface {
 /*
 	CreateSchedulerJob creates an email report scheduler job
 
-	Returns the created email report scheduler job.
+	**Privileges:** ```SCHEDULER_MODIFY``` <br><br>Returns the created email report scheduler job.
 
 An email report scheduler job generates a report with the specified parameters
 and sends that report to the specified email accounts according to the defined
@@ -116,7 +116,7 @@ func (a *Client) CreateSchedulerJob(params *CreateSchedulerJobParams, authInfo r
 /*
 DeleteSchedulerJobs deletes one or more email report schedule jobs
 
-Specify a list of email report schedule job ids to unschedule and delete.
+**Privileges:** ```SCHEDULER_MODIFY``` <br><br>Specify a list of email report schedule job ids to unschedule and delete.
 */
 func (a *Client) DeleteSchedulerJobs(params *DeleteSchedulerJobsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteSchedulerJobsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -156,7 +156,7 @@ func (a *Client) DeleteSchedulerJobs(params *DeleteSchedulerJobsParams, authInfo
 /*
 	GetSchedulerJobs lists the email report schedule jobs that are scheduled to run
 
-	Returns all the email report scheduler jobs that are scheduled to run.
+	**Privileges:** ```SCHEDULER_VIEW``` <br><br>Returns all the email report scheduler jobs that are scheduled to run.
 
 An email report scheduler job generates a report with the specified parameters
 and sends that report to the specified email accounts according to the defined
@@ -200,7 +200,7 @@ func (a *Client) GetSchedulerJobs(params *GetSchedulerJobsParams, authInfo runti
 /*
 UpdateSchedulerJob updates an existing email report schedule job
 
-Returns the updated email report scheduler job.
+**Privileges:** ```SCHEDULER_MODIFY``` <br><br>Returns the updated email report scheduler job.
 */
 func (a *Client) UpdateSchedulerJob(params *UpdateSchedulerJobParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateSchedulerJobOK, error) {
 	// TODO: Validate the params before sending

@@ -61,6 +61,10 @@ type O365BackupParams struct {
 	// Whether the entity to be backed up is a sharepoint entity or not.
 	ShouldBackupSharepoint *bool `json:"shouldBackupSharepoint,omitempty"`
 
+	// Only used for onedrive, whether we should do recon data run due to resync
+	// error in prev run for this drive.
+	ShouldReconDataForResync *bool `json:"shouldReconDataForResync,omitempty"`
+
 	// If slave needs to clone the entity snapshot directory recursively.
 	ShouldRecursivelyCloneSharepointDir *bool `json:"shouldRecursivelyCloneSharepointDir,omitempty"`
 

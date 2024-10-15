@@ -16,7 +16,9 @@ import (
 // OracleDBChannelInfoHostInfo The name of this proto message is out-dated. This proto should
 // generally be used to represent parameters needed for each Oracle
 // 'cluster' node. 'cluster' here is a loose term used to include
+//
 // more than Oracle RAC cluster, e.g. 'active-passive' cluster is also
+//
 // considered here as 'cluster' and its 'cluster node will also be
 // represented by the following proto.
 //

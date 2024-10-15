@@ -19,8 +19,20 @@ import (
 // swagger:model HiveBackupJobParams
 type HiveBackupJobParams struct {
 
+	// List of FQN of objects to be excluded from backup.
+	// For database FQN is just the name. eg. adserver_db
+	// For tables FQN in db name and table name eg. adserver_db.click_stats
+	// If this contains same entity as include_object_vec, we give priority to
+	// exclusion.
+	ExcludeObjectVec []string `json:"excludeObjectVec"`
+
 	// Additional hdfs connection params required for Hive Backup.
 	HdfsConnectParams *HdfsConnectParams `json:"hdfsConnectParams,omitempty"`
+
+	// List of FQN of objects to be included in backup.
+	// For database FQN is just the name. eg. adserver_db
+	// For tables FQN in db name and table name eg. adserver_db.click_stats
+	IncludeObjectVec []string `json:"includeObjectVec"`
 }
 
 // Validate validates this hive backup job params

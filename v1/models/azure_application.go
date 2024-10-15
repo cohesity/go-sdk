@@ -18,13 +18,17 @@ import (
 type AzureApplication struct {
 
 	// Id of the Azure application.
-	ApplicationID *string `json:"application_id,omitempty"`
+	ApplicationID *string `json:"applicationId,omitempty"`
 
 	// Object Id of the Azure application.
-	ApplicationObjectID *string `json:"application_object_id,omitempty"`
+	ApplicationObjectID *string `json:"applicationObjectId,omitempty"`
 
+	// TODO(ENG-416039): Deprecate this and add application_key.
 	// Encrypted application key.
-	EncryptedApplicationKey *string `json:"encrypted_application_key,omitempty"`
+	EncryptedApplicationKey *string `json:"encryptedApplicationKey,omitempty"`
+
+	// Application key encrypted by magneto.
+	InternalEncryptedApplicationKey []uint8 `json:"internalEncryptedApplicationKey"`
 }
 
 // Validate validates this azure application

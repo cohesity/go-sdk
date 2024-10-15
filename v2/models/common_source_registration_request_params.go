@@ -23,7 +23,7 @@ type CommonSourceRegistrationRequestParams struct {
 
 	// Specifies the environment type of the Protection Source.
 	// Required: true
-	// Enum: ["kVMware","kHyperV","kAcropolis","kKVM","kAWS","kGCP","kAzure","kPhysical","kPure","kIbmFlashSystem","kNimble","kNetapp","kGenericNas","kIsilon","kFlashBlade","kGPFS","kElastifile","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSQL","kOracle","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kAcropolis","kKVM","kAWS","kGCP","kAzure","kPhysical","kPure","kIbmFlashSystem","kNimble","kNetapp","kGenericNas","kIsilon","kFlashBlade","kGPFS","kElastifile","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSQL","kOracle","kSfdc"]
 	Environment *string `json:"environment"`
 
 	// A user specified name for this source.
@@ -74,7 +74,7 @@ var commonSourceRegistrationRequestParamsTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAcropolis","kKVM","kAWS","kGCP","kAzure","kPhysical","kPure","kIbmFlashSystem","kNimble","kNetapp","kGenericNas","kIsilon","kFlashBlade","kGPFS","kElastifile","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSQL","kOracle","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAcropolis","kKVM","kAWS","kGCP","kAzure","kPhysical","kPure","kIbmFlashSystem","kNimble","kNetapp","kGenericNas","kIsilon","kFlashBlade","kGPFS","kElastifile","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSQL","kOracle","kSfdc"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -161,6 +161,9 @@ const (
 
 	// CommonSourceRegistrationRequestParamsEnvironmentKHBase captures enum value "kHBase"
 	CommonSourceRegistrationRequestParamsEnvironmentKHBase string = "kHBase"
+
+	// CommonSourceRegistrationRequestParamsEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	CommonSourceRegistrationRequestParamsEnvironmentKSAPHANA string = "kSAPHANA"
 
 	// CommonSourceRegistrationRequestParamsEnvironmentKUDA captures enum value "kUDA"
 	CommonSourceRegistrationRequestParamsEnvironmentKUDA string = "kUDA"

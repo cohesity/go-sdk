@@ -28,9 +28,17 @@ type AdvancedSettings struct {
 	// online.
 	DbBackupIfNotOnlineStatus *int32 `json:"dbBackupIfNotOnlineStatus,omitempty"`
 
+	// If true, out of band incremental backup will be started when the log chain
+	// is broken. It will be started at the end of the log backup.
+	LogChainBreakAutoTriggerOobIncrBackup *bool `json:"logChainBreakAutoTriggerOobIncrBackup,omitempty"`
+
 	// Fail the backup job when the database is missing. The database may be
 	// missing if it is deleted or corrupted.
 	MissingDbBackupStatus *int32 `json:"missingDbBackupStatus,omitempty"`
+
+	// If true, out of band incremental backup will be started when a new
+	// database is found. It will be started at the end of the log backup.
+	NewDatabaseAutoTriggerOobIncrBackup *bool `json:"newDatabaseAutoTriggerOobIncrBackup,omitempty"`
 
 	// Fail the backup job when database is offline or restoring.
 	OfflineRestoringDbBackupStatus *int32 `json:"offlineRestoringDbBackupStatus,omitempty"`

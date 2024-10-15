@@ -94,7 +94,7 @@ type ClientService interface {
 /*
 DeleteAppOwnerRegistration deletes an application owner registration
 
-Returns success if the application owner registration is deleted.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Returns success if the application owner registration is deleted.
 */
 func (a *Client) DeleteAppOwnerRegistration(params *DeleteAppOwnerRegistrationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteAppOwnerRegistrationOK, error) {
 	// TODO: Validate the params before sending
@@ -134,7 +134,7 @@ func (a *Client) DeleteAppOwnerRegistration(params *DeleteAppOwnerRegistrationPa
 /*
 DeleteBackupSource deletes a backup source
 
-Returns success if the backup source is deleted.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Returns success if the backup source is deleted.
 */
 func (a *Client) DeleteBackupSource(params *DeleteBackupSourceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteBackupSourceOK, error) {
 	// TODO: Validate the params before sending
@@ -174,7 +174,7 @@ func (a *Client) DeleteBackupSource(params *DeleteBackupSourceParams, authInfo r
 /*
 GetBackupEntities lists backup entities based on the input parameters
 
-Returns a list of backup entities based on the input parameters.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns a list of backup entities based on the input parameters.
 */
 func (a *Client) GetBackupEntities(params *GetBackupEntitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetBackupEntitiesOK, error) {
 	// TODO: Validate the params before sending
@@ -214,7 +214,7 @@ func (a *Client) GetBackupEntities(params *GetBackupEntitiesParams, authInfo run
 /*
 GetBackupEntityByID lists backup entity based on the input id
 
-Returns a backup entity based on the input id.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns a backup entity based on the input id.
 */
 func (a *Client) GetBackupEntityByID(params *GetBackupEntityByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetBackupEntityByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -254,7 +254,7 @@ func (a *Client) GetBackupEntityByID(params *GetBackupEntityByIDParams, authInfo
 /*
 GetDatastores lists data stores for a resource pool
 
-Return the data stores for a resource pool.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Return the data stores for a resource pool.
 */
 func (a *Client) GetDatastores(params *GetDatastoresParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDatastoresOK, error) {
 	// TODO: Validate the params before sending
@@ -294,7 +294,7 @@ func (a *Client) GetDatastores(params *GetDatastoresParams, authInfo runtime.Cli
 /*
 GetNetworkEntities lists network entities for a resource pool
 
-Returns network entites for a resource pool.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns network entites for a resource pool.
 */
 func (a *Client) GetNetworkEntities(params *GetNetworkEntitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNetworkEntitiesOK, error) {
 	// TODO: Validate the params before sending
@@ -334,7 +334,7 @@ func (a *Client) GetNetworkEntities(params *GetNetworkEntitiesParams, authInfo r
 /*
 GetResourcePools lists resource pools for a v center
 
-Returns resource pools for a vCenter.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns resource pools for a vCenter.
 */
 func (a *Client) GetResourcePools(params *GetResourcePoolsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetResourcePoolsOK, error) {
 	// TODO: Validate the params before sending
@@ -374,7 +374,7 @@ func (a *Client) GetResourcePools(params *GetResourcePoolsParams, authInfo runti
 /*
 GetVirtualMachines lists virtual machines for a v center
 
-Returns a list of virtual machines for a vCenter.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns a list of virtual machines for a vCenter.
 */
 func (a *Client) GetVirtualMachines(params *GetVirtualMachinesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetVirtualMachinesOK, error) {
 	// TODO: Validate the params before sending
@@ -414,7 +414,7 @@ func (a *Client) GetVirtualMachines(params *GetVirtualMachinesParams, authInfo r
 /*
 GetVmwareFolders lists folder entities for a selected resource pool
 
-Returns folder entites for a resource pool.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns folder entites for a resource pool.
 */
 func (a *Client) GetVmwareFolders(params *GetVmwareFoldersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetVmwareFoldersOK, error) {
 	// TODO: Validate the params before sending
@@ -454,7 +454,7 @@ func (a *Client) GetVmwareFolders(params *GetVmwareFoldersParams, authInfo runti
 /*
 ListAppEntities lists the application entites
 
-Returns the application entities.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns the application entities.
 */
 func (a *Client) ListAppEntities(params *ListAppEntitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListAppEntitiesOK, error) {
 	// TODO: Validate the params before sending
@@ -494,7 +494,7 @@ func (a *Client) ListAppEntities(params *ListAppEntitiesParams, authInfo runtime
 /*
 ListBackupSources lists backup sources based on a particular criteria
 
-Returns a list of backup sources based on particular criteria.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns a list of backup sources based on particular criteria.
 */
 func (a *Client) ListBackupSources(params *ListBackupSourcesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListBackupSourcesOK, error) {
 	// TODO: Validate the params before sending
@@ -534,7 +534,7 @@ func (a *Client) ListBackupSources(params *ListBackupSourcesParams, authInfo run
 /*
 ListEntitiesOfType lists entities of certian type for example it can be used to list v ms and physical servers
 
-Returns a list of entities.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns a list of entities.
 */
 func (a *Client) ListEntitiesOfType(params *ListEntitiesOfTypeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListEntitiesOfTypeOK, error) {
 	// TODO: Validate the params before sending
@@ -574,7 +574,7 @@ func (a *Client) ListEntitiesOfType(params *ListEntitiesOfTypeParams, authInfo r
 /*
 ListRegisteredSourcesReport lists registered sources report based on the input parameters
 
-Returns a registered sources report based on the input parameters.
+**Privileges:** ```REPORTS_VIEW``` <br><br>Returns a registered sources report based on the input parameters.
 */
 func (a *Client) ListRegisteredSourcesReport(params *ListRegisteredSourcesReportParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListRegisteredSourcesReportOK, error) {
 	// TODO: Validate the params before sending
@@ -614,7 +614,7 @@ func (a *Client) ListRegisteredSourcesReport(params *ListRegisteredSourcesReport
 /*
 RegisterAppOwner registers an entity for an application
 
-Returns success if the entity is registered for an application.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Returns success if the entity is registered for an application.
 */
 func (a *Client) RegisterAppOwner(params *RegisterAppOwnerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RegisterAppOwnerOK, error) {
 	// TODO: Validate the params before sending
@@ -654,7 +654,7 @@ func (a *Client) RegisterAppOwner(params *RegisterAppOwnerParams, authInfo runti
 /*
 RegisterBackupSource registers a backup source
 
-Returns success if the backup source is registered.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Returns the registered backup source.
 */
 func (a *Client) RegisterBackupSource(params *RegisterBackupSourceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RegisterBackupSourceOK, error) {
 	// TODO: Validate the params before sending
@@ -694,7 +694,7 @@ func (a *Client) RegisterBackupSource(params *RegisterBackupSourceParams, authIn
 /*
 UpdateAppOwnerRegistration updates credentials for an application owner
 
-Returns success if the application owner credential is updated.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Returns success if the application owner credential is updated.
 */
 func (a *Client) UpdateAppOwnerRegistration(params *UpdateAppOwnerRegistrationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAppOwnerRegistrationOK, error) {
 	// TODO: Validate the params before sending
@@ -734,7 +734,7 @@ func (a *Client) UpdateAppOwnerRegistration(params *UpdateAppOwnerRegistrationPa
 /*
 UpdateBackupSourceAccessInfo updates a backup source s access info
 
-Returns success if the backup source's access info.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Returns success if the backup source's access info.
 */
 func (a *Client) UpdateBackupSourceAccessInfo(params *UpdateBackupSourceAccessInfoParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateBackupSourceAccessInfoOK, error) {
 	// TODO: Validate the params before sending

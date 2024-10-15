@@ -22,6 +22,10 @@ type BackupTaskStateProtoInProgressTaskStateProto struct {
 
 	// acquired app entity lock vec
 	AcquiredAppEntityLockVec []*PrivateEntityProto `json:"acquiredAppEntityLockVec"`
+
+	// List of app entities we had conflicts in acquiring the lock for this
+	// task.
+	ConflictAppEntityLockVec []*PrivateEntityProto `json:"conflictAppEntityLockVec"`
 }
 
 // Validate validates this backup task state proto in progress task state proto
@@ -29,6 +33,10 @@ func (m *BackupTaskStateProtoInProgressTaskStateProto) Validate(formats strfmt.R
 	var res []error
 
 	if err := m.validateAcquiredAppEntityLockVec(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateConflictAppEntityLockVec(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -64,11 +72,41 @@ func (m *BackupTaskStateProtoInProgressTaskStateProto) validateAcquiredAppEntity
 	return nil
 }
 
+func (m *BackupTaskStateProtoInProgressTaskStateProto) validateConflictAppEntityLockVec(formats strfmt.Registry) error {
+	if swag.IsZero(m.ConflictAppEntityLockVec) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.ConflictAppEntityLockVec); i++ {
+		if swag.IsZero(m.ConflictAppEntityLockVec[i]) { // not required
+			continue
+		}
+
+		if m.ConflictAppEntityLockVec[i] != nil {
+			if err := m.ConflictAppEntityLockVec[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("conflictAppEntityLockVec" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("conflictAppEntityLockVec" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 // ContextValidate validate this backup task state proto in progress task state proto based on the context it is used
 func (m *BackupTaskStateProtoInProgressTaskStateProto) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateAcquiredAppEntityLockVec(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateConflictAppEntityLockVec(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -93,6 +131,31 @@ func (m *BackupTaskStateProtoInProgressTaskStateProto) contextValidateAcquiredAp
 					return ve.ValidateName("acquiredAppEntityLockVec" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("acquiredAppEntityLockVec" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *BackupTaskStateProtoInProgressTaskStateProto) contextValidateConflictAppEntityLockVec(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.ConflictAppEntityLockVec); i++ {
+
+		if m.ConflictAppEntityLockVec[i] != nil {
+
+			if swag.IsZero(m.ConflictAppEntityLockVec[i]) { // not required
+				return nil
+			}
+
+			if err := m.ConflictAppEntityLockVec[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("conflictAppEntityLockVec" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("conflictAppEntityLockVec" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

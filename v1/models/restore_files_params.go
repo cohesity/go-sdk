@@ -29,7 +29,7 @@ type RestoreFilesParams struct {
 	// Directory name security style map contains mapping of the directory name
 	// to security style it supports.  This is needed to restore the same
 	// permission for the given directory for Qtrees.
-	DirectoryNameSecurityStyleMap []*RestoreFilesParamsDirectoryNameSecurityStyleMapEntry `json:"directoryNameSecurityStyleMap"`
+	DirectoryNameSecurityStyleMap map[string]string `json:"directoryNameSecurityStyleMap,omitempty"`
 
 	// Glacier restore option chosen by the user.
 	GlacierFlrRestoreOption *int32 `json:"glacierFlrRestoreOption,omitempty"`
@@ -120,6 +120,9 @@ type RestoreFilesParams struct {
 	// for VMware entities.
 	TargetHostType *int32 `json:"targetHostType,omitempty"`
 
+	// target pvc entity
+	TargetPvcEntity *EntityProto `json:"targetPvcEntity,omitempty"`
+
 	// Set if this is NAS Migration uptier operation.
 	UptierParams *FileUptieringParams `json:"uptierParams,omitempty"`
 
@@ -145,10 +148,6 @@ type RestoreFilesParams struct {
 // Validate validates this restore files params
 func (m *RestoreFilesParams) Validate(formats strfmt.Registry) error {
 	var res []error
-
-	if err := m.validateDirectoryNameSecurityStyleMap(formats); err != nil {
-		res = append(res, err)
-	}
 
 	if err := m.validateIsilonEnvParams(formats); err != nil {
 		res = append(res, err)
@@ -194,6 +193,10 @@ func (m *RestoreFilesParams) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateTargetPvcEntity(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateUptierParams(formats); err != nil {
 		res = append(res, err)
 	}
@@ -205,32 +208,6 @@ func (m *RestoreFilesParams) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *RestoreFilesParams) validateDirectoryNameSecurityStyleMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.DirectoryNameSecurityStyleMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.DirectoryNameSecurityStyleMap); i++ {
-		if swag.IsZero(m.DirectoryNameSecurityStyleMap[i]) { // not required
-			continue
-		}
-
-		if m.DirectoryNameSecurityStyleMap[i] != nil {
-			if err := m.DirectoryNameSecurityStyleMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("directoryNameSecurityStyleMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("directoryNameSecurityStyleMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 
@@ -450,6 +427,25 @@ func (m *RestoreFilesParams) validateTargetHostEntity(formats strfmt.Registry) e
 	return nil
 }
 
+func (m *RestoreFilesParams) validateTargetPvcEntity(formats strfmt.Registry) error {
+	if swag.IsZero(m.TargetPvcEntity) { // not required
+		return nil
+	}
+
+	if m.TargetPvcEntity != nil {
+		if err := m.TargetPvcEntity.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("targetPvcEntity")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("targetPvcEntity")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *RestoreFilesParams) validateUptierParams(formats strfmt.Registry) error {
 	if swag.IsZero(m.UptierParams) { // not required
 		return nil
@@ -491,10 +487,6 @@ func (m *RestoreFilesParams) validateVpcConnectorEntity(formats strfmt.Registry)
 // ContextValidate validate this restore files params based on the context it is used
 func (m *RestoreFilesParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
-
-	if err := m.contextValidateDirectoryNameSecurityStyleMap(ctx, formats); err != nil {
-		res = append(res, err)
-	}
 
 	if err := m.contextValidateIsilonEnvParams(ctx, formats); err != nil {
 		res = append(res, err)
@@ -540,6 +532,10 @@ func (m *RestoreFilesParams) ContextValidate(ctx context.Context, formats strfmt
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateTargetPvcEntity(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateUptierParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -551,31 +547,6 @@ func (m *RestoreFilesParams) ContextValidate(ctx context.Context, formats strfmt
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *RestoreFilesParams) contextValidateDirectoryNameSecurityStyleMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.DirectoryNameSecurityStyleMap); i++ {
-
-		if m.DirectoryNameSecurityStyleMap[i] != nil {
-
-			if swag.IsZero(m.DirectoryNameSecurityStyleMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.DirectoryNameSecurityStyleMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("directoryNameSecurityStyleMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("directoryNameSecurityStyleMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 
@@ -806,6 +777,27 @@ func (m *RestoreFilesParams) contextValidateTargetHostEntity(ctx context.Context
 				return ve.ValidateName("targetHostEntity")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("targetHostEntity")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *RestoreFilesParams) contextValidateTargetPvcEntity(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.TargetPvcEntity != nil {
+
+		if swag.IsZero(m.TargetPvcEntity) { // not required
+			return nil
+		}
+
+		if err := m.TargetPvcEntity.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("targetPvcEntity")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("targetPvcEntity")
 			}
 			return err
 		}

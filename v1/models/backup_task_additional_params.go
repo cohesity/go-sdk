@@ -87,6 +87,9 @@ type BackupTaskAdditionalParams struct {
 	// Pre-script that must be executed before taking the backup.
 	PreBackupTaskScript *RemoteScriptProto `json:"preBackupTaskScript,omitempty"`
 
+	// s3 backup params
+	S3BackupParams *S3BackupParams `json:"s3BackupParams,omitempty"`
+
 	// Additional parameters for SAN backup.
 	SanBackupParams *SANBackupParams `json:"sanBackupParams,omitempty"`
 
@@ -184,6 +187,10 @@ func (m *BackupTaskAdditionalParams) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validatePreBackupTaskScript(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateS3BackupParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -570,6 +577,25 @@ func (m *BackupTaskAdditionalParams) validatePreBackupTaskScript(formats strfmt.
 	return nil
 }
 
+func (m *BackupTaskAdditionalParams) validateS3BackupParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.S3BackupParams) { // not required
+		return nil
+	}
+
+	if m.S3BackupParams != nil {
+		if err := m.S3BackupParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("s3BackupParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("s3BackupParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *BackupTaskAdditionalParams) validateSanBackupParams(formats strfmt.Registry) error {
 	if swag.IsZero(m.SanBackupParams) { // not required
 		return nil
@@ -776,6 +802,10 @@ func (m *BackupTaskAdditionalParams) ContextValidate(ctx context.Context, format
 	}
 
 	if err := m.contextValidatePreBackupTaskScript(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateS3BackupParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1187,6 +1217,27 @@ func (m *BackupTaskAdditionalParams) contextValidatePreBackupTaskScript(ctx cont
 				return ve.ValidateName("preBackupTaskScript")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("preBackupTaskScript")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *BackupTaskAdditionalParams) contextValidateS3BackupParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.S3BackupParams != nil {
+
+		if swag.IsZero(m.S3BackupParams) { // not required
+			return nil
+		}
+
+		if err := m.S3BackupParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("s3BackupParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("s3BackupParams")
 			}
 			return err
 		}

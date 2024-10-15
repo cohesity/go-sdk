@@ -37,7 +37,7 @@ type VMwareBackupParams struct {
 
 	// This field stores a map of the VMware VM entity id to its progress monitor
 	// path.
-	VMEntityIDToProgressMonitorPath []*VMwareBackupParamsVMEntityIDToProgressMonitorPathEntry `json:"vmEntityIdToProgressMonitorPath"`
+	VMEntityIDToProgressMonitorPath interface{} `json:"vmEntityIdToProgressMonitorPath,omitempty"`
 }
 
 // Validate validates this v mware backup params
@@ -49,10 +49,6 @@ func (m *VMwareBackupParams) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateVcdBackupParams(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateVMEntityIDToProgressMonitorPath(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -107,32 +103,6 @@ func (m *VMwareBackupParams) validateVcdBackupParams(formats strfmt.Registry) er
 	return nil
 }
 
-func (m *VMwareBackupParams) validateVMEntityIDToProgressMonitorPath(formats strfmt.Registry) error {
-	if swag.IsZero(m.VMEntityIDToProgressMonitorPath) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.VMEntityIDToProgressMonitorPath); i++ {
-		if swag.IsZero(m.VMEntityIDToProgressMonitorPath[i]) { // not required
-			continue
-		}
-
-		if m.VMEntityIDToProgressMonitorPath[i] != nil {
-			if err := m.VMEntityIDToProgressMonitorPath[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("vmEntityIdToProgressMonitorPath" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("vmEntityIdToProgressMonitorPath" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 // ContextValidate validate this v mware backup params based on the context it is used
 func (m *VMwareBackupParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -142,10 +112,6 @@ func (m *VMwareBackupParams) ContextValidate(ctx context.Context, formats strfmt
 	}
 
 	if err := m.contextValidateVcdBackupParams(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateVMEntityIDToProgressMonitorPath(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -196,31 +162,6 @@ func (m *VMwareBackupParams) contextValidateVcdBackupParams(ctx context.Context,
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *VMwareBackupParams) contextValidateVMEntityIDToProgressMonitorPath(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.VMEntityIDToProgressMonitorPath); i++ {
-
-		if m.VMEntityIDToProgressMonitorPath[i] != nil {
-
-			if swag.IsZero(m.VMEntityIDToProgressMonitorPath[i]) { // not required
-				return nil
-			}
-
-			if err := m.VMEntityIDToProgressMonitorPath[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("vmEntityIdToProgressMonitorPath" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("vmEntityIdToProgressMonitorPath" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

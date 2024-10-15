@@ -19,6 +19,7 @@ import (
 // 1. should be enough to identify the disk during the backup job.
 // 2. is a subset of the message fetched to be displayed to the end user.
 // Example: entities/vmware.proto.
+//
 // Note: Currently this is only implemented for VMware type source.
 //
 // swagger:model VMwareDiskExclusionProto

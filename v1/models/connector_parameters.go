@@ -83,13 +83,21 @@ type ConnectorParameters struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies a Unique id that is generated when the Source is registered.
@@ -120,7 +128,7 @@ var connectorParametersTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -153,123 +161,6 @@ const (
 
 	// ConnectorParametersEnvironmentKNimble captures enum value "kNimble"
 	ConnectorParametersEnvironmentKNimble string = "kNimble"
-
-	// ConnectorParametersEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	ConnectorParametersEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// ConnectorParametersEnvironmentKAzure captures enum value "kAzure"
-	ConnectorParametersEnvironmentKAzure string = "kAzure"
-
-	// ConnectorParametersEnvironmentKNetapp captures enum value "kNetapp"
-	ConnectorParametersEnvironmentKNetapp string = "kNetapp"
-
-	// ConnectorParametersEnvironmentKAgent captures enum value "kAgent"
-	ConnectorParametersEnvironmentKAgent string = "kAgent"
-
-	// ConnectorParametersEnvironmentKGenericNas captures enum value "kGenericNas"
-	ConnectorParametersEnvironmentKGenericNas string = "kGenericNas"
-
-	// ConnectorParametersEnvironmentKAcropolis captures enum value "kAcropolis"
-	ConnectorParametersEnvironmentKAcropolis string = "kAcropolis"
-
-	// ConnectorParametersEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	ConnectorParametersEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// ConnectorParametersEnvironmentKIsilon captures enum value "kIsilon"
-	ConnectorParametersEnvironmentKIsilon string = "kIsilon"
-
-	// ConnectorParametersEnvironmentKGPFS captures enum value "kGPFS"
-	ConnectorParametersEnvironmentKGPFS string = "kGPFS"
-
-	// ConnectorParametersEnvironmentKKVM captures enum value "kKVM"
-	ConnectorParametersEnvironmentKKVM string = "kKVM"
-
-	// ConnectorParametersEnvironmentKAWS captures enum value "kAWS"
-	ConnectorParametersEnvironmentKAWS string = "kAWS"
-
-	// ConnectorParametersEnvironmentKExchange captures enum value "kExchange"
-	ConnectorParametersEnvironmentKExchange string = "kExchange"
-
-	// ConnectorParametersEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	ConnectorParametersEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// ConnectorParametersEnvironmentKOracle captures enum value "kOracle"
-	ConnectorParametersEnvironmentKOracle string = "kOracle"
-
-	// ConnectorParametersEnvironmentKGCP captures enum value "kGCP"
-	ConnectorParametersEnvironmentKGCP string = "kGCP"
-
-	// ConnectorParametersEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	ConnectorParametersEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// ConnectorParametersEnvironmentKAWSNative captures enum value "kAWSNative"
-	ConnectorParametersEnvironmentKAWSNative string = "kAWSNative"
-
-	// ConnectorParametersEnvironmentKO365 captures enum value "kO365"
-	ConnectorParametersEnvironmentKO365 string = "kO365"
-
-	// ConnectorParametersEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	ConnectorParametersEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// ConnectorParametersEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	ConnectorParametersEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// ConnectorParametersEnvironmentKGCPNative captures enum value "kGCPNative"
-	ConnectorParametersEnvironmentKGCPNative string = "kGCPNative"
-
-	// ConnectorParametersEnvironmentKAzureNative captures enum value "kAzureNative"
-	ConnectorParametersEnvironmentKAzureNative string = "kAzureNative"
-
-	// ConnectorParametersEnvironmentKKubernetes captures enum value "kKubernetes"
-	ConnectorParametersEnvironmentKKubernetes string = "kKubernetes"
-
-	// ConnectorParametersEnvironmentKElastifile captures enum value "kElastifile"
-	ConnectorParametersEnvironmentKElastifile string = "kElastifile"
-
-	// ConnectorParametersEnvironmentKAD captures enum value "kAD"
-	ConnectorParametersEnvironmentKAD string = "kAD"
-
-	// ConnectorParametersEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	ConnectorParametersEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// ConnectorParametersEnvironmentKCassandra captures enum value "kCassandra"
-	ConnectorParametersEnvironmentKCassandra string = "kCassandra"
-
-	// ConnectorParametersEnvironmentKMongoDB captures enum value "kMongoDB"
-	ConnectorParametersEnvironmentKMongoDB string = "kMongoDB"
-
-	// ConnectorParametersEnvironmentKCouchbase captures enum value "kCouchbase"
-	ConnectorParametersEnvironmentKCouchbase string = "kCouchbase"
-
-	// ConnectorParametersEnvironmentKHdfs captures enum value "kHdfs"
-	ConnectorParametersEnvironmentKHdfs string = "kHdfs"
-
-	// ConnectorParametersEnvironmentKHive captures enum value "kHive"
-	ConnectorParametersEnvironmentKHive string = "kHive"
-
-	// ConnectorParametersEnvironmentKHBase captures enum value "kHBase"
-	ConnectorParametersEnvironmentKHBase string = "kHBase"
-
-	// ConnectorParametersEnvironmentKUDA captures enum value "kUDA"
-	ConnectorParametersEnvironmentKUDA string = "kUDA"
-
-	// ConnectorParametersEnvironmentKO365Teams captures enum value "kO365Teams"
-	ConnectorParametersEnvironmentKO365Teams string = "kO365Teams"
-
-	// ConnectorParametersEnvironmentKO365Group captures enum value "kO365Group"
-	ConnectorParametersEnvironmentKO365Group string = "kO365Group"
-
-	// ConnectorParametersEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	ConnectorParametersEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// ConnectorParametersEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	ConnectorParametersEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// ConnectorParametersEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	ConnectorParametersEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// ConnectorParametersEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	ConnectorParametersEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

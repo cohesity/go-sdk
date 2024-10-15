@@ -60,6 +60,8 @@ type ClientService interface {
 
 	DeleteInfectedFiles(params *DeleteInfectedFilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteInfectedFilesCreated, error)
 
+	DeleteInfectedObjects(params *DeleteInfectedObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteInfectedObjectsCreated, error)
+
 	GetAntivirusServiceGroups(params *GetAntivirusServiceGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAntivirusServiceGroupsOK, error)
 
 	GetIcapURIConnectionStatus(params *GetIcapURIConnectionStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIcapURIConnectionStatusOK, error)
@@ -76,7 +78,7 @@ type ClientService interface {
 /*
 CreateAntivirusGroup creates an antivirus service group
 
-Create Antivirus Service group.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Create Antivirus Service group.
 */
 func (a *Client) CreateAntivirusGroup(params *CreateAntivirusGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateAntivirusGroupCreated, error) {
 	// TODO: Validate the params before sending
@@ -116,7 +118,7 @@ func (a *Client) CreateAntivirusGroup(params *CreateAntivirusGroupParams, authIn
 /*
 DeleteAntivirusGroup deletes an antivirus service group
 
-Deletes an Antivirus service group based on given id.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Deletes an Antivirus service group based on given id.
 */
 func (a *Client) DeleteAntivirusGroup(params *DeleteAntivirusGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteAntivirusGroupNoContent, error) {
 	// TODO: Validate the params before sending
@@ -156,7 +158,7 @@ func (a *Client) DeleteAntivirusGroup(params *DeleteAntivirusGroupParams, authIn
 /*
 DeleteInfectedFiles deletes infected files
 
-Delete infected files.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Delete infected files.
 */
 func (a *Client) DeleteInfectedFiles(params *DeleteInfectedFilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteInfectedFilesCreated, error) {
 	// TODO: Validate the params before sending
@@ -194,9 +196,49 @@ func (a *Client) DeleteInfectedFiles(params *DeleteInfectedFilesParams, authInfo
 }
 
 /*
+DeleteInfectedObjects deletes infected objects permanently
+
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Delete infected objects permanently.
+*/
+func (a *Client) DeleteInfectedObjects(params *DeleteInfectedObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteInfectedObjectsCreated, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteInfectedObjectsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DeleteInfectedObjects",
+		Method:             "DELETE",
+		PathPattern:        "/antivirus-service/infected-objects",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteInfectedObjectsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteInfectedObjectsCreated)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteInfectedObjectsDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
 GetAntivirusServiceGroups gets antivirus service groups
 
-Get Antivirus Service groups.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get Antivirus Service groups.
 */
 func (a *Client) GetAntivirusServiceGroups(params *GetAntivirusServiceGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAntivirusServiceGroupsOK, error) {
 	// TODO: Validate the params before sending
@@ -236,7 +278,7 @@ func (a *Client) GetAntivirusServiceGroups(params *GetAntivirusServiceGroupsPara
 /*
 GetIcapURIConnectionStatus gets i c a p Uri connection status
 
-Get ICAP Uri connection status.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get ICAP Uri connection status.
 */
 func (a *Client) GetIcapURIConnectionStatus(params *GetIcapURIConnectionStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIcapURIConnectionStatusOK, error) {
 	// TODO: Validate the params before sending
@@ -274,9 +316,9 @@ func (a *Client) GetIcapURIConnectionStatus(params *GetIcapURIConnectionStatusPa
 }
 
 /*
-GetInfectedFiles gets infected files
+GetInfectedFiles gets infected entities
 
-Get infected files.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get infected entities.
 */
 func (a *Client) GetInfectedFiles(params *GetInfectedFilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetInfectedFilesOK, error) {
 	// TODO: Validate the params before sending
@@ -316,7 +358,7 @@ func (a *Client) GetInfectedFiles(params *GetInfectedFilesParams, authInfo runti
 /*
 UpdateAntivirusGroup updates an antivirus service group with given parameters or if state is specified enable or disable given group
 
-Update an Antivirus Service group.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Update an Antivirus Service group.
 */
 func (a *Client) UpdateAntivirusGroup(params *UpdateAntivirusGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAntivirusGroupOK, error) {
 	// TODO: Validate the params before sending
@@ -354,9 +396,9 @@ func (a *Client) UpdateAntivirusGroup(params *UpdateAntivirusGroupParams, authIn
 }
 
 /*
-UpdateInfectedFiles updates infected files state
+UpdateInfectedFiles updates infected entities state
 
-Update infected files state.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update infected entities state.
 */
 func (a *Client) UpdateInfectedFiles(params *UpdateInfectedFilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateInfectedFilesCreated, error) {
 	// TODO: Validate the params before sending

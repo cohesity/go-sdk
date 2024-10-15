@@ -26,7 +26,7 @@ type AwsTargetParamsForRecoverRDSPostgres struct {
 	// Specifies the custom destination Server configuration parameters where the RDS Postgres instances will be recovered.
 	CustomServerConfig *RecoverRDSPostgresCustomServerConfig `json:"customServerConfig,omitempty"`
 
-	// Specifies the destination Source configuration parameters where the RDS Postgres instances will be recovered. This is mandatory if recoverToKnownSource is set to true.
+	// Specifies the destination Source configuration parameters where the RDS Postgres objects will be recovered. This is mandatory if recoverToKnownSource is set to true.
 	KnownSourceConfig *RecoverRDSPostgresToKnownSourceConfig `json:"knownSourceConfig,omitempty"`
 }
 

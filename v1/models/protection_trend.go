@@ -72,13 +72,21 @@ type ProtectionTrend struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies number of failed runs across trends.
@@ -131,7 +139,7 @@ var protectionTrendTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -164,123 +172,6 @@ const (
 
 	// ProtectionTrendEnvironmentKNimble captures enum value "kNimble"
 	ProtectionTrendEnvironmentKNimble string = "kNimble"
-
-	// ProtectionTrendEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	ProtectionTrendEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// ProtectionTrendEnvironmentKAzure captures enum value "kAzure"
-	ProtectionTrendEnvironmentKAzure string = "kAzure"
-
-	// ProtectionTrendEnvironmentKNetapp captures enum value "kNetapp"
-	ProtectionTrendEnvironmentKNetapp string = "kNetapp"
-
-	// ProtectionTrendEnvironmentKAgent captures enum value "kAgent"
-	ProtectionTrendEnvironmentKAgent string = "kAgent"
-
-	// ProtectionTrendEnvironmentKGenericNas captures enum value "kGenericNas"
-	ProtectionTrendEnvironmentKGenericNas string = "kGenericNas"
-
-	// ProtectionTrendEnvironmentKAcropolis captures enum value "kAcropolis"
-	ProtectionTrendEnvironmentKAcropolis string = "kAcropolis"
-
-	// ProtectionTrendEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	ProtectionTrendEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// ProtectionTrendEnvironmentKIsilon captures enum value "kIsilon"
-	ProtectionTrendEnvironmentKIsilon string = "kIsilon"
-
-	// ProtectionTrendEnvironmentKGPFS captures enum value "kGPFS"
-	ProtectionTrendEnvironmentKGPFS string = "kGPFS"
-
-	// ProtectionTrendEnvironmentKKVM captures enum value "kKVM"
-	ProtectionTrendEnvironmentKKVM string = "kKVM"
-
-	// ProtectionTrendEnvironmentKAWS captures enum value "kAWS"
-	ProtectionTrendEnvironmentKAWS string = "kAWS"
-
-	// ProtectionTrendEnvironmentKExchange captures enum value "kExchange"
-	ProtectionTrendEnvironmentKExchange string = "kExchange"
-
-	// ProtectionTrendEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	ProtectionTrendEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// ProtectionTrendEnvironmentKOracle captures enum value "kOracle"
-	ProtectionTrendEnvironmentKOracle string = "kOracle"
-
-	// ProtectionTrendEnvironmentKGCP captures enum value "kGCP"
-	ProtectionTrendEnvironmentKGCP string = "kGCP"
-
-	// ProtectionTrendEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	ProtectionTrendEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// ProtectionTrendEnvironmentKAWSNative captures enum value "kAWSNative"
-	ProtectionTrendEnvironmentKAWSNative string = "kAWSNative"
-
-	// ProtectionTrendEnvironmentKO365 captures enum value "kO365"
-	ProtectionTrendEnvironmentKO365 string = "kO365"
-
-	// ProtectionTrendEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	ProtectionTrendEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// ProtectionTrendEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	ProtectionTrendEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// ProtectionTrendEnvironmentKGCPNative captures enum value "kGCPNative"
-	ProtectionTrendEnvironmentKGCPNative string = "kGCPNative"
-
-	// ProtectionTrendEnvironmentKAzureNative captures enum value "kAzureNative"
-	ProtectionTrendEnvironmentKAzureNative string = "kAzureNative"
-
-	// ProtectionTrendEnvironmentKKubernetes captures enum value "kKubernetes"
-	ProtectionTrendEnvironmentKKubernetes string = "kKubernetes"
-
-	// ProtectionTrendEnvironmentKElastifile captures enum value "kElastifile"
-	ProtectionTrendEnvironmentKElastifile string = "kElastifile"
-
-	// ProtectionTrendEnvironmentKAD captures enum value "kAD"
-	ProtectionTrendEnvironmentKAD string = "kAD"
-
-	// ProtectionTrendEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	ProtectionTrendEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// ProtectionTrendEnvironmentKCassandra captures enum value "kCassandra"
-	ProtectionTrendEnvironmentKCassandra string = "kCassandra"
-
-	// ProtectionTrendEnvironmentKMongoDB captures enum value "kMongoDB"
-	ProtectionTrendEnvironmentKMongoDB string = "kMongoDB"
-
-	// ProtectionTrendEnvironmentKCouchbase captures enum value "kCouchbase"
-	ProtectionTrendEnvironmentKCouchbase string = "kCouchbase"
-
-	// ProtectionTrendEnvironmentKHdfs captures enum value "kHdfs"
-	ProtectionTrendEnvironmentKHdfs string = "kHdfs"
-
-	// ProtectionTrendEnvironmentKHive captures enum value "kHive"
-	ProtectionTrendEnvironmentKHive string = "kHive"
-
-	// ProtectionTrendEnvironmentKHBase captures enum value "kHBase"
-	ProtectionTrendEnvironmentKHBase string = "kHBase"
-
-	// ProtectionTrendEnvironmentKUDA captures enum value "kUDA"
-	ProtectionTrendEnvironmentKUDA string = "kUDA"
-
-	// ProtectionTrendEnvironmentKO365Teams captures enum value "kO365Teams"
-	ProtectionTrendEnvironmentKO365Teams string = "kO365Teams"
-
-	// ProtectionTrendEnvironmentKO365Group captures enum value "kO365Group"
-	ProtectionTrendEnvironmentKO365Group string = "kO365Group"
-
-	// ProtectionTrendEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	ProtectionTrendEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// ProtectionTrendEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	ProtectionTrendEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// ProtectionTrendEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	ProtectionTrendEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// ProtectionTrendEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	ProtectionTrendEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

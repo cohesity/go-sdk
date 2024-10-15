@@ -8,8 +8,10 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // LocalGroupParams Specifies properties for LOCAL Cohesity group.
@@ -19,6 +21,10 @@ type LocalGroupParams struct {
 
 	// Specifies the LOCAL users which are part of this group.
 	UserSids []string `json:"userSids,omitempty"`
+
+	// Specifies the usernames of the LOCAL users which are part of this group.
+	// Read Only: true
+	Usernames []string `json:"usernames,omitempty"`
 }
 
 // Validate validates this local group params
@@ -26,8 +32,26 @@ func (m *LocalGroupParams) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this local group params based on context it is used
+// ContextValidate validate this local group params based on the context it is used
 func (m *LocalGroupParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateUsernames(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *LocalGroupParams) contextValidateUsernames(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "usernames", "body", []string(m.Usernames)); err != nil {
+		return err
+	}
+
 	return nil
 }
 

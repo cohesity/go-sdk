@@ -16,6 +16,7 @@ import (
 // ProtectionRunShellInfoProto A message that contains shell information about a backup run.
 //
 // NOTE: This information is derived from BackupJobRunMetadataProto which is
+//
 // kept in memory by Magneto. Magneto does not need to unpack the entire
 // run metadata to furnish this information, making the RPC that serves
 // this info extremely efficient.

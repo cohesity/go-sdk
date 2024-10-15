@@ -78,7 +78,7 @@ type ClientService interface {
 /*
 CreateEmailOtp creates a new o t p to be sent to the user email
 
-Creates a new One Time Password for the user email. This is used for API login.
+```No Privileges Required``` <br><br>Creates a new One Time Password for the user email. This is used for API login.
 */
 func (a *Client) CreateEmailOtp(params *CreateEmailOtpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateEmailOtpNoContent, error) {
 	// TODO: Validate the params before sending
@@ -118,7 +118,7 @@ func (a *Client) CreateEmailOtp(params *CreateEmailOtpParams, authInfo runtime.C
 /*
 CreateTotpKey creates a new t o t p secret URI and store the secret key
 
-Create a TOTP key.
+```No Privileges Required``` <br><br>Create a TOTP key.
 */
 func (a *Client) CreateTotpKey(params *CreateTotpKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateTotpKeyCreated, error) {
 	// TODO: Validate the params before sending
@@ -158,7 +158,7 @@ func (a *Client) CreateTotpKey(params *CreateTotpKeyParams, authInfo runtime.Cli
 /*
 GetMFAConfig returns the current m f a configuration
 
-Returns the current MFA configuration for the cluster.
+```No Privileges Required``` <br><br>Returns the current MFA configuration for the cluster.
 */
 func (a *Client) GetMFAConfig(params *GetMFAConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetMFAConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -198,7 +198,7 @@ func (a *Client) GetMFAConfig(params *GetMFAConfigParams, authInfo runtime.Clien
 /*
 GetSupportMFAConfig returns the current m f a configuration
 
-Returns the current MFA configuration for support user.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the current MFA configuration for support user.
 */
 func (a *Client) GetSupportMFAConfig(params *GetSupportMFAConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSupportMFAConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -238,7 +238,7 @@ func (a *Client) GetSupportMFAConfig(params *GetSupportMFAConfigParams, authInfo
 /*
 SendEmailOtp creates a new o t p to be sent to the user email
 
-Creates a new One Time Password for the user email
+```No Privileges Required``` <br><br>Creates a new One Time Password for the user email
 */
 func (a *Client) SendEmailOtp(params *SendEmailOtpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SendEmailOtpNoContent, error) {
 	// TODO: Validate the params before sending
@@ -278,7 +278,7 @@ func (a *Client) SendEmailOtp(params *SendEmailOtpParams, authInfo runtime.Clien
 /*
 SendSupportEmailOtp creates a new o t p to be sent to the linux support user email
 
-Creates a new one time password for linux support user email
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Creates a new one time password for linux support user email
 */
 func (a *Client) SendSupportEmailOtp(params *SendSupportEmailOtpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SendSupportEmailOtpNoContent, error) {
 	// TODO: Validate the params before sending
@@ -318,7 +318,7 @@ func (a *Client) SendSupportEmailOtp(params *SendSupportEmailOtpParams, authInfo
 /*
 UpdateMFAConfig stores the updated m f a configuration
 
-Stores the updated MFA configuration for the cluster.
+**Privileges:** ```MFA_MODIFY``` <br><br>Stores the updated MFA configuration for the cluster.
 */
 func (a *Client) UpdateMFAConfig(params *UpdateMFAConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateMFAConfigNoContent, error) {
 	// TODO: Validate the params before sending
@@ -358,7 +358,7 @@ func (a *Client) UpdateMFAConfig(params *UpdateMFAConfigParams, authInfo runtime
 /*
 UpdateSupportMFAConfig stores the updated m f a configuration
 
-Update MFA configuration for support user.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update MFA configuration for support user.
 */
 func (a *Client) UpdateSupportMFAConfig(params *UpdateSupportMFAConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateSupportMFAConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -398,7 +398,7 @@ func (a *Client) UpdateSupportMFAConfig(params *UpdateSupportMFAConfigParams, au
 /*
 VerifySupportUserTotp verifies the totp code for support user
 
-Verify totp code for support user.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Verify totp code for support user.
 */
 func (a *Client) VerifySupportUserTotp(params *VerifySupportUserTotpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*VerifySupportUserTotpOK, error) {
 	// TODO: Validate the params before sending

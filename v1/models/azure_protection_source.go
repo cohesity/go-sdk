@@ -52,6 +52,9 @@ type AzureProtectionSource struct {
 	// Enum: ["kSubscription","kResourceGroup","kVirtualMachine","kStorageAccount","kStorageKey","kStorageContainer","kStorageBlob","kStorageResourceGroup","kNetworkSecurityGroup","kVirtualNetwork","kNetworkResourceGroup","kSubnet","kComputeOptions","kAvailabilitySet"]
 	AzureType *string `json:"azureType,omitempty"`
 
+	// Speecifies the list of Azure disk info.
+	DiskInfoList []*AzureDiskInfo `json:"diskInfoList"`
+
 	// Specifies Azure stack hub domain name for where the given subscription is
 	// present.
 	DomainName *string `json:"domainName,omitempty"`
@@ -188,6 +191,10 @@ func (m *AzureProtectionSource) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateDiskInfoList(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateHostType(formats); err != nil {
 		res = append(res, err)
 	}
@@ -283,6 +290,32 @@ func (m *AzureProtectionSource) validateAzureType(formats strfmt.Registry) error
 	// value enum
 	if err := m.validateAzureTypeEnum("azureType", "body", *m.AzureType); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *AzureProtectionSource) validateDiskInfoList(formats strfmt.Registry) error {
+	if swag.IsZero(m.DiskInfoList) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.DiskInfoList); i++ {
+		if swag.IsZero(m.DiskInfoList[i]) { // not required
+			continue
+		}
+
+		if m.DiskInfoList[i] != nil {
+			if err := m.DiskInfoList[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("diskInfoList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("diskInfoList" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -534,6 +567,10 @@ func (m *AzureProtectionSource) validateType(formats strfmt.Registry) error {
 func (m *AzureProtectionSource) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateDiskInfoList(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateTagAttributes(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -541,6 +578,31 @@ func (m *AzureProtectionSource) ContextValidate(ctx context.Context, formats str
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *AzureProtectionSource) contextValidateDiskInfoList(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.DiskInfoList); i++ {
+
+		if m.DiskInfoList[i] != nil {
+
+			if swag.IsZero(m.DiskInfoList[i]) { // not required
+				return nil
+			}
+
+			if err := m.DiskInfoList[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("diskInfoList" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("diskInfoList" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

@@ -25,8 +25,11 @@ type EnvBackupParams struct {
 	// This is applicable to AWS native backups.
 	AwsNativeEnvParams *AWSNativeEnvParams `json:"awsNativeEnvParams,omitempty"`
 
-	// This is applicable to Aws RDS Postgres environments.
+	// This is applicable to Aws RDS/Aurora Postgres environments.
 	AwsRdsPostgresEnvParams AwsRDSPostgresEnvBackupParams `json:"awsRdsPostgresEnvParams,omitempty"`
+
+	// This is applicable to kAzureNative job type.
+	AzureNativeEnvParams *AzureNativeEnvParams `json:"azureNativeEnvParams,omitempty"`
 
 	// This is applicable to Azure Sql environments.
 	AzureSQLEnvParams *AzureSQLEnvBackupParamsProto `json:"azureSqlEnvParams,omitempty"`
@@ -107,6 +110,10 @@ func (m *EnvBackupParams) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateAwsNativeEnvParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateAzureNativeEnvParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -238,6 +245,25 @@ func (m *EnvBackupParams) validateAwsNativeEnvParams(formats strfmt.Registry) er
 				return ve.ValidateName("awsNativeEnvParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("awsNativeEnvParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *EnvBackupParams) validateAzureNativeEnvParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.AzureNativeEnvParams) { // not required
+		return nil
+	}
+
+	if m.AzureNativeEnvParams != nil {
+		if err := m.AzureNativeEnvParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("azureNativeEnvParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("azureNativeEnvParams")
 			}
 			return err
 		}
@@ -695,6 +721,10 @@ func (m *EnvBackupParams) ContextValidate(ctx context.Context, formats strfmt.Re
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateAzureNativeEnvParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateAzureSQLEnvParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -827,6 +857,27 @@ func (m *EnvBackupParams) contextValidateAwsNativeEnvParams(ctx context.Context,
 				return ve.ValidateName("awsNativeEnvParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("awsNativeEnvParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *EnvBackupParams) contextValidateAzureNativeEnvParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.AzureNativeEnvParams != nil {
+
+		if swag.IsZero(m.AzureNativeEnvParams) { // not required
+			return nil
+		}
+
+		if err := m.AzureNativeEnvParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("azureNativeEnvParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("azureNativeEnvParams")
 			}
 			return err
 		}

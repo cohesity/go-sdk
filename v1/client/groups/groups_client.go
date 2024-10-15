@@ -68,7 +68,7 @@ type ClientService interface {
 /*
 	CreateGroup creates or add a new group to the cohesity cluster
 
-	If an Active Directory domain is specified, a new group is added to the
+	**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>If an Active Directory domain is specified, a new group is added to the
 
 Cohesity Cluster for the specified Active Directory group principal.
 If the LOCAL domain is specified, a new group is created directly in
@@ -114,7 +114,7 @@ func (a *Client) CreateGroup(params *CreateGroupParams, authInfo runtime.ClientA
 /*
 	DeleteGroups deletes one or more groups on the cohesity cluster
 
-	If the group on the Cohesity Cluster was added for an Active Directory user,
+	**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>If the group on the Cohesity Cluster was added for an Active Directory user,
 
 the referenced principal group on the Active Directory domain is NOT deleted.
 Only the group on the Cohesity Cluster is deleted.
@@ -159,7 +159,7 @@ func (a *Client) DeleteGroups(params *DeleteGroupsParams, authInfo runtime.Clien
 /*
 	GetGroups lists the groups that match the filter criteria specified using parameters
 
-	If no parameters are specified, all groups currently on the Cohesity Cluster
+	```No Privileges Required``` <br><br>If no parameters are specified, all groups currently on the Cohesity Cluster
 
 are returned. Specifying parameters filters the results that are returned.
 */
@@ -201,7 +201,7 @@ func (a *Client) GetGroups(params *GetGroupsParams, authInfo runtime.ClientAuthI
 /*
 UpdateGroup updates an existing group on the cohesity cluster only group settings on the cohesity cluster are updated no changes are made to the referenced group principal on the active directory
 
-Returns the group that was updated on the Cohesity Cluster.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Returns the group that was updated on the Cohesity Cluster.
 */
 func (a *Client) UpdateGroup(params *UpdateGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateGroupOK, error) {
 	// TODO: Validate the params before sending

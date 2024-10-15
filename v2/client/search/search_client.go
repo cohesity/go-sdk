@@ -66,7 +66,7 @@ type ClientService interface {
 /*
 SearchIndexedObjects lists indexed objects
 
-List all the indexed objects like files and folders, emails, mailboxes etc., that match the specified search and filter criteria from protected objects.
+**Privileges:** ```RESTORE_VIEW``` <br><br>List all the indexed objects like files and folders, emails, mailboxes etc., that match the specified search and filter criteria from protected objects.
 */
 func (a *Client) SearchIndexedObjects(params *SearchIndexedObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SearchIndexedObjectsOK, error) {
 	// TODO: Validate the params before sending
@@ -106,7 +106,7 @@ func (a *Client) SearchIndexedObjects(params *SearchIndexedObjectsParams, authIn
 /*
 SearchObjects lists objects
 
-List objects.
+**Privileges:** ```OBJECT_SEARCH``` <br><br>List objects.
 */
 func (a *Client) SearchObjects(params *SearchObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SearchObjectsOK, error) {
 	// TODO: Validate the params before sending
@@ -146,7 +146,7 @@ func (a *Client) SearchObjects(params *SearchObjectsParams, authInfo runtime.Cli
 /*
 SearchProtectedObjects lists protected objects
 
-List protected objects and corresponding detail information from registered sources filtered by specified query parameters. If no search pattern or filter parameters are specified, all protected objects currently found are returned.
+**Privileges:** ```RESTORE_VIEW``` <br><br>List protected objects and corresponding detail information from registered sources filtered by specified query parameters. If no search pattern or filter parameters are specified, all protected objects currently found are returned.
 */
 func (a *Client) SearchProtectedObjects(params *SearchProtectedObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SearchProtectedObjectsOK, error) {
 	// TODO: Validate the params before sending

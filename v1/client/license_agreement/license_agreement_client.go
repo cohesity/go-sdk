@@ -64,7 +64,7 @@ type ClientService interface {
 /*
 AcceptLicense accepts license agreement
 
-Accepts license agreement.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Accepts license agreement.
 */
 func (a *Client) AcceptLicense(params *AcceptLicenseParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AcceptLicenseNoContent, error) {
 	// TODO: Validate the params before sending
@@ -104,7 +104,7 @@ func (a *Client) AcceptLicense(params *AcceptLicenseParams, authInfo runtime.Cli
 /*
 UpdateEula updates e u l a version
 
-Updates EULA version.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Updates EULA version.
 */
 func (a *Client) UpdateEula(params *UpdateEulaParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateEulaOK, error) {
 	// TODO: Validate the params before sending

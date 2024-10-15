@@ -48,6 +48,9 @@ type DestroyClonedVMTaskInfoProto struct {
 
 	// Whether the clone view was deleted by the destroy task.
 	ViewDeleted *bool `json:"viewDeleted,omitempty"`
+
+	// Field to store information when using custom storage policy.
+	VmwareCustomStoragePolicyInfo *VMwareStoragePolicyInfo `json:"vmwareCustomStoragePolicyInfo,omitempty"`
 }
 
 // Validate validates this destroy cloned VM task info proto
@@ -55,6 +58,10 @@ func (m *DestroyClonedVMTaskInfoProto) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateDestroyClonedEntityInfoVec(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateVmwareCustomStoragePolicyInfo(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -90,11 +97,34 @@ func (m *DestroyClonedVMTaskInfoProto) validateDestroyClonedEntityInfoVec(format
 	return nil
 }
 
+func (m *DestroyClonedVMTaskInfoProto) validateVmwareCustomStoragePolicyInfo(formats strfmt.Registry) error {
+	if swag.IsZero(m.VmwareCustomStoragePolicyInfo) { // not required
+		return nil
+	}
+
+	if m.VmwareCustomStoragePolicyInfo != nil {
+		if err := m.VmwareCustomStoragePolicyInfo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("vmwareCustomStoragePolicyInfo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vmwareCustomStoragePolicyInfo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this destroy cloned VM task info proto based on the context it is used
 func (m *DestroyClonedVMTaskInfoProto) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateDestroyClonedEntityInfoVec(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateVmwareCustomStoragePolicyInfo(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -124,6 +154,27 @@ func (m *DestroyClonedVMTaskInfoProto) contextValidateDestroyClonedEntityInfoVec
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *DestroyClonedVMTaskInfoProto) contextValidateVmwareCustomStoragePolicyInfo(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.VmwareCustomStoragePolicyInfo != nil {
+
+		if swag.IsZero(m.VmwareCustomStoragePolicyInfo) { // not required
+			return nil
+		}
+
+		if err := m.VmwareCustomStoragePolicyInfo.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("vmwareCustomStoragePolicyInfo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vmwareCustomStoragePolicyInfo")
+			}
+			return err
+		}
 	}
 
 	return nil

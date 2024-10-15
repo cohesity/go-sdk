@@ -42,6 +42,9 @@ type VcenterRegistrationParams struct {
 
 	// Specifies datastore specific parameters.
 	DataStoreParams []*DatastoreParams `json:"dataStoreParams"`
+
+	// Specifies whether to update the last backup details, including the time of the backup attempt and backup status, for the virtual machines on the vCenter.
+	UpdateLastBackupDetails *bool `json:"updateLastBackupDetails,omitempty"`
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
@@ -68,6 +71,8 @@ func (m *VcenterRegistrationParams) UnmarshalJSON(raw []byte) error {
 		ThrottlingParams *VmwareThrottlingParams `json:"throttlingParams,omitempty"`
 
 		DataStoreParams []*DatastoreParams `json:"dataStoreParams"`
+
+		UpdateLastBackupDetails *bool `json:"updateLastBackupDetails,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
 		return err
@@ -86,6 +91,8 @@ func (m *VcenterRegistrationParams) UnmarshalJSON(raw []byte) error {
 	m.ThrottlingParams = dataAO1.ThrottlingParams
 
 	m.DataStoreParams = dataAO1.DataStoreParams
+
+	m.UpdateLastBackupDetails = dataAO1.UpdateLastBackupDetails
 
 	return nil
 }
@@ -113,6 +120,8 @@ func (m VcenterRegistrationParams) MarshalJSON() ([]byte, error) {
 		ThrottlingParams *VmwareThrottlingParams `json:"throttlingParams,omitempty"`
 
 		DataStoreParams []*DatastoreParams `json:"dataStoreParams"`
+
+		UpdateLastBackupDetails *bool `json:"updateLastBackupDetails,omitempty"`
 	}
 
 	dataAO1.CaCert = m.CaCert
@@ -128,6 +137,8 @@ func (m VcenterRegistrationParams) MarshalJSON() ([]byte, error) {
 	dataAO1.ThrottlingParams = m.ThrottlingParams
 
 	dataAO1.DataStoreParams = m.DataStoreParams
+
+	dataAO1.UpdateLastBackupDetails = m.UpdateLastBackupDetails
 
 	jsonDataAO1, errAO1 := swag.WriteJSON(dataAO1)
 	if errAO1 != nil {

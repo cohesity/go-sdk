@@ -17,8 +17,11 @@ import (
 // swagger:model DiskAttachParams
 type DiskAttachParams struct {
 
-	// azure disk
-	AzureDisk *int32 `json:"azureDisk,omitempty"`
+	// Type of the disk.
+	//
+	// Types that are valid to be assigned to Type:
+	// DiskAttachParams_AzureDisk
+	Type IsDiskAttachParamsType `json:"Type,omitempty"`
 
 	// Size of the disk to be provisioned.
 	Size *int64 `json:"size,omitempty"`

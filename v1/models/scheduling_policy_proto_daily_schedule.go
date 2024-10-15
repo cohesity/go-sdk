@@ -13,12 +13,13 @@ import (
 )
 
 // SchedulingPolicyProtoDailySchedule The daily schedule encompasses below 2 types of schedules.
-//
 // Sample protos:
 // Every n days (n >= 1)
 // Ex: For every 2 days, { frequency : 2 }
+//
 // Weekly schedule (Few selected weekdays)
 // Ex: For every Monday, Tuesday { days : {kMonday, kTuesday} }
+//
 // NOTE: Only one of the 'days' and 'frequency' should be populated.
 //
 // swagger:model SchedulingPolicyProto_DailySchedule

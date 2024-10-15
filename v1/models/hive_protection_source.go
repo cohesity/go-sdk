@@ -35,7 +35,7 @@ type HiveProtectionSource struct {
 	// nodes.
 	// 'kDatabase' indicates a Database in the Hive environment.
 	// 'kTable' indicates a Table in the Hive environment.
-	// Enum: ["kCluster","kDatabase","kTable"]
+	// Enum: ["kCluster","kDatabase","kTable","kView"]
 	Type *string `json:"type,omitempty"`
 
 	// Specifies the UUID for the Hive entity.
@@ -83,7 +83,7 @@ var hiveProtectionSourceTypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kCluster","kDatabase","kTable"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kCluster","kDatabase","kTable","kView"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -101,6 +101,9 @@ const (
 
 	// HiveProtectionSourceTypeKTable captures enum value "kTable"
 	HiveProtectionSourceTypeKTable string = "kTable"
+
+	// HiveProtectionSourceTypeKView captures enum value "kView"
+	HiveProtectionSourceTypeKView string = "kView"
 )
 
 // prop value enum

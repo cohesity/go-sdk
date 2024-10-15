@@ -38,7 +38,7 @@ type CommonTargetConfiguration struct {
 	ConfigID *string `json:"configId,omitempty"`
 
 	// Specifies which type of run should be copied, if not set, all types of runs will be eligible for copying. If set, this will ensure that the first run of given type in the scheduled period will get copied. Currently, this can only be set to Full.
-	// Enum: ["Regular","Full","Log","System"]
+	// Enum: ["Regular","Full","Log","System","StorageArraySnapshot"]
 	BackupRunType *string `json:"backupRunType,omitempty"`
 
 	// Specifies the replication/archival timeouts for different type of runs(kFull, kRegular etc.).
@@ -122,7 +122,7 @@ var commonTargetConfigurationTypeBackupRunTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Regular","Full","Log","System"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Regular","Full","Log","System","StorageArraySnapshot"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -143,6 +143,9 @@ const (
 
 	// CommonTargetConfigurationBackupRunTypeSystem captures enum value "System"
 	CommonTargetConfigurationBackupRunTypeSystem string = "System"
+
+	// CommonTargetConfigurationBackupRunTypeStorageArraySnapshot captures enum value "StorageArraySnapshot"
+	CommonTargetConfigurationBackupRunTypeStorageArraySnapshot string = "StorageArraySnapshot"
 )
 
 // prop value enum

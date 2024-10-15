@@ -63,6 +63,8 @@ type ClientService interface {
 
 /*
 GetNotifications lists the notification of the session user
+
+**Privileges:** ```CLUSTER_VIEW, TENANT_VIEW``` <br><br>
 */
 func (a *Client) GetNotifications(params *GetNotificationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetNotificationsOK, error) {
 	// TODO: Validate the params before sending
@@ -102,7 +104,7 @@ func (a *Client) GetNotifications(params *GetNotificationsParams, authInfo runti
 /*
 UpdateNotifications performs operations on the notification of the session user
 
-Returns success or failure.
+**Privileges:** ```CLUSTER_VIEW, TENANT_VIEW``` <br><br>Returns success or failure.
 */
 func (a *Client) UpdateNotifications(params *UpdateNotificationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateNotificationsNoContent, error) {
 	// TODO: Validate the params before sending

@@ -30,15 +30,15 @@ type ProtectionSummary struct {
 	StorageDomainID *string `json:"storageDomainId,omitempty"`
 
 	// Specifies the status of last local back up run.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]
 	LastBackupRunStatus *string `json:"lastBackupRunStatus,omitempty"`
 
 	// Specifies the status of last archival run.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]
 	LastArchivalRunStatus *string `json:"lastArchivalRunStatus,omitempty"`
 
 	// Specifies the status of last replication run.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]
 	LastReplicationRunStatus *string `json:"lastReplicationRunStatus,omitempty"`
 
 	// Specifies if the sla is violated in last run.
@@ -71,7 +71,7 @@ var protectionSummaryTypeLastBackupRunStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -114,6 +114,9 @@ const (
 	// ProtectionSummaryLastBackupRunStatusSkipped captures enum value "Skipped"
 	ProtectionSummaryLastBackupRunStatusSkipped string = "Skipped"
 
+	// ProtectionSummaryLastBackupRunStatusLegalHold captures enum value "LegalHold"
+	ProtectionSummaryLastBackupRunStatusLegalHold string = "LegalHold"
+
 	// ProtectionSummaryLastBackupRunStatusPaused captures enum value "Paused"
 	ProtectionSummaryLastBackupRunStatusPaused string = "Paused"
 )
@@ -143,7 +146,7 @@ var protectionSummaryTypeLastArchivalRunStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -186,6 +189,9 @@ const (
 	// ProtectionSummaryLastArchivalRunStatusSkipped captures enum value "Skipped"
 	ProtectionSummaryLastArchivalRunStatusSkipped string = "Skipped"
 
+	// ProtectionSummaryLastArchivalRunStatusLegalHold captures enum value "LegalHold"
+	ProtectionSummaryLastArchivalRunStatusLegalHold string = "LegalHold"
+
 	// ProtectionSummaryLastArchivalRunStatusPaused captures enum value "Paused"
 	ProtectionSummaryLastArchivalRunStatusPaused string = "Paused"
 )
@@ -215,7 +221,7 @@ var protectionSummaryTypeLastReplicationRunStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -257,6 +263,9 @@ const (
 
 	// ProtectionSummaryLastReplicationRunStatusSkipped captures enum value "Skipped"
 	ProtectionSummaryLastReplicationRunStatusSkipped string = "Skipped"
+
+	// ProtectionSummaryLastReplicationRunStatusLegalHold captures enum value "LegalHold"
+	ProtectionSummaryLastReplicationRunStatusLegalHold string = "LegalHold"
 
 	// ProtectionSummaryLastReplicationRunStatusPaused captures enum value "Paused"
 	ProtectionSummaryLastReplicationRunStatusPaused string = "Paused"

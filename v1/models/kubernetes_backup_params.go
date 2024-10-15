@@ -31,6 +31,9 @@ type KubernetesBackupParams struct {
 	// is true and the flag is enabled in the feature enabler.
 	IsProtectionUsingDatamoverEnabled *bool `json:"isProtectionUsingDatamoverEnabled,omitempty"`
 
+	// Indicates if quiescing feature is enabled in the feature enabler.
+	IsQuiescingEnabled *bool `json:"isQuiescingEnabled,omitempty"`
+
 	// Indicates if volume inclusion/exclusion feature is enabled in the feature
 	// enabler.
 	IsVolumeExclusionEnabled *bool `json:"isVolumeExclusionEnabled,omitempty"`

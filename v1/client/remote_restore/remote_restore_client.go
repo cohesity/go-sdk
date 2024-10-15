@@ -80,7 +80,7 @@ type ClientService interface {
 /*
 CreateCloudDomainMigrationRequest schedules cloud domain migration
 
-Returns the created cloud domain response.
+**Privileges:** ```REMOTE_RESTORE``` <br><br>Returns the created cloud domain response.
 */
 func (a *Client) CreateCloudDomainMigrationRequest(params *CreateCloudDomainMigrationRequestParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateCloudDomainMigrationRequestNoContent, error) {
 	// TODO: Validate the params before sending
@@ -120,7 +120,7 @@ func (a *Client) CreateCloudDomainMigrationRequest(params *CreateCloudDomainMigr
 /*
 	CreateRemoteVaultRestoreTask creates a remote vault restore task cloud retrieve
 
-	Returns the id of the remote Vault restore Task that was created.
+	**Privileges:** ```REMOTE_RESTORE``` <br><br>Returns the id of the remote Vault restore Task that was created.
 
 After a Vault is searched by a search Job, this operation can be
 called to create a task that restores the indexes and/or the Snapshots
@@ -166,7 +166,7 @@ func (a *Client) CreateRemoteVaultRestoreTask(params *CreateRemoteVaultRestoreTa
 /*
 	CreateRemoteVaultSearchJob creates a search of a remote vault cloud retrieve
 
-	A search Job finds Protection Jobs that archived data to a
+	**Privileges:** ```REMOTE_RESTORE``` <br><br>A search Job finds Protection Jobs that archived data to a
 
 Vault (External Target) which also match the specified search criteria.
 The results can be optionally filtered by specifying a Cluster match string,
@@ -215,7 +215,7 @@ func (a *Client) CreateRemoteVaultSearchJob(params *CreateRemoteVaultSearchJobPa
 /*
 	GetRemoteVaultSearchJobResults lists details about the job runs of protection jobs found by a single search of a remote vault cloud retrieve
 
-	Specify a unique id of the search Job using a combination of the
+	**Privileges:** ```REMOTE_RESTORE``` <br><br>Specify a unique id of the search Job using a combination of the
 
 searchJobId, clusterId, and clusterIncarnationId parameters,
 which are all required.
@@ -262,7 +262,7 @@ func (a *Client) GetRemoteVaultSearchJobResults(params *GetRemoteVaultSearchJobR
 /*
 ListCloudDomainMigration queries the cloud domain migration
 
-Returns the queried cloud domain response.
+**Privileges:** ```REMOTE_RESTORE``` <br><br>Returns the queried cloud domain response.
 */
 func (a *Client) ListCloudDomainMigration(params *ListCloudDomainMigrationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListCloudDomainMigrationOK, error) {
 	// TODO: Validate the params before sending
@@ -302,7 +302,7 @@ func (a *Client) ListCloudDomainMigration(params *ListCloudDomainMigrationParams
 /*
 	ListRemoteVaultRestoreTasks lists the remote vault restore tasks that have completed or are running on this cohesity cluster cloud retrieve
 
-	A remote Vault restore task can restore archived data from a Vault
+	**Privileges:** ```REMOTE_RESTORE``` <br><br>A remote Vault restore task can restore archived data from a Vault
 
 (External Target) to this local Cluster.
 This is part of the CloudRetrieve functionality for finding and restoring
@@ -346,7 +346,7 @@ func (a *Client) ListRemoteVaultRestoreTasks(params *ListRemoteVaultRestoreTasks
 /*
 	ListRemoteVaultSearchJobByID lists details about a single search job of a remote vault cloud retrieve
 
-	Specify an id for a completed or running search Job.
+	**Privileges:** ```REMOTE_RESTORE``` <br><br>Specify an id for a completed or running search Job.
 
 A search Job finds data that has been archived to a Vault (External Target).
 The returned results do not include Job Run (Snapshot) information.
@@ -391,7 +391,7 @@ func (a *Client) ListRemoteVaultSearchJobByID(params *ListRemoteVaultSearchJobBy
 /*
 	ListRemoteVaultSearchJobs lists all the searches of remote vaults cloud retrieve
 
-	List all the searches of remote Vaults (External Targets) that
+	**Privileges:** ```REMOTE_RESTORE``` <br><br>List all the searches of remote Vaults (External Targets) that
 
 have run or are running on this Cohesity Cluster.
 A search finds Protection Jobs that have archived to a
@@ -440,7 +440,7 @@ func (a *Client) ListRemoteVaultSearchJobs(params *ListRemoteVaultSearchJobsPara
 /*
 	StopRemoteVaultSearchJob stops a search of a remote vault external target cloud retrieve
 
-	This is part of the CloudRetrieve functionality for finding and restoring
+	**Privileges:** ```REMOTE_RESTORE``` <br><br>This is part of the CloudRetrieve functionality for finding and restoring
 
 archived data from remote Vaults to an alternative (non-original) Cluster.
 */
@@ -482,7 +482,7 @@ func (a *Client) StopRemoteVaultSearchJob(params *StopRemoteVaultSearchJobParams
 /*
 	UploadVaultEncryptionKeys uploads the encryption keys required to restore data from a remote vault cloud retrieve
 
-	This request contains multiple files stored as multipart mime data.
+	**Privileges:** ```CLUSTER_MODIFY``` <br><br>This request contains multiple files stored as multipart mime data.
 
 Each file has a key used to encrypt data between a remote Cluster and the
 remote Vault.

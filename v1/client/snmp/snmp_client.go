@@ -63,6 +63,8 @@ type ClientService interface {
 
 /*
 GetSnmpConfig gets the s n m p configuration of the cluster
+
+**Privileges:** ```CLUSTER_VIEW``` <br><br>
 */
 func (a *Client) GetSnmpConfig(params *GetSnmpConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSnmpConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -100,7 +102,7 @@ func (a *Client) GetSnmpConfig(params *GetSnmpConfigParams, authInfo runtime.Cli
 }
 
 /*
-UpdateSnmpConfig update SnmpConfig of the cluster
+UpdateSnmpConfig **Privileges:** ```CLUSTER_MODIFY``` <br><br>update SnmpConfig of the cluster
 */
 func (a *Client) UpdateSnmpConfig(params *UpdateSnmpConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateSnmpConfigOK, error) {
 	// TODO: Validate the params before sending

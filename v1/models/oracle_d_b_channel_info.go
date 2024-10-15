@@ -19,6 +19,7 @@ import (
 // of the database.
 //
 // Note: The name of this proto message is out-dated. This proto can represent
+//
 // more than just the database channel information. It should be renamed
 // in the future.
 //

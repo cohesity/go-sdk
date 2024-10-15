@@ -70,7 +70,7 @@ type ClientService interface {
 /*
 GetAuditLogs gets cluster audit logs
 
-Get a cluster audit logs.
+**Privileges:** ```CLUSTER_AUDIT``` <br><br>Get a cluster audit logs.
 */
 func (a *Client) GetAuditLogs(params *GetAuditLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAuditLogsOK, error) {
 	// TODO: Validate the params before sending
@@ -110,7 +110,7 @@ func (a *Client) GetAuditLogs(params *GetAuditLogsParams, authInfo runtime.Clien
 /*
 GetAuditLogsActions gets cluster audit logs actions
 
-Get all actions of cluster audit logs.
+**Privileges:** ```CLUSTER_AUDIT``` <br><br>Get all actions of cluster audit logs.
 */
 func (a *Client) GetAuditLogsActions(params *GetAuditLogsActionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAuditLogsActionsOK, error) {
 	// TODO: Validate the params before sending
@@ -150,7 +150,7 @@ func (a *Client) GetAuditLogsActions(params *GetAuditLogsActionsParams, authInfo
 /*
 GetAuditLogsEntityTypes gets cluster audit logs entity types
 
-Get all entity types of cluster audit logs.
+**Privileges:** ```CLUSTER_AUDIT``` <br><br>Get all entity types of cluster audit logs.
 */
 func (a *Client) GetAuditLogsEntityTypes(params *GetAuditLogsEntityTypesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAuditLogsEntityTypesOK, error) {
 	// TODO: Validate the params before sending
@@ -190,7 +190,7 @@ func (a *Client) GetAuditLogsEntityTypes(params *GetAuditLogsEntityTypesParams, 
 /*
 GetFilerAuditLogConfigs gets filer audit log configs
 
-Get filer audit log configs.
+**Privileges:** ```CLUSTER_AUDIT``` <br><br>Get filer audit log configs.
 */
 func (a *Client) GetFilerAuditLogConfigs(params *GetFilerAuditLogConfigsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetFilerAuditLogConfigsOK, error) {
 	// TODO: Validate the params before sending
@@ -230,7 +230,7 @@ func (a *Client) GetFilerAuditLogConfigs(params *GetFilerAuditLogConfigsParams, 
 /*
 UpdateFilerAuditLogConfigs updates filer audit log configs
 
-Update filer audit log configs.
+**Privileges:** ```CLUSTER_AUDIT``` <br><br>Update filer audit log configs.
 */
 func (a *Client) UpdateFilerAuditLogConfigs(params *UpdateFilerAuditLogConfigsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateFilerAuditLogConfigsOK, error) {
 	// TODO: Validate the params before sending

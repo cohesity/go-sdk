@@ -70,6 +70,14 @@ type GetResourcePoolsParams struct {
 	*/
 	EnvType *int32
 
+	/* NamespaceID.
+
+	   NamespaceId specifies the entity Id of the Namespace
+
+	   Format: int64
+	*/
+	NamespaceID *int64
+
 	/* VCenterID.
 
 	   VCenterId specifies the entity Id of the vCenter.
@@ -142,6 +150,17 @@ func (o *GetResourcePoolsParams) SetEnvType(envType *int32) {
 	o.EnvType = envType
 }
 
+// WithNamespaceID adds the namespaceID to the get resource pools params
+func (o *GetResourcePoolsParams) WithNamespaceID(namespaceID *int64) *GetResourcePoolsParams {
+	o.SetNamespaceID(namespaceID)
+	return o
+}
+
+// SetNamespaceID adds the namespaceId to the get resource pools params
+func (o *GetResourcePoolsParams) SetNamespaceID(namespaceID *int64) {
+	o.NamespaceID = namespaceID
+}
+
 // WithVCenterID adds the vCenterID to the get resource pools params
 func (o *GetResourcePoolsParams) WithVCenterID(vCenterID *int64) *GetResourcePoolsParams {
 	o.SetVCenterID(vCenterID)
@@ -173,6 +192,23 @@ func (o *GetResourcePoolsParams) WriteToRequest(r runtime.ClientRequest, reg str
 		if qEnvType != "" {
 
 			if err := r.SetQueryParam("envType", qEnvType); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.NamespaceID != nil {
+
+		// query param namespaceId
+		var qrNamespaceID int64
+
+		if o.NamespaceID != nil {
+			qrNamespaceID = *o.NamespaceID
+		}
+		qNamespaceID := swag.FormatInt64(qrNamespaceID)
+		if qNamespaceID != "" {
+
+			if err := r.SetQueryParam("namespaceId", qNamespaceID); err != nil {
 				return err
 			}
 		}

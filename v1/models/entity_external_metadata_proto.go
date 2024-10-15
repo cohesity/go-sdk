@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -23,7 +24,14 @@ import (
 // swagger:model EntityExternalMetadataProto
 type EntityExternalMetadataProto struct {
 
+	// Connector params required to connect to different type of environment.
+	CredentialVec []*PrivateAppCredentials `json:"credentialVec"`
+
 	// Connector params required to connect to the external entity if applicable.
+	// Don't use it for AWS entity. It was only being used for AWS RDS Postgres
+	// instances which has been converted to ChildType kRDSPostgres and added to
+	// credential_vec, so add a new child type if required for new AWS entities.
+	// It is also recommended to use credential_vec for other adapters as well.
 	Credentials *PrivateCredentials `json:"credentials,omitempty"`
 
 	// Information about maintenance mode, if applicable.
@@ -38,6 +46,10 @@ type EntityExternalMetadataProto struct {
 // Validate validates this entity external metadata proto
 func (m *EntityExternalMetadataProto) Validate(formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.validateCredentialVec(formats); err != nil {
+		res = append(res, err)
+	}
 
 	if err := m.validateCredentials(formats); err != nil {
 		res = append(res, err)
@@ -54,6 +66,32 @@ func (m *EntityExternalMetadataProto) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *EntityExternalMetadataProto) validateCredentialVec(formats strfmt.Registry) error {
+	if swag.IsZero(m.CredentialVec) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.CredentialVec); i++ {
+		if swag.IsZero(m.CredentialVec[i]) { // not required
+			continue
+		}
+
+		if m.CredentialVec[i] != nil {
+			if err := m.CredentialVec[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("credentialVec" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("credentialVec" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -118,6 +156,10 @@ func (m *EntityExternalMetadataProto) validateUdaParams(formats strfmt.Registry)
 func (m *EntityExternalMetadataProto) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateCredentialVec(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateCredentials(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -133,6 +175,31 @@ func (m *EntityExternalMetadataProto) ContextValidate(ctx context.Context, forma
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *EntityExternalMetadataProto) contextValidateCredentialVec(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.CredentialVec); i++ {
+
+		if m.CredentialVec[i] != nil {
+
+			if swag.IsZero(m.CredentialVec[i]) { // not required
+				return nil
+			}
+
+			if err := m.CredentialVec[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("credentialVec" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("credentialVec" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

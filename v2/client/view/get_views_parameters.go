@@ -113,6 +113,12 @@ type GetViewsParams struct {
 	*/
 	IncludeProtectionGroups *bool
 
+	/* IncludeS3MigrationOnly.
+
+	   Specifies whether to return only views which have a s3 migration state or are eligible for migration.
+	*/
+	IncludeS3MigrationOnly *bool
+
 	/* IncludeStats.
 
 	     If set to true, stats of views will be returned. By default this parameter
@@ -432,6 +438,17 @@ func (o *GetViewsParams) WithIncludeProtectionGroups(includeProtectionGroups *bo
 // SetIncludeProtectionGroups adds the includeProtectionGroups to the get views params
 func (o *GetViewsParams) SetIncludeProtectionGroups(includeProtectionGroups *bool) {
 	o.IncludeProtectionGroups = includeProtectionGroups
+}
+
+// WithIncludeS3MigrationOnly adds the includeS3MigrationOnly to the get views params
+func (o *GetViewsParams) WithIncludeS3MigrationOnly(includeS3MigrationOnly *bool) *GetViewsParams {
+	o.SetIncludeS3MigrationOnly(includeS3MigrationOnly)
+	return o
+}
+
+// SetIncludeS3MigrationOnly adds the includeS3MigrationOnly to the get views params
+func (o *GetViewsParams) SetIncludeS3MigrationOnly(includeS3MigrationOnly *bool) {
+	o.IncludeS3MigrationOnly = includeS3MigrationOnly
 }
 
 // WithIncludeStats adds the includeStats to the get views params
@@ -858,6 +875,23 @@ func (o *GetViewsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regi
 		if qIncludeProtectionGroups != "" {
 
 			if err := r.SetQueryParam("includeProtectionGroups", qIncludeProtectionGroups); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.IncludeS3MigrationOnly != nil {
+
+		// query param includeS3MigrationOnly
+		var qrIncludeS3MigrationOnly bool
+
+		if o.IncludeS3MigrationOnly != nil {
+			qrIncludeS3MigrationOnly = *o.IncludeS3MigrationOnly
+		}
+		qIncludeS3MigrationOnly := swag.FormatBool(qrIncludeS3MigrationOnly)
+		if qIncludeS3MigrationOnly != "" {
+
+			if err := r.SetQueryParam("includeS3MigrationOnly", qIncludeS3MigrationOnly); err != nil {
 				return err
 			}
 		}

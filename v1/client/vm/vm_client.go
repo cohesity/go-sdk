@@ -63,6 +63,8 @@ type ClientService interface {
 
 /*
 GetVMVolumeInfo gets volume information for v ms
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) GetVMVolumeInfo(params *GetVMVolumeInfoParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetVMVolumeInfoOK, error) {
 	// TODO: Validate the params before sending
@@ -101,6 +103,8 @@ func (a *Client) GetVMVolumeInfo(params *GetVMVolumeInfoParams, authInfo runtime
 
 /*
 ReadDir gets the directory listing for a VM
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) ReadDir(params *ReadDirParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ReadDirOK, error) {
 	// TODO: Validate the params before sending

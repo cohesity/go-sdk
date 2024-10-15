@@ -141,7 +141,7 @@ type ProtectionPolicy struct {
 
 	// Specifies the number of mins/hours/days in seconds to retain
 	// CDP backups if CDP schedule exists.
-	NumSecsToKeep *int32 `json:"numSecsToKeep,omitempty"`
+	NumSecsToKeep *int64 `json:"numSecsToKeep,omitempty"`
 
 	// Specifies the parent global policy Id. This must be specified when
 	// creating a policy from global policy template.

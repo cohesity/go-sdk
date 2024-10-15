@@ -24,7 +24,7 @@ type PrivateO365Entity struct {
 	// Since the map within proto message cannot have an enum as the key, the
 	// internal implementation will ensure that the keys only belong to the
 	// Attribute.Type enum.
-	AttributeMap []*EntityAttributeMapEntry `json:"attributeMap"`
+	AttributeMap map[string]string `json:"attributeMap,omitempty"`
 
 	// The city where this Office365 user entity is located.
 	// This field is deprecated. Use 'attribute_map' instead.
@@ -168,10 +168,6 @@ type PrivateO365Entity struct {
 func (m *PrivateO365Entity) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateAttributeMap(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateFrontEndSizeInfo(formats); err != nil {
 		res = append(res, err)
 	}
@@ -195,32 +191,6 @@ func (m *PrivateO365Entity) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *PrivateO365Entity) validateAttributeMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.AttributeMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.AttributeMap); i++ {
-		if swag.IsZero(m.AttributeMap[i]) { // not required
-			continue
-		}
-
-		if m.AttributeMap[i] != nil {
-			if err := m.AttributeMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("attributeMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("attributeMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 
@@ -330,10 +300,6 @@ func (m *PrivateO365Entity) validateTeamParams(formats strfmt.Registry) error {
 func (m *PrivateO365Entity) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidateAttributeMap(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.contextValidateFrontEndSizeInfo(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -357,31 +323,6 @@ func (m *PrivateO365Entity) ContextValidate(ctx context.Context, formats strfmt.
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *PrivateO365Entity) contextValidateAttributeMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.AttributeMap); i++ {
-
-		if m.AttributeMap[i] != nil {
-
-			if swag.IsZero(m.AttributeMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.AttributeMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("attributeMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("attributeMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

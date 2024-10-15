@@ -44,8 +44,12 @@ type User struct {
 	// 'kAuthAd' implies authenticated user is an Active Directory user.
 	// 'kAuthSalesforce' implies authenticated user is a Salesforce user.
 	// 'kAuthGoogle' implies authenticated user is a Google user.
-	// 'kAuthSso' implies authenticated user is an SSO user.
-	// Enum: ["kAuthLocal","kAuthAd","kAuthSalesforce","kAuthGoogle","kAuthSso"]
+	// 'kAuthSso' implies authenticated user is an SAML based SSO user.
+	// 'kAuthMcmOnPrem' implies authenticated user is an OnPrem MCM user.
+	// 'kAuthService' implies authenticated client is an API consumer.
+	// 'kAuthMsftSelfService' implies authenticated client is MSFT based via OIDC.
+	// 'kAuthOidcSso' implies authenticated user is an SSO user via OIDC.
+	// Enum: ["kAuthLocal","kAuthAd","kAuthSalesforce","kAuthGoogle","kAuthSso","kAuthMcmOnPrem","kAuthService","kAuthMsftSelfService","kAuthOidcSso"]
 	AuthenticationType *string `json:"authenticationType,omitempty"`
 
 	// Specifies the list of clusters this user has access to. If this is not
@@ -136,6 +140,11 @@ type User struct {
 
 	// Specifies MFA methods that enabled on the cluster.
 	MfaMethods []string `json:"mfaMethods"`
+
+	// Specifies additional information pertaining to Micrsoft account.
+	// This field is set only for users who have been authenticated through
+	// MSFT OpenID Connect for Self Service workflows.
+	MsftUserInfo *MsftUserInfo `json:"msftUserInfo,omitempty"`
 
 	// Specifies object class of user, could be either user or group.
 	ObjectClass *string `json:"objectClass,omitempty"`
@@ -255,6 +264,10 @@ func (m *User) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateMsftUserInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateOrgMembership(formats); err != nil {
 		res = append(res, err)
 	}
@@ -335,7 +348,7 @@ var userTypeAuthenticationTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kAuthLocal","kAuthAd","kAuthSalesforce","kAuthGoogle","kAuthSso"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kAuthLocal","kAuthAd","kAuthSalesforce","kAuthGoogle","kAuthSso","kAuthMcmOnPrem","kAuthService","kAuthMsftSelfService","kAuthOidcSso"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -359,6 +372,18 @@ const (
 
 	// UserAuthenticationTypeKAuthSso captures enum value "kAuthSso"
 	UserAuthenticationTypeKAuthSso string = "kAuthSso"
+
+	// UserAuthenticationTypeKAuthMcmOnPrem captures enum value "kAuthMcmOnPrem"
+	UserAuthenticationTypeKAuthMcmOnPrem string = "kAuthMcmOnPrem"
+
+	// UserAuthenticationTypeKAuthService captures enum value "kAuthService"
+	UserAuthenticationTypeKAuthService string = "kAuthService"
+
+	// UserAuthenticationTypeKAuthMsftSelfService captures enum value "kAuthMsftSelfService"
+	UserAuthenticationTypeKAuthMsftSelfService string = "kAuthMsftSelfService"
+
+	// UserAuthenticationTypeKAuthOidcSso captures enum value "kAuthOidcSso"
+	UserAuthenticationTypeKAuthOidcSso string = "kAuthOidcSso"
 )
 
 // prop value enum
@@ -508,6 +533,25 @@ func (m *User) validateMfaInfo(formats strfmt.Registry) error {
 				return ve.ValidateName("mfaInfo")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("mfaInfo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *User) validateMsftUserInfo(formats strfmt.Registry) error {
+	if swag.IsZero(m.MsftUserInfo) { // not required
+		return nil
+	}
+
+	if m.MsftUserInfo != nil {
+		if err := m.MsftUserInfo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("msftUserInfo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("msftUserInfo")
 			}
 			return err
 		}
@@ -746,6 +790,10 @@ func (m *User) ContextValidate(ctx context.Context, formats strfmt.Registry) err
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateMsftUserInfo(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateOrgMembership(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -929,6 +977,27 @@ func (m *User) contextValidateMfaInfo(ctx context.Context, formats strfmt.Regist
 				return ve.ValidateName("mfaInfo")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("mfaInfo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *User) contextValidateMsftUserInfo(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.MsftUserInfo != nil {
+
+		if swag.IsZero(m.MsftUserInfo) { // not required
+			return nil
+		}
+
+		if err := m.MsftUserInfo.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("msftUserInfo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("msftUserInfo")
 			}
 			return err
 		}

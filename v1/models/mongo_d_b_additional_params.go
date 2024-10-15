@@ -22,6 +22,9 @@ type MongoDBAdditionalParams struct {
 	// should be performed.
 	SecondaryNodeTag []string `json:"secondaryNodeTag"`
 
+	// Set to true if this cluster uses fixed node for backup.
+	UseFixedNodeForBackup *bool `json:"useFixedNodeForBackup,omitempty"`
+
 	// Set to true if this cluster uses secondary nodes for backup.
 	UseSecondaryForBackup *bool `json:"useSecondaryForBackup,omitempty"`
 }

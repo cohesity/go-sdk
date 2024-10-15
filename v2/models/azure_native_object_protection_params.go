@@ -26,6 +26,9 @@ type AzureNativeObjectProtectionParams struct {
 
 	// Specifies the the details of network used in transferring the data from source account to Cohesity cluster.
 	DataTransferInfo *DataTransferInfo `json:"dataTransferInfo,omitempty"`
+
+	// Specifies the parameters to exclude disks attached to Azure VM at job level.
+	DiskExclusionParams *AzureDiskExclusionParams `json:"diskExclusionParams,omitempty"`
 }
 
 // Validate validates this azure native object protection params
@@ -37,6 +40,10 @@ func (m *AzureNativeObjectProtectionParams) Validate(formats strfmt.Registry) er
 	}
 
 	if err := m.validateDataTransferInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDiskExclusionParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -91,6 +98,25 @@ func (m *AzureNativeObjectProtectionParams) validateDataTransferInfo(formats str
 	return nil
 }
 
+func (m *AzureNativeObjectProtectionParams) validateDiskExclusionParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.DiskExclusionParams) { // not required
+		return nil
+	}
+
+	if m.DiskExclusionParams != nil {
+		if err := m.DiskExclusionParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("diskExclusionParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("diskExclusionParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this azure native object protection params based on the context it is used
 func (m *AzureNativeObjectProtectionParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -100,6 +126,10 @@ func (m *AzureNativeObjectProtectionParams) ContextValidate(ctx context.Context,
 	}
 
 	if err := m.contextValidateDataTransferInfo(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateDiskExclusionParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -147,6 +177,27 @@ func (m *AzureNativeObjectProtectionParams) contextValidateDataTransferInfo(ctx 
 				return ve.ValidateName("dataTransferInfo")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("dataTransferInfo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *AzureNativeObjectProtectionParams) contextValidateDiskExclusionParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.DiskExclusionParams != nil {
+
+		if swag.IsZero(m.DiskExclusionParams) { // not required
+			return nil
+		}
+
+		if err := m.DiskExclusionParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("diskExclusionParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("diskExclusionParams")
 			}
 			return err
 		}

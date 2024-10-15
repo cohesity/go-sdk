@@ -64,7 +64,7 @@ type ClientService interface {
 /*
 ApplyTags applies tags on existing objects in the cohesity cluster
 
-Returns No Error if tagging done properly
+**Privileges:** ```TAGS_MANAGE``` <br><br>Returns No Error if tagging done properly
 */
 func (a *Client) ApplyTags(params *ApplyTagsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ApplyTagsOK, error) {
 	// TODO: Validate the params before sending
@@ -104,7 +104,7 @@ func (a *Client) ApplyTags(params *ApplyTagsParams, authInfo runtime.ClientAuthI
 /*
 RemoveTags removes tags on existing objects in the cohesity cluster
 
-Returns No Error if tagging done properly
+**Privileges:** ```TAGS_MANAGE``` <br><br>Returns No Error if tagging done properly
 */
 func (a *Client) RemoveTags(params *RemoveTagsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RemoveTagsOK, error) {
 	// TODO: Validate the params before sending

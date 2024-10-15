@@ -7,7 +7,6 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -34,7 +33,7 @@ type SfdcRecoverJobParams struct {
 
 	// A map containing prev_full_sfdc_server_timestamp_usecs for the dependent
 	// objects.
-	PrevFullSfdcServerTimestampUsecsMap []*SfdcRecoverJobParamsPrevFullSfdcServerTimestampUsecsMapEntry `json:"prevFullSfdcServerTimestampUsecsMap"`
+	PrevFullSfdcServerTimestampUsecsMap map[string]int64 `json:"prevFullSfdcServerTimestampUsecsMap,omitempty"`
 
 	// restore childs object vec
 	RestoreChildsObjectVec []string `json:"restoreChildsObjectVec"`
@@ -54,10 +53,6 @@ func (m *SfdcRecoverJobParams) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAuroraClusterInfo(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validatePrevFullSfdcServerTimestampUsecsMap(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -90,32 +85,6 @@ func (m *SfdcRecoverJobParams) validateAuroraClusterInfo(formats strfmt.Registry
 	return nil
 }
 
-func (m *SfdcRecoverJobParams) validatePrevFullSfdcServerTimestampUsecsMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.PrevFullSfdcServerTimestampUsecsMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.PrevFullSfdcServerTimestampUsecsMap); i++ {
-		if swag.IsZero(m.PrevFullSfdcServerTimestampUsecsMap[i]) { // not required
-			continue
-		}
-
-		if m.PrevFullSfdcServerTimestampUsecsMap[i] != nil {
-			if err := m.PrevFullSfdcServerTimestampUsecsMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("prevFullSfdcServerTimestampUsecsMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("prevFullSfdcServerTimestampUsecsMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 func (m *SfdcRecoverJobParams) validateS3BucketInfo(formats strfmt.Registry) error {
 	if swag.IsZero(m.S3BucketInfo) { // not required
 		return nil
@@ -140,10 +109,6 @@ func (m *SfdcRecoverJobParams) ContextValidate(ctx context.Context, formats strf
 	var res []error
 
 	if err := m.contextValidateAuroraClusterInfo(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidatePrevFullSfdcServerTimestampUsecsMap(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -173,31 +138,6 @@ func (m *SfdcRecoverJobParams) contextValidateAuroraClusterInfo(ctx context.Cont
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *SfdcRecoverJobParams) contextValidatePrevFullSfdcServerTimestampUsecsMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.PrevFullSfdcServerTimestampUsecsMap); i++ {
-
-		if m.PrevFullSfdcServerTimestampUsecsMap[i] != nil {
-
-			if swag.IsZero(m.PrevFullSfdcServerTimestampUsecsMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.PrevFullSfdcServerTimestampUsecsMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("prevFullSfdcServerTimestampUsecsMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("prevFullSfdcServerTimestampUsecsMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

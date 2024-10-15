@@ -19,6 +19,9 @@ import (
 // swagger:model DataProtectAzureInfo
 type DataProtectAzureInfo struct {
 
+	// Specifies the information regarding banner to display.
+	Banner *EntitlementBannerInfo `json:"banner,omitempty"`
+
 	// Specifies the end date of the subscription.
 	EndDate *string `json:"endDate,omitempty"`
 
@@ -27,6 +30,9 @@ type DataProtectAzureInfo struct {
 
 	// Specifies whether the subscription is free trial.
 	IsFreeTrial *bool `json:"isFreeTrial,omitempty"`
+
+	// Display name of the Product
+	ProductDisplayName *string `json:"productDisplayName,omitempty"`
 
 	// Specifies the quantity of the subscription.
 	Quantity *int64 `json:"quantity,omitempty"`
@@ -42,6 +48,10 @@ type DataProtectAzureInfo struct {
 func (m *DataProtectAzureInfo) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateBanner(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateTiering(formats); err != nil {
 		res = append(res, err)
 	}
@@ -49,6 +59,25 @@ func (m *DataProtectAzureInfo) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *DataProtectAzureInfo) validateBanner(formats strfmt.Registry) error {
+	if swag.IsZero(m.Banner) { // not required
+		return nil
+	}
+
+	if m.Banner != nil {
+		if err := m.Banner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("banner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("banner")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -75,6 +104,10 @@ func (m *DataProtectAzureInfo) validateTiering(formats strfmt.Registry) error {
 func (m *DataProtectAzureInfo) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateBanner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateTiering(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -82,6 +115,27 @@ func (m *DataProtectAzureInfo) ContextValidate(ctx context.Context, formats strf
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *DataProtectAzureInfo) contextValidateBanner(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Banner != nil {
+
+		if swag.IsZero(m.Banner) { // not required
+			return nil
+		}
+
+		if err := m.Banner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("banner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("banner")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

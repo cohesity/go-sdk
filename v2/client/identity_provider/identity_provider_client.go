@@ -80,7 +80,7 @@ type ClientService interface {
 /*
 CreateIdentity configures identity provider
 
-Configure Identity Provider on the cluster. Currently this API is only for Open ID providers, but will be expanded to include SAML providers in the future.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Configure Identity Provider on the cluster. Currently this API is only for Open ID providers, but will be expanded to include SAML providers in the future.
 */
 func (a *Client) CreateIdentity(params *CreateIdentityParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateIdentityCreated, error) {
 	// TODO: Validate the params before sending
@@ -120,7 +120,7 @@ func (a *Client) CreateIdentity(params *CreateIdentityParams, authInfo runtime.C
 /*
 CreateIdentityProvider configures identity provider
 
-Configure SAML based identity provider on the cluster
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Configure SAML based identity provider on the cluster
 */
 func (a *Client) CreateIdentityProvider(params *CreateIdentityProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateIdentityProviderCreated, error) {
 	// TODO: Validate the params before sending
@@ -160,7 +160,7 @@ func (a *Client) CreateIdentityProvider(params *CreateIdentityProviderParams, au
 /*
 DeleteIdentity deletes identity provider
 
-Delete identity provider configuration on the cluster. Currently this API only supports Open ID based SSO providers, but it will be expanded in the future to support SAML SSO providers.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Delete identity provider configuration on the cluster. Currently this API only supports Open ID based SSO providers, but it will be expanded in the future to support SAML SSO providers.
 */
 func (a *Client) DeleteIdentity(params *DeleteIdentityParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteIdentityNoContent, error) {
 	// TODO: Validate the params before sending
@@ -200,7 +200,7 @@ func (a *Client) DeleteIdentity(params *DeleteIdentityParams, authInfo runtime.C
 /*
 DeleteIdentityProvider deletes identity provider
 
-Delete SAML based identity provider configuration on the cluster
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Delete SAML based identity provider configuration on the cluster
 */
 func (a *Client) DeleteIdentityProvider(params *DeleteIdentityProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteIdentityProviderNoContent, error) {
 	// TODO: Validate the params before sending
@@ -240,7 +240,7 @@ func (a *Client) DeleteIdentityProvider(params *DeleteIdentityProviderParams, au
 /*
 GetIdentities gets identities
 
-Get Identity Providers configured on the cluster. Currently this API only supports Open ID based SSO providers, but it will be expanded in the future to support SAML SSO providers.
+**Privileges:** ```PRINCIPAL_VIEW``` <br><br>Get Identity Providers configured on the cluster. Currently this API only supports Open ID based SSO providers, but it will be expanded in the future to support SAML SSO providers.
 */
 func (a *Client) GetIdentities(params *GetIdentitiesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIdentitiesOK, error) {
 	// TODO: Validate the params before sending
@@ -280,7 +280,7 @@ func (a *Client) GetIdentities(params *GetIdentitiesParams, authInfo runtime.Cli
 /*
 GetIdentityProviders gets identity providers
 
-Get SAML based identity providers configured on the cluster
+**Privileges:** ```PRINCIPAL_VIEW``` <br><br>Get SAML based identity providers configured on the cluster
 */
 func (a *Client) GetIdentityProviders(params *GetIdentityProvidersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIdentityProvidersOK, error) {
 	// TODO: Validate the params before sending
@@ -320,7 +320,7 @@ func (a *Client) GetIdentityProviders(params *GetIdentityProvidersParams, authIn
 /*
 IdpsLogin logins to cluster using idp
 
-Redirects the client to the idp site with the URI to login
+```No Privileges Required``` <br><br>Redirects the client to the idp site with the URI to login
 */
 func (a *Client) IdpsLogin(params *IdpsLoginParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -354,7 +354,7 @@ func (a *Client) IdpsLogin(params *IdpsLoginParams, authInfo runtime.ClientAuthI
 /*
 PerformIdentityAction performs identity action
 
-Perform an action on an Identity Provider. Currently this API only supports Open ID based SSO providers, but it will be expanded in the future to support SAML SSO providers.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Perform an action on an Identity Provider. Currently this API only supports Open ID based SSO providers, but it will be expanded in the future to support SAML SSO providers.
 */
 func (a *Client) PerformIdentityAction(params *PerformIdentityActionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PerformIdentityActionCreated, error) {
 	// TODO: Validate the params before sending
@@ -394,7 +394,7 @@ func (a *Client) PerformIdentityAction(params *PerformIdentityActionParams, auth
 /*
 UpdateIdentity updates identity provider
 
-Update Identity Provider on the cluster. Currently this API only supports Open ID based SSO providers, but it will be expanded in the future to support SAML SSO providers.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Update Identity Provider on the cluster. Currently this API only supports Open ID based SSO providers, but it will be expanded in the future to support SAML SSO providers.
 */
 func (a *Client) UpdateIdentity(params *UpdateIdentityParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateIdentityOK, error) {
 	// TODO: Validate the params before sending
@@ -434,7 +434,7 @@ func (a *Client) UpdateIdentity(params *UpdateIdentityParams, authInfo runtime.C
 /*
 UpdateIdentityProvider updates identity provider
 
-Update SAML based identity provider configurartion on the cluster
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Update SAML based identity provider configurartion on the cluster
 */
 func (a *Client) UpdateIdentityProvider(params *UpdateIdentityProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateIdentityProviderOK, error) {
 	// TODO: Validate the params before sending

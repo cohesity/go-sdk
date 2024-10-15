@@ -33,6 +33,9 @@ type RestoreO365TeamsParams struct {
 	// Whether or not all teams are restored to original location.
 	RestoreToOriginal *bool `json:"restoreToOriginal,omitempty"`
 
+	// Bool which specifies if SP lists needs to be restored.
+	ShouldRestoreLists *bool `json:"shouldRestoreLists,omitempty"`
+
 	// target channel
 	TargetChannel *RestoreO365TeamsParamsTargetChannel `json:"targetChannel,omitempty"`
 

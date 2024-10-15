@@ -82,7 +82,7 @@ type ClientService interface {
 /*
 CancelRecoveryByID cancels recovery for a given id
 
-Cancel Recovery for a given id.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Cancel Recovery for a given id.
 */
 func (a *Client) CancelRecoveryByID(params *CancelRecoveryByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelRecoveryByIDNoContent, error) {
 	// TODO: Validate the params before sending
@@ -122,7 +122,7 @@ func (a *Client) CancelRecoveryByID(params *CancelRecoveryByIDParams, authInfo r
 /*
 CreateDownloadFilesAndFoldersRecovery creates a download files and folders recovery
 
-Creates a download files and folders recovery.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Creates a download files and folders recovery.
 */
 func (a *Client) CreateDownloadFilesAndFoldersRecovery(params *CreateDownloadFilesAndFoldersRecoveryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDownloadFilesAndFoldersRecoveryCreated, error) {
 	// TODO: Validate the params before sending
@@ -162,7 +162,7 @@ func (a *Client) CreateDownloadFilesAndFoldersRecovery(params *CreateDownloadFil
 /*
 CreateRecovery performs a recovery
 
-Performs a Recovery.
+**Privileges:** ```RESTORE_MODIFY, REMOTE_RESTORE``` <br><br>Performs a Recovery.
 */
 func (a *Client) CreateRecovery(params *CreateRecoveryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateRecoveryCreated, error) {
 	// TODO: Validate the params before sending
@@ -202,7 +202,7 @@ func (a *Client) CreateRecovery(params *CreateRecoveryParams, authInfo runtime.C
 /*
 DownloadFilesFromRecovery downloads files from the given download file recovery
 
-Download files from the given download file recovery.
+**Privileges:** ```RESTORE_DOWNLOAD``` <br><br>Download files from the given download file recovery.
 */
 func (a *Client) DownloadFilesFromRecovery(params *DownloadFilesFromRecoveryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DownloadFilesFromRecoveryOK, error) {
 	// TODO: Validate the params before sending
@@ -242,7 +242,7 @@ func (a *Client) DownloadFilesFromRecovery(params *DownloadFilesFromRecoveryPara
 /*
 DownloadIndexedFile downloads an indexed file
 
-Download an indexed file from a snapshot.
+**Privileges:** ```RESTORE_DOWNLOAD``` <br><br>Download an indexed file from a snapshot.
 */
 func (a *Client) DownloadIndexedFile(params *DownloadIndexedFileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DownloadIndexedFileOK, error) {
 	// TODO: Validate the params before sending
@@ -282,7 +282,7 @@ func (a *Client) DownloadIndexedFile(params *DownloadIndexedFileParams, authInfo
 /*
 FetchUptierData fetches the uptier data
 
-Fetches the uptier data for a restore job.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Fetches the uptier data for a restore job.
 */
 func (a *Client) FetchUptierData(params *FetchUptierDataParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*FetchUptierDataOK, error) {
 	// TODO: Validate the params before sending
@@ -322,7 +322,7 @@ func (a *Client) FetchUptierData(params *FetchUptierDataParams, authInfo runtime
 /*
 GetRecoveries lists the recoveries
 
-Lists the Recoveries.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Lists the Recoveries.
 */
 func (a *Client) GetRecoveries(params *GetRecoveriesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRecoveriesOK, error) {
 	// TODO: Validate the params before sending
@@ -362,7 +362,7 @@ func (a *Client) GetRecoveries(params *GetRecoveriesParams, authInfo runtime.Cli
 /*
 GetRecoveryByID gets recovery for a given id
 
-Get Recovery for a given id.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Get Recovery for a given id.
 */
 func (a *Client) GetRecoveryByID(params *GetRecoveryByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRecoveryByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -402,7 +402,7 @@ func (a *Client) GetRecoveryByID(params *GetRecoveryByIDParams, authInfo runtime
 /*
 GetRecoveryDebugLogs gets the debug logs for a particular recovery operation
 
-Get the debug logs for a particular recovery operation.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Get the debug logs for a particular recovery operation.
 */
 func (a *Client) GetRecoveryDebugLogs(params *GetRecoveryDebugLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRecoveryDebugLogsOK, error) {
 	// TODO: Validate the params before sending
@@ -442,7 +442,7 @@ func (a *Client) GetRecoveryDebugLogs(params *GetRecoveryDebugLogsParams, authIn
 /*
 GetRecoveryErrorsReport gets the c s v of errors warnings for a given recovery operation
 
-Get a CSV error report for given recovery operation. Each row in CSV report contains the File Path, error/warning code and error/warning message.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Get a CSV error report for given recovery operation. Each row in CSV report contains the File Path, error/warning code and error/warning message.
 */
 func (a *Client) GetRecoveryErrorsReport(params *GetRecoveryErrorsReportParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRecoveryErrorsReportOK, error) {
 	// TODO: Validate the params before sending
@@ -482,7 +482,7 @@ func (a *Client) GetRecoveryErrorsReport(params *GetRecoveryErrorsReportParams, 
 /*
 TearDownRecoveryByID tears down recovery for a given id
 
-Tear down Recovery for a given id.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Tear down Recovery for a given id.
 */
 func (a *Client) TearDownRecoveryByID(params *TearDownRecoveryByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*TearDownRecoveryByIDNoContent, error) {
 	// TODO: Validate the params before sending

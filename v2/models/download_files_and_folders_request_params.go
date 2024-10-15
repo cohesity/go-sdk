@@ -35,10 +35,13 @@ type DownloadFilesAndFoldersRequestParams struct {
 	// Pattern: ^\d+:\d+:\d+$
 	ParentRecoveryID *string `json:"parentRecoveryId,omitempty"`
 
-	// Specifies the list of files and folders to download.
-	// Required: true
+	// Specifies the list of files and folders to download. Only one of filesAndFolders or documents should be used.
 	// Min Items: 1
 	FilesAndFolders []*FilesAndFoldersObject `json:"filesAndFolders"`
+
+	// Specifies the list of documents to download using item ids. Only one of filesAndFolders or documents should be used. Currently only files are supported by documents.
+	// Min Items: 1
+	Documents []*DocumentObject `json:"documents"`
 
 	// Specifies the glacier retrieval type when restoring or downloding files or folders from a Glacier-based cloud snapshot.
 	// Enum: ["kStandard","kExpeditedNoPCU","kExpeditedWithPCU"]
@@ -62,6 +65,10 @@ func (m *DownloadFilesAndFoldersRequestParams) Validate(formats strfmt.Registry)
 	}
 
 	if err := m.validateFilesAndFolders(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDocuments(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -117,9 +124,8 @@ func (m *DownloadFilesAndFoldersRequestParams) validateParentRecoveryID(formats 
 }
 
 func (m *DownloadFilesAndFoldersRequestParams) validateFilesAndFolders(formats strfmt.Registry) error {
-
-	if err := validate.Required("filesAndFolders", "body", m.FilesAndFolders); err != nil {
-		return err
+	if swag.IsZero(m.FilesAndFolders) { // not required
+		return nil
 	}
 
 	iFilesAndFoldersSize := int64(len(m.FilesAndFolders))
@@ -139,6 +145,38 @@ func (m *DownloadFilesAndFoldersRequestParams) validateFilesAndFolders(formats s
 					return ve.ValidateName("filesAndFolders" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("filesAndFolders" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *DownloadFilesAndFoldersRequestParams) validateDocuments(formats strfmt.Registry) error {
+	if swag.IsZero(m.Documents) { // not required
+		return nil
+	}
+
+	iDocumentsSize := int64(len(m.Documents))
+
+	if err := validate.MinItems("documents", "body", iDocumentsSize, 1); err != nil {
+		return err
+	}
+
+	for i := 0; i < len(m.Documents); i++ {
+		if swag.IsZero(m.Documents[i]) { // not required
+			continue
+		}
+
+		if m.Documents[i] != nil {
+			if err := m.Documents[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("documents" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("documents" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -206,6 +244,10 @@ func (m *DownloadFilesAndFoldersRequestParams) ContextValidate(ctx context.Conte
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateDocuments(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -244,6 +286,31 @@ func (m *DownloadFilesAndFoldersRequestParams) contextValidateFilesAndFolders(ct
 					return ve.ValidateName("filesAndFolders" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("filesAndFolders" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *DownloadFilesAndFoldersRequestParams) contextValidateDocuments(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Documents); i++ {
+
+		if m.Documents[i] != nil {
+
+			if swag.IsZero(m.Documents[i]) { // not required
+				return nil
+			}
+
+			if err := m.Documents[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("documents" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("documents" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

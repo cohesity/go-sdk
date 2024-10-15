@@ -74,7 +74,7 @@ type ClientService interface {
 /*
 CreateProtectionPolicy creates a protection policy
 
-Create the Protection Policy and returns the newly created policy object.
+**Privileges:** ```PROTECTION_POLICY_MODIFY``` <br><br>Create the Protection Policy and returns the newly created policy object.
 */
 func (a *Client) CreateProtectionPolicy(params *CreateProtectionPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProtectionPolicyCreated, error) {
 	// TODO: Validate the params before sending
@@ -114,7 +114,7 @@ func (a *Client) CreateProtectionPolicy(params *CreateProtectionPolicyParams, au
 /*
 DeleteProtectionPolicy deletes a protection policy
 
-Deletes a Protection Policy based on given policy id.
+**Privileges:** ```PROTECTION_POLICY_MODIFY``` <br><br>Deletes a Protection Policy based on given policy id.
 */
 func (a *Client) DeleteProtectionPolicy(params *DeleteProtectionPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProtectionPolicyNoContent, error) {
 	// TODO: Validate the params before sending
@@ -154,7 +154,7 @@ func (a *Client) DeleteProtectionPolicy(params *DeleteProtectionPolicyParams, au
 /*
 GetPolicyTemplateByID lists details about a single policy template
 
-Returns the Policy Template corresponding to the specified Policy Id.
+**Privileges:** ```PROTECTION_POLICY_VIEW``` <br><br>Returns the Policy Template corresponding to the specified Policy Id.
 */
 func (a *Client) GetPolicyTemplateByID(params *GetPolicyTemplateByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPolicyTemplateByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -194,7 +194,7 @@ func (a *Client) GetPolicyTemplateByID(params *GetPolicyTemplateByIDParams, auth
 /*
 GetPolicyTemplates lists policy templates filtered by query parameters
 
-Returns the policy templates based on the filtering parameters. If no parameters are specified, then all the policy templates are returned.
+**Privileges:** ```PROTECTION_POLICY_VIEW``` <br><br>Returns the policy templates based on the filtering parameters. If no parameters are specified, then all the policy templates are returned.
 */
 func (a *Client) GetPolicyTemplates(params *GetPolicyTemplatesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPolicyTemplatesOK, error) {
 	// TODO: Validate the params before sending
@@ -234,7 +234,7 @@ func (a *Client) GetPolicyTemplates(params *GetPolicyTemplatesParams, authInfo r
 /*
 GetProtectionPolicies lists protection policies based on provided filtering parameters
 
-Lists protection policies based on filtering query parameters.
+**Privileges:** ```PROTECTION_POLICY_VIEW``` <br><br>Lists protection policies based on filtering query parameters.
 */
 func (a *Client) GetProtectionPolicies(params *GetProtectionPoliciesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionPoliciesOK, error) {
 	// TODO: Validate the params before sending
@@ -274,7 +274,7 @@ func (a *Client) GetProtectionPolicies(params *GetProtectionPoliciesParams, auth
 /*
 GetProtectionPolicyByID lists details about a single protection policy
 
-Returns the Protection Policy details based on provided Policy Id.
+**Privileges:** ```PROTECTION_POLICY_VIEW``` <br><br>Returns the Protection Policy details based on provided Policy Id.
 */
 func (a *Client) GetProtectionPolicyByID(params *GetProtectionPolicyByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionPolicyByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -314,7 +314,7 @@ func (a *Client) GetProtectionPolicyByID(params *GetProtectionPolicyByIDParams, 
 /*
 UpdateProtectionPolicy updates a protection policy
 
-Specifies the request to update the existing Protection Policy. On successful update, returns the updated policy object.
+**Privileges:** ```PROTECTION_POLICY_MODIFY``` <br><br>Specifies the request to update the existing Protection Policy. On successful update, returns the updated policy object.
 */
 func (a *Client) UpdateProtectionPolicy(params *UpdateProtectionPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProtectionPolicyOK, error) {
 	// TODO: Validate the params before sending

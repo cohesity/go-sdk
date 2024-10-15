@@ -92,13 +92,21 @@ type ConsumerStats struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	ProtectionEnvironment *string `json:"protectionEnvironment,omitempty"`
 
 	// Specifies the name of the protection policy for 'kProtectionRuns' and
@@ -224,7 +232,7 @@ var consumerStatsTypeProtectionEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -257,123 +265,6 @@ const (
 
 	// ConsumerStatsProtectionEnvironmentKNimble captures enum value "kNimble"
 	ConsumerStatsProtectionEnvironmentKNimble string = "kNimble"
-
-	// ConsumerStatsProtectionEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	ConsumerStatsProtectionEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// ConsumerStatsProtectionEnvironmentKAzure captures enum value "kAzure"
-	ConsumerStatsProtectionEnvironmentKAzure string = "kAzure"
-
-	// ConsumerStatsProtectionEnvironmentKNetapp captures enum value "kNetapp"
-	ConsumerStatsProtectionEnvironmentKNetapp string = "kNetapp"
-
-	// ConsumerStatsProtectionEnvironmentKAgent captures enum value "kAgent"
-	ConsumerStatsProtectionEnvironmentKAgent string = "kAgent"
-
-	// ConsumerStatsProtectionEnvironmentKGenericNas captures enum value "kGenericNas"
-	ConsumerStatsProtectionEnvironmentKGenericNas string = "kGenericNas"
-
-	// ConsumerStatsProtectionEnvironmentKAcropolis captures enum value "kAcropolis"
-	ConsumerStatsProtectionEnvironmentKAcropolis string = "kAcropolis"
-
-	// ConsumerStatsProtectionEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	ConsumerStatsProtectionEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// ConsumerStatsProtectionEnvironmentKIsilon captures enum value "kIsilon"
-	ConsumerStatsProtectionEnvironmentKIsilon string = "kIsilon"
-
-	// ConsumerStatsProtectionEnvironmentKGPFS captures enum value "kGPFS"
-	ConsumerStatsProtectionEnvironmentKGPFS string = "kGPFS"
-
-	// ConsumerStatsProtectionEnvironmentKKVM captures enum value "kKVM"
-	ConsumerStatsProtectionEnvironmentKKVM string = "kKVM"
-
-	// ConsumerStatsProtectionEnvironmentKAWS captures enum value "kAWS"
-	ConsumerStatsProtectionEnvironmentKAWS string = "kAWS"
-
-	// ConsumerStatsProtectionEnvironmentKExchange captures enum value "kExchange"
-	ConsumerStatsProtectionEnvironmentKExchange string = "kExchange"
-
-	// ConsumerStatsProtectionEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	ConsumerStatsProtectionEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// ConsumerStatsProtectionEnvironmentKOracle captures enum value "kOracle"
-	ConsumerStatsProtectionEnvironmentKOracle string = "kOracle"
-
-	// ConsumerStatsProtectionEnvironmentKGCP captures enum value "kGCP"
-	ConsumerStatsProtectionEnvironmentKGCP string = "kGCP"
-
-	// ConsumerStatsProtectionEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	ConsumerStatsProtectionEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// ConsumerStatsProtectionEnvironmentKAWSNative captures enum value "kAWSNative"
-	ConsumerStatsProtectionEnvironmentKAWSNative string = "kAWSNative"
-
-	// ConsumerStatsProtectionEnvironmentKO365 captures enum value "kO365"
-	ConsumerStatsProtectionEnvironmentKO365 string = "kO365"
-
-	// ConsumerStatsProtectionEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	ConsumerStatsProtectionEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// ConsumerStatsProtectionEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	ConsumerStatsProtectionEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// ConsumerStatsProtectionEnvironmentKGCPNative captures enum value "kGCPNative"
-	ConsumerStatsProtectionEnvironmentKGCPNative string = "kGCPNative"
-
-	// ConsumerStatsProtectionEnvironmentKAzureNative captures enum value "kAzureNative"
-	ConsumerStatsProtectionEnvironmentKAzureNative string = "kAzureNative"
-
-	// ConsumerStatsProtectionEnvironmentKKubernetes captures enum value "kKubernetes"
-	ConsumerStatsProtectionEnvironmentKKubernetes string = "kKubernetes"
-
-	// ConsumerStatsProtectionEnvironmentKElastifile captures enum value "kElastifile"
-	ConsumerStatsProtectionEnvironmentKElastifile string = "kElastifile"
-
-	// ConsumerStatsProtectionEnvironmentKAD captures enum value "kAD"
-	ConsumerStatsProtectionEnvironmentKAD string = "kAD"
-
-	// ConsumerStatsProtectionEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	ConsumerStatsProtectionEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// ConsumerStatsProtectionEnvironmentKCassandra captures enum value "kCassandra"
-	ConsumerStatsProtectionEnvironmentKCassandra string = "kCassandra"
-
-	// ConsumerStatsProtectionEnvironmentKMongoDB captures enum value "kMongoDB"
-	ConsumerStatsProtectionEnvironmentKMongoDB string = "kMongoDB"
-
-	// ConsumerStatsProtectionEnvironmentKCouchbase captures enum value "kCouchbase"
-	ConsumerStatsProtectionEnvironmentKCouchbase string = "kCouchbase"
-
-	// ConsumerStatsProtectionEnvironmentKHdfs captures enum value "kHdfs"
-	ConsumerStatsProtectionEnvironmentKHdfs string = "kHdfs"
-
-	// ConsumerStatsProtectionEnvironmentKHive captures enum value "kHive"
-	ConsumerStatsProtectionEnvironmentKHive string = "kHive"
-
-	// ConsumerStatsProtectionEnvironmentKHBase captures enum value "kHBase"
-	ConsumerStatsProtectionEnvironmentKHBase string = "kHBase"
-
-	// ConsumerStatsProtectionEnvironmentKUDA captures enum value "kUDA"
-	ConsumerStatsProtectionEnvironmentKUDA string = "kUDA"
-
-	// ConsumerStatsProtectionEnvironmentKO365Teams captures enum value "kO365Teams"
-	ConsumerStatsProtectionEnvironmentKO365Teams string = "kO365Teams"
-
-	// ConsumerStatsProtectionEnvironmentKO365Group captures enum value "kO365Group"
-	ConsumerStatsProtectionEnvironmentKO365Group string = "kO365Group"
-
-	// ConsumerStatsProtectionEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	ConsumerStatsProtectionEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// ConsumerStatsProtectionEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	ConsumerStatsProtectionEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// ConsumerStatsProtectionEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	ConsumerStatsProtectionEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// ConsumerStatsProtectionEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	ConsumerStatsProtectionEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

@@ -68,7 +68,7 @@ type ClientService interface {
 /*
 CreateRole creates a role
 
-Create a Role.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Create a Role.
 */
 func (a *Client) CreateRole(params *CreateRoleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateRoleCreated, error) {
 	// TODO: Validate the params before sending
@@ -108,7 +108,7 @@ func (a *Client) CreateRole(params *CreateRoleParams, authInfo runtime.ClientAut
 /*
 DeleteRole deletes a role
 
-Delete a Role.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Delete a Role.
 */
 func (a *Client) DeleteRole(params *DeleteRoleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRoleNoContent, error) {
 	// TODO: Validate the params before sending
@@ -148,7 +148,7 @@ func (a *Client) DeleteRole(params *DeleteRoleParams, authInfo runtime.ClientAut
 /*
 GetRoles gets roles
 
-Get Roles.
+**Privileges:** ```PRINCIPAL_VIEW``` <br><br>Get Roles.
 */
 func (a *Client) GetRoles(params *GetRolesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRolesOK, error) {
 	// TODO: Validate the params before sending
@@ -188,7 +188,7 @@ func (a *Client) GetRoles(params *GetRolesParams, authInfo runtime.ClientAuthInf
 /*
 UpdateRole updates a role
 
-Update a Role.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Update a Role.
 */
 func (a *Client) UpdateRole(params *UpdateRoleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateRoleOK, error) {
 	// TODO: Validate the params before sending

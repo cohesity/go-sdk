@@ -66,7 +66,7 @@ type ClientService interface {
 /*
 GetAuditLogsActions returns list of audit log actions
 
-A string array of all the actions used to filter audit logs.
+**Privileges:** ```CLUSTER_AUDIT``` <br><br>A string array of all the actions used to filter audit logs.
 */
 func (a *Client) GetAuditLogsActions(params *GetAuditLogsActionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAuditLogsActionsOK, error) {
 	// TODO: Validate the params before sending
@@ -106,7 +106,7 @@ func (a *Client) GetAuditLogsActions(params *GetAuditLogsActionsParams, authInfo
 /*
 GetAuditLogsCategories returns list of audit log categories
 
-A string array of all the categories used to filter audit logs.
+**Privileges:** ```CLUSTER_AUDIT``` <br><br>A string array of all the categories used to filter audit logs.
 */
 func (a *Client) GetAuditLogsCategories(params *GetAuditLogsCategoriesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAuditLogsCategoriesOK, error) {
 	// TODO: Validate the params before sending
@@ -146,7 +146,7 @@ func (a *Client) GetAuditLogsCategories(params *GetAuditLogsCategoriesParams, au
 /*
 	SearchClusterAuditLogs lists the cluster audit logs on the cohesity cluster that match the filter criteria specified using parameters
 
-	When actions (such as a login or a Job being paused) occur on the
+	**Privileges:** ```CLUSTER_AUDIT``` <br><br>When actions (such as a login or a Job being paused) occur on the
 
 Cohesity Cluster, the Cluster generates Audit Logs.
 If no parameters are specified, all logs currently on the Cohesity Cluster

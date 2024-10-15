@@ -19,21 +19,24 @@ import (
 type PrivateAwsCredentials struct {
 
 	// Access key id.
-	AccessKeyID *string `json:"access_key_id,omitempty"`
+	AccessKeyID *string `json:"accessKeyId,omitempty"`
 
 	// Authentication method to be used for API calls.
-	AuthMethod *int32 `json:"auth_method,omitempty"`
+	AuthMethod *int32 `json:"authMethod,omitempty"`
+
+	// Information related to the AD account managed by AWS.
+	AwsManagedAd *AWSManagedADInfo `json:"awsManagedAd,omitempty"`
 
 	// C2S CAP server information.
-	C2sServerCapInfo *C2SCAPServerInfo `json:"c2s_server_cap_info,omitempty"`
+	C2SServerCapInfo *C2SCAPServerInfo `json:"c2SServerCapInfo,omitempty"`
 
 	// This is only applicable in case of DMaaS. Control plane IAM role ARN,
 	// this is first assumed by the dataplane(cluster). Then we assume the
 	// iam_role_arn which is tenant's IAM role with all required permissions.
-	CpIamRoleArn *string `json:"cp_iam_role_arn,omitempty"`
+	CpIamRoleArn *string `json:"cpIamRoleArn,omitempty"`
 
 	// Encrypted secret access key.
-	EncryptedSecretAccessKey []uint8 `json:"encrypted_secret_access_key"`
+	EncryptedSecretAccessKey []uint8 `json:"encryptedSecretAccessKey"`
 
 	// Endpoint to be used while connecting with AWS. Currently this is being
 	// used to communicate with Cohesity S3. Note: Vault type will be
@@ -46,23 +49,30 @@ type PrivateAwsCredentials struct {
 	//
 	// In case of DMaaS this will be the Tenant's IAM role ARN. This is assumed
 	// only after the cp_iam_role_arn(control plane role) is assumed.
-	IamRoleArn *string `json:"iam_role_arn,omitempty"`
+	IamRoleArn *string `json:"iamRoleArn,omitempty"`
 
 	// Secret access key.
-	SecretAccessKey *string `json:"secret_access_key,omitempty"`
+	SecretAccessKey *string `json:"secretAccessKey,omitempty"`
+
+	// Session token.
+	SessionToken []uint8 `json:"sessionToken"`
 
 	// Represents which type of subscription the credentials belong to. Depending
 	// upon the type of subscription, whether AWS Commercial or AWS Gov cloud we
 	// will need to use different ClientConfigurations when talking to various
 	// Azure services.
-	SubscriptionType *int32 `json:"subscription_type,omitempty"`
+	SubscriptionType *int32 `json:"subscriptionType,omitempty"`
 }
 
 // Validate validates this private aws credentials
 func (m *PrivateAwsCredentials) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateC2sServerCapInfo(formats); err != nil {
+	if err := m.validateAwsManagedAd(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateC2SServerCapInfo(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -72,17 +82,36 @@ func (m *PrivateAwsCredentials) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *PrivateAwsCredentials) validateC2sServerCapInfo(formats strfmt.Registry) error {
-	if swag.IsZero(m.C2sServerCapInfo) { // not required
+func (m *PrivateAwsCredentials) validateAwsManagedAd(formats strfmt.Registry) error {
+	if swag.IsZero(m.AwsManagedAd) { // not required
 		return nil
 	}
 
-	if m.C2sServerCapInfo != nil {
-		if err := m.C2sServerCapInfo.Validate(formats); err != nil {
+	if m.AwsManagedAd != nil {
+		if err := m.AwsManagedAd.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("c2s_server_cap_info")
+				return ve.ValidateName("awsManagedAd")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("c2s_server_cap_info")
+				return ce.ValidateName("awsManagedAd")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *PrivateAwsCredentials) validateC2SServerCapInfo(formats strfmt.Registry) error {
+	if swag.IsZero(m.C2SServerCapInfo) { // not required
+		return nil
+	}
+
+	if m.C2SServerCapInfo != nil {
+		if err := m.C2SServerCapInfo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("c2SServerCapInfo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("c2SServerCapInfo")
 			}
 			return err
 		}
@@ -95,7 +124,11 @@ func (m *PrivateAwsCredentials) validateC2sServerCapInfo(formats strfmt.Registry
 func (m *PrivateAwsCredentials) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidateC2sServerCapInfo(ctx, formats); err != nil {
+	if err := m.contextValidateAwsManagedAd(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateC2SServerCapInfo(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -105,19 +138,40 @@ func (m *PrivateAwsCredentials) ContextValidate(ctx context.Context, formats str
 	return nil
 }
 
-func (m *PrivateAwsCredentials) contextValidateC2sServerCapInfo(ctx context.Context, formats strfmt.Registry) error {
+func (m *PrivateAwsCredentials) contextValidateAwsManagedAd(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.C2sServerCapInfo != nil {
+	if m.AwsManagedAd != nil {
 
-		if swag.IsZero(m.C2sServerCapInfo) { // not required
+		if swag.IsZero(m.AwsManagedAd) { // not required
 			return nil
 		}
 
-		if err := m.C2sServerCapInfo.ContextValidate(ctx, formats); err != nil {
+		if err := m.AwsManagedAd.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("c2s_server_cap_info")
+				return ve.ValidateName("awsManagedAd")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("c2s_server_cap_info")
+				return ce.ValidateName("awsManagedAd")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *PrivateAwsCredentials) contextValidateC2SServerCapInfo(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.C2SServerCapInfo != nil {
+
+		if swag.IsZero(m.C2SServerCapInfo) { // not required
+			return nil
+		}
+
+		if err := m.C2SServerCapInfo.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("c2SServerCapInfo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("c2SServerCapInfo")
 			}
 			return err
 		}

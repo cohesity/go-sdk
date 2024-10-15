@@ -30,7 +30,7 @@ type UpdateObjectSnapshotRequest struct {
 	DataLockType *string `json:"dataLockType,omitempty"`
 
 	// Specifies the expiry time of the snapshot in Unix timestamp epoch in seconds.
-	ExpiryTimeSecs *int32 `json:"expiryTimeSecs,omitempty"`
+	ExpiryTimeSecs *int64 `json:"expiryTimeSecs,omitempty"`
 }
 
 // Validate validates this update object snapshot request

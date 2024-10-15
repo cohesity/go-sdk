@@ -202,7 +202,7 @@ type BackupJobProto struct {
 	IsRpoJob *bool `json:"isRpoJob,omitempty"`
 
 	// A map from entity id of the source to whether the source backup is paused.
-	IsSourcePausedMap []*BackupJobProtoIsSourcePausedMapEntry `json:"isSourcePausedMap"`
+	IsSourcePausedMap interface{} `json:"isSourcePausedMap,omitempty"`
 
 	// Time when this job was first created.
 	JobCreationTimeUsecs *int64 `json:"jobCreationTimeUsecs,omitempty"`
@@ -524,10 +524,6 @@ func (m *BackupJobProto) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateIndexingPolicy(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateIsSourcePausedMap(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -974,32 +970,6 @@ func (m *BackupJobProto) validateIndexingPolicy(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *BackupJobProto) validateIsSourcePausedMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.IsSourcePausedMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.IsSourcePausedMap); i++ {
-		if swag.IsZero(m.IsSourcePausedMap[i]) { // not required
-			continue
-		}
-
-		if m.IsSourcePausedMap[i] != nil {
-			if err := m.IsSourcePausedMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("isSourcePausedMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("isSourcePausedMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 func (m *BackupJobProto) validateJobPolicy(formats strfmt.Registry) error {
 	if swag.IsZero(m.JobPolicy) { // not required
 		return nil
@@ -1439,10 +1409,6 @@ func (m *BackupJobProto) ContextValidate(ctx context.Context, formats strfmt.Reg
 	}
 
 	if err := m.contextValidateIndexingPolicy(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateIsSourcePausedMap(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1900,31 +1866,6 @@ func (m *BackupJobProto) contextValidateIndexingPolicy(ctx context.Context, form
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *BackupJobProto) contextValidateIsSourcePausedMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.IsSourcePausedMap); i++ {
-
-		if m.IsSourcePausedMap[i] != nil {
-
-			if swag.IsZero(m.IsSourcePausedMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.IsSourcePausedMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("isSourcePausedMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("isSourcePausedMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

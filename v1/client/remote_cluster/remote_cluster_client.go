@@ -72,7 +72,7 @@ type ClientService interface {
 /*
 	CreateRemoteCluster registers a remote cluster on this local cluster for replication
 
-	For a Protection Job to replicate Snapshots from one Cluster
+	**Privileges:** ```CLUSTER_REMOTE_MODIFY``` <br><br>For a Protection Job to replicate Snapshots from one Cluster
 
 to another Cluster, the Clusters must be paired together by
 registering each Cluster on the other Cluster.
@@ -117,7 +117,7 @@ func (a *Client) CreateRemoteCluster(params *CreateRemoteClusterParams, authInfo
 /*
 	DeleteRemoteCluster deletes a remote cluster registration connection
 
-	Delete the specified remote Cluster registration connection
+	**Privileges:** ```CLUSTER_REMOTE_MODIFY``` <br><br>Delete the specified remote Cluster registration connection
 
 on this Cluster.
 */
@@ -159,7 +159,7 @@ func (a *Client) DeleteRemoteCluster(params *DeleteRemoteClusterParams, authInfo
 /*
 	GetRemoteClusterByID lists details about a single remote cluster registered on this local cluster
 
-	Returns the details about the remote Cluster with the specified Cluster id
+	**Privileges:** ```CLUSTER_REMOTE_VIEW``` <br><br>Returns the details about the remote Cluster with the specified Cluster id
 
 that is registered on this local Cluster.
 */
@@ -201,7 +201,7 @@ func (a *Client) GetRemoteClusterByID(params *GetRemoteClusterByIDParams, authIn
 /*
 	GetRemoteClusters lists the remote cohesity clusters that are registered on this local cohesity cluster that match the filter criteria specified using parameters
 
-	Cohesity Clusters involved in replication, must be registered to each other.
+	**Privileges:** ```CLUSTER_REMOTE_VIEW``` <br><br>Cohesity Clusters involved in replication, must be registered to each other.
 
 For example, if Cluster A is replicating Snapshots to Cluster B, Cluster
 B must be registered on Cluster A and Cluster B must be registered
@@ -245,7 +245,7 @@ func (a *Client) GetRemoteClusters(params *GetRemoteClustersParams, authInfo run
 /*
 	GetReplicationEncryptionKey gets the encryption key on this cluster
 
-	Get the encryption key that is used for encrypting replication data
+	**Privileges:** ```CLUSTER_REMOTE_MODIFY``` <br><br>Get the encryption key that is used for encrypting replication data
 
 between this Cluster and a remote Cluster.
 */
@@ -287,7 +287,7 @@ func (a *Client) GetReplicationEncryptionKey(params *GetReplicationEncryptionKey
 /*
 	UpdateRemoteCluster updates the connection settings of the registered remote cluster
 
-	Update the connection settings of the specified remote Cluster that is
+	**Privileges:** ```CLUSTER_REMOTE_MODIFY``` <br><br>Update the connection settings of the specified remote Cluster that is
 
 registered on this Cluster.
 */

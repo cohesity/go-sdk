@@ -73,6 +73,9 @@ type ObjectSnapshotDocument struct {
 	// field specifies the last time this verification was done.
 	LastVerificationTimeSecs *int64 `json:"lastVerificationTimeSecs,omitempty"`
 
+	// This field holds Nas related information.
+	NasParams *ObjectSnapshotDocumentNasParams `json:"nasParams,omitempty"`
+
 	// This field is set only if backup_type is kO365.
 	O365Params *ObjectSnapshotDocumentO365Params `json:"o365Params,omitempty"`
 
@@ -145,6 +148,10 @@ func (m *ObjectSnapshotDocument) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateBootVolumeInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateNasParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -234,6 +241,25 @@ func (m *ObjectSnapshotDocument) validateBootVolumeInfo(formats strfmt.Registry)
 				return ve.ValidateName("bootVolumeInfo")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("bootVolumeInfo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ObjectSnapshotDocument) validateNasParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.NasParams) { // not required
+		return nil
+	}
+
+	if m.NasParams != nil {
+		if err := m.NasParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("nasParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("nasParams")
 			}
 			return err
 		}
@@ -393,6 +419,10 @@ func (m *ObjectSnapshotDocument) ContextValidate(ctx context.Context, formats st
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateNasParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateO365Params(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -482,6 +512,27 @@ func (m *ObjectSnapshotDocument) contextValidateBootVolumeInfo(ctx context.Conte
 				return ve.ValidateName("bootVolumeInfo")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("bootVolumeInfo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *ObjectSnapshotDocument) contextValidateNasParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.NasParams != nil {
+
+		if swag.IsZero(m.NasParams) { // not required
+			return nil
+		}
+
+		if err := m.NasParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("nasParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("nasParams")
 			}
 			return err
 		}

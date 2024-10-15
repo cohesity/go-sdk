@@ -63,6 +63,8 @@ type ClientService interface {
 
 /*
 CheckRestoreAppTask validates whether parameters specified for restoring snapshots are valid
+
+**Privileges:** ```RESTORE_MODIFY``` <br><br>
 */
 func (a *Client) CheckRestoreAppTask(params *CheckRestoreAppTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CheckRestoreAppTaskOK, error) {
 	// TODO: Validate the params before sending
@@ -101,6 +103,8 @@ func (a *Client) CheckRestoreAppTask(params *CheckRestoreAppTaskParams, authInfo
 
 /*
 GetRestoreAppTimeRanges gets valid time ranges for an application restore
+
+**Privileges:** ```RESTORE_MODIFY``` <br><br>
 */
 func (a *Client) GetRestoreAppTimeRanges(params *GetRestoreAppTimeRangesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRestoreAppTimeRangesOK, error) {
 	// TODO: Validate the params before sending

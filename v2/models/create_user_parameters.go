@@ -56,6 +56,9 @@ type CreateUserParameters struct {
 	// Specifies whether the SMB access token is to be set for the user.
 	AllowSmbAccessToken *bool `json:"allowSmbAccessToken,omitempty"`
 
+	// Specifies the S3 Access Keys of the User.
+	S3AccessKeys *S3Keys `json:"S3AccessKeys,omitempty"`
+
 	// Specifies the LOCAL user properties. This field is required when adding a new LOCAL Cohesity User.
 	LocalUserParams *LocalUserParams `json:"localUserParams,omitempty"`
 }
@@ -69,6 +72,10 @@ func (m *CreateUserParameters) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateDomain(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateS3AccessKeys(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -95,6 +102,25 @@ func (m *CreateUserParameters) validateDomain(formats strfmt.Registry) error {
 
 	if err := validate.RequiredString("domain", "body", m.Domain); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *CreateUserParameters) validateS3AccessKeys(formats strfmt.Registry) error {
+	if swag.IsZero(m.S3AccessKeys) { // not required
+		return nil
+	}
+
+	if m.S3AccessKeys != nil {
+		if err := m.S3AccessKeys.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("S3AccessKeys")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("S3AccessKeys")
+			}
+			return err
+		}
 	}
 
 	return nil
@@ -131,6 +157,10 @@ func (m *CreateUserParameters) ContextValidate(ctx context.Context, formats strf
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateS3AccessKeys(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateLocalUserParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -154,6 +184,27 @@ func (m *CreateUserParameters) contextValidateOtherGroups(ctx context.Context, f
 
 	if err := validate.ReadOnly(ctx, "otherGroups", "body", []string(m.OtherGroups)); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *CreateUserParameters) contextValidateS3AccessKeys(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.S3AccessKeys != nil {
+
+		if swag.IsZero(m.S3AccessKeys) { // not required
+			return nil
+		}
+
+		if err := m.S3AccessKeys.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("S3AccessKeys")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("S3AccessKeys")
+			}
+			return err
+		}
 	}
 
 	return nil

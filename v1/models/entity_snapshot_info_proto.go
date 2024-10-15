@@ -23,9 +23,13 @@ import (
 // EntitySnapshotInfoProto       extension        Location                 Extn
 // =============================================================================
 // vmware::EntitySnapshotInfo::vmware_entity_snapshot_info
+//
 // vmware/vmware.proto       100
+//
 // hyperv::EntitySnapshotInfo::hyperv_vss_entity_snapshot_info
+//
 // hyperv/hyperv.proto       101
+//
 // =============================================================================
 //
 // swagger:model EntitySnapshotInfoProto

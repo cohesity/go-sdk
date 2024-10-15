@@ -20,6 +20,9 @@ type Preferences struct {
 	// Locale reflects the language settings of the user. Populate using the
 	// user preferences stored in Scribe for the user wherever needed.
 	Locale *string `json:"locale,omitempty"`
+
+	// user preferences for ui customization.
+	Preferences *string `json:"preferences,omitempty"`
 }
 
 // Validate validates this preferences

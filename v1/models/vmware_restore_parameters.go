@@ -101,6 +101,11 @@ type VmwareRestoreParameters struct {
 	// clone operation. The default behavior is 'true'.
 	PreserveCustomAttributesDuringClone *bool `json:"preserveCustomAttributesDuringClone,omitempty"`
 
+	// Specifies whether to preserve mac address for the cloned/recovered
+	// VM. This option is applicable only for alternate location recovery/clone
+	// operation.
+	PreserveMacAddress *bool `json:"preserveMacAddress,omitempty"`
+
 	// Specifies whether or not to preserve tags during the clone operation. The
 	// default behavior is 'true'.
 	PreserveTags *bool `json:"preserveTags,omitempty"`

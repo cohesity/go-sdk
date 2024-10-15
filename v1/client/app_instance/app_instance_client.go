@@ -68,7 +68,7 @@ type ClientService interface {
 /*
 	GetAppInstances lists the app instances
 
-	Api provides the list of the app instances. Instances can be in different
+	**Privileges:** ```APP_LAUNCH``` <br><br>Api provides the list of the app instances. Instances can be in different
 
 states including stopped.
 */
@@ -110,7 +110,7 @@ func (a *Client) GetAppInstances(params *GetAppInstancesParams, authInfo runtime
 /*
 LaunchAppInstance starts the application instance launch on the cluster
 
-Only installed apps can be launched.
+**Privileges:** ```APP_LAUNCH``` <br><br>Only installed apps can be launched.
 */
 func (a *Client) LaunchAppInstance(params *LaunchAppInstanceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*LaunchAppInstanceAccepted, error) {
 	// TODO: Validate the params before sending
@@ -150,7 +150,7 @@ func (a *Client) LaunchAppInstance(params *LaunchAppInstanceParams, authInfo run
 /*
 UpdateAppInstanceSettings updates app instance settings
 
-Changes the settings of the app instance.
+**Privileges:** ```APP_LAUNCH``` <br><br>Changes the settings of the app instance.
 */
 func (a *Client) UpdateAppInstanceSettings(params *UpdateAppInstanceSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAppInstanceSettingsAccepted, error) {
 	// TODO: Validate the params before sending
@@ -190,7 +190,7 @@ func (a *Client) UpdateAppInstanceSettings(params *UpdateAppInstanceSettingsPara
 /*
 UpdateAppInstanceState updates app instance state
 
-Changes the state of the app instances.
+**Privileges:** ```APP_LAUNCH``` <br><br>Changes the state of the app instances.
 */
 func (a *Client) UpdateAppInstanceState(params *UpdateAppInstanceStateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAppInstanceStateAccepted, error) {
 	// TODO: Validate the params before sending

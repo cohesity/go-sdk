@@ -62,7 +62,7 @@ type ClientService interface {
 /*
 DeployVms deploys v ms on cloud
 
-Returns the Restore task response.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Returns the Restore task response.
 */
 func (a *Client) DeployVms(params *DeployVmsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeployVmsOK, error) {
 	// TODO: Validate the params before sending

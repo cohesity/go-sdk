@@ -24,6 +24,11 @@ type UdaBackupParams struct {
 	// set for Azure SQL backup.
 	DiskAttachParams *DiskAttachParams `json:"diskAttachParams,omitempty"`
 
+	// Expansion of entity types specified in
+	// object_types_excluded_from_expansion will get skipped but are needed
+	// for indexing.
+	ExpandedEntities []*PrivateEntityProto `json:"expandedEntities"`
+
 	// This field specifies whether this is a full or regular backup
 	// of the job/task.
 	// Set from BackupJobTaskStateBaseProto::is_full_backup field.
@@ -47,6 +52,10 @@ func (m *UdaBackupParams) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateDiskAttachParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateExpandedEntities(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -82,6 +91,32 @@ func (m *UdaBackupParams) validateDiskAttachParams(formats strfmt.Registry) erro
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *UdaBackupParams) validateExpandedEntities(formats strfmt.Registry) error {
+	if swag.IsZero(m.ExpandedEntities) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.ExpandedEntities); i++ {
+		if swag.IsZero(m.ExpandedEntities[i]) { // not required
+			continue
+		}
+
+		if m.ExpandedEntities[i] != nil {
+			if err := m.ExpandedEntities[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("expandedEntities" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("expandedEntities" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -159,6 +194,10 @@ func (m *UdaBackupParams) ContextValidate(ctx context.Context, formats strfmt.Re
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateExpandedEntities(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateParentEntities(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -193,6 +232,31 @@ func (m *UdaBackupParams) contextValidateDiskAttachParams(ctx context.Context, f
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *UdaBackupParams) contextValidateExpandedEntities(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.ExpandedEntities); i++ {
+
+		if m.ExpandedEntities[i] != nil {
+
+			if swag.IsZero(m.ExpandedEntities[i]) { // not required
+				return nil
+			}
+
+			if err := m.ExpandedEntities[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("expandedEntities" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("expandedEntities" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

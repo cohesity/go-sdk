@@ -22,6 +22,14 @@ type KubernetesEnvParams struct {
 	// backup, even those that are explicitly specified by include_params.
 	ExcludeParams *K8SFilterParams `json:"excludeParams,omitempty"`
 
+	// If specified, magneto will fallback to non-snapshot backup for PVC in
+	// case the snapshot fails.
+	FallbackToNonSnapshotBackup *bool `json:"fallbackToNonSnapshotBackup,omitempty"`
+
+	// If specified, magneto will ignore failure of backup of a volume and
+	// proceed with the backup.
+	IgnoreVolumeBackupFailure *bool `json:"ignoreVolumeBackupFailure,omitempty"`
+
 	// If not specified, all objects, including volumes, will be included by
 	// default, except those filtered by exclude_params. Otherwise, only the
 	// below objects (volumes) will be included by default, except those filtered

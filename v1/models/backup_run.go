@@ -71,13 +71,21 @@ type BackupRun struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies if an error occurred (if any) while running this task.
@@ -207,7 +215,7 @@ var backupRunTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -240,123 +248,6 @@ const (
 
 	// BackupRunEnvironmentKNimble captures enum value "kNimble"
 	BackupRunEnvironmentKNimble string = "kNimble"
-
-	// BackupRunEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	BackupRunEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// BackupRunEnvironmentKAzure captures enum value "kAzure"
-	BackupRunEnvironmentKAzure string = "kAzure"
-
-	// BackupRunEnvironmentKNetapp captures enum value "kNetapp"
-	BackupRunEnvironmentKNetapp string = "kNetapp"
-
-	// BackupRunEnvironmentKAgent captures enum value "kAgent"
-	BackupRunEnvironmentKAgent string = "kAgent"
-
-	// BackupRunEnvironmentKGenericNas captures enum value "kGenericNas"
-	BackupRunEnvironmentKGenericNas string = "kGenericNas"
-
-	// BackupRunEnvironmentKAcropolis captures enum value "kAcropolis"
-	BackupRunEnvironmentKAcropolis string = "kAcropolis"
-
-	// BackupRunEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	BackupRunEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// BackupRunEnvironmentKIsilon captures enum value "kIsilon"
-	BackupRunEnvironmentKIsilon string = "kIsilon"
-
-	// BackupRunEnvironmentKGPFS captures enum value "kGPFS"
-	BackupRunEnvironmentKGPFS string = "kGPFS"
-
-	// BackupRunEnvironmentKKVM captures enum value "kKVM"
-	BackupRunEnvironmentKKVM string = "kKVM"
-
-	// BackupRunEnvironmentKAWS captures enum value "kAWS"
-	BackupRunEnvironmentKAWS string = "kAWS"
-
-	// BackupRunEnvironmentKExchange captures enum value "kExchange"
-	BackupRunEnvironmentKExchange string = "kExchange"
-
-	// BackupRunEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	BackupRunEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// BackupRunEnvironmentKOracle captures enum value "kOracle"
-	BackupRunEnvironmentKOracle string = "kOracle"
-
-	// BackupRunEnvironmentKGCP captures enum value "kGCP"
-	BackupRunEnvironmentKGCP string = "kGCP"
-
-	// BackupRunEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	BackupRunEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// BackupRunEnvironmentKAWSNative captures enum value "kAWSNative"
-	BackupRunEnvironmentKAWSNative string = "kAWSNative"
-
-	// BackupRunEnvironmentKO365 captures enum value "kO365"
-	BackupRunEnvironmentKO365 string = "kO365"
-
-	// BackupRunEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	BackupRunEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// BackupRunEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	BackupRunEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// BackupRunEnvironmentKGCPNative captures enum value "kGCPNative"
-	BackupRunEnvironmentKGCPNative string = "kGCPNative"
-
-	// BackupRunEnvironmentKAzureNative captures enum value "kAzureNative"
-	BackupRunEnvironmentKAzureNative string = "kAzureNative"
-
-	// BackupRunEnvironmentKKubernetes captures enum value "kKubernetes"
-	BackupRunEnvironmentKKubernetes string = "kKubernetes"
-
-	// BackupRunEnvironmentKElastifile captures enum value "kElastifile"
-	BackupRunEnvironmentKElastifile string = "kElastifile"
-
-	// BackupRunEnvironmentKAD captures enum value "kAD"
-	BackupRunEnvironmentKAD string = "kAD"
-
-	// BackupRunEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	BackupRunEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// BackupRunEnvironmentKCassandra captures enum value "kCassandra"
-	BackupRunEnvironmentKCassandra string = "kCassandra"
-
-	// BackupRunEnvironmentKMongoDB captures enum value "kMongoDB"
-	BackupRunEnvironmentKMongoDB string = "kMongoDB"
-
-	// BackupRunEnvironmentKCouchbase captures enum value "kCouchbase"
-	BackupRunEnvironmentKCouchbase string = "kCouchbase"
-
-	// BackupRunEnvironmentKHdfs captures enum value "kHdfs"
-	BackupRunEnvironmentKHdfs string = "kHdfs"
-
-	// BackupRunEnvironmentKHive captures enum value "kHive"
-	BackupRunEnvironmentKHive string = "kHive"
-
-	// BackupRunEnvironmentKHBase captures enum value "kHBase"
-	BackupRunEnvironmentKHBase string = "kHBase"
-
-	// BackupRunEnvironmentKUDA captures enum value "kUDA"
-	BackupRunEnvironmentKUDA string = "kUDA"
-
-	// BackupRunEnvironmentKO365Teams captures enum value "kO365Teams"
-	BackupRunEnvironmentKO365Teams string = "kO365Teams"
-
-	// BackupRunEnvironmentKO365Group captures enum value "kO365Group"
-	BackupRunEnvironmentKO365Group string = "kO365Group"
-
-	// BackupRunEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	BackupRunEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// BackupRunEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	BackupRunEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// BackupRunEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	BackupRunEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// BackupRunEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	BackupRunEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

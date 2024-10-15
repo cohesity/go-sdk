@@ -66,6 +66,12 @@ type NodeInfo struct {
 	// Product Model
 	ProductModel string `json:"productModel,omitempty"`
 
+	// System Memory in bytes
+	SystemMemoryBytes int64 `json:"systemMemoryBytes,omitempty"`
+
+	// Number of CPUs
+	CPU int32 `json:"cpu,omitempty"`
+
 	// Specifies the version information of the cohesity services.
 	ServicesVersionInfo []*ServiceVersionInfo `json:"servicesVersionInfo,omitempty"`
 }

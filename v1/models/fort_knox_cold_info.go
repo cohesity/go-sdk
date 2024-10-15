@@ -8,6 +8,7 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -18,6 +19,9 @@ import (
 // swagger:model FortKnoxColdInfo
 type FortKnoxColdInfo struct {
 
+	// Specifies the information regarding banner to display.
+	Banner *EntitlementBannerInfo `json:"banner,omitempty"`
+
 	// Specifies the end date of the subscription.
 	EndDate *string `json:"endDate,omitempty"`
 
@@ -26,6 +30,9 @@ type FortKnoxColdInfo struct {
 
 	// Specifies whether the subscription is free trial.
 	IsFreeTrial *bool `json:"isFreeTrial,omitempty"`
+
+	// Display name of the Product
+	ProductDisplayName *string `json:"productDisplayName,omitempty"`
 
 	// Specifies the quantity of the subscription.
 	Quantity *int64 `json:"quantity,omitempty"`
@@ -36,11 +43,69 @@ type FortKnoxColdInfo struct {
 
 // Validate validates this fort knox cold info
 func (m *FortKnoxColdInfo) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateBanner(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this fort knox cold info based on context it is used
+func (m *FortKnoxColdInfo) validateBanner(formats strfmt.Registry) error {
+	if swag.IsZero(m.Banner) { // not required
+		return nil
+	}
+
+	if m.Banner != nil {
+		if err := m.Banner.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("banner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("banner")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this fort knox cold info based on the context it is used
 func (m *FortKnoxColdInfo) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateBanner(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *FortKnoxColdInfo) contextValidateBanner(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Banner != nil {
+
+		if swag.IsZero(m.Banner) { // not required
+			return nil
+		}
+
+		if err := m.Banner.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("banner")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("banner")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

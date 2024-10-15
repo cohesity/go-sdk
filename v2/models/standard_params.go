@@ -24,7 +24,7 @@ type StandardParams struct {
 
 	// Specifies the Authentication method(IamArn/IamRole) used by api
 	// Required: true
-	// Enum: ["kUseIAMUser","kUseIAMRole"]
+	// Enum: ["kUseIAMUser","kUseIAMRole","kUseInstanceProfile","kStandardCredentials","kKerberos"]
 	AuthMethodType *string `json:"authMethodType"`
 
 	// Specifies the credentials required to register as AWS source.
@@ -60,7 +60,7 @@ var standardParamsTypeAuthMethodTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kUseIAMUser","kUseIAMRole"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kUseIAMUser","kUseIAMRole","kUseInstanceProfile","kStandardCredentials","kKerberos"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -75,6 +75,15 @@ const (
 
 	// StandardParamsAuthMethodTypeKUseIAMRole captures enum value "kUseIAMRole"
 	StandardParamsAuthMethodTypeKUseIAMRole string = "kUseIAMRole"
+
+	// StandardParamsAuthMethodTypeKUseInstanceProfile captures enum value "kUseInstanceProfile"
+	StandardParamsAuthMethodTypeKUseInstanceProfile string = "kUseInstanceProfile"
+
+	// StandardParamsAuthMethodTypeKStandardCredentials captures enum value "kStandardCredentials"
+	StandardParamsAuthMethodTypeKStandardCredentials string = "kStandardCredentials"
+
+	// StandardParamsAuthMethodTypeKKerberos captures enum value "kKerberos"
+	StandardParamsAuthMethodTypeKKerberos string = "kKerberos"
 )
 
 // prop value enum

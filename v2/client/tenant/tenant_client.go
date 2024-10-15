@@ -64,8 +64,6 @@ type ClientService interface {
 
 	GetOnPremTenantConfig(params *GetOnPremTenantConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOnPremTenantConfigOK, error)
 
-	GetTenantByID(params *GetTenantByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTenantByIDOK, error)
-
 	GetTenantSwift(params *GetTenantSwiftParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTenantSwiftOK, error)
 
 	ListTenants(params *ListTenantsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListTenantsOK, error)
@@ -88,7 +86,7 @@ type ClientService interface {
 /*
 	AssignPropertiesToTenant updates assginment of properties for a tenant
 
-	Assign/Unassign properties like storage domain, entities, policies etc.
+	```Unknown Privileges``` <br><br>Assign/Unassign properties like storage domain, entities, policies etc.
 
 to the tenant.
 The API expects a list of all the assignments (policies etc.) that are
@@ -135,6 +133,8 @@ func (a *Client) AssignPropertiesToTenant(params *AssignPropertiesToTenantParams
 
 /*
 CreateTenant creates a new tenant
+
+**Privileges:** ```ORGANIZATION_MODIFY``` <br><br>
 */
 func (a *Client) CreateTenant(params *CreateTenantParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateTenantCreated, error) {
 	// TODO: Validate the params before sending
@@ -173,6 +173,8 @@ func (a *Client) CreateTenant(params *CreateTenantParams, authInfo runtime.Clien
 
 /*
 DeleteTenant deletes tenant with given ID
+
+```Unknown Privileges``` <br><br>
 */
 func (a *Client) DeleteTenant(params *DeleteTenantParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteTenantNoContent, error) {
 	// TODO: Validate the params before sending
@@ -212,7 +214,7 @@ func (a *Client) DeleteTenant(params *DeleteTenantParams, authInfo runtime.Clien
 /*
 	GetAssignedPropertiesForTenant gets tenant assignments
 
-	Get all assigned properties like storage domain, entities, policies,
+	```Unknown Privileges``` <br><br>Get all assigned properties like storage domain, entities, policies,
 
 objects, views etc for a given tenant.
 */
@@ -254,7 +256,7 @@ func (a *Client) GetAssignedPropertiesForTenant(params *GetAssignedPropertiesFor
 /*
 GetOnPremTenantConfig gets tenants config
 
-Get Tenant related configurations for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get Tenant related configurations for the cluster.
 */
 func (a *Client) GetOnPremTenantConfig(params *GetOnPremTenantConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetOnPremTenantConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -292,47 +294,9 @@ func (a *Client) GetOnPremTenantConfig(params *GetOnPremTenantConfigParams, auth
 }
 
 /*
-GetTenantByID gets tenant by ID
-*/
-func (a *Client) GetTenantByID(params *GetTenantByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTenantByIDOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetTenantByIDParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "GetTenantByID",
-		Method:             "GET",
-		PathPattern:        "/tenants/{id}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &GetTenantByIDReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*GetTenantByIDOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*GetTenantByIDDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 GetTenantSwift gets a swift configuration
 
-Get a Swift configuration.
+**Privileges:** ```KEYSTONE_VIEW``` <br><br>Get a Swift configuration.
 */
 func (a *Client) GetTenantSwift(params *GetTenantSwiftParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTenantSwiftOK, error) {
 	// TODO: Validate the params before sending
@@ -371,6 +335,8 @@ func (a *Client) GetTenantSwift(params *GetTenantSwiftParams, authInfo runtime.C
 
 /*
 ListTenants gets a list of tenants
+
+**Privileges:** ```ORGANIZATION_VIEW``` <br><br>
 */
 func (a *Client) ListTenants(params *ListTenantsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListTenantsOK, error) {
 	// TODO: Validate the params before sending
@@ -410,7 +376,7 @@ func (a *Client) ListTenants(params *ListTenantsParams, authInfo runtime.ClientA
 /*
 PerformTenantAction performs actions on a tenant
 
-Perform actions like activate and deactivate on a given Tenant.
+```Unknown Privileges``` <br><br>Perform actions like activate and deactivate on a given Tenant.
 */
 func (a *Client) PerformTenantAction(params *PerformTenantActionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PerformTenantActionOK, error) {
 	// TODO: Validate the params before sending
@@ -450,7 +416,7 @@ func (a *Client) PerformTenantAction(params *PerformTenantActionParams, authInfo
 /*
 RegisterSwift registers swift service on a keystone server
 
-Register Swift service on Keystone server.
+**Privileges:** ```KEYSTONE_MODIFY``` <br><br>Register Swift service on Keystone server.
 */
 func (a *Client) RegisterSwift(params *RegisterSwiftParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RegisterSwiftNoContent, error) {
 	// TODO: Validate the params before sending
@@ -490,7 +456,7 @@ func (a *Client) RegisterSwift(params *RegisterSwiftParams, authInfo runtime.Cli
 /*
 UnregisterSwift unregisters swift service from a keystone server
 
-Unregister Swift service from Keystone server.
+**Privileges:** ```KEYSTONE_MODIFY``` <br><br>Unregister Swift service from Keystone server.
 */
 func (a *Client) UnregisterSwift(params *UnregisterSwiftParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnregisterSwiftNoContent, error) {
 	// TODO: Validate the params before sending
@@ -530,7 +496,7 @@ func (a *Client) UnregisterSwift(params *UnregisterSwiftParams, authInfo runtime
 /*
 UpdateOnPremTenantConfig updates tenants config
 
-Update Tenant related configurations for the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update Tenant related configurations for the cluster.
 */
 func (a *Client) UpdateOnPremTenantConfig(params *UpdateOnPremTenantConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateOnPremTenantConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -570,7 +536,7 @@ func (a *Client) UpdateOnPremTenantConfig(params *UpdateOnPremTenantConfigParams
 /*
 UpdateTenant updates tenant
 
-Update Tenant's properties.
+```Unknown Privileges``` <br><br>Update Tenant's properties.
 */
 func (a *Client) UpdateTenant(params *UpdateTenantParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateTenantOK, error) {
 	// TODO: Validate the params before sending
@@ -610,7 +576,7 @@ func (a *Client) UpdateTenant(params *UpdateTenantParams, authInfo runtime.Clien
 /*
 UpdateTenantSwift updates a swift configuration
 
-Update a Swift configuration.
+**Privileges:** ```KEYSTONE_MODIFY``` <br><br>Update a Swift configuration.
 */
 func (a *Client) UpdateTenantSwift(params *UpdateTenantSwiftParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateTenantSwiftOK, error) {
 	// TODO: Validate the params before sending

@@ -102,7 +102,7 @@ type ClientService interface {
 /*
 	CreateUser creates or add a new user to the cohesity cluster
 
-	If an Active Directory domain is specified, a new user is added to the
+	**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>If an Active Directory domain is specified, a new user is added to the
 
 Cohesity Cluster for the specified Active Directory user principal.
 If the LOCAL domain is specified, a new user is created directly in
@@ -147,6 +147,8 @@ func (a *Client) CreateUser(params *CreateUserParams, authInfo runtime.ClientAut
 
 /*
 CreateUserAPIKey creates an API key for user
+
+```No Privileges Required``` <br><br>
 */
 func (a *Client) CreateUserAPIKey(params *CreateUserAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateUserAPIKeyCreated, error) {
 	// TODO: Validate the params before sending
@@ -185,6 +187,8 @@ func (a *Client) CreateUserAPIKey(params *CreateUserAPIKeyParams, authInfo runti
 
 /*
 DeleteUserAPIKey deletes an API key for user
+
+```No Privileges Required``` <br><br>
 */
 func (a *Client) DeleteUserAPIKey(params *DeleteUserAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteUserAPIKeyNoContent, error) {
 	// TODO: Validate the params before sending
@@ -224,7 +228,7 @@ func (a *Client) DeleteUserAPIKey(params *DeleteUserAPIKeyParams, authInfo runti
 /*
 	DeleteUsers deletes one or more users on the cohesity cluster
 
-	Only users from the same domain can be deleted by a single request.
+	**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Only users from the same domain can be deleted by a single request.
 
 If the Cohesity user was created for an Active Directory user, the referenced
 principal user on the Active Directory domain is NOT deleted.
@@ -268,6 +272,8 @@ func (a *Client) DeleteUsers(params *DeleteUsersParams, authInfo runtime.ClientA
 
 /*
 GetAllUserAPIKeys fetches API keys across all users
+
+```No Privileges Required``` <br><br>
 */
 func (a *Client) GetAllUserAPIKeys(params *GetAllUserAPIKeysParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAllUserAPIKeysOK, error) {
 	// TODO: Validate the params before sending
@@ -306,6 +312,8 @@ func (a *Client) GetAllUserAPIKeys(params *GetAllUserAPIKeysParams, authInfo run
 
 /*
 GetSessionUser gets the information of the logged in user
+
+```No Privileges Required``` <br><br>
 */
 func (a *Client) GetSessionUser(params *GetSessionUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSessionUserOK, error) {
 	// TODO: Validate the params before sending
@@ -344,6 +352,8 @@ func (a *Client) GetSessionUser(params *GetSessionUserParams, authInfo runtime.C
 
 /*
 GetUserAPIKeyByID fetches an API key for user by its id
+
+```No Privileges Required``` <br><br>
 */
 func (a *Client) GetUserAPIKeyByID(params *GetUserAPIKeyByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUserAPIKeyByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -382,6 +392,8 @@ func (a *Client) GetUserAPIKeyByID(params *GetUserAPIKeyByIDParams, authInfo run
 
 /*
 GetUserAPIKeys fetches API keys for user
+
+```No Privileges Required``` <br><br>
 */
 func (a *Client) GetUserAPIKeys(params *GetUserAPIKeysParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUserAPIKeysOK, error) {
 	// TODO: Validate the params before sending
@@ -420,6 +432,8 @@ func (a *Client) GetUserAPIKeys(params *GetUserAPIKeysParams, authInfo runtime.C
 
 /*
 GetUserPrivileges lists the privileges of the session user
+
+```No Privileges Required``` <br><br>
 */
 func (a *Client) GetUserPrivileges(params *GetUserPrivilegesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUserPrivilegesOK, error) {
 	// TODO: Validate the params before sending
@@ -459,7 +473,7 @@ func (a *Client) GetUserPrivileges(params *GetUserPrivilegesParams, authInfo run
 /*
 	GetUsers lists the users on the cohesity cluster that match the filter criteria specified using parameters
 
-	If no parameters are specified, all users currently on the Cohesity Cluster
+	```No Privileges Required``` <br><br>If no parameters are specified, all users currently on the Cohesity Cluster
 
 are returned. Specifying parameters filters the results that are returned.
 */
@@ -500,6 +514,8 @@ func (a *Client) GetUsers(params *GetUsersParams, authInfo runtime.ClientAuthInf
 
 /*
 LinuxSupportUserBashShellAccess requests linux support user bash shell access
+
+**Privileges:** ```SUPPORT_CHANNEL_MODIFY``` <br><br>
 */
 func (a *Client) LinuxSupportUserBashShellAccess(params *LinuxSupportUserBashShellAccessParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*LinuxSupportUserBashShellAccessAccepted, error) {
 	// TODO: Validate the params before sending
@@ -538,6 +554,8 @@ func (a *Client) LinuxSupportUserBashShellAccess(params *LinuxSupportUserBashShe
 
 /*
 LinuxSupportUserSudoAccess requests linux support user sudo access
+
+**Privileges:** ```LINUX_USER_SUDO_ACCESS``` <br><br>
 */
 func (a *Client) LinuxSupportUserSudoAccess(params *LinuxSupportUserSudoAccessParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*LinuxSupportUserSudoAccessAccepted, error) {
 	// TODO: Validate the params before sending
@@ -577,7 +595,7 @@ func (a *Client) LinuxSupportUserSudoAccess(params *LinuxSupportUserSudoAccessPa
 /*
 	ListSourcesForPrincipals returns the protection sources objects and view names that the principals have permissions to access
 
-	From the passed in list principals (specified by SIDs),
+	**Privileges:** ```PRINCIPAL_VIEW``` <br><br>From the passed in list principals (specified by SIDs),
 
 return the list of Protection Sources objects and View names that each
 principal has permission to access.
@@ -620,7 +638,7 @@ func (a *Client) ListSourcesForPrincipals(params *ListSourcesForPrincipalsParams
 /*
 ResetS3SecretKey resets the s3 secret access key for the specified user on the cohesity cluster
 
-Returns the new key that was generated.
+```No Privileges Required``` <br><br>Returns the new key that was generated.
 */
 func (a *Client) ResetS3SecretKey(params *ResetS3SecretKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResetS3SecretKeyOK, error) {
 	// TODO: Validate the params before sending
@@ -659,6 +677,8 @@ func (a *Client) ResetS3SecretKey(params *ResetS3SecretKeyParams, authInfo runti
 
 /*
 RotateUserAPIKey fetches an API key for user by its id
+
+```No Privileges Required``` <br><br>
 */
 func (a *Client) RotateUserAPIKey(params *RotateUserAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RotateUserAPIKeyOK, error) {
 	// TODO: Validate the params before sending
@@ -698,7 +718,7 @@ func (a *Client) RotateUserAPIKey(params *RotateUserAPIKeyParams, authInfo runti
 /*
 	SearchPrincipals lists the user and group principals that match the filter criteria specified using parameters
 
-	Optionally, limit the search results by specifying security identifiers (SIDs),
+	**Privileges:** ```PRINCIPAL_VIEW``` <br><br>Optionally, limit the search results by specifying security identifiers (SIDs),
 
 an object class (user or group) or a substring.
 You can specify SIDs or a substring but not both.
@@ -740,6 +760,8 @@ func (a *Client) SearchPrincipals(params *SearchPrincipalsParams, authInfo runti
 
 /*
 UpdateLinuxCredentials updates linux user password
+
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>
 */
 func (a *Client) UpdateLinuxCredentials(params *UpdateLinuxCredentialsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateLinuxCredentialsAccepted, error) {
 	// TODO: Validate the params before sending
@@ -779,7 +801,7 @@ func (a *Client) UpdateLinuxCredentials(params *UpdateLinuxCredentialsParams, au
 /*
 	UpdateSourcesForPrincipals sets the protection sources and views that the specified principal has permissions to access
 
-	Specify the security identifier (SID) of the principal to grant access
+	**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Specify the security identifier (SID) of the principal to grant access
 
 permissions for.
 */
@@ -821,7 +843,7 @@ func (a *Client) UpdateSourcesForPrincipals(params *UpdateSourcesForPrincipalsPa
 /*
 UpdateUser updates an existing user on the cohesity cluster only user settings on the cohesity cluster are updated no changes are made to the referenced user principal on the active directory
 
-Returns the user that was updated on the Cohesity Cluster.
+```No Privileges Required``` <br><br>Returns the user that was updated on the Cohesity Cluster.
 */
 func (a *Client) UpdateUser(params *UpdateUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateUserOK, error) {
 	// TODO: Validate the params before sending
@@ -860,6 +882,8 @@ func (a *Client) UpdateUser(params *UpdateUserParams, authInfo runtime.ClientAut
 
 /*
 UpdateUserAPIKey updates an API key
+
+```No Privileges Required``` <br><br>
 */
 func (a *Client) UpdateUserAPIKey(params *UpdateUserAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateUserAPIKeyOK, error) {
 	// TODO: Validate the params before sending
@@ -899,7 +923,7 @@ func (a *Client) UpdateUserAPIKey(params *UpdateUserAPIKeyParams, authInfo runti
 /*
 VerifyOtpCode verifies the o t p code
 
-Returns the session user info if the verification is successful.
+```No Privileges Required``` <br><br>Returns the session user info if the verification is successful.
 */
 func (a *Client) VerifyOtpCode(params *VerifyOtpCodeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*VerifyOtpCodeOK, error) {
 	// TODO: Validate the params before sending

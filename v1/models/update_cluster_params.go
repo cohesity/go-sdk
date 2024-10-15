@@ -185,6 +185,9 @@ type UpdateClusterParams struct {
 	// filer audit logs, etc.
 	Timezone *string `json:"timezone,omitempty"`
 
+	// Specifies if the TLS is enabled on the remote cluster.
+	TLSEnabled *bool `json:"tlsEnabled,omitempty"`
+
 	// Specifies if the cluster is in Turbo mode.
 	TurboMode *bool `json:"turboMode,omitempty"`
 

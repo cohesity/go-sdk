@@ -23,6 +23,14 @@ import (
 // swagger:model VMwareProtectionSource
 type VMwareProtectionSource struct {
 
+	// This field specifies VMware cloud provider where VMC is hosted.
+	// 'kNone' VMC source is hosted on unknown cloud provider.
+	// 'kAWS' VMC source is hosted on AWS cloud.
+	// 'kAzure' VMC source is hosted on Azure cloud.
+	// 'kGCP' VMC source is hosted on GCP cloud.
+	// Enum: ["kNone","kAWS","kAzure","kGCP"]
+	VMwareCloudProviderType *string `json:"VMwareCloudProviderType,omitempty"`
+
 	// Specifies the id of the persistent agent.
 	AgentID *int64 `json:"agentId,omitempty"`
 
@@ -179,6 +187,10 @@ type VMwareProtectionSource struct {
 func (m *VMwareProtectionSource) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateVMwareCloudProviderType(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateAgents(formats); err != nil {
 		res = append(res, err)
 	}
@@ -238,6 +250,54 @@ func (m *VMwareProtectionSource) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+var vMwareProtectionSourceTypeVMwareCloudProviderTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["kNone","kAWS","kAzure","kGCP"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		vMwareProtectionSourceTypeVMwareCloudProviderTypePropEnum = append(vMwareProtectionSourceTypeVMwareCloudProviderTypePropEnum, v)
+	}
+}
+
+const (
+
+	// VMwareProtectionSourceVMwareCloudProviderTypeKNone captures enum value "kNone"
+	VMwareProtectionSourceVMwareCloudProviderTypeKNone string = "kNone"
+
+	// VMwareProtectionSourceVMwareCloudProviderTypeKAWS captures enum value "kAWS"
+	VMwareProtectionSourceVMwareCloudProviderTypeKAWS string = "kAWS"
+
+	// VMwareProtectionSourceVMwareCloudProviderTypeKAzure captures enum value "kAzure"
+	VMwareProtectionSourceVMwareCloudProviderTypeKAzure string = "kAzure"
+
+	// VMwareProtectionSourceVMwareCloudProviderTypeKGCP captures enum value "kGCP"
+	VMwareProtectionSourceVMwareCloudProviderTypeKGCP string = "kGCP"
+)
+
+// prop value enum
+func (m *VMwareProtectionSource) validateVMwareCloudProviderTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, vMwareProtectionSourceTypeVMwareCloudProviderTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *VMwareProtectionSource) validateVMwareCloudProviderType(formats strfmt.Registry) error {
+	if swag.IsZero(m.VMwareCloudProviderType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateVMwareCloudProviderTypeEnum("VMwareCloudProviderType", "body", *m.VMwareCloudProviderType); err != nil {
+		return err
+	}
+
 	return nil
 }
 

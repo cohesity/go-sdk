@@ -62,7 +62,7 @@ type ClientService interface {
 /*
 GetDashboard returns the dashboard that match the filter criteria specified using parameters
 
-If no parameters are specified, dashboard for the local cluster is returned.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>If no parameters are specified, dashboard for the local cluster is returned.
 */
 func (a *Client) GetDashboard(params *GetDashboardParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDashboardOK, error) {
 	// TODO: Validate the params before sending

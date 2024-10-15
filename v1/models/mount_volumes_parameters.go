@@ -8,6 +8,7 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -40,6 +41,9 @@ type MountVolumesParameters struct {
 	// volumes may be automatically brought online.
 	BringDisksOnline *bool `json:"bringDisksOnline,omitempty"`
 
+	// Specifies the cloud credentials used to authenticate with cloud(Aws).
+	CloudCredentials *CloudCredentials `json:"cloudCredentials,omitempty"`
+
 	// Specifies password of the username to access the target source.
 	Password *string `json:"password,omitempty"`
 
@@ -69,11 +73,69 @@ type MountVolumesParameters struct {
 
 // Validate validates this mount volumes parameters
 func (m *MountVolumesParameters) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateCloudCredentials(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this mount volumes parameters based on context it is used
+func (m *MountVolumesParameters) validateCloudCredentials(formats strfmt.Registry) error {
+	if swag.IsZero(m.CloudCredentials) { // not required
+		return nil
+	}
+
+	if m.CloudCredentials != nil {
+		if err := m.CloudCredentials.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this mount volumes parameters based on the context it is used
 func (m *MountVolumesParameters) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateCloudCredentials(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *MountVolumesParameters) contextValidateCloudCredentials(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CloudCredentials != nil {
+
+		if swag.IsZero(m.CloudCredentials) { // not required
+			return nil
+		}
+
+		if err := m.CloudCredentials.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

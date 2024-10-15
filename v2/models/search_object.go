@@ -25,6 +25,16 @@ type SearchObject struct {
 	// Specifies the object info on each cluster.
 	ObjectProtectionInfos []*ObjectProtectionInfo `json:"objectProtectionInfos"`
 
+	// Specifies the helios tag information for the object
+	HeliosTags []*HeliosTagInfo `json:"heliosTags"`
+
+	// Specifies the helios tagged snapshots (snapshots which
+	// are tagged by user or thirdparty in control plane) for the object
+	TaggedSnapshots []*TaggedSnapshotInfo `json:"taggedSnapshots"`
+
+	// Specifies secondary IDs associated to the object.
+	SecondaryIds []*SecondaryID `json:"secondaryIds"`
+
 	// Specifies the Source Object information.
 	SourceInfo *Object `json:"sourceInfo,omitempty"`
 }
@@ -49,6 +59,12 @@ func (m *SearchObject) UnmarshalJSON(raw []byte) error {
 	var dataAO2 struct {
 		ObjectProtectionInfos []*ObjectProtectionInfo `json:"objectProtectionInfos"`
 
+		HeliosTags []*HeliosTagInfo `json:"heliosTags"`
+
+		TaggedSnapshots []*TaggedSnapshotInfo `json:"taggedSnapshots"`
+
+		SecondaryIds []*SecondaryID `json:"secondaryIds"`
+
 		SourceInfo *Object `json:"sourceInfo,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO2); err != nil {
@@ -56,6 +72,12 @@ func (m *SearchObject) UnmarshalJSON(raw []byte) error {
 	}
 
 	m.ObjectProtectionInfos = dataAO2.ObjectProtectionInfos
+
+	m.HeliosTags = dataAO2.HeliosTags
+
+	m.TaggedSnapshots = dataAO2.TaggedSnapshots
+
+	m.SecondaryIds = dataAO2.SecondaryIds
 
 	m.SourceInfo = dataAO2.SourceInfo
 
@@ -80,10 +102,22 @@ func (m SearchObject) MarshalJSON() ([]byte, error) {
 	var dataAO2 struct {
 		ObjectProtectionInfos []*ObjectProtectionInfo `json:"objectProtectionInfos"`
 
+		HeliosTags []*HeliosTagInfo `json:"heliosTags"`
+
+		TaggedSnapshots []*TaggedSnapshotInfo `json:"taggedSnapshots"`
+
+		SecondaryIds []*SecondaryID `json:"secondaryIds"`
+
 		SourceInfo *Object `json:"sourceInfo,omitempty"`
 	}
 
 	dataAO2.ObjectProtectionInfos = m.ObjectProtectionInfos
+
+	dataAO2.HeliosTags = m.HeliosTags
+
+	dataAO2.TaggedSnapshots = m.TaggedSnapshots
+
+	dataAO2.SecondaryIds = m.SecondaryIds
 
 	dataAO2.SourceInfo = m.SourceInfo
 
@@ -109,6 +143,18 @@ func (m *SearchObject) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateObjectProtectionInfos(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateHeliosTags(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTaggedSnapshots(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSecondaryIds(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -139,6 +185,87 @@ func (m *SearchObject) validateObjectProtectionInfos(formats strfmt.Registry) er
 					return ve.ValidateName("objectProtectionInfos" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("objectProtectionInfos" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *SearchObject) validateHeliosTags(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.HeliosTags) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.HeliosTags); i++ {
+		if swag.IsZero(m.HeliosTags[i]) { // not required
+			continue
+		}
+
+		if m.HeliosTags[i] != nil {
+			if err := m.HeliosTags[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("heliosTags" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("heliosTags" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *SearchObject) validateTaggedSnapshots(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.TaggedSnapshots) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.TaggedSnapshots); i++ {
+		if swag.IsZero(m.TaggedSnapshots[i]) { // not required
+			continue
+		}
+
+		if m.TaggedSnapshots[i] != nil {
+			if err := m.TaggedSnapshots[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("taggedSnapshots" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("taggedSnapshots" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *SearchObject) validateSecondaryIds(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.SecondaryIds) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.SecondaryIds); i++ {
+		if swag.IsZero(m.SecondaryIds[i]) { // not required
+			continue
+		}
+
+		if m.SecondaryIds[i] != nil {
+			if err := m.SecondaryIds[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("secondaryIds" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("secondaryIds" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -186,6 +313,18 @@ func (m *SearchObject) ContextValidate(ctx context.Context, formats strfmt.Regis
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateHeliosTags(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTaggedSnapshots(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSecondaryIds(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateSourceInfo(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -211,6 +350,81 @@ func (m *SearchObject) contextValidateObjectProtectionInfos(ctx context.Context,
 					return ve.ValidateName("objectProtectionInfos" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("objectProtectionInfos" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *SearchObject) contextValidateHeliosTags(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.HeliosTags); i++ {
+
+		if m.HeliosTags[i] != nil {
+
+			if swag.IsZero(m.HeliosTags[i]) { // not required
+				return nil
+			}
+
+			if err := m.HeliosTags[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("heliosTags" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("heliosTags" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *SearchObject) contextValidateTaggedSnapshots(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.TaggedSnapshots); i++ {
+
+		if m.TaggedSnapshots[i] != nil {
+
+			if swag.IsZero(m.TaggedSnapshots[i]) { // not required
+				return nil
+			}
+
+			if err := m.TaggedSnapshots[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("taggedSnapshots" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("taggedSnapshots" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *SearchObject) contextValidateSecondaryIds(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.SecondaryIds); i++ {
+
+		if m.SecondaryIds[i] != nil {
+
+			if swag.IsZero(m.SecondaryIds[i]) { // not required
+				return nil
+			}
+
+			if err := m.SecondaryIds[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("secondaryIds" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("secondaryIds" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

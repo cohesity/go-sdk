@@ -8,7 +8,6 @@ package models
 import (
 	"context"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -18,183 +17,25 @@ import (
 // swagger:model CrackedFileDocument_O365GroupMetadata
 type CrackedFileDocumentO365GroupMetadata struct {
 
+	// Item (folder/email) metadata.
+	//
+	// Types that are valid to be assigned to ItemMetadata:
+	// CrackedFileDocument_O365GroupMetadata_FolderMetadata
+	// CrackedFileDocument_O365GroupMetadata_EmailMetadata
+	// CrackedFileDocument_O365GroupMetadata_SiteMetadata
+	ItemMetadata IsCrackedFileDocumentO365GroupMetadataItemMetadata `json:"ItemMetadata,omitempty"`
+
 	// doc type
 	DocType *int32 `json:"docType,omitempty"`
-
-	// Captures the Item metatdata info. This is populated only if the
-	// doc_type is 'kEmail'.
-	EmailMetadata *ItemMetaData `json:"emailMetadata,omitempty"`
-
-	// Captures the Folder metadata info. This is populated only if the
-	// doc_type is 'kEmailFolder'.
-	FolderMetadata *FolderContentInfo `json:"folderMetadata,omitempty"`
-
-	// Captures the Group Site Item metatdata info. This is populated only if
-	// the doc_type is 'kSiteDoclib, kFile and kDirectory'.
-	SiteMetadata *CrackedFileDocumentSharepointMetadata `json:"siteMetadata,omitempty"`
 }
 
 // Validate validates this cracked file document o365 group metadata
 func (m *CrackedFileDocumentO365GroupMetadata) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateEmailMetadata(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateFolderMetadata(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateSiteMetadata(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *CrackedFileDocumentO365GroupMetadata) validateEmailMetadata(formats strfmt.Registry) error {
-	if swag.IsZero(m.EmailMetadata) { // not required
-		return nil
-	}
-
-	if m.EmailMetadata != nil {
-		if err := m.EmailMetadata.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("emailMetadata")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("emailMetadata")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *CrackedFileDocumentO365GroupMetadata) validateFolderMetadata(formats strfmt.Registry) error {
-	if swag.IsZero(m.FolderMetadata) { // not required
-		return nil
-	}
-
-	if m.FolderMetadata != nil {
-		if err := m.FolderMetadata.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("folderMetadata")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("folderMetadata")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *CrackedFileDocumentO365GroupMetadata) validateSiteMetadata(formats strfmt.Registry) error {
-	if swag.IsZero(m.SiteMetadata) { // not required
-		return nil
-	}
-
-	if m.SiteMetadata != nil {
-		if err := m.SiteMetadata.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("siteMetadata")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("siteMetadata")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this cracked file document o365 group metadata based on the context it is used
+// ContextValidate validates this cracked file document o365 group metadata based on context it is used
 func (m *CrackedFileDocumentO365GroupMetadata) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateEmailMetadata(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateFolderMetadata(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateSiteMetadata(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *CrackedFileDocumentO365GroupMetadata) contextValidateEmailMetadata(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.EmailMetadata != nil {
-
-		if swag.IsZero(m.EmailMetadata) { // not required
-			return nil
-		}
-
-		if err := m.EmailMetadata.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("emailMetadata")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("emailMetadata")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *CrackedFileDocumentO365GroupMetadata) contextValidateFolderMetadata(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.FolderMetadata != nil {
-
-		if swag.IsZero(m.FolderMetadata) { // not required
-			return nil
-		}
-
-		if err := m.FolderMetadata.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("folderMetadata")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("folderMetadata")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *CrackedFileDocumentO365GroupMetadata) contextValidateSiteMetadata(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.SiteMetadata != nil {
-
-		if swag.IsZero(m.SiteMetadata) { // not required
-			return nil
-		}
-
-		if err := m.SiteMetadata.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("siteMetadata")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("siteMetadata")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

@@ -104,7 +104,7 @@ type ClientService interface {
 /*
 CreateExternalTarget creates a external target
 
-Create a External Target.
+**Privileges:** ```CLUSTER_EXTERNAL_TARGET_MODIFY``` <br><br>Create a External Target.
 */
 func (a *Client) CreateExternalTarget(params *CreateExternalTargetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateExternalTargetCreated, error) {
 	// TODO: Validate the params before sending
@@ -144,7 +144,7 @@ func (a *Client) CreateExternalTarget(params *CreateExternalTargetParams, authIn
 /*
 DeleteExternalTarget deletes a external target
 
-Returns Success if the External Target is deleted.
+**Privileges:** ```CLUSTER_EXTERNAL_TARGET_MODIFY``` <br><br>Returns Success if the External Target is deleted.
 */
 func (a *Client) DeleteExternalTarget(params *DeleteExternalTargetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteExternalTargetNoContent, error) {
 	// TODO: Validate the params before sending
@@ -184,7 +184,7 @@ func (a *Client) DeleteExternalTarget(params *DeleteExternalTargetParams, authIn
 /*
 GetExternalTargetByID lists details about single external target
 
-Returns the External Target corresponding to the specified Group id.
+**Privileges:** ```CLUSTER_EXTERNAL_TARGET_VIEW``` <br><br>Returns the External Target corresponding to the specified Group id.
 */
 func (a *Client) GetExternalTargetByID(params *GetExternalTargetByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetExternalTargetByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -224,7 +224,7 @@ func (a *Client) GetExternalTargetByID(params *GetExternalTargetByIDParams, auth
 /*
 GetExternalTargetEncryptionKeyInfo gets the encryption key info for an external target
 
-Get the encryption key info for an external target
+**Privileges:** ```CLUSTER_EXTERNAL_TARGET_VIEW``` <br><br>Get the encryption key info for an external target
 */
 func (a *Client) GetExternalTargetEncryptionKeyInfo(params *GetExternalTargetEncryptionKeyInfoParams, authInfo runtime.ClientAuthInfoWriter, writer io.Writer, opts ...ClientOption) (*GetExternalTargetEncryptionKeyInfoOK, error) {
 	// TODO: Validate the params before sending
@@ -264,7 +264,7 @@ func (a *Client) GetExternalTargetEncryptionKeyInfo(params *GetExternalTargetEnc
 /*
 GetExternalTargetMediaInfo lists archive media information
 
-Returns the media information about the specified archive service uid (such as a QStar tape archive service).
+```Unknown Privileges``` <br><br>Returns the media information about the specified archive service uid (such as a QStar tape archive service).
 */
 func (a *Client) GetExternalTargetMediaInfo(params *GetExternalTargetMediaInfoParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetExternalTargetMediaInfoOK, error) {
 	// TODO: Validate the params before sending
@@ -304,7 +304,7 @@ func (a *Client) GetExternalTargetMediaInfo(params *GetExternalTargetMediaInfoPa
 /*
 GetExternalTargetSettings gets the list of external target settings
 
-Get the list of External Target Settings
+**Privileges:** ```CLUSTER_EXTERNAL_TARGET_VIEW``` <br><br>Get the list of External Target Settings
 */
 func (a *Client) GetExternalTargetSettings(params *GetExternalTargetSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetExternalTargetSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -344,7 +344,7 @@ func (a *Client) GetExternalTargetSettings(params *GetExternalTargetSettingsPara
 /*
 GetExternalTargets gets the list of external targets
 
-Get the list of External Targets.
+**Privileges:** ```CLUSTER_EXTERNAL_TARGET_VIEW``` <br><br>Get the list of External Targets.
 */
 func (a *Client) GetExternalTargets(params *GetExternalTargetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetExternalTargetsOK, error) {
 	// TODO: Validate the params before sending
@@ -384,7 +384,7 @@ func (a *Client) GetExternalTargets(params *GetExternalTargetsParams, authInfo r
 /*
 UpdateExternalTarget updates a external target
 
-Update the specified External Target.
+**Privileges:** ```CLUSTER_EXTERNAL_TARGET_MODIFY``` <br><br>Update the specified External Target.
 */
 func (a *Client) UpdateExternalTarget(params *UpdateExternalTargetParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateExternalTargetOK, error) {
 	// TODO: Validate the params before sending
@@ -424,7 +424,7 @@ func (a *Client) UpdateExternalTarget(params *UpdateExternalTargetParams, authIn
 /*
 UpdateExternalTargetSettings updates external target settings
 
-Update External Target Settings
+**Privileges:** ```CLUSTER_EXTERNAL_TARGET_MODIFY``` <br><br>Update External Target Settings
 */
 func (a *Client) UpdateExternalTargetSettings(params *UpdateExternalTargetSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateExternalTargetSettingsOK, error) {
 	// TODO: Validate the params before sending

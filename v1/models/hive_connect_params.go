@@ -21,6 +21,9 @@ import (
 // swagger:model HiveConnectParams
 type HiveConnectParams struct {
 
+	// Specifies if max entity count exceeded for protection source view.
+	EntityThresholdExceeded *bool `json:"entityThresholdExceeded,omitempty"`
+
 	// Specifies the entity id of the HDFS source for this Hive
 	HdfsEntityID *int64 `json:"hdfsEntityId,omitempty"`
 

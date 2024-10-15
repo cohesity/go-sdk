@@ -26,11 +26,13 @@ type UpdateViewParam struct {
 	Name *string `json:"name,omitempty"`
 
 	// Specifies the category of the View.
+	// Required: true
 	// Enum: ["BackupTarget","FileServices","ObjectServices"]
-	Category *string `json:"category,omitempty"`
+	Category *string `json:"category"`
 
 	// Specifies the supported Protocols for the View.
-	ProtocolAccess []*ViewProtocol `json:"protocolAccess,omitempty"`
+	// Required: true
+	ProtocolAccess []*ViewProtocol `json:"protocolAccess"`
 
 	// Specifies whether view level client subnet whitelist overrides cluster and
 	// global setting.
@@ -145,7 +147,8 @@ type UpdateViewParam struct {
 	NetgroupWhitelist *NisNetgroups `json:"netgroupWhitelist,omitempty"`
 
 	// Specifies the Quality of Service (QoS) Policy for the View.
-	Qos *QoS `json:"qos,omitempty"`
+	// Required: true
+	Qos *QoS `json:"qos"`
 
 	// Specifies self service config of this view.
 	SelfServiceSnapshotConfig *SelfServiceSnapshotConfig `json:"selfServiceSnapshotConfig,omitempty"`
@@ -172,9 +175,9 @@ func (m *UpdateViewParam) UnmarshalJSON(raw []byte) error {
 	var dataAO0 struct {
 		Name *string `json:"name,omitempty"`
 
-		Category *string `json:"category,omitempty"`
+		Category *string `json:"category"`
 
-		ProtocolAccess []*ViewProtocol `json:"protocolAccess,omitempty"`
+		ProtocolAccess []*ViewProtocol `json:"protocolAccess"`
 
 		OverrideGlobalSubnetWhitelist *bool `json:"overrideGlobalSubnetWhitelist,omitempty"`
 
@@ -222,7 +225,7 @@ func (m *UpdateViewParam) UnmarshalJSON(raw []byte) error {
 
 		NetgroupWhitelist *NisNetgroups `json:"netgroupWhitelist,omitempty"`
 
-		Qos *QoS `json:"qos,omitempty"`
+		Qos *QoS `json:"qos"`
 
 		SelfServiceSnapshotConfig *SelfServiceSnapshotConfig `json:"selfServiceSnapshotConfig,omitempty"`
 
@@ -332,9 +335,9 @@ func (m UpdateViewParam) MarshalJSON() ([]byte, error) {
 	var dataAO0 struct {
 		Name *string `json:"name,omitempty"`
 
-		Category *string `json:"category,omitempty"`
+		Category *string `json:"category"`
 
-		ProtocolAccess []*ViewProtocol `json:"protocolAccess,omitempty"`
+		ProtocolAccess []*ViewProtocol `json:"protocolAccess"`
 
 		OverrideGlobalSubnetWhitelist *bool `json:"overrideGlobalSubnetWhitelist,omitempty"`
 
@@ -382,7 +385,7 @@ func (m UpdateViewParam) MarshalJSON() ([]byte, error) {
 
 		NetgroupWhitelist *NisNetgroups `json:"netgroupWhitelist,omitempty"`
 
-		Qos *QoS `json:"qos,omitempty"`
+		Qos *QoS `json:"qos"`
 
 		SelfServiceSnapshotConfig *SelfServiceSnapshotConfig `json:"selfServiceSnapshotConfig,omitempty"`
 
@@ -588,8 +591,8 @@ func (m *UpdateViewParam) validateCategoryEnum(path, location string, value stri
 
 func (m *UpdateViewParam) validateCategory(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Category) { // not required
-		return nil
+	if err := validate.Required("category", "body", m.Category); err != nil {
+		return err
 	}
 
 	// value enum
@@ -602,8 +605,8 @@ func (m *UpdateViewParam) validateCategory(formats strfmt.Registry) error {
 
 func (m *UpdateViewParam) validateProtocolAccess(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.ProtocolAccess) { // not required
-		return nil
+	if err := validate.Required("protocolAccess", "body", m.ProtocolAccess); err != nil {
+		return err
 	}
 
 	for i := 0; i < len(m.ProtocolAccess); i++ {
@@ -810,8 +813,8 @@ func (m *UpdateViewParam) validateNetgroupWhitelist(formats strfmt.Registry) err
 
 func (m *UpdateViewParam) validateQos(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Qos) { // not required
-		return nil
+	if err := validate.Required("qos", "body", m.Qos); err != nil {
+		return err
 	}
 
 	if m.Qos != nil {
@@ -1142,10 +1145,6 @@ func (m *UpdateViewParam) contextValidateNetgroupWhitelist(ctx context.Context, 
 func (m *UpdateViewParam) contextValidateQos(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Qos != nil {
-
-		if swag.IsZero(m.Qos) { // not required
-			return nil
-		}
 
 		if err := m.Qos.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {

@@ -7,7 +7,6 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -41,7 +40,7 @@ type PodInfoPodSpecVolumeInfoCSI struct {
 	ReadOnly *bool `json:"readOnly,omitempty"`
 
 	// volume attributes
-	VolumeAttributes []*PodInfoPodSpecVolumeInfoCSIVolumeAttributesEntry `json:"volumeAttributes"`
+	VolumeAttributes map[string]string `json:"volumeAttributes,omitempty"`
 
 	// volume handle
 	VolumeHandle *string `json:"volumeHandle,omitempty"`
@@ -64,10 +63,6 @@ func (m *PodInfoPodSpecVolumeInfoCSI) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateNodeStageSecretRef(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateVolumeAttributes(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -153,32 +148,6 @@ func (m *PodInfoPodSpecVolumeInfoCSI) validateNodeStageSecretRef(formats strfmt.
 	return nil
 }
 
-func (m *PodInfoPodSpecVolumeInfoCSI) validateVolumeAttributes(formats strfmt.Registry) error {
-	if swag.IsZero(m.VolumeAttributes) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.VolumeAttributes); i++ {
-		if swag.IsZero(m.VolumeAttributes[i]) { // not required
-			continue
-		}
-
-		if m.VolumeAttributes[i] != nil {
-			if err := m.VolumeAttributes[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("volumeAttributes" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("volumeAttributes" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 // ContextValidate validate this pod info pod spec volume info c s i based on the context it is used
 func (m *PodInfoPodSpecVolumeInfoCSI) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -196,10 +165,6 @@ func (m *PodInfoPodSpecVolumeInfoCSI) ContextValidate(ctx context.Context, forma
 	}
 
 	if err := m.contextValidateNodeStageSecretRef(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateVolumeAttributes(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -288,31 +253,6 @@ func (m *PodInfoPodSpecVolumeInfoCSI) contextValidateNodeStageSecretRef(ctx cont
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *PodInfoPodSpecVolumeInfoCSI) contextValidateVolumeAttributes(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.VolumeAttributes); i++ {
-
-		if m.VolumeAttributes[i] != nil {
-
-			if swag.IsZero(m.VolumeAttributes[i]) { // not required
-				return nil
-			}
-
-			if err := m.VolumeAttributes[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("volumeAttributes" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("volumeAttributes" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

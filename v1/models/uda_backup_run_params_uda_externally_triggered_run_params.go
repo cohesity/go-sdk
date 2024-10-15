@@ -7,11 +7,11 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // UdaBackupRunParamsUdaExternallyTriggeredRunParams uda backup run params uda externally triggered run params
@@ -20,7 +20,7 @@ import (
 type UdaBackupRunParamsUdaExternallyTriggeredRunParams struct {
 
 	// Specifies a map of custom arguments to be supplied to the plugin.
-	ArgsMap []*UdaBackupRunParamsUdaExternallyTriggeredRunParamsArgsMapEntry `json:"argsMap"`
+	ArgsMap map[string]UdaCustomArgument `json:"argsMap,omitempty"`
 
 	// Specifies the IP or FQDN of the source host where this
 	// backup will run.
@@ -50,17 +50,17 @@ func (m *UdaBackupRunParamsUdaExternallyTriggeredRunParams) validateArgsMap(form
 		return nil
 	}
 
-	for i := 0; i < len(m.ArgsMap); i++ {
-		if swag.IsZero(m.ArgsMap[i]) { // not required
-			continue
-		}
+	for k := range m.ArgsMap {
 
-		if m.ArgsMap[i] != nil {
-			if err := m.ArgsMap[i].Validate(formats); err != nil {
+		if err := validate.Required("argsMap"+"."+k, "body", m.ArgsMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.ArgsMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("argsMap" + "." + strconv.Itoa(i))
+					return ve.ValidateName("argsMap" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("argsMap" + "." + strconv.Itoa(i))
+					return ce.ValidateName("argsMap" + "." + k)
 				}
 				return err
 			}
@@ -87,20 +87,10 @@ func (m *UdaBackupRunParamsUdaExternallyTriggeredRunParams) ContextValidate(ctx 
 
 func (m *UdaBackupRunParamsUdaExternallyTriggeredRunParams) contextValidateArgsMap(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.ArgsMap); i++ {
+	for k := range m.ArgsMap {
 
-		if m.ArgsMap[i] != nil {
-
-			if swag.IsZero(m.ArgsMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.ArgsMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("argsMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("argsMap" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.ArgsMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

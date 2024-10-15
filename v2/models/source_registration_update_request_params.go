@@ -66,6 +66,9 @@ type SourceRegistrationUpdateRequestParams struct {
 	// Specifies the parameters to update the registration of a Universal Data Adapter Protection Source.
 	UdaParams *UdaSourceRegistrationParams `json:"udaParams,omitempty"`
 
+	// Specifies the parameters to register a SAP HANA protection source.
+	SapHanaParams *SapHanaSourceRegistrationParams `json:"sapHanaParams,omitempty"`
+
 	// Specifies the parameters to update the registration of an office 365 Source.
 	Office365Params *Office365SourceRegistrationParams `json:"office365Params,omitempty"`
 
@@ -126,6 +129,8 @@ func (m *SourceRegistrationUpdateRequestParams) UnmarshalJSON(raw []byte) error 
 
 		UdaParams *UdaSourceRegistrationParams `json:"udaParams,omitempty"`
 
+		SapHanaParams *SapHanaSourceRegistrationParams `json:"sapHanaParams,omitempty"`
+
 		Office365Params *Office365SourceRegistrationParams `json:"office365Params,omitempty"`
 
 		AwsParams *AwsSourceRegistrationParams `json:"awsParams,omitempty"`
@@ -171,6 +176,8 @@ func (m *SourceRegistrationUpdateRequestParams) UnmarshalJSON(raw []byte) error 
 	m.HiveParams = dataAO1.HiveParams
 
 	m.UdaParams = dataAO1.UdaParams
+
+	m.SapHanaParams = dataAO1.SapHanaParams
 
 	m.Office365Params = dataAO1.Office365Params
 
@@ -227,6 +234,8 @@ func (m SourceRegistrationUpdateRequestParams) MarshalJSON() ([]byte, error) {
 
 		UdaParams *UdaSourceRegistrationParams `json:"udaParams,omitempty"`
 
+		SapHanaParams *SapHanaSourceRegistrationParams `json:"sapHanaParams,omitempty"`
+
 		Office365Params *Office365SourceRegistrationParams `json:"office365Params,omitempty"`
 
 		AwsParams *AwsSourceRegistrationParams `json:"awsParams,omitempty"`
@@ -269,6 +278,8 @@ func (m SourceRegistrationUpdateRequestParams) MarshalJSON() ([]byte, error) {
 	dataAO1.HiveParams = m.HiveParams
 
 	dataAO1.UdaParams = m.UdaParams
+
+	dataAO1.SapHanaParams = m.SapHanaParams
 
 	dataAO1.Office365Params = m.Office365Params
 
@@ -356,6 +367,10 @@ func (m *SourceRegistrationUpdateRequestParams) Validate(formats strfmt.Registry
 	}
 
 	if err := m.validateUdaParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSapHanaParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -685,6 +700,26 @@ func (m *SourceRegistrationUpdateRequestParams) validateUdaParams(formats strfmt
 	return nil
 }
 
+func (m *SourceRegistrationUpdateRequestParams) validateSapHanaParams(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.SapHanaParams) { // not required
+		return nil
+	}
+
+	if m.SapHanaParams != nil {
+		if err := m.SapHanaParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sapHanaParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sapHanaParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *SourceRegistrationUpdateRequestParams) validateOffice365Params(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Office365Params) { // not required
@@ -851,6 +886,10 @@ func (m *SourceRegistrationUpdateRequestParams) ContextValidate(ctx context.Cont
 	}
 
 	if err := m.contextValidateUdaParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSapHanaParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1187,6 +1226,27 @@ func (m *SourceRegistrationUpdateRequestParams) contextValidateUdaParams(ctx con
 				return ve.ValidateName("udaParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("udaParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *SourceRegistrationUpdateRequestParams) contextValidateSapHanaParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.SapHanaParams != nil {
+
+		if swag.IsZero(m.SapHanaParams) { // not required
+			return nil
+		}
+
+		if err := m.SapHanaParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sapHanaParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sapHanaParams")
 			}
 			return err
 		}

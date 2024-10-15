@@ -54,107 +54,17 @@ type ClientOption func(*runtime.ClientOperation)
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	ListFirewallIPSets(params *ListFirewallIPSetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListFirewallIPSetsOK, error)
-
-	ListFirewallProfiles(params *ListFirewallProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListFirewallProfilesOK, error)
-
 	RemoveFirewallProfiles(params *RemoveFirewallProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RemoveFirewallProfilesOK, error)
 
-	ResetFirewallProfile(params *ResetFirewallProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResetFirewallProfileNoContent, error)
-
-	UpdateFirewallIPSets(params *UpdateFirewallIPSetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateFirewallIPSetsOK, error)
-
 	UpdateFirewallProfile(params *UpdateFirewallProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateFirewallProfileOK, error)
-
-	UpdateFirewallProfiles(params *UpdateFirewallProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateFirewallProfilesOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
-ListFirewallIPSets lists all firewall IP sets
-
-List all firewall IP sets.
-*/
-func (a *Client) ListFirewallIPSets(params *ListFirewallIPSetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListFirewallIPSetsOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewListFirewallIPSetsParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "ListFirewallIPSets",
-		Method:             "GET",
-		PathPattern:        "/network/firewall/ip-sets",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &ListFirewallIPSetsReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*ListFirewallIPSetsOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*ListFirewallIPSetsDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-ListFirewallProfiles lists all firewall profiles
-
-List the firewall profiles & their attachments.
-*/
-func (a *Client) ListFirewallProfiles(params *ListFirewallProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListFirewallProfilesOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewListFirewallProfilesParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "ListFirewallProfiles",
-		Method:             "GET",
-		PathPattern:        "/network/firewall/profiles",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &ListFirewallProfilesReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*ListFirewallProfilesOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*ListFirewallProfilesDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 RemoveFirewallProfiles removes firewall profiles
 
-Remove firewall profiles and their attachments.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Remove firewall profiles and their attachments.
 */
 func (a *Client) RemoveFirewallProfiles(params *RemoveFirewallProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RemoveFirewallProfilesOK, error) {
 	// TODO: Validate the params before sending
@@ -192,89 +102,9 @@ func (a *Client) RemoveFirewallProfiles(params *RemoveFirewallProfilesParams, au
 }
 
 /*
-ResetFirewallProfile resets firewall profiles
-
-Reset firewall profiles, ip-sets & their attachments.
-*/
-func (a *Client) ResetFirewallProfile(params *ResetFirewallProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ResetFirewallProfileNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewResetFirewallProfileParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "ResetFirewallProfile",
-		Method:             "POST",
-		PathPattern:        "/network/firewall/profiles/reset",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &ResetFirewallProfileReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*ResetFirewallProfileNoContent)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*ResetFirewallProfileDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-UpdateFirewallIPSets updates firewall IP sets
-
-Update firewall IP sets.
-*/
-func (a *Client) UpdateFirewallIPSets(params *UpdateFirewallIPSetsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateFirewallIPSetsOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUpdateFirewallIPSetsParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "UpdateFirewallIPSets",
-		Method:             "PUT",
-		PathPattern:        "/network/firewall/ip-sets",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UpdateFirewallIPSetsReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*UpdateFirewallIPSetsOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*UpdateFirewallIPSetsDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
 UpdateFirewallProfile updates firewall profiles and their attachments
 
-Update the firewall profiles and/or their attachments.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update the firewall profiles and/or their attachments.
 */
 func (a *Client) UpdateFirewallProfile(params *UpdateFirewallProfileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateFirewallProfileOK, error) {
 	// TODO: Validate the params before sending
@@ -308,46 +138,6 @@ func (a *Client) UpdateFirewallProfile(params *UpdateFirewallProfileParams, auth
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*UpdateFirewallProfileDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-UpdateFirewallProfiles updates firewall profiles and their attachments
-
-Update the firewall profiles and/or their attachments.
-*/
-func (a *Client) UpdateFirewallProfiles(params *UpdateFirewallProfilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateFirewallProfilesOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUpdateFirewallProfilesParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "UpdateFirewallProfiles",
-		Method:             "PUT",
-		PathPattern:        "/network/firewall/profiles",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UpdateFirewallProfilesReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*UpdateFirewallProfilesOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*UpdateFirewallProfilesDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

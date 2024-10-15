@@ -123,6 +123,9 @@ type RemoteCluster struct {
 	// Specifies if tenant ViewBox sharing is enabled on the remote cluster.
 	TenantViewBoxSharingEnabled *bool `json:"tenantViewBoxSharingEnabled,omitempty"`
 
+	// Specifies if the TLS is enabled on the remote cluster.
+	TLSEnabled *bool `json:"tlsEnabled,omitempty"`
+
 	// Specifies the Cohesity user name used to connect to the
 	// remote Cluster.
 	UserName *string `json:"userName,omitempty"`

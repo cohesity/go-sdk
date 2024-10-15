@@ -24,7 +24,7 @@ type CommonObjectActionRequest struct {
 
 	// Specifies the environment type of the Object.
 	// Required: true
-	// Enum: ["kVMware","kHyperV","kAzure","kKVM","kAWS","kAzureSQL","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kAzure","kKVM","kAWS","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc"]
 	Environment *string `json:"environment"`
 }
 
@@ -46,7 +46,7 @@ var commonObjectActionRequestTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kKVM","kAWS","kAzureSQL","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kKVM","kAWS","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -70,9 +70,6 @@ const (
 
 	// CommonObjectActionRequestEnvironmentKAWS captures enum value "kAWS"
 	CommonObjectActionRequestEnvironmentKAWS string = "kAWS"
-
-	// CommonObjectActionRequestEnvironmentKAzureSQL captures enum value "kAzureSQL"
-	CommonObjectActionRequestEnvironmentKAzureSQL string = "kAzureSQL"
 
 	// CommonObjectActionRequestEnvironmentKAcropolis captures enum value "kAcropolis"
 	CommonObjectActionRequestEnvironmentKAcropolis string = "kAcropolis"
@@ -154,6 +151,9 @@ const (
 
 	// CommonObjectActionRequestEnvironmentKHBase captures enum value "kHBase"
 	CommonObjectActionRequestEnvironmentKHBase string = "kHBase"
+
+	// CommonObjectActionRequestEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	CommonObjectActionRequestEnvironmentKSAPHANA string = "kSAPHANA"
 
 	// CommonObjectActionRequestEnvironmentKUDA captures enum value "kUDA"
 	CommonObjectActionRequestEnvironmentKUDA string = "kUDA"

@@ -90,7 +90,7 @@ type ClientService interface {
 /*
 GetActiveAlertsStats computes the statistics on the active alerts generated on the cluster
 
-Compute the statistics on the active Alerts generated on the cluster based on the provided time interval.
+**Privileges:** ```ALERT_VIEW``` <br><br>Compute the statistics on the active Alerts generated on the cluster based on the provided time interval.
 */
 func (a *Client) GetActiveAlertsStats(params *GetActiveAlertsStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetActiveAlertsStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -129,6 +129,8 @@ func (a *Client) GetActiveAlertsStats(params *GetActiveAlertsStatsParams, authIn
 
 /*
 GetConsumerStats gets the statistics of consumers
+
+**Privileges:** ```STORAGE_VIEW, PROTECTION_VIEW``` <br><br>
 */
 func (a *Client) GetConsumerStats(params *GetConsumerStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetConsumerStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -168,7 +170,7 @@ func (a *Client) GetConsumerStats(params *GetConsumerStatsParams, authInfo runti
 /*
 GetFileDistributionStats computes the file distribution statistics on a given entity like cluster or storage domain
 
-Compute the file distribution statistics on a given entity like cluster or storage domain.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Compute the file distribution statistics on a given entity like cluster or storage domain.
 */
 func (a *Client) GetFileDistributionStats(params *GetFileDistributionStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetFileDistributionStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -208,7 +210,7 @@ func (a *Client) GetFileDistributionStats(params *GetFileDistributionStatsParams
 /*
 GetLastProtectionRunStats computes stats on last protection run for every job
 
-Compute stats on last Protection Run for every job.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Compute stats on last Protection Run for every job.
 */
 func (a *Client) GetLastProtectionRunStats(params *GetLastProtectionRunStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetLastProtectionRunStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -248,7 +250,7 @@ func (a *Client) GetLastProtectionRunStats(params *GetLastProtectionRunStatsPara
 /*
 GetProtectedObjectsSummary computes the protected objects summary on the cluster
 
-Computes the protected objects summary on the cluster.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Computes the protected objects summary on the cluster.
 */
 func (a *Client) GetProtectedObjectsSummary(params *GetProtectedObjectsSummaryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectedObjectsSummaryOK, error) {
 	// TODO: Validate the params before sending
@@ -288,7 +290,7 @@ func (a *Client) GetProtectedObjectsSummary(params *GetProtectedObjectsSummaryPa
 /*
 GetProtectionRunsStats computes the statistics on the protection runs for the cluster
 
-Compute the statistics of the Protection Runs based on the input filters. This endpoint provides a snapshot of count of Protection Runs of a specified status on a specified time interval.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Compute the statistics of the Protection Runs based on the input filters. This endpoint provides a snapshot of count of Protection Runs of a specified status on a specified time interval.
 */
 func (a *Client) GetProtectionRunsStats(params *GetProtectionRunsStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionRunsStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -328,7 +330,7 @@ func (a *Client) GetProtectionRunsStats(params *GetProtectionRunsStatsParams, au
 /*
 GetRestoreStats computes the statistics on the restore tasks on the cluster
 
-Compute the statistics on the Restore tasks on the cluster based on the provided time interval.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Compute the statistics on the Restore tasks on the cluster based on the provided time interval.
 */
 func (a *Client) GetRestoreStats(params *GetRestoreStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRestoreStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -368,7 +370,7 @@ func (a *Client) GetRestoreStats(params *GetRestoreStatsParams, authInfo runtime
 /*
 GetStorageStats computes the storage stats on the cluster
 
-Computes the storage stats on the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Computes the storage stats on the cluster.
 */
 func (a *Client) GetStorageStats(params *GetStorageStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetStorageStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -407,6 +409,8 @@ func (a *Client) GetStorageStats(params *GetStorageStatsParams, authInfo runtime
 
 /*
 GetTenantStats gets the statistics of organizations tenant
+
+**Privileges:** ```STORAGE_VIEW``` <br><br>
 */
 func (a *Client) GetTenantStats(params *GetTenantStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTenantStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -446,7 +450,7 @@ func (a *Client) GetTenantStats(params *GetTenantStatsParams, authInfo runtime.C
 /*
 GetVaultProviderStats computes the size and count of entities on vaults
 
-Compute the size and count of entities on vaults.
+**Privileges:** ```CLUSTER_EXTERNAL_TARGET_VIEW``` <br><br>Compute the size and count of entities on vaults.
 */
 func (a *Client) GetVaultProviderStats(params *GetVaultProviderStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetVaultProviderStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -486,7 +490,7 @@ func (a *Client) GetVaultProviderStats(params *GetVaultProviderStatsParams, auth
 /*
 GetVaultRunStats computes the statistics on protection runs to or from a vault
 
-Compute the statistics on protection runs to or from a vault and return a trend line of the result.
+**Privileges:** ```CLUSTER_EXTERNAL_TARGET_VIEW``` <br><br>Compute the statistics on protection runs to or from a vault and return a trend line of the result.
 */
 func (a *Client) GetVaultRunStats(params *GetVaultRunStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetVaultRunStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -526,7 +530,7 @@ func (a *Client) GetVaultRunStats(params *GetVaultRunStatsParams, authInfo runti
 /*
 GetVaultStats computes the statistics on vaults
 
-Compute the statistics on vaults.
+**Privileges:** ```CLUSTER_EXTERNAL_TARGET_VIEW``` <br><br>Compute the statistics on vaults.
 */
 func (a *Client) GetVaultStats(params *GetVaultStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetVaultStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -565,6 +569,8 @@ func (a *Client) GetVaultStats(params *GetVaultStatsParams, authInfo runtime.Cli
 
 /*
 GetViewBoxStats gets the statistics of view boxes storage domain
+
+**Privileges:** ```STORAGE_DOMAIN_VIEW``` <br><br>
 */
 func (a *Client) GetViewBoxStats(params *GetViewBoxStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetViewBoxStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -604,7 +610,7 @@ func (a *Client) GetViewBoxStats(params *GetViewBoxStatsParams, authInfo runtime
 /*
 GetViewProtocolStats computes the protocol statistics on views
 
-Compute the protocol statistics on Views.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Compute the protocol statistics on Views.
 */
 func (a *Client) GetViewProtocolStats(params *GetViewProtocolStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetViewProtocolStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -644,7 +650,7 @@ func (a *Client) GetViewProtocolStats(params *GetViewProtocolStatsParams, authIn
 /*
 GetViewStats computes the statistics on views
 
-Compute the statistics on Views.
+**Privileges:** ```STORAGE_VIEW``` <br><br>Compute the statistics on Views.
 */
 func (a *Client) GetViewStats(params *GetViewStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetViewStatsOK, error) {
 	// TODO: Validate the params before sending

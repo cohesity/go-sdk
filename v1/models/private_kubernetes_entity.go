@@ -71,12 +71,12 @@ type PrivateKubernetesEntity struct {
 	PvcName *string `json:"pvcName,omitempty"`
 
 	// Contains generic annotations to be put on services.
-	ServiceAnnotations []*EntityServiceAnnotationsEntry `json:"serviceAnnotations"`
+	ServiceAnnotations map[string]string `json:"serviceAnnotations,omitempty"`
 
 	// A mapping from datamover services to corresponding unique connector_params
 	// IDs. This will be generated during registration and updated during
 	// refresh. Applicable only for 'kCluster' type entities.
-	ServicesToConnectorIdsMap []*EntityServicesToConnectorIdsMapEntry `json:"servicesToConnectorIdsMap"`
+	ServicesToConnectorIdsMap map[string]int64 `json:"servicesToConnectorIdsMap,omitempty"`
 
 	// This is populated for the root entity only (type kCluster).
 	StorageClassVec []*EntityStorageClassInfo `json:"storageClassVec"`
@@ -126,14 +126,6 @@ func (m *PrivateKubernetesEntity) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateLabelAttributesVec(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateServiceAnnotations(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateServicesToConnectorIdsMap(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -209,58 +201,6 @@ func (m *PrivateKubernetesEntity) validateLabelAttributesVec(formats strfmt.Regi
 					return ve.ValidateName("labelAttributesVec" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("labelAttributesVec" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *PrivateKubernetesEntity) validateServiceAnnotations(formats strfmt.Registry) error {
-	if swag.IsZero(m.ServiceAnnotations) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.ServiceAnnotations); i++ {
-		if swag.IsZero(m.ServiceAnnotations[i]) { // not required
-			continue
-		}
-
-		if m.ServiceAnnotations[i] != nil {
-			if err := m.ServiceAnnotations[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("serviceAnnotations" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("serviceAnnotations" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *PrivateKubernetesEntity) validateServicesToConnectorIdsMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.ServicesToConnectorIdsMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.ServicesToConnectorIdsMap); i++ {
-		if swag.IsZero(m.ServicesToConnectorIdsMap[i]) { // not required
-			continue
-		}
-
-		if m.ServicesToConnectorIdsMap[i] != nil {
-			if err := m.ServicesToConnectorIdsMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("servicesToConnectorIdsMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("servicesToConnectorIdsMap" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -365,14 +305,6 @@ func (m *PrivateKubernetesEntity) ContextValidate(ctx context.Context, formats s
 		res = append(res, err)
 	}
 
-	if err := m.contextValidateServiceAnnotations(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateServicesToConnectorIdsMap(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.contextValidateStorageClassVec(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -448,56 +380,6 @@ func (m *PrivateKubernetesEntity) contextValidateLabelAttributesVec(ctx context.
 					return ve.ValidateName("labelAttributesVec" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("labelAttributesVec" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *PrivateKubernetesEntity) contextValidateServiceAnnotations(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.ServiceAnnotations); i++ {
-
-		if m.ServiceAnnotations[i] != nil {
-
-			if swag.IsZero(m.ServiceAnnotations[i]) { // not required
-				return nil
-			}
-
-			if err := m.ServiceAnnotations[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("serviceAnnotations" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("serviceAnnotations" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *PrivateKubernetesEntity) contextValidateServicesToConnectorIdsMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.ServicesToConnectorIdsMap); i++ {
-
-		if m.ServicesToConnectorIdsMap[i] != nil {
-
-			if swag.IsZero(m.ServicesToConnectorIdsMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.ServicesToConnectorIdsMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("servicesToConnectorIdsMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("servicesToConnectorIdsMap" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

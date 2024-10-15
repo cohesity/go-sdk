@@ -64,7 +64,7 @@ type ClientService interface {
 
 	UpdateRemoteCluster(params *UpdateRemoteClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateRemoteClusterOK, error)
 
-	ValidateRemoteCluster(params *ValidateRemoteClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ValidateRemoteClusterNoContent, error)
+	ValidateRemoteCluster(params *ValidateRemoteClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ValidateRemoteClusterOK, *ValidateRemoteClusterNoContent, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -72,7 +72,7 @@ type ClientService interface {
 /*
 DeleteRemoteCluster unregisters a remote cluster
 
-Unregister an external Remote Cluster.
+**Privileges:** ```CLUSTER_REMOTE_MODIFY``` <br><br>Unregister an external Remote Cluster.
 */
 func (a *Client) DeleteRemoteCluster(params *DeleteRemoteClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRemoteClusterNoContent, error) {
 	// TODO: Validate the params before sending
@@ -112,7 +112,7 @@ func (a *Client) DeleteRemoteCluster(params *DeleteRemoteClusterParams, authInfo
 /*
 GetRemoteClusterByID gets remote cluster config by id
 
-Get Remote Cluster config by cluster id.
+**Privileges:** ```CLUSTER_REMOTE_VIEW``` <br><br>Get Remote Cluster config by cluster id.
 */
 func (a *Client) GetRemoteClusterByID(params *GetRemoteClusterByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRemoteClusterByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -152,7 +152,7 @@ func (a *Client) GetRemoteClusterByID(params *GetRemoteClusterByIDParams, authIn
 /*
 GetRemoteClusters gets all registered remote clusters
 
-List the Remote Clusters that are registered on this local Cluster and that matches the filter criteria specified using parameters.
+**Privileges:** ```CLUSTER_REMOTE_VIEW``` <br><br>List the Remote Clusters that are registered on this local Cluster and that matches the filter criteria specified using parameters.
 */
 func (a *Client) GetRemoteClusters(params *GetRemoteClustersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRemoteClustersOK, error) {
 	// TODO: Validate the params before sending
@@ -192,7 +192,7 @@ func (a *Client) GetRemoteClusters(params *GetRemoteClustersParams, authInfo run
 /*
 RegisterRemoteCluster registers a remote cluster
 
-Register a Remote Cluster on this local cluster for remote access and/or replication.
+**Privileges:** ```CLUSTER_REMOTE_MODIFY``` <br><br>Register a Remote Cluster on this local cluster for remote access and/or replication.
 */
 func (a *Client) RegisterRemoteCluster(params *RegisterRemoteClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RegisterRemoteClusterCreated, error) {
 	// TODO: Validate the params before sending
@@ -232,7 +232,7 @@ func (a *Client) RegisterRemoteCluster(params *RegisterRemoteClusterParams, auth
 /*
 UpdateRemoteCluster updates a remote cluster config
 
-Update the connection settings of the specified Remote Cluster that is registered on this Cluster.
+**Privileges:** ```CLUSTER_REMOTE_MODIFY``` <br><br>Update the connection settings of the specified Remote Cluster that is registered on this Cluster.
 */
 func (a *Client) UpdateRemoteCluster(params *UpdateRemoteClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateRemoteClusterOK, error) {
 	// TODO: Validate the params before sending
@@ -272,9 +272,9 @@ func (a *Client) UpdateRemoteCluster(params *UpdateRemoteClusterParams, authInfo
 /*
 ValidateRemoteCluster validates remote cluster config
 
-Validate a Remote Cluster credentials.
+**Privileges:** ```CLUSTER_REMOTE_MODIFY``` <br><br>Validate a Remote Cluster credentials. If includeRemoteClusterMetadata is true, response will include the remote cluster metadata.
 */
-func (a *Client) ValidateRemoteCluster(params *ValidateRemoteClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ValidateRemoteClusterNoContent, error) {
+func (a *Client) ValidateRemoteCluster(params *ValidateRemoteClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ValidateRemoteClusterOK, *ValidateRemoteClusterNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewValidateRemoteClusterParams()
@@ -298,15 +298,17 @@ func (a *Client) ValidateRemoteCluster(params *ValidateRemoteClusterParams, auth
 
 	result, err := a.transport.Submit(op)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	success, ok := result.(*ValidateRemoteClusterNoContent)
-	if ok {
-		return success, nil
+	switch value := result.(type) {
+	case *ValidateRemoteClusterOK:
+		return value, nil, nil
+	case *ValidateRemoteClusterNoContent:
+		return nil, value, nil
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*ValidateRemoteClusterDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+	return nil, nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 // SetTransport changes the transport on the client

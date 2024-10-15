@@ -38,7 +38,7 @@ type Cluster struct {
 
 	// Specifies the type of the new cluster.
 	// Read Only: true
-	// Enum: ["Physical","Virtual","Cloud","Rigel","Unknown","HeliosOnPremVM"]
+	// Enum: ["Physical","Virtual","Cloud","Rigel","Cohesion","Unknown","HeliosOnPremVM"]
 	Type *string `json:"type,omitempty"`
 
 	// Specifies the size of the cloud platforms.
@@ -60,6 +60,9 @@ type Cluster struct {
 
 	// Specifies the Rigel specific parameters.
 	RigelClusterParams *RigelClusterConfigParams `json:"rigelClusterParams,omitempty"`
+
+	// cohesion cluster params
+	CohesionClusterParams *CohesionClusterConfigParams `json:"cohesionClusterParams,omitempty"`
 
 	// Software version of the new cluster.
 	// Read Only: true
@@ -101,6 +104,10 @@ func (m *Cluster) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateCohesionClusterParams(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateNetworkConfig(formats); err != nil {
 		res = append(res, err)
 	}
@@ -131,7 +138,7 @@ var clusterTypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Physical","Virtual","Cloud","Rigel","Unknown","HeliosOnPremVM"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Physical","Virtual","Cloud","Rigel","Cohesion","Unknown","HeliosOnPremVM"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -152,6 +159,9 @@ const (
 
 	// ClusterTypeRigel captures enum value "Rigel"
 	ClusterTypeRigel string = "Rigel"
+
+	// ClusterTypeCohesion captures enum value "Cohesion"
+	ClusterTypeCohesion string = "Cohesion"
 
 	// ClusterTypeUnknown captures enum value "Unknown"
 	ClusterTypeUnknown string = "Unknown"
@@ -243,6 +253,25 @@ func (m *Cluster) validateRigelClusterParams(formats strfmt.Registry) error {
 				return ve.ValidateName("rigelClusterParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("rigelClusterParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Cluster) validateCohesionClusterParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.CohesionClusterParams) { // not required
+		return nil
+	}
+
+	if m.CohesionClusterParams != nil {
+		if err := m.CohesionClusterParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cohesionClusterParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cohesionClusterParams")
 			}
 			return err
 		}
@@ -382,6 +411,10 @@ func (m *Cluster) ContextValidate(ctx context.Context, formats strfmt.Registry) 
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateCohesionClusterParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateSwVersion(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -492,6 +525,27 @@ func (m *Cluster) contextValidateRigelClusterParams(ctx context.Context, formats
 				return ve.ValidateName("rigelClusterParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("rigelClusterParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Cluster) contextValidateCohesionClusterParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CohesionClusterParams != nil {
+
+		if swag.IsZero(m.CohesionClusterParams) { // not required
+			return nil
+		}
+
+		if err := m.CohesionClusterParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cohesionClusterParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cohesionClusterParams")
 			}
 			return err
 		}

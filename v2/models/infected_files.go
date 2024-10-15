@@ -14,15 +14,15 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// InfectedFiles Specifies a list of infected files.
+// InfectedFiles Specifies a list of infected entities.
 //
 // swagger:model InfectedFiles
 type InfectedFiles struct {
 
-	// Specifies the list of infected files.
+	// Specifies the list of infected entities.
 	InfectedFiles []*InfectedFile `json:"infectedFiles"`
 
-	// Specifies the pagination cookie. Cookie is used to  resume the enumeration of infected files. When the cookie is set the fields viewNameVec, includeQuarantinedFiles and includeUnquarantinedFiles are ignored.
+	// Specifies the pagination cookie. Cookie is used to  resume the enumeration of infected entities. When the cookie is set the fields viewNameVec, includeQuarantinedFiles and include UnquarantinedFiles are ignored.
 	Cookie *string `json:"cookie,omitempty"`
 }
 

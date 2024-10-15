@@ -61,6 +61,8 @@ type ClientService interface {
 
 /*
 RestoreFiles restores files
+
+**Privileges:** ```RESTORE_MODIFY``` <br><br>
 */
 func (a *Client) RestoreFiles(params *RestoreFilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RestoreFilesOK, error) {
 	// TODO: Validate the params before sending

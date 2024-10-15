@@ -7,7 +7,6 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -49,7 +48,7 @@ type OracleDBConfig struct {
 	NumTempfiles *int32 `json:"numTempfiles,omitempty"`
 
 	// Map of pfile parameters to its values.
-	PfileParameterMap []*OracleDBConfigPfileParameterMapEntry `json:"pfileParameterMap"`
+	PfileParameterMap map[string]string `json:"pfileParameterMap,omitempty"`
 
 	// List of redo log groups for this DB.
 	RedoLogConf *OracleDBConfigRedoLogGroupConf `json:"redoLogConf,omitempty"`
@@ -65,10 +64,6 @@ type OracleDBConfig struct {
 func (m *OracleDBConfig) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validatePfileParameterMap(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateRedoLogConf(formats); err != nil {
 		res = append(res, err)
 	}
@@ -76,32 +71,6 @@ func (m *OracleDBConfig) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *OracleDBConfig) validatePfileParameterMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.PfileParameterMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.PfileParameterMap); i++ {
-		if swag.IsZero(m.PfileParameterMap[i]) { // not required
-			continue
-		}
-
-		if m.PfileParameterMap[i] != nil {
-			if err := m.PfileParameterMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("pfileParameterMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("pfileParameterMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 
@@ -128,10 +97,6 @@ func (m *OracleDBConfig) validateRedoLogConf(formats strfmt.Registry) error {
 func (m *OracleDBConfig) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidatePfileParameterMap(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.contextValidateRedoLogConf(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -139,31 +104,6 @@ func (m *OracleDBConfig) ContextValidate(ctx context.Context, formats strfmt.Reg
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *OracleDBConfig) contextValidatePfileParameterMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.PfileParameterMap); i++ {
-
-		if m.PfileParameterMap[i] != nil {
-
-			if swag.IsZero(m.PfileParameterMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.PfileParameterMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("pfileParameterMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("pfileParameterMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

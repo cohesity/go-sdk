@@ -103,6 +103,8 @@ type ClientService interface {
 
 /*
 DownloadCftFile downloads the c f t
+
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>
 */
 func (a *Client) DownloadCftFile(params *DownloadCftFileParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DownloadCftFileOK, error) {
 	// TODO: Validate the params before sending
@@ -142,7 +144,7 @@ func (a *Client) DownloadCftFile(params *DownloadCftFileParams, authInfo runtime
 /*
 DownloadPhysicalAgent downloads the physical agent for a host type
 
-Host type could be Linux, Windows, AIX.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Host type could be Linux, Windows, AIX.
 */
 func (a *Client) DownloadPhysicalAgent(params *DownloadPhysicalAgentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DownloadPhysicalAgentOK, error) {
 	// TODO: Validate the params before sending
@@ -182,7 +184,7 @@ func (a *Client) DownloadPhysicalAgent(params *DownloadPhysicalAgentParams, auth
 /*
 GetProtectionSourcesObjectByID gets details about a single protection source object
 
-Returns the Protection Source object corresponding to the specified id.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns the Protection Source object corresponding to the specified id.
 */
 func (a *Client) GetProtectionSourcesObjectByID(params *GetProtectionSourcesObjectByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionSourcesObjectByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -222,7 +224,7 @@ func (a *Client) GetProtectionSourcesObjectByID(params *GetProtectionSourcesObje
 /*
 GetProtectionSourcesObjects lists details about protection source objects
 
-Returns the Protection Source objects corresponding to the specified ids.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns the Protection Source objects corresponding to the specified ids.
 */
 func (a *Client) GetProtectionSourcesObjects(params *GetProtectionSourcesObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionSourcesObjectsOK, error) {
 	// TODO: Validate the params before sending
@@ -262,7 +264,7 @@ func (a *Client) GetProtectionSourcesObjects(params *GetProtectionSourcesObjects
 /*
 	ListApplicationServers returns the registered application servers and their object subtrees
 
-	Given the root node id of a Protection Source tree, returns the list of
+	**Privileges:** ```PROTECTION_VIEW``` <br><br>Given the root node id of a Protection Source tree, returns the list of
 
 Application Servers registered under that tree based on the filters.
 */
@@ -303,6 +305,8 @@ func (a *Client) ListApplicationServers(params *ListApplicationServersParams, au
 
 /*
 ListDataStoreInformation returns the datastore information in v mware environment
+
+**Privileges:** ```PROTECTION_VIEW``` <br><br>
 */
 func (a *Client) ListDataStoreInformation(params *ListDataStoreInformationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDataStoreInformationOK, error) {
 	// TODO: Validate the params before sending
@@ -340,7 +344,7 @@ func (a *Client) ListDataStoreInformation(params *ListDataStoreInformationParams
 }
 
 /*
-	ListExchangeDagHosts Returns information about all the exchange hosts that belong to an Exchange
+	ListExchangeDagHosts **Privileges:** ```PROTECTION_VIEW``` <br><br>Returns information about all the exchange hosts that belong to an Exchange
 
 DAG.
 */
@@ -381,6 +385,8 @@ func (a *Client) ListExchangeDagHosts(params *ListExchangeDagHostsParams, authIn
 
 /*
 ListProtectedObjects returns the list of protected objects in a registered protection source
+
+**Privileges:** ```PROTECTION_VIEW``` <br><br>
 */
 func (a *Client) ListProtectedObjects(params *ListProtectedObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProtectedObjectsOK, error) {
 	// TODO: Validate the params before sending
@@ -420,7 +426,7 @@ func (a *Client) ListProtectedObjects(params *ListProtectedObjectsParams, authIn
 /*
 	ListProtectionSources returns the registered protection sources and their object subtrees
 
-	If no parameters are specified, all Protection Sources that are registered
+	**Privileges:** ```PROTECTION_VIEW``` <br><br>If no parameters are specified, all Protection Sources that are registered
 
 on the Cohesity Cluster are returned.
 In addition, an Object subtree gathered from each Source is returned.
@@ -467,7 +473,7 @@ func (a *Client) ListProtectionSources(params *ListProtectionSourcesParams, auth
 }
 
 /*
-	ListProtectionSourcesRegistrationInfo Returns the registration and protection information of the registered
+	ListProtectionSourcesRegistrationInfo **Privileges:** ```PROTECTION_VIEW``` <br><br>Returns the registration and protection information of the registered
 
 Protection Sources.
 */
@@ -509,7 +515,7 @@ func (a *Client) ListProtectionSourcesRegistrationInfo(params *ListProtectionSou
 /*
 	ListProtectionSourcesRootNodes returns the top level root protection sources with registration information
 
-	Returns the root Protection Sources and the registration information for
+	**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns the root Protection Sources and the registration information for
 
 each of these Sources.
 */
@@ -551,7 +557,7 @@ func (a *Client) ListProtectionSourcesRootNodes(params *ListProtectionSourcesRoo
 /*
 	ListSQLAagHostsAndDatabases returns the registered protection sources and their object subtrees
 
-	Given a list of Protection Source Ids registered as SQL servers, returns
+	**Privileges:** ```PROTECTION_VIEW``` <br><br>Given a list of Protection Source Ids registered as SQL servers, returns
 
 AAGs found and the databases in AAG(Always on Availablity Group).
 */
@@ -593,7 +599,7 @@ func (a *Client) ListSQLAagHostsAndDatabases(params *ListSQLAagHostsAndDatabases
 /*
 	ListVirtualMachines returns the virtual machines in a v center server
 
-	Returns all Virtual Machines found in all the vCenter Servers registered
+	**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns all Virtual Machines found in all the vCenter Servers registered
 
 on the Cohesity Cluster that match the filter criteria specified using
 parameters.
@@ -640,7 +646,7 @@ func (a *Client) ListVirtualMachines(params *ListVirtualMachinesParams, authInfo
 /*
 	RefreshProtectionSourceByID refreshes the object hierarchy of the protection sources tree
 
-	Force an immediate refresh between the specified Protection Source tree
+	**Privileges:** ```PROTECTION_VIEW``` <br><br>Force an immediate refresh between the specified Protection Source tree
 
 on the Cohesity Cluster and the Inventory tree
 in the associated vCenter Server.
@@ -692,7 +698,7 @@ func (a *Client) RefreshProtectionSourceByID(params *RefreshProtectionSourceByID
 /*
 	RegisterApplicationServers registers a protection source as running one or more application servers like microsoft SQL servers or microsoft exchange servers
 
-	Registering Application Servers will help Cohesity Cluster such that any
+	**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Registering Application Servers will help Cohesity Cluster such that any
 
 application specific data can be backed up.
 
@@ -736,7 +742,7 @@ func (a *Client) RegisterApplicationServers(params *RegisterApplicationServersPa
 /*
 	RegisterProtectionSource registers a protection source
 
-	Register a Protection Source on the Cohesity Cluster.
+	**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Register a Protection Source on the Cohesity Cluster.
 
 It could be the root node of a vCenter Server or a physical server.
 
@@ -780,7 +786,7 @@ func (a *Client) RegisterProtectionSource(params *RegisterProtectionSourceParams
 /*
 	RunDiagnostics collects diagnostics of the protection source for a host type
 
-	If the request is successful, the diagnostics script is triggered on Cohesity
+	**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>If the request is successful, the diagnostics script is triggered on Cohesity
 
 agent which generates a tarball containing various diagnostics and uploads it
 to the Cohesity cluster. Host type could be Linux, Windows.
@@ -823,7 +829,7 @@ func (a *Client) RunDiagnostics(params *RunDiagnosticsParams, authInfo runtime.C
 /*
 	UnregisterApplicationServers unregisters application servers like microsoft SQL servers or microsoft exchange servers running on a protection source
 
-	Unregistering Application Servers will fail if the Protection Source is
+	**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Unregistering Application Servers will fail if the Protection Source is
 
 currently being backed up.
 
@@ -867,6 +873,8 @@ func (a *Client) UnregisterApplicationServers(params *UnregisterApplicationServe
 
 /*
 UnregisterProtectionSource unregisters a previously registered protection source
+
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>
 */
 func (a *Client) UnregisterProtectionSource(params *UnregisterProtectionSourceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnregisterProtectionSourceNoContent, error) {
 	// TODO: Validate the params before sending
@@ -906,7 +914,7 @@ func (a *Client) UnregisterProtectionSource(params *UnregisterProtectionSourcePa
 /*
 	UpdateApplicationServers modifies the registration parameters of application servers in a protection source
 
-	Returns the Protection Source whose registration parameters of its
+	**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Returns the Protection Source whose registration parameters of its
 
 Application Servers are modified upon success.
 */
@@ -947,6 +955,8 @@ func (a *Client) UpdateApplicationServers(params *UpdateApplicationServersParams
 
 /*
 UpdateProtectionSource updates a previously registered protection source with new details
+
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>
 */
 func (a *Client) UpdateProtectionSource(params *UpdateProtectionSourceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProtectionSourceOK, error) {
 	// TODO: Validate the params before sending
@@ -986,7 +996,7 @@ func (a *Client) UpdateProtectionSource(params *UpdateProtectionSourceParams, au
 /*
 	UpgradePhysicalAgents initiates a request to upgrade cohesity agents on one or more physical servers registered on the cohesity cluster
 
-	If the request is successful, the Cohesity agents on the specified
+	**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>If the request is successful, the Cohesity agents on the specified
 
 Physical Servers are upgraded to the agent release
 currently available from this Cohesity Cluster.

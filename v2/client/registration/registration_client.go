@@ -64,7 +64,7 @@ type ClientService interface {
 /*
 GetHeliosRegConfig lists the helios registration config
 
-Lists the Helios Registration Config.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Lists the Helios Registration Config.
 */
 func (a *Client) GetHeliosRegConfig(params *GetHeliosRegConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetHeliosRegConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -104,7 +104,7 @@ func (a *Client) GetHeliosRegConfig(params *GetHeliosRegConfigParams, authInfo r
 /*
 HeliosClaim registers to helios
 
-Claim to Helios.
+**Privileges:** ```MCM_MODIFY``` <br><br>Claim to Helios.
 */
 func (a *Client) HeliosClaim(params *HeliosClaimParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*HeliosClaimNoContent, error) {
 	// TODO: Validate the params before sending

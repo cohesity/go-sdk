@@ -70,7 +70,7 @@ type ClientService interface {
 /*
 CreateLdapProvider creates a l d a p provider
 
-Returns the created LDAP provider.
+**Privileges:** ```AD_LDAP_MODIFY``` <br><br>Returns the created LDAP provider.
 */
 func (a *Client) CreateLdapProvider(params *CreateLdapProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateLdapProviderCreated, error) {
 	// TODO: Validate the params before sending
@@ -109,6 +109,8 @@ func (a *Client) CreateLdapProvider(params *CreateLdapProviderParams, authInfo r
 
 /*
 DeleteLdapProvider deletes an l d a p provider
+
+**Privileges:** ```AD_LDAP_MODIFY``` <br><br>
 */
 func (a *Client) DeleteLdapProvider(params *DeleteLdapProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteLdapProviderNoContent, error) {
 	// TODO: Validate the params before sending
@@ -147,6 +149,8 @@ func (a *Client) DeleteLdapProvider(params *DeleteLdapProviderParams, authInfo r
 
 /*
 GetLdapProvider lists the l d a p providers
+
+**Privileges:** ```AD_LDAP_VIEW``` <br><br>
 */
 func (a *Client) GetLdapProvider(params *GetLdapProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetLdapProviderOK, error) {
 	// TODO: Validate the params before sending
@@ -185,6 +189,8 @@ func (a *Client) GetLdapProvider(params *GetLdapProviderParams, authInfo runtime
 
 /*
 GetLdapProviderStatus gets the connection status of an l d a p provider
+
+**Privileges:** ```AD_LDAP_VIEW``` <br><br>
 */
 func (a *Client) GetLdapProviderStatus(params *GetLdapProviderStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetLdapProviderStatusCreated, error) {
 	// TODO: Validate the params before sending
@@ -224,7 +230,7 @@ func (a *Client) GetLdapProviderStatus(params *GetLdapProviderStatusParams, auth
 /*
 UpdateLdapProvider updates an l d a p provider
 
-Returns the updated LDAP provider.
+**Privileges:** ```AD_LDAP_MODIFY``` <br><br>Returns the updated LDAP provider.
 */
 func (a *Client) UpdateLdapProvider(params *UpdateLdapProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateLdapProviderCreated, error) {
 	// TODO: Validate the params before sending

@@ -74,13 +74,21 @@ type RemoteProtectionJobRunInformation struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies the name of the Protection Job on the original Cluster.
@@ -128,7 +136,7 @@ var remoteProtectionJobRunInformationTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -161,123 +169,6 @@ const (
 
 	// RemoteProtectionJobRunInformationEnvironmentKNimble captures enum value "kNimble"
 	RemoteProtectionJobRunInformationEnvironmentKNimble string = "kNimble"
-
-	// RemoteProtectionJobRunInformationEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	RemoteProtectionJobRunInformationEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// RemoteProtectionJobRunInformationEnvironmentKAzure captures enum value "kAzure"
-	RemoteProtectionJobRunInformationEnvironmentKAzure string = "kAzure"
-
-	// RemoteProtectionJobRunInformationEnvironmentKNetapp captures enum value "kNetapp"
-	RemoteProtectionJobRunInformationEnvironmentKNetapp string = "kNetapp"
-
-	// RemoteProtectionJobRunInformationEnvironmentKAgent captures enum value "kAgent"
-	RemoteProtectionJobRunInformationEnvironmentKAgent string = "kAgent"
-
-	// RemoteProtectionJobRunInformationEnvironmentKGenericNas captures enum value "kGenericNas"
-	RemoteProtectionJobRunInformationEnvironmentKGenericNas string = "kGenericNas"
-
-	// RemoteProtectionJobRunInformationEnvironmentKAcropolis captures enum value "kAcropolis"
-	RemoteProtectionJobRunInformationEnvironmentKAcropolis string = "kAcropolis"
-
-	// RemoteProtectionJobRunInformationEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	RemoteProtectionJobRunInformationEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// RemoteProtectionJobRunInformationEnvironmentKIsilon captures enum value "kIsilon"
-	RemoteProtectionJobRunInformationEnvironmentKIsilon string = "kIsilon"
-
-	// RemoteProtectionJobRunInformationEnvironmentKGPFS captures enum value "kGPFS"
-	RemoteProtectionJobRunInformationEnvironmentKGPFS string = "kGPFS"
-
-	// RemoteProtectionJobRunInformationEnvironmentKKVM captures enum value "kKVM"
-	RemoteProtectionJobRunInformationEnvironmentKKVM string = "kKVM"
-
-	// RemoteProtectionJobRunInformationEnvironmentKAWS captures enum value "kAWS"
-	RemoteProtectionJobRunInformationEnvironmentKAWS string = "kAWS"
-
-	// RemoteProtectionJobRunInformationEnvironmentKExchange captures enum value "kExchange"
-	RemoteProtectionJobRunInformationEnvironmentKExchange string = "kExchange"
-
-	// RemoteProtectionJobRunInformationEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	RemoteProtectionJobRunInformationEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// RemoteProtectionJobRunInformationEnvironmentKOracle captures enum value "kOracle"
-	RemoteProtectionJobRunInformationEnvironmentKOracle string = "kOracle"
-
-	// RemoteProtectionJobRunInformationEnvironmentKGCP captures enum value "kGCP"
-	RemoteProtectionJobRunInformationEnvironmentKGCP string = "kGCP"
-
-	// RemoteProtectionJobRunInformationEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	RemoteProtectionJobRunInformationEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// RemoteProtectionJobRunInformationEnvironmentKAWSNative captures enum value "kAWSNative"
-	RemoteProtectionJobRunInformationEnvironmentKAWSNative string = "kAWSNative"
-
-	// RemoteProtectionJobRunInformationEnvironmentKO365 captures enum value "kO365"
-	RemoteProtectionJobRunInformationEnvironmentKO365 string = "kO365"
-
-	// RemoteProtectionJobRunInformationEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	RemoteProtectionJobRunInformationEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// RemoteProtectionJobRunInformationEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	RemoteProtectionJobRunInformationEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// RemoteProtectionJobRunInformationEnvironmentKGCPNative captures enum value "kGCPNative"
-	RemoteProtectionJobRunInformationEnvironmentKGCPNative string = "kGCPNative"
-
-	// RemoteProtectionJobRunInformationEnvironmentKAzureNative captures enum value "kAzureNative"
-	RemoteProtectionJobRunInformationEnvironmentKAzureNative string = "kAzureNative"
-
-	// RemoteProtectionJobRunInformationEnvironmentKKubernetes captures enum value "kKubernetes"
-	RemoteProtectionJobRunInformationEnvironmentKKubernetes string = "kKubernetes"
-
-	// RemoteProtectionJobRunInformationEnvironmentKElastifile captures enum value "kElastifile"
-	RemoteProtectionJobRunInformationEnvironmentKElastifile string = "kElastifile"
-
-	// RemoteProtectionJobRunInformationEnvironmentKAD captures enum value "kAD"
-	RemoteProtectionJobRunInformationEnvironmentKAD string = "kAD"
-
-	// RemoteProtectionJobRunInformationEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	RemoteProtectionJobRunInformationEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// RemoteProtectionJobRunInformationEnvironmentKCassandra captures enum value "kCassandra"
-	RemoteProtectionJobRunInformationEnvironmentKCassandra string = "kCassandra"
-
-	// RemoteProtectionJobRunInformationEnvironmentKMongoDB captures enum value "kMongoDB"
-	RemoteProtectionJobRunInformationEnvironmentKMongoDB string = "kMongoDB"
-
-	// RemoteProtectionJobRunInformationEnvironmentKCouchbase captures enum value "kCouchbase"
-	RemoteProtectionJobRunInformationEnvironmentKCouchbase string = "kCouchbase"
-
-	// RemoteProtectionJobRunInformationEnvironmentKHdfs captures enum value "kHdfs"
-	RemoteProtectionJobRunInformationEnvironmentKHdfs string = "kHdfs"
-
-	// RemoteProtectionJobRunInformationEnvironmentKHive captures enum value "kHive"
-	RemoteProtectionJobRunInformationEnvironmentKHive string = "kHive"
-
-	// RemoteProtectionJobRunInformationEnvironmentKHBase captures enum value "kHBase"
-	RemoteProtectionJobRunInformationEnvironmentKHBase string = "kHBase"
-
-	// RemoteProtectionJobRunInformationEnvironmentKUDA captures enum value "kUDA"
-	RemoteProtectionJobRunInformationEnvironmentKUDA string = "kUDA"
-
-	// RemoteProtectionJobRunInformationEnvironmentKO365Teams captures enum value "kO365Teams"
-	RemoteProtectionJobRunInformationEnvironmentKO365Teams string = "kO365Teams"
-
-	// RemoteProtectionJobRunInformationEnvironmentKO365Group captures enum value "kO365Group"
-	RemoteProtectionJobRunInformationEnvironmentKO365Group string = "kO365Group"
-
-	// RemoteProtectionJobRunInformationEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	RemoteProtectionJobRunInformationEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// RemoteProtectionJobRunInformationEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	RemoteProtectionJobRunInformationEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// RemoteProtectionJobRunInformationEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	RemoteProtectionJobRunInformationEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// RemoteProtectionJobRunInformationEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	RemoteProtectionJobRunInformationEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

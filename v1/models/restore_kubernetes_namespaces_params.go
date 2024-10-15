@@ -12,6 +12,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // RestoreKubernetesNamespacesParams This message defines the Kubernetes specific namespace restore params.
@@ -53,6 +54,13 @@ type RestoreKubernetesNamespacesParams struct {
 	// Information about pods in the namespace which was backed up.
 	PodMetadataVec []*PodMetadata `json:"podMetadataVec"`
 
+	// List of PVCs (PVC names) that were successfully backed up.
+	PvcBackupSuccessVec []string `json:"pvcBackupSuccessVec"`
+
+	// Map of PVC (names) to PvcInfo discovered in the backed up
+	// namespace.
+	PvcInfoMap map[string]PvcInfo `json:"pvcInfoMap,omitempty"`
+
 	// By default, namespaces are restored with their original name. This field
 	// can be used to specify the transformation ( i.e prefix/suffix) to be
 	// applied to the source namespace to derive the new name of the restored
@@ -75,6 +83,10 @@ func (m *RestoreKubernetesNamespacesParams) Validate(formats strfmt.Registry) er
 	}
 
 	if err := m.validatePodMetadataVec(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePvcInfoMap(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -137,6 +149,32 @@ func (m *RestoreKubernetesNamespacesParams) validatePodMetadataVec(formats strfm
 	return nil
 }
 
+func (m *RestoreKubernetesNamespacesParams) validatePvcInfoMap(formats strfmt.Registry) error {
+	if swag.IsZero(m.PvcInfoMap) { // not required
+		return nil
+	}
+
+	for k := range m.PvcInfoMap {
+
+		if err := validate.Required("pvcInfoMap"+"."+k, "body", m.PvcInfoMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.PvcInfoMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("pvcInfoMap" + "." + k)
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("pvcInfoMap" + "." + k)
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *RestoreKubernetesNamespacesParams) validateRenameRestoredObjectParam(formats strfmt.Registry) error {
 	if swag.IsZero(m.RenameRestoredObjectParam) { // not required
 		return nil
@@ -184,6 +222,10 @@ func (m *RestoreKubernetesNamespacesParams) ContextValidate(ctx context.Context,
 	}
 
 	if err := m.contextValidatePodMetadataVec(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidatePvcInfoMap(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -238,6 +280,21 @@ func (m *RestoreKubernetesNamespacesParams) contextValidatePodMetadataVec(ctx co
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("podMetadataVec" + "." + strconv.Itoa(i))
 				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *RestoreKubernetesNamespacesParams) contextValidatePvcInfoMap(ctx context.Context, formats strfmt.Registry) error {
+
+	for k := range m.PvcInfoMap {
+
+		if val, ok := m.PvcInfoMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

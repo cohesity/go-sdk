@@ -7,11 +7,11 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // VolumeNameMap This message store the map, which store the information for each logical
@@ -22,7 +22,7 @@ type VolumeNameMap struct {
 
 	// Key for the map is volume name (guest mount point) and value is its
 	// corresponding volume information.
-	VolumeNameMap []*VolumeNameMapVolumeNameMapEntry `json:"volumeNameMap"`
+	VolumeNameMap map[string]PrivateVolumeInfo `json:"volumeNameMap,omitempty"`
 }
 
 // Validate validates this volume name map
@@ -44,17 +44,17 @@ func (m *VolumeNameMap) validateVolumeNameMap(formats strfmt.Registry) error {
 		return nil
 	}
 
-	for i := 0; i < len(m.VolumeNameMap); i++ {
-		if swag.IsZero(m.VolumeNameMap[i]) { // not required
-			continue
-		}
+	for k := range m.VolumeNameMap {
 
-		if m.VolumeNameMap[i] != nil {
-			if err := m.VolumeNameMap[i].Validate(formats); err != nil {
+		if err := validate.Required("volumeNameMap"+"."+k, "body", m.VolumeNameMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.VolumeNameMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("volumeNameMap" + "." + strconv.Itoa(i))
+					return ve.ValidateName("volumeNameMap" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("volumeNameMap" + "." + strconv.Itoa(i))
+					return ce.ValidateName("volumeNameMap" + "." + k)
 				}
 				return err
 			}
@@ -81,20 +81,10 @@ func (m *VolumeNameMap) ContextValidate(ctx context.Context, formats strfmt.Regi
 
 func (m *VolumeNameMap) contextValidateVolumeNameMap(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.VolumeNameMap); i++ {
+	for k := range m.VolumeNameMap {
 
-		if m.VolumeNameMap[i] != nil {
-
-			if swag.IsZero(m.VolumeNameMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.VolumeNameMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("volumeNameMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("volumeNameMap" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.VolumeNameMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

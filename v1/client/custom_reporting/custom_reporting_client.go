@@ -62,7 +62,7 @@ type ClientService interface {
 /*
 GetPostgres lists the postgres database running nodes on the cohesity cluster
 
-Returns the list of node information running postgres database.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the list of node information running postgres database.
 */
 func (a *Client) GetPostgres(params *GetPostgresParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPostgresOK, error) {
 	// TODO: Validate the params before sending

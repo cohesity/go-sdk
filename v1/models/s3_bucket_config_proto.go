@@ -7,7 +7,6 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -58,6 +57,15 @@ type S3BucketConfigProto struct {
 	// MPU directory can have.
 	MaxSubfilesPerMpu *int32 `json:"maxSubfilesPerMpu,omitempty"`
 
+	// For a view under-migration from S3 1.0 to 2.0, we will use newly created
+	// object and versions directories with following suffix in obj namespace.
+	// Prefix for these root directories is defined in s3_constants.cc
+	ObjNsRootDirsSuffix *string `json:"objNsRootDirsSuffix,omitempty"`
+
+	// This field stores all the metadata for migration of bucket from
+	// S3 1.0 to 2.0
+	ObjectIDMigration *ObjectIDMigrationProto `json:"objectIdMigration,omitempty"`
+
 	// Whether this view has ever had any object with tags. This should be
 	// enabled only when first object tag is ever put in this view.
 	ObjectTagsAdded *bool `json:"objectTagsAdded,omitempty"`
@@ -81,7 +89,7 @@ type S3BucketConfigProto struct {
 
 	// Stores the prefix to child bucket mapping to enable prefix based routing
 	// of object requests to child buckets.
-	PrefixToChildBucketMap []*S3BucketConfigProtoPrefixToChildBucketMapEntry `json:"prefixToChildBucketMap"`
+	PrefixToChildBucketMap map[string]string `json:"prefixToChildBucketMap,omitempty"`
 
 	// Protocol type of this bucket.
 	ProtocolType *int32 `json:"protocolType,omitempty"`
@@ -91,7 +99,7 @@ type S3BucketConfigProto struct {
 
 	// Tags (or labels) assigned to the bucket. Tags are set of <key, value>
 	// pairs.
-	TagMap []*S3BucketConfigProtoTagMapEntry `json:"tagMap"`
+	TagMap map[string]string `json:"tagMap,omitempty"`
 
 	// versioning state
 	VersioningState *int32 `json:"versioningState,omitempty"`
@@ -113,6 +121,10 @@ func (m *S3BucketConfigProto) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateObjectIDMigration(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateOwnerInfo(formats); err != nil {
 		res = append(res, err)
 	}
@@ -121,15 +133,7 @@ func (m *S3BucketConfigProto) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validatePrefixToChildBucketMap(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateSwiftContainerTag(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateTagMap(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -196,6 +200,25 @@ func (m *S3BucketConfigProto) validateLifecycleConfig(formats strfmt.Registry) e
 	return nil
 }
 
+func (m *S3BucketConfigProto) validateObjectIDMigration(formats strfmt.Registry) error {
+	if swag.IsZero(m.ObjectIDMigration) { // not required
+		return nil
+	}
+
+	if m.ObjectIDMigration != nil {
+		if err := m.ObjectIDMigration.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("objectIdMigration")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("objectIdMigration")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *S3BucketConfigProto) validateOwnerInfo(formats strfmt.Registry) error {
 	if swag.IsZero(m.OwnerInfo) { // not required
 		return nil
@@ -234,32 +257,6 @@ func (m *S3BucketConfigProto) validateOwnershipControls(formats strfmt.Registry)
 	return nil
 }
 
-func (m *S3BucketConfigProto) validatePrefixToChildBucketMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.PrefixToChildBucketMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.PrefixToChildBucketMap); i++ {
-		if swag.IsZero(m.PrefixToChildBucketMap[i]) { // not required
-			continue
-		}
-
-		if m.PrefixToChildBucketMap[i] != nil {
-			if err := m.PrefixToChildBucketMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("prefixToChildBucketMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("prefixToChildBucketMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 func (m *S3BucketConfigProto) validateSwiftContainerTag(formats strfmt.Registry) error {
 	if swag.IsZero(m.SwiftContainerTag) { // not required
 		return nil
@@ -274,32 +271,6 @@ func (m *S3BucketConfigProto) validateSwiftContainerTag(formats strfmt.Registry)
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *S3BucketConfigProto) validateTagMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.TagMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.TagMap); i++ {
-		if swag.IsZero(m.TagMap[i]) { // not required
-			continue
-		}
-
-		if m.TagMap[i] != nil {
-			if err := m.TagMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("tagMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("tagMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil
@@ -321,6 +292,10 @@ func (m *S3BucketConfigProto) ContextValidate(ctx context.Context, formats strfm
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateObjectIDMigration(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateOwnerInfo(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -329,15 +304,7 @@ func (m *S3BucketConfigProto) ContextValidate(ctx context.Context, formats strfm
 		res = append(res, err)
 	}
 
-	if err := m.contextValidatePrefixToChildBucketMap(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.contextValidateSwiftContainerTag(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateTagMap(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -410,6 +377,27 @@ func (m *S3BucketConfigProto) contextValidateLifecycleConfig(ctx context.Context
 	return nil
 }
 
+func (m *S3BucketConfigProto) contextValidateObjectIDMigration(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ObjectIDMigration != nil {
+
+		if swag.IsZero(m.ObjectIDMigration) { // not required
+			return nil
+		}
+
+		if err := m.ObjectIDMigration.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("objectIdMigration")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("objectIdMigration")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *S3BucketConfigProto) contextValidateOwnerInfo(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.OwnerInfo != nil {
@@ -452,31 +440,6 @@ func (m *S3BucketConfigProto) contextValidateOwnershipControls(ctx context.Conte
 	return nil
 }
 
-func (m *S3BucketConfigProto) contextValidatePrefixToChildBucketMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.PrefixToChildBucketMap); i++ {
-
-		if m.PrefixToChildBucketMap[i] != nil {
-
-			if swag.IsZero(m.PrefixToChildBucketMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.PrefixToChildBucketMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("prefixToChildBucketMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("prefixToChildBucketMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 func (m *S3BucketConfigProto) contextValidateSwiftContainerTag(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.SwiftContainerTag != nil {
@@ -493,31 +456,6 @@ func (m *S3BucketConfigProto) contextValidateSwiftContainerTag(ctx context.Conte
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *S3BucketConfigProto) contextValidateTagMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.TagMap); i++ {
-
-		if m.TagMap[i] != nil {
-
-			if swag.IsZero(m.TagMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.TagMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("tagMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("tagMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

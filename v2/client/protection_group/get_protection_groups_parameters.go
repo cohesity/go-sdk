@@ -146,14 +146,6 @@ type GetProtectionGroupsParams struct {
 	*/
 	LastRunReplicationStatus []string
 
-	/* MaxResultCount.
-
-	   Identifies the max number of items to be returned. This is specifically to be used with pagination.
-
-	   Format: int64
-	*/
-	MaxResultCount *int64
-
 	/* Names.
 
 	   Filter by a list of Protection Group names.
@@ -162,12 +154,6 @@ type GetProtectionGroupsParams struct {
 
 	// Office365Workloads.
 	Office365Workloads []string
-
-	/* PaginationCookie.
-
-	   Specifies the cookie to fetch the set page of results
-	*/
-	PaginationCookie *string
 
 	/* PolicyIds.
 
@@ -426,17 +412,6 @@ func (o *GetProtectionGroupsParams) SetLastRunReplicationStatus(lastRunReplicati
 	o.LastRunReplicationStatus = lastRunReplicationStatus
 }
 
-// WithMaxResultCount adds the maxResultCount to the get protection groups params
-func (o *GetProtectionGroupsParams) WithMaxResultCount(maxResultCount *int64) *GetProtectionGroupsParams {
-	o.SetMaxResultCount(maxResultCount)
-	return o
-}
-
-// SetMaxResultCount adds the maxResultCount to the get protection groups params
-func (o *GetProtectionGroupsParams) SetMaxResultCount(maxResultCount *int64) {
-	o.MaxResultCount = maxResultCount
-}
-
 // WithNames adds the names to the get protection groups params
 func (o *GetProtectionGroupsParams) WithNames(names []string) *GetProtectionGroupsParams {
 	o.SetNames(names)
@@ -457,17 +432,6 @@ func (o *GetProtectionGroupsParams) WithOffice365Workloads(office365Workloads []
 // SetOffice365Workloads adds the office365Workloads to the get protection groups params
 func (o *GetProtectionGroupsParams) SetOffice365Workloads(office365Workloads []string) {
 	o.Office365Workloads = office365Workloads
-}
-
-// WithPaginationCookie adds the paginationCookie to the get protection groups params
-func (o *GetProtectionGroupsParams) WithPaginationCookie(paginationCookie *string) *GetProtectionGroupsParams {
-	o.SetPaginationCookie(paginationCookie)
-	return o
-}
-
-// SetPaginationCookie adds the paginationCookie to the get protection groups params
-func (o *GetProtectionGroupsParams) SetPaginationCookie(paginationCookie *string) {
-	o.PaginationCookie = paginationCookie
 }
 
 // WithPolicyIds adds the policyIds to the get protection groups params
@@ -762,23 +726,6 @@ func (o *GetProtectionGroupsParams) WriteToRequest(r runtime.ClientRequest, reg 
 		}
 	}
 
-	if o.MaxResultCount != nil {
-
-		// query param maxResultCount
-		var qrMaxResultCount int64
-
-		if o.MaxResultCount != nil {
-			qrMaxResultCount = *o.MaxResultCount
-		}
-		qMaxResultCount := swag.FormatInt64(qrMaxResultCount)
-		if qMaxResultCount != "" {
-
-			if err := r.SetQueryParam("maxResultCount", qMaxResultCount); err != nil {
-				return err
-			}
-		}
-	}
-
 	if o.Names != nil {
 
 		// binding items for names
@@ -798,23 +745,6 @@ func (o *GetProtectionGroupsParams) WriteToRequest(r runtime.ClientRequest, reg 
 		// query array param office365Workloads
 		if err := r.SetQueryParam("office365Workloads", joinedOffice365Workloads...); err != nil {
 			return err
-		}
-	}
-
-	if o.PaginationCookie != nil {
-
-		// query param paginationCookie
-		var qrPaginationCookie string
-
-		if o.PaginationCookie != nil {
-			qrPaginationCookie = *o.PaginationCookie
-		}
-		qPaginationCookie := qrPaginationCookie
-		if qPaginationCookie != "" {
-
-			if err := r.SetQueryParam("paginationCookie", qPaginationCookie); err != nil {
-				return err
-			}
 		}
 	}
 

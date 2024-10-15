@@ -70,7 +70,7 @@ type ClientService interface {
 /*
 CreateViewBox creates a domain view box
 
-Returns the created Domain (View Box).
+**Privileges:** ```STORAGE_DOMAIN_MODIFY``` <br><br>Returns the created Domain (View Box).
 */
 func (a *Client) CreateViewBox(params *CreateViewBoxParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateViewBoxCreated, error) {
 	// TODO: Validate the params before sending
@@ -110,7 +110,7 @@ func (a *Client) CreateViewBox(params *CreateViewBoxParams, authInfo runtime.Cli
 /*
 DeleteViewBox deletes a domain view box
 
-Returns delete status upon completion.
+**Privileges:** ```STORAGE_DOMAIN_MODIFY``` <br><br>Returns delete status upon completion.
 */
 func (a *Client) DeleteViewBox(params *DeleteViewBoxParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteViewBoxNoContent, error) {
 	// TODO: Validate the params before sending
@@ -150,7 +150,7 @@ func (a *Client) DeleteViewBox(params *DeleteViewBoxParams, authInfo runtime.Cli
 /*
 	GetViewBoxByID lists details about a single domain view box
 
-	Returns the Domain (View Box) corresponding to the specified Domain (View Box)
+	**Privileges:** ```STORAGE_DOMAIN_VIEW``` <br><br>Returns the Domain (View Box) corresponding to the specified Domain (View Box)
 
 Id.
 */
@@ -192,7 +192,7 @@ func (a *Client) GetViewBoxByID(params *GetViewBoxByIDParams, authInfo runtime.C
 /*
 	GetViewBoxes lists domains view boxes filtered by the specified parameters
 
-	If no parameters are specified, all Domains (View Boxes) currently on
+	**Privileges:** ```STORAGE_DOMAIN_VIEW``` <br><br>If no parameters are specified, all Domains (View Boxes) currently on
 
 the Cohesity Cluster are returned.
 Specifying parameters filters the results that are returned.
@@ -235,7 +235,7 @@ func (a *Client) GetViewBoxes(params *GetViewBoxesParams, authInfo runtime.Clien
 /*
 UpdateViewBox updates a domain view box
 
-Returns the updated Domain (View Box).
+**Privileges:** ```STORAGE_DOMAIN_MODIFY``` <br><br>Returns the updated Domain (View Box).
 */
 func (a *Client) UpdateViewBox(params *UpdateViewBoxParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateViewBoxOK, error) {
 	// TODO: Validate the params before sending

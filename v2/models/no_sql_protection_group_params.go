@@ -46,6 +46,17 @@ type NoSQLProtectionGroupParams struct {
 	// The user specified name for the Source on which this protection was run.
 	// Read Only: true
 	CustomSourceName *string `json:"customSourceName,omitempty"`
+
+	// Specifies the list of fully qualified name of the entities to include for protection.
+	// Unique: true
+	IncludeObjectlist []string `json:"includeObjectlist"`
+
+	// Specifies the list of fully qualified name of the entities to exclude for protection.
+	// Unique: true
+	ExcludeObjectlist []string `json:"excludeObjectlist"`
+
+	// Specifies the flag to automatically scale number of concurrent IO Streams that will be created to exchange data with the cluster.
+	AutoScaleConcurrency *bool `json:"autoScaleConcurrency,omitempty"`
 }
 
 // Validate validates this no Sql protection group params
@@ -57,6 +68,14 @@ func (m *NoSQLProtectionGroupParams) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateExcludeObjectIds(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateIncludeObjectlist(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateExcludeObjectlist(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -108,6 +127,30 @@ func (m *NoSQLProtectionGroupParams) validateExcludeObjectIds(formats strfmt.Reg
 	}
 
 	if err := validate.UniqueItems("excludeObjectIds", "body", m.ExcludeObjectIds); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *NoSQLProtectionGroupParams) validateIncludeObjectlist(formats strfmt.Registry) error {
+	if swag.IsZero(m.IncludeObjectlist) { // not required
+		return nil
+	}
+
+	if err := validate.UniqueItems("includeObjectlist", "body", m.IncludeObjectlist); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *NoSQLProtectionGroupParams) validateExcludeObjectlist(formats strfmt.Registry) error {
+	if swag.IsZero(m.ExcludeObjectlist) { // not required
+		return nil
+	}
+
+	if err := validate.UniqueItems("excludeObjectlist", "body", m.ExcludeObjectlist); err != nil {
 		return err
 	}
 

@@ -64,7 +64,7 @@ type ClientService interface {
 /*
 CloseSmbFileOpen closes an active s m b file open
 
-Returns nothing upon success.
+**Privileges:** ```STORAGE_MODIFY``` <br><br>Returns nothing upon success.
 */
 func (a *Client) CloseSmbFileOpen(params *CloseSmbFileOpenParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CloseSmbFileOpenNoContent, error) {
 	// TODO: Validate the params before sending
@@ -104,7 +104,7 @@ func (a *Client) CloseSmbFileOpen(params *CloseSmbFileOpenParams, authInfo runti
 /*
 	GetSmbFileOpens lists the active s m b file opens that match the filter criteria specified using parameters
 
-	If no parameters are specified, all active SMB file opens currently on the
+	**Privileges:** ```STORAGE_VIEW``` <br><br>If no parameters are specified, all active SMB file opens currently on the
 
 Cohesity Cluster are returned. Specifying parameters filters the results that
 are returned.

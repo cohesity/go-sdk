@@ -25,6 +25,9 @@ type SMBPrincipal struct {
 
 	// Specifies the principal class.
 	ObjectClass *string `json:"objectClass,omitempty"`
+
+	// Specifies the SID of the principal.
+	Sid *string `json:"sid,omitempty"`
 }
 
 // Validate validates this s m b principal

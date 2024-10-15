@@ -62,7 +62,7 @@ type ClientService interface {
 /*
 	GetPrivileges lists the privileges defined on the cohesity cluster
 
-	If the 'name' parameter is not specified, all privileges defined
+	**Privileges:** ```PRINCIPAL_VIEW``` <br><br>If the 'name' parameter is not specified, all privileges defined
 
 on the Cohesity Cluster are returned.
 In addition, information about each privilege is returned such as the

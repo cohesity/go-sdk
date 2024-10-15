@@ -44,7 +44,10 @@ type RestoreObjectState struct {
 	// 'kDataCopyStarted' indicates that the disk copy is started.
 	// 'kInProgress' captures a generic in-progress state and can be used by restore
 	// operations that don't track individual states.
-	// Enum: ["kFilesCloned","kFetchedEntityInfo","kVMCreated","kRelocationStarted","kFinished","kAborted","kDataCopyStarted","kInProgress"]
+	// 'kVMDeleted' captures a VM that has been deleted from the vCenter upon a failed
+	// import to vCD.
+	// 'kCancelled' captures the cancellation of the restore for the entity.
+	// Enum: ["kFilesCloned","kFetchedEntityInfo","kVMCreated","kRelocationStarted","kFinished","kAborted","kDataCopyStarted","kInProgress","kVMDeleted","kCancelled"]
 	ObjectStatus *string `json:"objectStatus,omitempty"`
 
 	// Specifies the id of the Resource Pool that the restored
@@ -115,7 +118,7 @@ var restoreObjectStateTypeObjectStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kFilesCloned","kFetchedEntityInfo","kVMCreated","kRelocationStarted","kFinished","kAborted","kDataCopyStarted","kInProgress"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kFilesCloned","kFetchedEntityInfo","kVMCreated","kRelocationStarted","kFinished","kAborted","kDataCopyStarted","kInProgress","kVMDeleted","kCancelled"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -148,6 +151,12 @@ const (
 
 	// RestoreObjectStateObjectStatusKInProgress captures enum value "kInProgress"
 	RestoreObjectStateObjectStatusKInProgress string = "kInProgress"
+
+	// RestoreObjectStateObjectStatusKVMDeleted captures enum value "kVMDeleted"
+	RestoreObjectStateObjectStatusKVMDeleted string = "kVMDeleted"
+
+	// RestoreObjectStateObjectStatusKCancelled captures enum value "kCancelled"
+	RestoreObjectStateObjectStatusKCancelled string = "kCancelled"
 )
 
 // prop value enum

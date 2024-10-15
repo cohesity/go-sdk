@@ -27,6 +27,9 @@ type CrackedFileDocumentOneDriveMetadata struct {
 	// Type of the drive for this file/folder.
 	DriveType *int32 `json:"driveType,omitempty"`
 
+	// Unique id for this file/folder.
+	ItemID *string `json:"itemId,omitempty"`
+
 	// The email of the owner of the file.
 	// TODO(tauseef): Mark this as reserved once Op cleanup is done.
 	OwnerEmail *string `json:"ownerEmail,omitempty"`

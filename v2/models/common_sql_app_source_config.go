@@ -44,6 +44,12 @@ type CommonSQLAppSourceConfig struct {
 
 	// 'with_clause' contains 'with clause' to be used in native sql restore command. This is only applicable for database restore of native sql backup. Here user can specify multiple restore options. Example: 'WITH BUFFERCOUNT = 575, MAXTRANSFERSIZE = 2097152'.
 	NativeRecoveryWithClause *string `json:"nativeRecoveryWithClause,omitempty"`
+
+	// Specifies the option to set replay last log bit while creating the sql restore task and doing restore to latest point-in-time. If this is set to true, we will replay the entire last log without STOPAT.
+	ReplayEntireLastLog *bool `json:"replayEntireLastLog,omitempty"`
+
+	// Specifies the WITH clause to be used in native sql log restore command. This is only applicable for native log restore.
+	NativeLogRecoveryWithClause *string `json:"nativeLogRecoveryWithClause,omitempty"`
 }
 
 // Validate validates this common Sql app source config

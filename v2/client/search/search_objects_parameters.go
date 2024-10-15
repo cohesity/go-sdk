@@ -62,11 +62,23 @@ SearchObjectsParams contains all the parameters to send to the API endpoint
 */
 type SearchObjectsParams struct {
 
+	/* AwsObjectTypes.
+
+	   Specifies the object types to filter objects on. Only applicable if the environment is AWS.
+	*/
+	AwsObjectTypes []string
+
 	/* AzureObjectTypes.
 
 	   Specifies the object types to filter objects on. Only applicable if the environment is Azure.
 	*/
 	AzureObjectTypes []string
+
+	/* AzureUuids.
+
+	   Specifies the Azure UUID for the Microsoft365 objects. If specified, the objects with the matching Azure UUIDs will be returned.
+	*/
+	AzureUuids []string
 
 	/* ClusterIdentifiers.
 
@@ -88,11 +100,24 @@ type SearchObjectsParams struct {
 	*/
 	Environments []string
 
+	/* ExternalFilters.
+
+	     Specifies the key-value pairs to filtering the results for the search. Each filter is of the form 'key:value'. The filter 'externalFilters:k1:v1&externalFilters:k2:v2&externalFilters:k2:v3' returns the documents where each document will match the query (k1=v1) AND (k2=v2 OR k2 = v3).
+	Allowed keys: - vmBiosUuid - graphUuid - arn - instanceId - bucketName - azureId
+	*/
+	ExternalFilters []string
+
 	/* IncludeDeletedObjects.
 
 	   Specifies whether to include deleted objects in response. These objects can't be protected but can be recovered. This field is deprecated.
 	*/
 	IncludeDeletedObjects *bool
+
+	/* IncludeHeliosTagInfoForObjects.
+
+	   Specifies whether to include helios tags information for objects in response. Default value is false
+	*/
+	IncludeHeliosTagInfoForObjects *bool
 
 	/* IncludeTenants.
 
@@ -218,6 +243,36 @@ type SearchObjectsParams struct {
 	*/
 	StorageDomainIds []string
 
+	/* TagCategories.
+
+	   Specifies the tag category to filter the objects and snapshots.
+	*/
+	TagCategories []string
+
+	/* TagNames.
+
+	   Specifies the tag names to filter the tagged objects and snapshots
+	*/
+	TagNames []string
+
+	/* TagSearchName.
+
+	   Specifies the tag name to filter the tagged objects and snapshots. User can specify a wildcard character '*' as a suffix to a string where all object's tag names are matched with the prefix string.
+	*/
+	TagSearchName *string
+
+	/* TagSubCategories.
+
+	   Specifies the tag subcategory to filter the objects and snapshots
+	*/
+	TagSubCategories []string
+
+	/* TagTypes.
+
+	   Specifies the tag type to filter the objects and snapshots.
+	*/
+	TagTypes []string
+
 	/* TenantIds.
 
 	   TenantIds contains ids of the tenants for which objects are to be returned.
@@ -277,6 +332,17 @@ func (o *SearchObjectsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithAwsObjectTypes adds the awsObjectTypes to the search objects params
+func (o *SearchObjectsParams) WithAwsObjectTypes(awsObjectTypes []string) *SearchObjectsParams {
+	o.SetAwsObjectTypes(awsObjectTypes)
+	return o
+}
+
+// SetAwsObjectTypes adds the awsObjectTypes to the search objects params
+func (o *SearchObjectsParams) SetAwsObjectTypes(awsObjectTypes []string) {
+	o.AwsObjectTypes = awsObjectTypes
+}
+
 // WithAzureObjectTypes adds the azureObjectTypes to the search objects params
 func (o *SearchObjectsParams) WithAzureObjectTypes(azureObjectTypes []string) *SearchObjectsParams {
 	o.SetAzureObjectTypes(azureObjectTypes)
@@ -286,6 +352,17 @@ func (o *SearchObjectsParams) WithAzureObjectTypes(azureObjectTypes []string) *S
 // SetAzureObjectTypes adds the azureObjectTypes to the search objects params
 func (o *SearchObjectsParams) SetAzureObjectTypes(azureObjectTypes []string) {
 	o.AzureObjectTypes = azureObjectTypes
+}
+
+// WithAzureUuids adds the azureUuids to the search objects params
+func (o *SearchObjectsParams) WithAzureUuids(azureUuids []string) *SearchObjectsParams {
+	o.SetAzureUuids(azureUuids)
+	return o
+}
+
+// SetAzureUuids adds the azureUuids to the search objects params
+func (o *SearchObjectsParams) SetAzureUuids(azureUuids []string) {
+	o.AzureUuids = azureUuids
 }
 
 // WithClusterIdentifiers adds the clusterIdentifiers to the search objects params
@@ -321,6 +398,17 @@ func (o *SearchObjectsParams) SetEnvironments(environments []string) {
 	o.Environments = environments
 }
 
+// WithExternalFilters adds the externalFilters to the search objects params
+func (o *SearchObjectsParams) WithExternalFilters(externalFilters []string) *SearchObjectsParams {
+	o.SetExternalFilters(externalFilters)
+	return o
+}
+
+// SetExternalFilters adds the externalFilters to the search objects params
+func (o *SearchObjectsParams) SetExternalFilters(externalFilters []string) {
+	o.ExternalFilters = externalFilters
+}
+
 // WithIncludeDeletedObjects adds the includeDeletedObjects to the search objects params
 func (o *SearchObjectsParams) WithIncludeDeletedObjects(includeDeletedObjects *bool) *SearchObjectsParams {
 	o.SetIncludeDeletedObjects(includeDeletedObjects)
@@ -330,6 +418,17 @@ func (o *SearchObjectsParams) WithIncludeDeletedObjects(includeDeletedObjects *b
 // SetIncludeDeletedObjects adds the includeDeletedObjects to the search objects params
 func (o *SearchObjectsParams) SetIncludeDeletedObjects(includeDeletedObjects *bool) {
 	o.IncludeDeletedObjects = includeDeletedObjects
+}
+
+// WithIncludeHeliosTagInfoForObjects adds the includeHeliosTagInfoForObjects to the search objects params
+func (o *SearchObjectsParams) WithIncludeHeliosTagInfoForObjects(includeHeliosTagInfoForObjects *bool) *SearchObjectsParams {
+	o.SetIncludeHeliosTagInfoForObjects(includeHeliosTagInfoForObjects)
+	return o
+}
+
+// SetIncludeHeliosTagInfoForObjects adds the includeHeliosTagInfoForObjects to the search objects params
+func (o *SearchObjectsParams) SetIncludeHeliosTagInfoForObjects(includeHeliosTagInfoForObjects *bool) {
+	o.IncludeHeliosTagInfoForObjects = includeHeliosTagInfoForObjects
 }
 
 // WithIncludeTenants adds the includeTenants to the search objects params
@@ -552,6 +651,61 @@ func (o *SearchObjectsParams) SetStorageDomainIds(storageDomainIds []string) {
 	o.StorageDomainIds = storageDomainIds
 }
 
+// WithTagCategories adds the tagCategories to the search objects params
+func (o *SearchObjectsParams) WithTagCategories(tagCategories []string) *SearchObjectsParams {
+	o.SetTagCategories(tagCategories)
+	return o
+}
+
+// SetTagCategories adds the tagCategories to the search objects params
+func (o *SearchObjectsParams) SetTagCategories(tagCategories []string) {
+	o.TagCategories = tagCategories
+}
+
+// WithTagNames adds the tagNames to the search objects params
+func (o *SearchObjectsParams) WithTagNames(tagNames []string) *SearchObjectsParams {
+	o.SetTagNames(tagNames)
+	return o
+}
+
+// SetTagNames adds the tagNames to the search objects params
+func (o *SearchObjectsParams) SetTagNames(tagNames []string) {
+	o.TagNames = tagNames
+}
+
+// WithTagSearchName adds the tagSearchName to the search objects params
+func (o *SearchObjectsParams) WithTagSearchName(tagSearchName *string) *SearchObjectsParams {
+	o.SetTagSearchName(tagSearchName)
+	return o
+}
+
+// SetTagSearchName adds the tagSearchName to the search objects params
+func (o *SearchObjectsParams) SetTagSearchName(tagSearchName *string) {
+	o.TagSearchName = tagSearchName
+}
+
+// WithTagSubCategories adds the tagSubCategories to the search objects params
+func (o *SearchObjectsParams) WithTagSubCategories(tagSubCategories []string) *SearchObjectsParams {
+	o.SetTagSubCategories(tagSubCategories)
+	return o
+}
+
+// SetTagSubCategories adds the tagSubCategories to the search objects params
+func (o *SearchObjectsParams) SetTagSubCategories(tagSubCategories []string) {
+	o.TagSubCategories = tagSubCategories
+}
+
+// WithTagTypes adds the tagTypes to the search objects params
+func (o *SearchObjectsParams) WithTagTypes(tagTypes []string) *SearchObjectsParams {
+	o.SetTagTypes(tagTypes)
+	return o
+}
+
+// SetTagTypes adds the tagTypes to the search objects params
+func (o *SearchObjectsParams) SetTagTypes(tagTypes []string) {
+	o.TagTypes = tagTypes
+}
+
 // WithTenantIds adds the tenantIds to the search objects params
 func (o *SearchObjectsParams) WithTenantIds(tenantIds []string) *SearchObjectsParams {
 	o.SetTenantIds(tenantIds)
@@ -571,6 +725,17 @@ func (o *SearchObjectsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 	}
 	var res []error
 
+	if o.AwsObjectTypes != nil {
+
+		// binding items for awsObjectTypes
+		joinedAwsObjectTypes := o.bindParamAwsObjectTypes(reg)
+
+		// query array param awsObjectTypes
+		if err := r.SetQueryParam("awsObjectTypes", joinedAwsObjectTypes...); err != nil {
+			return err
+		}
+	}
+
 	if o.AzureObjectTypes != nil {
 
 		// binding items for azureObjectTypes
@@ -578,6 +743,17 @@ func (o *SearchObjectsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 
 		// query array param azureObjectTypes
 		if err := r.SetQueryParam("azureObjectTypes", joinedAzureObjectTypes...); err != nil {
+			return err
+		}
+	}
+
+	if o.AzureUuids != nil {
+
+		// binding items for azureUuids
+		joinedAzureUuids := o.bindParamAzureUuids(reg)
+
+		// query array param azureUuids
+		if err := r.SetQueryParam("azureUuids", joinedAzureUuids...); err != nil {
 			return err
 		}
 	}
@@ -621,6 +797,17 @@ func (o *SearchObjectsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 		}
 	}
 
+	if o.ExternalFilters != nil {
+
+		// binding items for externalFilters
+		joinedExternalFilters := o.bindParamExternalFilters(reg)
+
+		// query array param externalFilters
+		if err := r.SetQueryParam("externalFilters", joinedExternalFilters...); err != nil {
+			return err
+		}
+	}
+
 	if o.IncludeDeletedObjects != nil {
 
 		// query param includeDeletedObjects
@@ -633,6 +820,23 @@ func (o *SearchObjectsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 		if qIncludeDeletedObjects != "" {
 
 			if err := r.SetQueryParam("includeDeletedObjects", qIncludeDeletedObjects); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.IncludeHeliosTagInfoForObjects != nil {
+
+		// query param includeHeliosTagInfoForObjects
+		var qrIncludeHeliosTagInfoForObjects bool
+
+		if o.IncludeHeliosTagInfoForObjects != nil {
+			qrIncludeHeliosTagInfoForObjects = *o.IncludeHeliosTagInfoForObjects
+		}
+		qIncludeHeliosTagInfoForObjects := swag.FormatBool(qrIncludeHeliosTagInfoForObjects)
+		if qIncludeHeliosTagInfoForObjects != "" {
+
+			if err := r.SetQueryParam("includeHeliosTagInfoForObjects", qIncludeHeliosTagInfoForObjects); err != nil {
 				return err
 			}
 		}
@@ -885,6 +1089,67 @@ func (o *SearchObjectsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 		}
 	}
 
+	if o.TagCategories != nil {
+
+		// binding items for tagCategories
+		joinedTagCategories := o.bindParamTagCategories(reg)
+
+		// query array param tagCategories
+		if err := r.SetQueryParam("tagCategories", joinedTagCategories...); err != nil {
+			return err
+		}
+	}
+
+	if o.TagNames != nil {
+
+		// binding items for tagNames
+		joinedTagNames := o.bindParamTagNames(reg)
+
+		// query array param tagNames
+		if err := r.SetQueryParam("tagNames", joinedTagNames...); err != nil {
+			return err
+		}
+	}
+
+	if o.TagSearchName != nil {
+
+		// query param tagSearchName
+		var qrTagSearchName string
+
+		if o.TagSearchName != nil {
+			qrTagSearchName = *o.TagSearchName
+		}
+		qTagSearchName := qrTagSearchName
+		if qTagSearchName != "" {
+
+			if err := r.SetQueryParam("tagSearchName", qTagSearchName); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.TagSubCategories != nil {
+
+		// binding items for tagSubCategories
+		joinedTagSubCategories := o.bindParamTagSubCategories(reg)
+
+		// query array param tagSubCategories
+		if err := r.SetQueryParam("tagSubCategories", joinedTagSubCategories...); err != nil {
+			return err
+		}
+	}
+
+	if o.TagTypes != nil {
+
+		// binding items for tagTypes
+		joinedTagTypes := o.bindParamTagTypes(reg)
+
+		// query array param tagTypes
+		if err := r.SetQueryParam("tagTypes", joinedTagTypes...); err != nil {
+			return err
+		}
+	}
+
 	if o.TenantIds != nil {
 
 		// binding items for tenantIds
@@ -902,6 +1167,23 @@ func (o *SearchObjectsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 	return nil
 }
 
+// bindParamSearchObjects binds the parameter awsObjectTypes
+func (o *SearchObjectsParams) bindParamAwsObjectTypes(formats strfmt.Registry) []string {
+	awsObjectTypesIR := o.AwsObjectTypes
+
+	var awsObjectTypesIC []string
+	for _, awsObjectTypesIIR := range awsObjectTypesIR { // explode []string
+
+		awsObjectTypesIIV := awsObjectTypesIIR // string as string
+		awsObjectTypesIC = append(awsObjectTypesIC, awsObjectTypesIIV)
+	}
+
+	// items.CollectionFormat: ""
+	awsObjectTypesIS := swag.JoinByFormat(awsObjectTypesIC, "")
+
+	return awsObjectTypesIS
+}
+
 // bindParamSearchObjects binds the parameter azureObjectTypes
 func (o *SearchObjectsParams) bindParamAzureObjectTypes(formats strfmt.Registry) []string {
 	azureObjectTypesIR := o.AzureObjectTypes
@@ -917,6 +1199,23 @@ func (o *SearchObjectsParams) bindParamAzureObjectTypes(formats strfmt.Registry)
 	azureObjectTypesIS := swag.JoinByFormat(azureObjectTypesIC, "")
 
 	return azureObjectTypesIS
+}
+
+// bindParamSearchObjects binds the parameter azureUuids
+func (o *SearchObjectsParams) bindParamAzureUuids(formats strfmt.Registry) []string {
+	azureUuidsIR := o.AzureUuids
+
+	var azureUuidsIC []string
+	for _, azureUuidsIIR := range azureUuidsIR { // explode []string
+
+		azureUuidsIIV := azureUuidsIIR // string as string
+		azureUuidsIC = append(azureUuidsIC, azureUuidsIIV)
+	}
+
+	// items.CollectionFormat: ""
+	azureUuidsIS := swag.JoinByFormat(azureUuidsIC, "")
+
+	return azureUuidsIS
 }
 
 // bindParamSearchObjects binds the parameter clusterIdentifiers
@@ -951,6 +1250,23 @@ func (o *SearchObjectsParams) bindParamEnvironments(formats strfmt.Registry) []s
 	environmentsIS := swag.JoinByFormat(environmentsIC, "")
 
 	return environmentsIS
+}
+
+// bindParamSearchObjects binds the parameter externalFilters
+func (o *SearchObjectsParams) bindParamExternalFilters(formats strfmt.Registry) []string {
+	externalFiltersIR := o.ExternalFilters
+
+	var externalFiltersIC []string
+	for _, externalFiltersIIR := range externalFiltersIR { // explode []string
+
+		externalFiltersIIV := externalFiltersIIR // string as string
+		externalFiltersIC = append(externalFiltersIC, externalFiltersIIV)
+	}
+
+	// items.CollectionFormat: "multi"
+	externalFiltersIS := swag.JoinByFormat(externalFiltersIC, "multi")
+
+	return externalFiltersIS
 }
 
 // bindParamSearchObjects binds the parameter lastRunStatusList
@@ -1189,6 +1505,74 @@ func (o *SearchObjectsParams) bindParamStorageDomainIds(formats strfmt.Registry)
 	storageDomainIdsIS := swag.JoinByFormat(storageDomainIdsIC, "")
 
 	return storageDomainIdsIS
+}
+
+// bindParamSearchObjects binds the parameter tagCategories
+func (o *SearchObjectsParams) bindParamTagCategories(formats strfmt.Registry) []string {
+	tagCategoriesIR := o.TagCategories
+
+	var tagCategoriesIC []string
+	for _, tagCategoriesIIR := range tagCategoriesIR { // explode []string
+
+		tagCategoriesIIV := tagCategoriesIIR // string as string
+		tagCategoriesIC = append(tagCategoriesIC, tagCategoriesIIV)
+	}
+
+	// items.CollectionFormat: ""
+	tagCategoriesIS := swag.JoinByFormat(tagCategoriesIC, "")
+
+	return tagCategoriesIS
+}
+
+// bindParamSearchObjects binds the parameter tagNames
+func (o *SearchObjectsParams) bindParamTagNames(formats strfmt.Registry) []string {
+	tagNamesIR := o.TagNames
+
+	var tagNamesIC []string
+	for _, tagNamesIIR := range tagNamesIR { // explode []string
+
+		tagNamesIIV := tagNamesIIR // string as string
+		tagNamesIC = append(tagNamesIC, tagNamesIIV)
+	}
+
+	// items.CollectionFormat: ""
+	tagNamesIS := swag.JoinByFormat(tagNamesIC, "")
+
+	return tagNamesIS
+}
+
+// bindParamSearchObjects binds the parameter tagSubCategories
+func (o *SearchObjectsParams) bindParamTagSubCategories(formats strfmt.Registry) []string {
+	tagSubCategoriesIR := o.TagSubCategories
+
+	var tagSubCategoriesIC []string
+	for _, tagSubCategoriesIIR := range tagSubCategoriesIR { // explode []string
+
+		tagSubCategoriesIIV := tagSubCategoriesIIR // string as string
+		tagSubCategoriesIC = append(tagSubCategoriesIC, tagSubCategoriesIIV)
+	}
+
+	// items.CollectionFormat: ""
+	tagSubCategoriesIS := swag.JoinByFormat(tagSubCategoriesIC, "")
+
+	return tagSubCategoriesIS
+}
+
+// bindParamSearchObjects binds the parameter tagTypes
+func (o *SearchObjectsParams) bindParamTagTypes(formats strfmt.Registry) []string {
+	tagTypesIR := o.TagTypes
+
+	var tagTypesIC []string
+	for _, tagTypesIIR := range tagTypesIR { // explode []string
+
+		tagTypesIIV := tagTypesIIR // string as string
+		tagTypesIC = append(tagTypesIC, tagTypesIIV)
+	}
+
+	// items.CollectionFormat: ""
+	tagTypesIS := swag.JoinByFormat(tagTypesIC, "")
+
+	return tagTypesIS
 }
 
 // bindParamSearchObjects binds the parameter tenantIds

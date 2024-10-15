@@ -18,6 +18,12 @@ import (
 // swagger:model NfsInfo
 type NfsInfo struct {
 
+	// Export policy id.
+	ExportPolicyID *string `json:"exportPolicyId,omitempty"`
+
+	// Export policy name.
+	ExportPolicyName *string `json:"exportPolicyName,omitempty"`
+
 	// NFS protocol export rules. Rules are in the form host(options).
 	// host represents one of the following categories:
 	//

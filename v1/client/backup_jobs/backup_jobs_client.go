@@ -84,7 +84,7 @@ type ClientService interface {
 /*
 ActivateBackupJob activates a backup job
 
-This is used for failback.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>This is used for failback.
 */
 func (a *Client) ActivateBackupJob(params *ActivateBackupJobParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ActivateBackupJobOK, error) {
 	// TODO: Validate the params before sending
@@ -124,7 +124,7 @@ func (a *Client) ActivateBackupJob(params *ActivateBackupJobParams, authInfo run
 /*
 CreateBackupJob creates a backup job
 
-Returns the created backup job.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Returns the created backup job.
 */
 func (a *Client) CreateBackupJob(params *CreateBackupJobParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateBackupJobCreated, error) {
 	// TODO: Validate the params before sending
@@ -164,7 +164,7 @@ func (a *Client) CreateBackupJob(params *CreateBackupJobParams, authInfo runtime
 /*
 DeactivateBackupJob deactivates a backup job
 
-Deactivate a backup job. This is used for failover on a remote cluster.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Deactivate a backup job. This is used for failover on a remote cluster.
 */
 func (a *Client) DeactivateBackupJob(params *DeactivateBackupJobParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeactivateBackupJobOK, error) {
 	// TODO: Validate the params before sending
@@ -204,7 +204,7 @@ func (a *Client) DeactivateBackupJob(params *DeactivateBackupJobParams, authInfo
 /*
 DeleteBackupJob deletes a backup job
 
-Return success if the backup job is deleted.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Return success if the backup job is deleted.
 */
 func (a *Client) DeleteBackupJob(params *DeleteBackupJobParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteBackupJobOK, error) {
 	// TODO: Validate the params before sending
@@ -244,7 +244,7 @@ func (a *Client) DeleteBackupJob(params *DeleteBackupJobParams, authInfo runtime
 /*
 DeleteBackupJobRuns deletes backup job runs
 
-Returns success if the backup job runs are deleted.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Returns success if the backup job runs are deleted.
 */
 func (a *Client) DeleteBackupJobRuns(params *DeleteBackupJobRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteBackupJobRunsOK, error) {
 	// TODO: Validate the params before sending
@@ -284,7 +284,7 @@ func (a *Client) DeleteBackupJobRuns(params *DeleteBackupJobRunsParams, authInfo
 /*
 GetBackupJobAudit lists a backup job audit
 
-Returns the audit of specific backup job history.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns the audit of specific backup job history.
 */
 func (a *Client) GetBackupJobAudit(params *GetBackupJobAuditParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetBackupJobAuditOK, error) {
 	// TODO: Validate the params before sending
@@ -324,7 +324,7 @@ func (a *Client) GetBackupJobAudit(params *GetBackupJobAuditParams, authInfo run
 /*
 GetBackupJobByID lists details about single backup job
 
-Return the Backup Job corresponding to the specified id.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Return the Backup Job corresponding to the specified id.
 */
 func (a *Client) GetBackupJobByID(params *GetBackupJobByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetBackupJobByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -364,7 +364,7 @@ func (a *Client) GetBackupJobByID(params *GetBackupJobByIDParams, authInfo runti
 /*
 GetBackupJobHistory lists a backup job history
 
-Returns the history of specific backup job history.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns the history of specific backup job history.
 */
 func (a *Client) GetBackupJobHistory(params *GetBackupJobHistoryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetBackupJobHistoryOK, error) {
 	// TODO: Validate the params before sending
@@ -404,7 +404,7 @@ func (a *Client) GetBackupJobHistory(params *GetBackupJobHistoryParams, authInfo
 /*
 GetBackupJobRuns lists the backup job runs
 
-Returns the list of backup job returns.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns the list of backup job returns.
 */
 func (a *Client) GetBackupJobRuns(params *GetBackupJobRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetBackupJobRunsOK, error) {
 	// TODO: Validate the params before sending
@@ -444,7 +444,7 @@ func (a *Client) GetBackupJobRuns(params *GetBackupJobRunsParams, authInfo runti
 /*
 	GetBackupJobs lists backup jobs filtered by the specifed parameters
 
-	If no parameters are specified, all Backup Jobs currently
+	**Privileges:** ```PROTECTION_VIEW``` <br><br>If no parameters are specified, all Backup Jobs currently
 
 on the Cohesity Cluster are returned.
 Specifying parameters filters the results that are returned.
@@ -487,7 +487,7 @@ func (a *Client) GetBackupJobs(params *GetBackupJobsParams, authInfo runtime.Cli
 /*
 GetBackupJobsSummary lists backup jobs summary according to specified summary
 
-Returns the backup jobs summary filtered by the mentioned criteria.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Returns the backup jobs summary filtered by the mentioned criteria.
 */
 func (a *Client) GetBackupJobsSummary(params *GetBackupJobsSummaryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetBackupJobsSummaryOK, error) {
 	// TODO: Validate the params before sending
@@ -527,7 +527,7 @@ func (a *Client) GetBackupJobsSummary(params *GetBackupJobsSummaryParams, authIn
 /*
 UpdateBackupJob updates a backup job
 
-Returns the updated backup job.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Returns the updated backup job.
 */
 func (a *Client) UpdateBackupJob(params *UpdateBackupJobParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateBackupJobOK, error) {
 	// TODO: Validate the params before sending

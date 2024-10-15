@@ -66,7 +66,7 @@ type ClientService interface {
 /*
 CreateCloudRetrieveTask creates a cloud retrieve task
 
-Create a cloud retrieve task.
+```Unknown Privileges``` <br><br>Create a cloud retrieve task.
 */
 func (a *Client) CreateCloudRetrieveTask(params *CreateCloudRetrieveTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateCloudRetrieveTaskCreated, error) {
 	// TODO: Validate the params before sending
@@ -106,7 +106,7 @@ func (a *Client) CreateCloudRetrieveTask(params *CreateCloudRetrieveTaskParams, 
 /*
 GetCloudRetrieveTaskByJobID lists details about the cloud retrieve task with the specific job id
 
-Returns the cloud retrieve task corresponding to the job id.
+```Unknown Privileges``` <br><br>Returns the cloud retrieve task corresponding to the job id.
 */
 func (a *Client) GetCloudRetrieveTaskByJobID(params *GetCloudRetrieveTaskByJobIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetCloudRetrieveTaskByJobIDOK, error) {
 	// TODO: Validate the params before sending
@@ -146,7 +146,7 @@ func (a *Client) GetCloudRetrieveTaskByJobID(params *GetCloudRetrieveTaskByJobID
 /*
 GetCloudRetrieveTasks gets the list of cloud retrieve tasks
 
-Get the list of cloud retrieve tasks.
+```Unknown Privileges``` <br><br>Get the list of cloud retrieve tasks.
 */
 func (a *Client) GetCloudRetrieveTasks(params *GetCloudRetrieveTasksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetCloudRetrieveTasksOK, error) {
 	// TODO: Validate the params before sending

@@ -210,6 +210,12 @@ type View struct {
 	// Specifies the path to access this View as an S3 share.
 	S3AccessPath *string `json:"s3AccessPath,omitempty"`
 
+	// Specifies the max subfiles per mpu parameter set in a view's s3_config.
+	S3EfficientMpuMaxSubfiles *int32 `json:"s3EfficientMpuMaxSubfiles,omitempty"`
+
+	// Specifies whether to MPU 2.0 is enabled on a view.
+	S3EnableEfficientMpu *bool `json:"s3EnableEfficientMpu,omitempty"`
+
 	// Specifies whether to support s3 folder support feature on the view. This
 	// parameter can only be set during create and cannot be changed.
 	S3FolderSupportEnabled *bool `json:"s3FolderSupportEnabled,omitempty"`

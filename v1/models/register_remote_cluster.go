@@ -110,6 +110,9 @@ type RegisterRemoteCluster struct {
 	// Specifies whether the Rx regiseter the Tx.
 	ReverseRegisted *bool `json:"reverseRegisted,omitempty"`
 
+	// Specifies if the TLS is enabled on the remote cluster.
+	TLSEnabled *bool `json:"tlsEnabled,omitempty"`
+
 	// Specifies the Cohesity user name used to connect to the
 	// remote Cluster.
 	UserName *string `json:"userName,omitempty"`

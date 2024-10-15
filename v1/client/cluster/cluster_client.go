@@ -72,7 +72,7 @@ type ClientService interface {
 /*
 GetAppSettings gets the app settings for the cluster
 
-Returns the app settings for the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the app settings for the cluster.
 */
 func (a *Client) GetAppSettings(params *GetAppSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAppSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -112,7 +112,7 @@ func (a *Client) GetAppSettings(params *GetAppSettingsParams, authInfo runtime.C
 /*
 	GetBasicClusterInfo lists details about the cohesity cluster such as the name type version language locale and domains this operation does not require authentication
 
-	All Active Directory domains that are currently joined to the Cohesity
+	```No Privileges Required``` <br><br>All Active Directory domains that are currently joined to the Cohesity
 
 Cluster are returned. In addition, the default LOCAL domain on the
 Cohesity Cluster is returned as the first element of the domains array in
@@ -156,7 +156,7 @@ func (a *Client) GetBasicClusterInfo(params *GetBasicClusterInfoParams, authInfo
 /*
 GetCluster lists details about this cohesity cluster
 
-Returns information about this Cohesity Cluster.
+```No Privileges Required``` <br><br>Returns information about this Cohesity Cluster.
 */
 func (a *Client) GetCluster(params *GetClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterOK, error) {
 	// TODO: Validate the params before sending
@@ -196,7 +196,7 @@ func (a *Client) GetCluster(params *GetClusterParams, authInfo runtime.ClientAut
 /*
 	GetClusterStatus gets the status of a cohesity cluster
 
-	Sends a request to get the status of every node that is part of the current
+	**Privileges:** ```CLUSTER_VIEW``` <br><br>Sends a request to get the status of every node that is part of the current
 
 Cluster.
 */
@@ -238,7 +238,7 @@ func (a *Client) GetClusterStatus(params *GetClusterStatusParams, authInfo runti
 /*
 UpdateAppSettings updates the app settings of the cluster
 
-Returns the updated app settings.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the updated app settings.
 */
 func (a *Client) UpdateAppSettings(params *UpdateAppSettingsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateAppSettingsOK, error) {
 	// TODO: Validate the params before sending
@@ -278,7 +278,7 @@ func (a *Client) UpdateAppSettings(params *UpdateAppSettingsParams, authInfo run
 /*
 UpdateCluster updates the configuration of this cohesity cluster
 
-Returns the updated Cluster configuration.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the updated Cluster configuration.
 */
 func (a *Client) UpdateCluster(params *UpdateClusterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateClusterOK, error) {
 	// TODO: Validate the params before sending

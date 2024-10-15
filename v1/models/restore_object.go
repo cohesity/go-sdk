@@ -73,6 +73,20 @@ type RestoreObject struct {
 	// more context.
 	JobUID *UniversalIDProto `json:"jobUid,omitempty"`
 
+	// This field contains params specific to restore of K8s namespace entity.
+	KubernetesNamespaceRecoverParams *KubernetesNamespaceRecoverParams `json:"kubernetesNamespaceRecoverParams,omitempty"`
+
+	// This is a sequencer which will incremented whenever the restore task
+	// reaches a new milestone. A milestone can be a change in state, progress
+	// percentage incrementals (e.g. 10%).
+	LastUpdateLogicalTimestamp *int64 `json:"lastUpdateLogicalTimestamp,omitempty"`
+
+	// Params specific to M365 Backup Storage API based recoveries. This object
+	// will contain the restore point from which recovery has to be done.
+	// This is common for Exchange, OneDrive & Sharepoint, which recovery to
+	// trigger will be decided by entity type.
+	M365CsmRestoreAdditionalParams *M365CSMRestoreAdditionalParams `json:"m365CsmRestoreAdditionalParams,omitempty"`
+
 	// This field contains params specific to the restore of a nosql entity.
 	NosqlRecoverParams *NoSQLRecoverParams `json:"nosqlRecoverParams,omitempty"`
 
@@ -90,6 +104,12 @@ type RestoreObject struct {
 	// then the object will be restored to the full/incremental snapshot. This
 	// is applicable only if the object is protected using CDP.
 	PointInTimeRestoreTimeUsecs *int64 `json:"pointInTimeRestoreTimeUsecs,omitempty"`
+
+	// This field specifies whether the object should be recovered from the
+	// latest snapshot. This will only be honored iff 'job_instance_id' &
+	// 'start_time_usecs' are not set by the caller.
+	// Currently only M365 CSM based restores are capable of honoring this.
+	RecoverFromLatest *bool `json:"recoverFromLatest,omitempty"`
 
 	// This field indicates if the object should be recovered from standby if it
 	// is enabled.
@@ -164,6 +184,14 @@ func (m *RestoreObject) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateJobUID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateKubernetesNamespaceRecoverParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateM365CsmRestoreAdditionalParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -334,6 +362,44 @@ func (m *RestoreObject) validateJobUID(formats strfmt.Registry) error {
 				return ve.ValidateName("jobUid")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("jobUid")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *RestoreObject) validateKubernetesNamespaceRecoverParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.KubernetesNamespaceRecoverParams) { // not required
+		return nil
+	}
+
+	if m.KubernetesNamespaceRecoverParams != nil {
+		if err := m.KubernetesNamespaceRecoverParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("kubernetesNamespaceRecoverParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("kubernetesNamespaceRecoverParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *RestoreObject) validateM365CsmRestoreAdditionalParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.M365CsmRestoreAdditionalParams) { // not required
+		return nil
+	}
+
+	if m.M365CsmRestoreAdditionalParams != nil {
+		if err := m.M365CsmRestoreAdditionalParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("m365CsmRestoreAdditionalParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("m365CsmRestoreAdditionalParams")
 			}
 			return err
 		}
@@ -598,6 +664,14 @@ func (m *RestoreObject) ContextValidate(ctx context.Context, formats strfmt.Regi
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateKubernetesNamespaceRecoverParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateM365CsmRestoreAdditionalParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateNosqlRecoverParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -774,6 +848,48 @@ func (m *RestoreObject) contextValidateJobUID(ctx context.Context, formats strfm
 				return ve.ValidateName("jobUid")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("jobUid")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *RestoreObject) contextValidateKubernetesNamespaceRecoverParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.KubernetesNamespaceRecoverParams != nil {
+
+		if swag.IsZero(m.KubernetesNamespaceRecoverParams) { // not required
+			return nil
+		}
+
+		if err := m.KubernetesNamespaceRecoverParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("kubernetesNamespaceRecoverParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("kubernetesNamespaceRecoverParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *RestoreObject) contextValidateM365CsmRestoreAdditionalParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.M365CsmRestoreAdditionalParams != nil {
+
+		if swag.IsZero(m.M365CsmRestoreAdditionalParams) { // not required
+			return nil
+		}
+
+		if err := m.M365CsmRestoreAdditionalParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("m365CsmRestoreAdditionalParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("m365CsmRestoreAdditionalParams")
 			}
 			return err
 		}

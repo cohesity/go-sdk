@@ -28,12 +28,12 @@ type CreateClusterParams struct {
 
 	// Specifies the type of the new cluster.
 	// Required: true
-	// Enum: ["Physical","Virtual","Cloud","Rigel","Unknown","HeliosOnPremVM"]
+	// Enum: ["Physical","Virtual","Cloud","Rigel","Cohesion","Unknown","HeliosOnPremVM"]
 	Type *string `json:"type"`
 
 	// Specifies whether or not to enable encryption. If encryption is enabled, all data on the Cluster will be encrypted. This can only be enabled at Cluster creation time and cannot be disabled later.
 	// Required: true
-	EnableEncryption *bool `json:"enableEncryption"`
+	EnableEncryption bool `json:"enableEncryption"`
 
 	// Specifies all of the parameters needed for network configuration of the new Cluster.
 	// Required: true
@@ -114,7 +114,7 @@ var createClusterParamsTypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Physical","Virtual","Cloud","Rigel","Unknown","HeliosOnPremVM"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Physical","Virtual","Cloud","Rigel","Cohesion","Unknown","HeliosOnPremVM"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -135,6 +135,9 @@ const (
 
 	// CreateClusterParamsTypeRigel captures enum value "Rigel"
 	CreateClusterParamsTypeRigel string = "Rigel"
+
+	// CreateClusterParamsTypeCohesion captures enum value "Cohesion"
+	CreateClusterParamsTypeCohesion string = "Cohesion"
 
 	// CreateClusterParamsTypeUnknown captures enum value "Unknown"
 	CreateClusterParamsTypeUnknown string = "Unknown"
@@ -167,7 +170,7 @@ func (m *CreateClusterParams) validateType(formats strfmt.Registry) error {
 
 func (m *CreateClusterParams) validateEnableEncryption(formats strfmt.Registry) error {
 
-	if err := validate.Required("enableEncryption", "body", m.EnableEncryption); err != nil {
+	if err := validate.Required("enableEncryption", "body", bool(m.EnableEncryption)); err != nil {
 		return err
 	}
 

@@ -61,6 +61,8 @@ type ClientService interface {
 
 /*
 CloneVms clones v ms
+
+**Privileges:** ```CLONE_MODIFY``` <br><br>
 */
 func (a *Client) CloneVms(params *CloneVmsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CloneVmsOK, error) {
 	// TODO: Validate the params before sending

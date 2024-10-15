@@ -75,13 +75,21 @@ type ProtectionJobInfo struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Type *string `json:"type,omitempty"`
 }
 
@@ -103,7 +111,7 @@ var protectionJobInfoTypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -136,123 +144,6 @@ const (
 
 	// ProtectionJobInfoTypeKNimble captures enum value "kNimble"
 	ProtectionJobInfoTypeKNimble string = "kNimble"
-
-	// ProtectionJobInfoTypeKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	ProtectionJobInfoTypeKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// ProtectionJobInfoTypeKAzure captures enum value "kAzure"
-	ProtectionJobInfoTypeKAzure string = "kAzure"
-
-	// ProtectionJobInfoTypeKNetapp captures enum value "kNetapp"
-	ProtectionJobInfoTypeKNetapp string = "kNetapp"
-
-	// ProtectionJobInfoTypeKAgent captures enum value "kAgent"
-	ProtectionJobInfoTypeKAgent string = "kAgent"
-
-	// ProtectionJobInfoTypeKGenericNas captures enum value "kGenericNas"
-	ProtectionJobInfoTypeKGenericNas string = "kGenericNas"
-
-	// ProtectionJobInfoTypeKAcropolis captures enum value "kAcropolis"
-	ProtectionJobInfoTypeKAcropolis string = "kAcropolis"
-
-	// ProtectionJobInfoTypeKPhysicalFiles captures enum value "kPhysicalFiles"
-	ProtectionJobInfoTypeKPhysicalFiles string = "kPhysicalFiles"
-
-	// ProtectionJobInfoTypeKIsilon captures enum value "kIsilon"
-	ProtectionJobInfoTypeKIsilon string = "kIsilon"
-
-	// ProtectionJobInfoTypeKGPFS captures enum value "kGPFS"
-	ProtectionJobInfoTypeKGPFS string = "kGPFS"
-
-	// ProtectionJobInfoTypeKKVM captures enum value "kKVM"
-	ProtectionJobInfoTypeKKVM string = "kKVM"
-
-	// ProtectionJobInfoTypeKAWS captures enum value "kAWS"
-	ProtectionJobInfoTypeKAWS string = "kAWS"
-
-	// ProtectionJobInfoTypeKExchange captures enum value "kExchange"
-	ProtectionJobInfoTypeKExchange string = "kExchange"
-
-	// ProtectionJobInfoTypeKHyperVVSS captures enum value "kHyperVVSS"
-	ProtectionJobInfoTypeKHyperVVSS string = "kHyperVVSS"
-
-	// ProtectionJobInfoTypeKOracle captures enum value "kOracle"
-	ProtectionJobInfoTypeKOracle string = "kOracle"
-
-	// ProtectionJobInfoTypeKGCP captures enum value "kGCP"
-	ProtectionJobInfoTypeKGCP string = "kGCP"
-
-	// ProtectionJobInfoTypeKFlashBlade captures enum value "kFlashBlade"
-	ProtectionJobInfoTypeKFlashBlade string = "kFlashBlade"
-
-	// ProtectionJobInfoTypeKAWSNative captures enum value "kAWSNative"
-	ProtectionJobInfoTypeKAWSNative string = "kAWSNative"
-
-	// ProtectionJobInfoTypeKO365 captures enum value "kO365"
-	ProtectionJobInfoTypeKO365 string = "kO365"
-
-	// ProtectionJobInfoTypeKO365Outlook captures enum value "kO365Outlook"
-	ProtectionJobInfoTypeKO365Outlook string = "kO365Outlook"
-
-	// ProtectionJobInfoTypeKHyperFlex captures enum value "kHyperFlex"
-	ProtectionJobInfoTypeKHyperFlex string = "kHyperFlex"
-
-	// ProtectionJobInfoTypeKGCPNative captures enum value "kGCPNative"
-	ProtectionJobInfoTypeKGCPNative string = "kGCPNative"
-
-	// ProtectionJobInfoTypeKAzureNative captures enum value "kAzureNative"
-	ProtectionJobInfoTypeKAzureNative string = "kAzureNative"
-
-	// ProtectionJobInfoTypeKKubernetes captures enum value "kKubernetes"
-	ProtectionJobInfoTypeKKubernetes string = "kKubernetes"
-
-	// ProtectionJobInfoTypeKElastifile captures enum value "kElastifile"
-	ProtectionJobInfoTypeKElastifile string = "kElastifile"
-
-	// ProtectionJobInfoTypeKAD captures enum value "kAD"
-	ProtectionJobInfoTypeKAD string = "kAD"
-
-	// ProtectionJobInfoTypeKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	ProtectionJobInfoTypeKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// ProtectionJobInfoTypeKCassandra captures enum value "kCassandra"
-	ProtectionJobInfoTypeKCassandra string = "kCassandra"
-
-	// ProtectionJobInfoTypeKMongoDB captures enum value "kMongoDB"
-	ProtectionJobInfoTypeKMongoDB string = "kMongoDB"
-
-	// ProtectionJobInfoTypeKCouchbase captures enum value "kCouchbase"
-	ProtectionJobInfoTypeKCouchbase string = "kCouchbase"
-
-	// ProtectionJobInfoTypeKHdfs captures enum value "kHdfs"
-	ProtectionJobInfoTypeKHdfs string = "kHdfs"
-
-	// ProtectionJobInfoTypeKHive captures enum value "kHive"
-	ProtectionJobInfoTypeKHive string = "kHive"
-
-	// ProtectionJobInfoTypeKHBase captures enum value "kHBase"
-	ProtectionJobInfoTypeKHBase string = "kHBase"
-
-	// ProtectionJobInfoTypeKUDA captures enum value "kUDA"
-	ProtectionJobInfoTypeKUDA string = "kUDA"
-
-	// ProtectionJobInfoTypeKO365Teams captures enum value "kO365Teams"
-	ProtectionJobInfoTypeKO365Teams string = "kO365Teams"
-
-	// ProtectionJobInfoTypeKO365Group captures enum value "kO365Group"
-	ProtectionJobInfoTypeKO365Group string = "kO365Group"
-
-	// ProtectionJobInfoTypeKO365Exchange captures enum value "kO365Exchange"
-	ProtectionJobInfoTypeKO365Exchange string = "kO365Exchange"
-
-	// ProtectionJobInfoTypeKO365OneDrive captures enum value "kO365OneDrive"
-	ProtectionJobInfoTypeKO365OneDrive string = "kO365OneDrive"
-
-	// ProtectionJobInfoTypeKO365Sharepoint captures enum value "kO365Sharepoint"
-	ProtectionJobInfoTypeKO365Sharepoint string = "kO365Sharepoint"
-
-	// ProtectionJobInfoTypeKO365PublicFolders captures enum value "kO365PublicFolders"
-	ProtectionJobInfoTypeKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

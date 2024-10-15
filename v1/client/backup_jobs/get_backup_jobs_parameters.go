@@ -139,6 +139,15 @@ type GetBackupJobsParams struct {
 	*/
 	PruneSources *bool
 
+	/* ReturnCompleteSourceTree.
+
+	     ReturnCompleteSourceTree specifies if the full source tree should be
+	returned if the protected node is a container node.
+	Mostly used in case of run now where we currently get the container node
+	in the source in case of autoprotect of container node.
+	*/
+	ReturnCompleteSourceTree *bool
+
 	/* TenantID.
 
 	   TenantId specifies the tenant whose action resulted in the audit log.
@@ -319,6 +328,17 @@ func (o *GetBackupJobsParams) SetPruneSources(pruneSources *bool) {
 	o.PruneSources = pruneSources
 }
 
+// WithReturnCompleteSourceTree adds the returnCompleteSourceTree to the get backup jobs params
+func (o *GetBackupJobsParams) WithReturnCompleteSourceTree(returnCompleteSourceTree *bool) *GetBackupJobsParams {
+	o.SetReturnCompleteSourceTree(returnCompleteSourceTree)
+	return o
+}
+
+// SetReturnCompleteSourceTree adds the returnCompleteSourceTree to the get backup jobs params
+func (o *GetBackupJobsParams) SetReturnCompleteSourceTree(returnCompleteSourceTree *bool) {
+	o.ReturnCompleteSourceTree = returnCompleteSourceTree
+}
+
 // WithTenantID adds the tenantID to the get backup jobs params
 func (o *GetBackupJobsParams) WithTenantID(tenantID *string) *GetBackupJobsParams {
 	o.SetTenantID(tenantID)
@@ -496,6 +516,23 @@ func (o *GetBackupJobsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 		if qPruneSources != "" {
 
 			if err := r.SetQueryParam("pruneSources", qPruneSources); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.ReturnCompleteSourceTree != nil {
+
+		// query param returnCompleteSourceTree
+		var qrReturnCompleteSourceTree bool
+
+		if o.ReturnCompleteSourceTree != nil {
+			qrReturnCompleteSourceTree = *o.ReturnCompleteSourceTree
+		}
+		qReturnCompleteSourceTree := swag.FormatBool(qrReturnCompleteSourceTree)
+		if qReturnCompleteSourceTree != "" {
+
+			if err := r.SetQueryParam("returnCompleteSourceTree", qReturnCompleteSourceTree); err != nil {
 				return err
 			}
 		}

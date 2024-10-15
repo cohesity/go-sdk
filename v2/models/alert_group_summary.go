@@ -21,7 +21,7 @@ import (
 type AlertGroupSummary struct {
 
 	// Category of alerts by which summary is grouped.
-	// Enum: ["kDisk","kNode","kCluster","kChassis","kPowerSupply","kCPU","kMemory","kTemperature","kFan","kNIC","kFirmware","kNodeHealth","kOperatingSystem","kDataPath","kMetadata","kIndexing","kHelios","kAppMarketPlace","kSystemService","kLicense","kSecurity","kUpgrade","kClusterManagement","kAuditLog","kNetworking","kConfiguration","kStorageUsage","kFaultTolerance","kBackupRestore","kArchivalRestore","kRemoteReplication","kQuota","kCDP","kViewFailover","kDisasterRecovery"]
+	// Enum: ["kDisk","kNode","kCluster","kChassis","kPowerSupply","kCPU","kMemory","kTemperature","kFan","kNIC","kFirmware","kNodeHealth","kOperatingSystem","kDataPath","kMetadata","kIndexing","kHelios","kAppMarketPlace","kSystemService","kLicense","kSecurity","kUpgrade","kClusterManagement","kAuditLog","kNetworking","kConfiguration","kStorageUsage","kFaultTolerance","kBackupRestore","kArchivalRestore","kRemoteReplication","kQuota","kCDP","kViewFailover","kDisasterRecovery","kStorageDevice","kStoragePool","kGeneralSoftwareFailure","kAgent"]
 	Category string `json:"category,omitempty"`
 
 	// Type/bucket that this alert category belongs to.
@@ -58,7 +58,7 @@ var alertGroupSummaryTypeCategoryPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kDisk","kNode","kCluster","kChassis","kPowerSupply","kCPU","kMemory","kTemperature","kFan","kNIC","kFirmware","kNodeHealth","kOperatingSystem","kDataPath","kMetadata","kIndexing","kHelios","kAppMarketPlace","kSystemService","kLicense","kSecurity","kUpgrade","kClusterManagement","kAuditLog","kNetworking","kConfiguration","kStorageUsage","kFaultTolerance","kBackupRestore","kArchivalRestore","kRemoteReplication","kQuota","kCDP","kViewFailover","kDisasterRecovery"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kDisk","kNode","kCluster","kChassis","kPowerSupply","kCPU","kMemory","kTemperature","kFan","kNIC","kFirmware","kNodeHealth","kOperatingSystem","kDataPath","kMetadata","kIndexing","kHelios","kAppMarketPlace","kSystemService","kLicense","kSecurity","kUpgrade","kClusterManagement","kAuditLog","kNetworking","kConfiguration","kStorageUsage","kFaultTolerance","kBackupRestore","kArchivalRestore","kRemoteReplication","kQuota","kCDP","kViewFailover","kDisasterRecovery","kStorageDevice","kStoragePool","kGeneralSoftwareFailure","kAgent"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -172,6 +172,18 @@ const (
 
 	// AlertGroupSummaryCategoryKDisasterRecovery captures enum value "kDisasterRecovery"
 	AlertGroupSummaryCategoryKDisasterRecovery string = "kDisasterRecovery"
+
+	// AlertGroupSummaryCategoryKStorageDevice captures enum value "kStorageDevice"
+	AlertGroupSummaryCategoryKStorageDevice string = "kStorageDevice"
+
+	// AlertGroupSummaryCategoryKStoragePool captures enum value "kStoragePool"
+	AlertGroupSummaryCategoryKStoragePool string = "kStoragePool"
+
+	// AlertGroupSummaryCategoryKGeneralSoftwareFailure captures enum value "kGeneralSoftwareFailure"
+	AlertGroupSummaryCategoryKGeneralSoftwareFailure string = "kGeneralSoftwareFailure"
+
+	// AlertGroupSummaryCategoryKAgent captures enum value "kAgent"
+	AlertGroupSummaryCategoryKAgent string = "kAgent"
 )
 
 // prop value enum

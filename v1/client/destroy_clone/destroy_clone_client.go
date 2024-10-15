@@ -61,6 +61,8 @@ type ClientService interface {
 
 /*
 DestroyCloneTask destroys a clone task with specified id
+
+**Privileges:** ```RESTORE_MODIFY, CLONE_MODIFY``` <br><br>
 */
 func (a *Client) DestroyCloneTask(params *DestroyCloneTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DestroyCloneTaskOK, error) {
 	// TODO: Validate the params before sending

@@ -61,6 +61,8 @@ type ClientService interface {
 
 /*
 SearchFiles searches for files
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) SearchFiles(params *SearchFilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SearchFilesOK, error) {
 	// TODO: Validate the params before sending

@@ -8,10 +8,8 @@ package models
 import (
 	"context"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // FolderItem Specifies an email folder to recover.
@@ -20,8 +18,10 @@ import (
 type FolderItem struct {
 
 	// Specifies the email folder key.
-	// Required: true
-	Key *int64 `json:"key"`
+	Key *int64 `json:"key,omitempty"`
+
+	// Specifies the email folder id.
+	FolderID *string `json:"folderId,omitempty"`
 
 	// Specifies whether to recover the whole email folder.
 	RecoverEntireFolder *bool `json:"recoverEntireFolder,omitempty"`
@@ -32,24 +32,6 @@ type FolderItem struct {
 
 // Validate validates this folder item
 func (m *FolderItem) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateKey(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *FolderItem) validateKey(formats strfmt.Registry) error {
-
-	if err := validate.Required("key", "body", m.Key); err != nil {
-		return err
-	}
-
 	return nil
 }
 

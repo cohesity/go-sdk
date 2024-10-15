@@ -7,11 +7,11 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // VolumeMappingReportVolumeMountIOInfo volume mapping report volume mount i o info
@@ -20,7 +20,7 @@ import (
 type VolumeMappingReportVolumeMountIOInfo struct {
 
 	// Mapping from volume name to the reads recorded during its mount.
-	VolumeMountReads []*VolumeMappingReportVolumeMountIOInfoVolumeMountReadsEntry `json:"volumeMountReads"`
+	VolumeMountReads map[string]ReadIODataProto `json:"volumeMountReads,omitempty"`
 }
 
 // Validate validates this volume mapping report volume mount i o info
@@ -42,17 +42,17 @@ func (m *VolumeMappingReportVolumeMountIOInfo) validateVolumeMountReads(formats 
 		return nil
 	}
 
-	for i := 0; i < len(m.VolumeMountReads); i++ {
-		if swag.IsZero(m.VolumeMountReads[i]) { // not required
-			continue
-		}
+	for k := range m.VolumeMountReads {
 
-		if m.VolumeMountReads[i] != nil {
-			if err := m.VolumeMountReads[i].Validate(formats); err != nil {
+		if err := validate.Required("volumeMountReads"+"."+k, "body", m.VolumeMountReads[k]); err != nil {
+			return err
+		}
+		if val, ok := m.VolumeMountReads[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("volumeMountReads" + "." + strconv.Itoa(i))
+					return ve.ValidateName("volumeMountReads" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("volumeMountReads" + "." + strconv.Itoa(i))
+					return ce.ValidateName("volumeMountReads" + "." + k)
 				}
 				return err
 			}
@@ -79,20 +79,10 @@ func (m *VolumeMappingReportVolumeMountIOInfo) ContextValidate(ctx context.Conte
 
 func (m *VolumeMappingReportVolumeMountIOInfo) contextValidateVolumeMountReads(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.VolumeMountReads); i++ {
+	for k := range m.VolumeMountReads {
 
-		if m.VolumeMountReads[i] != nil {
-
-			if swag.IsZero(m.VolumeMountReads[i]) { // not required
-				return nil
-			}
-
-			if err := m.VolumeMountReads[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("volumeMountReads" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("volumeMountReads" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.VolumeMountReads[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

@@ -27,7 +27,7 @@ type CloudRetrieveTask struct {
 	EndTimeUsecs *int64 `json:"endTimeUsecs,omitempty"`
 
 	// Specifies the status of the retrieve task.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]
 	Status *string `json:"status,omitempty"`
 
 	// Message about the cloud retrieve task.
@@ -61,7 +61,7 @@ var cloudRetrieveTaskTypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -103,6 +103,9 @@ const (
 
 	// CloudRetrieveTaskStatusSkipped captures enum value "Skipped"
 	CloudRetrieveTaskStatusSkipped string = "Skipped"
+
+	// CloudRetrieveTaskStatusLegalHold captures enum value "LegalHold"
+	CloudRetrieveTaskStatusLegalHold string = "LegalHold"
 )
 
 // prop value enum

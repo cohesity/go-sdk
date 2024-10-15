@@ -127,12 +127,20 @@ type GetProtectedObjectsTrendsReportRequestParams struct {
 	'kHive' indicates Hive Protection Source environment.
 	'kHBase' indicates HBase Protection Source environment.
 	'kUDA' indicates Universal Data Adapter Protection Source environment.
+	'kSAPHANA' indicates SAP HANA protection source environment.
 	'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	'kO365Group' indicates the Office365 Groups Protection Source environment.
 	'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
+	kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	kO365PublicFolders
 	*/
 	Environments []string
 

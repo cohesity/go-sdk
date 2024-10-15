@@ -7,9 +7,7 @@ package models
 
 import (
 	"context"
-	"strconv"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -20,7 +18,7 @@ import (
 type PrivateHiveConnectParams struct {
 
 	// Hive connection configuration.
-	Configuration []*HiveConnectParamsConfigurationEntry `json:"configuration"`
+	Configuration map[string]string `json:"configuration,omitempty"`
 
 	// The entity id of the HDFS source for this Hive
 	HdfsEntityID *int64 `json:"hdfsEntityId,omitempty"`
@@ -40,80 +38,11 @@ type PrivateHiveConnectParams struct {
 
 // Validate validates this private hive connect params
 func (m *PrivateHiveConnectParams) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateConfiguration(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *PrivateHiveConnectParams) validateConfiguration(formats strfmt.Registry) error {
-	if swag.IsZero(m.Configuration) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Configuration); i++ {
-		if swag.IsZero(m.Configuration[i]) { // not required
-			continue
-		}
-
-		if m.Configuration[i] != nil {
-			if err := m.Configuration[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("configuration" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("configuration" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this private hive connect params based on the context it is used
+// ContextValidate validates this private hive connect params based on context it is used
 func (m *PrivateHiveConnectParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateConfiguration(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *PrivateHiveConnectParams) contextValidateConfiguration(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.Configuration); i++ {
-
-		if m.Configuration[i] != nil {
-
-			if swag.IsZero(m.Configuration[i]) { // not required
-				return nil
-			}
-
-			if err := m.Configuration[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("configuration" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("configuration" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

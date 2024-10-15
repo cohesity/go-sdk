@@ -74,6 +74,12 @@ type GetSourceRegistrationsParams struct {
 	*/
 	Ids []int64
 
+	/* IgnoreTenantMigrationInProgressCheck.
+
+	   If true, tenant migration check will be ignored
+	*/
+	IgnoreTenantMigrationInProgressCheck *bool
+
 	/* IncludeExternalMetadata.
 
 	   If true, the external entity metadata like maintenance mode config for the registered sources will be included.
@@ -179,6 +185,17 @@ func (o *GetSourceRegistrationsParams) SetIds(ids []int64) {
 	o.Ids = ids
 }
 
+// WithIgnoreTenantMigrationInProgressCheck adds the ignoreTenantMigrationInProgressCheck to the get source registrations params
+func (o *GetSourceRegistrationsParams) WithIgnoreTenantMigrationInProgressCheck(ignoreTenantMigrationInProgressCheck *bool) *GetSourceRegistrationsParams {
+	o.SetIgnoreTenantMigrationInProgressCheck(ignoreTenantMigrationInProgressCheck)
+	return o
+}
+
+// SetIgnoreTenantMigrationInProgressCheck adds the ignoreTenantMigrationInProgressCheck to the get source registrations params
+func (o *GetSourceRegistrationsParams) SetIgnoreTenantMigrationInProgressCheck(ignoreTenantMigrationInProgressCheck *bool) {
+	o.IgnoreTenantMigrationInProgressCheck = ignoreTenantMigrationInProgressCheck
+}
+
 // WithIncludeExternalMetadata adds the includeExternalMetadata to the get source registrations params
 func (o *GetSourceRegistrationsParams) WithIncludeExternalMetadata(includeExternalMetadata *bool) *GetSourceRegistrationsParams {
 	o.SetIncludeExternalMetadata(includeExternalMetadata)
@@ -267,6 +284,23 @@ func (o *GetSourceRegistrationsParams) WriteToRequest(r runtime.ClientRequest, r
 		// query array param ids
 		if err := r.SetQueryParam("ids", joinedIds...); err != nil {
 			return err
+		}
+	}
+
+	if o.IgnoreTenantMigrationInProgressCheck != nil {
+
+		// query param ignoreTenantMigrationInProgressCheck
+		var qrIgnoreTenantMigrationInProgressCheck bool
+
+		if o.IgnoreTenantMigrationInProgressCheck != nil {
+			qrIgnoreTenantMigrationInProgressCheck = *o.IgnoreTenantMigrationInProgressCheck
+		}
+		qIgnoreTenantMigrationInProgressCheck := swag.FormatBool(qrIgnoreTenantMigrationInProgressCheck)
+		if qIgnoreTenantMigrationInProgressCheck != "" {
+
+			if err := r.SetQueryParam("ignoreTenantMigrationInProgressCheck", qIgnoreTenantMigrationInProgressCheck); err != nil {
+				return err
+			}
 		}
 	}
 

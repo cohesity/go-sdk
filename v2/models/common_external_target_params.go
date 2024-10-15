@@ -41,6 +41,9 @@ type CommonExternalTargetParams struct {
 	// Enum: ["None","Low","High"]
 	Compression *string `json:"compression,omitempty"`
 
+	// Whether to enable object lock for this vault. If this field is set, all the objects written to the vault will be object locked until all the archives referring to them expire.
+	EnableObjectLock *bool `json:"enableObjectLock,omitempty"`
+
 	// Specifies the registration status of the External Target
 	// Read Only: true
 	// Enum: ["Registered","Unregistering","Unregistered"]
@@ -65,6 +68,9 @@ type CommonExternalTargetParams struct {
 
 	// Specifies whether this external target has been found to be capable of supporting WORM archives.
 	IsWormCapable *bool `json:"isWormCapable,omitempty"`
+
+	// Specifies whether this external target is used to store apollo mr records.
+	UseForApolloMrStore *bool `json:"useForApolloMrStore,omitempty"`
 }
 
 // Validate validates this common external target params

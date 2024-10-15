@@ -88,7 +88,7 @@ type ClientService interface {
 /*
 DownloadArtFile downloads the azure resource template
 
-Download the azure resource template.
+**Privileges:** ```CLUSTER_EXTERNAL_TARGET_VIEW``` <br><br>Download the azure resource template.
 */
 func (a *Client) DownloadArtFile(params *DownloadArtFileParams, authInfo runtime.ClientAuthInfoWriter, writer io.Writer, opts ...ClientOption) (*DownloadArtFileOK, error) {
 	// TODO: Validate the params before sending

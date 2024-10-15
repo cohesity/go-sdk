@@ -7,9 +7,7 @@ package models
 
 import (
 	"context"
-	"strconv"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -21,7 +19,7 @@ type LabelSelector struct {
 
 	// This field is an object which consists of key-value pairs
 	// of all labels that must be matched by the selector
-	MatchLabels []*LabelSelectorMatchLabelsEntry `json:"matchLabels"`
+	MatchLabels map[string]string `json:"matchLabels,omitempty"`
 
 	// Select all objects which have a label with
 	// key : "name" and value specified by this field.
@@ -34,80 +32,11 @@ type LabelSelector struct {
 
 // Validate validates this label selector
 func (m *LabelSelector) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateMatchLabels(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *LabelSelector) validateMatchLabels(formats strfmt.Registry) error {
-	if swag.IsZero(m.MatchLabels) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.MatchLabels); i++ {
-		if swag.IsZero(m.MatchLabels[i]) { // not required
-			continue
-		}
-
-		if m.MatchLabels[i] != nil {
-			if err := m.MatchLabels[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("matchLabels" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("matchLabels" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this label selector based on the context it is used
+// ContextValidate validates this label selector based on context it is used
 func (m *LabelSelector) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateMatchLabels(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *LabelSelector) contextValidateMatchLabels(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.MatchLabels); i++ {
-
-		if m.MatchLabels[i] != nil {
-
-			if swag.IsZero(m.MatchLabels[i]) { // not required
-				return nil
-			}
-
-			if err := m.MatchLabels[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("matchLabels" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("matchLabels" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

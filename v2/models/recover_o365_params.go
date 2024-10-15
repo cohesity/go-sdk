@@ -28,7 +28,7 @@ type RecoverO365Params struct {
 
 	// Specifies the type of recovery action to be performed.
 	// Required: true
-	// Enum: ["RecoverMailbox","RecoverOneDrive","RecoverSharePoint","RecoverPublicFolders","RecoverMsGroup","RecoverMsTeam","ConvertToPst","DownloadChats"]
+	// Enum: ["RecoverMailbox","RecoverOneDrive","RecoverSharePoint","RecoverPublicFolders","RecoverMsGroup","RecoverMsTeam","ConvertToPst","DownloadChats","RecoverMailboxCSM","RecoverOneDriveCSM","RecoverSharePointCSM"]
 	RecoveryAction *string `json:"recoveryAction"`
 
 	// Specifies the download chats specific parameters for downloading posts for a team/channel or downloading private chats for a user.
@@ -136,7 +136,7 @@ var recoverO365ParamsTypeRecoveryActionPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["RecoverMailbox","RecoverOneDrive","RecoverSharePoint","RecoverPublicFolders","RecoverMsGroup","RecoverMsTeam","ConvertToPst","DownloadChats"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["RecoverMailbox","RecoverOneDrive","RecoverSharePoint","RecoverPublicFolders","RecoverMsGroup","RecoverMsTeam","ConvertToPst","DownloadChats","RecoverMailboxCSM","RecoverOneDriveCSM","RecoverSharePointCSM"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -169,6 +169,15 @@ const (
 
 	// RecoverO365ParamsRecoveryActionDownloadChats captures enum value "DownloadChats"
 	RecoverO365ParamsRecoveryActionDownloadChats string = "DownloadChats"
+
+	// RecoverO365ParamsRecoveryActionRecoverMailboxCSM captures enum value "RecoverMailboxCSM"
+	RecoverO365ParamsRecoveryActionRecoverMailboxCSM string = "RecoverMailboxCSM"
+
+	// RecoverO365ParamsRecoveryActionRecoverOneDriveCSM captures enum value "RecoverOneDriveCSM"
+	RecoverO365ParamsRecoveryActionRecoverOneDriveCSM string = "RecoverOneDriveCSM"
+
+	// RecoverO365ParamsRecoveryActionRecoverSharePointCSM captures enum value "RecoverSharePointCSM"
+	RecoverO365ParamsRecoveryActionRecoverSharePointCSM string = "RecoverSharePointCSM"
 )
 
 // prop value enum

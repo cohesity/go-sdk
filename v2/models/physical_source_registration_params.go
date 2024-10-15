@@ -35,7 +35,7 @@ type PhysicalSourceRegistrationParams struct {
 	HostType *string `json:"hostType,omitempty"`
 
 	// Specifies the type of physical server.
-	// Enum: ["kGroup","kHost","kWindowsCluster","kOracleRACCluster","kOracleAPCluster"]
+	// Enum: ["kGroup","kHost","kWindowsCluster","kOracleRACCluster","kOracleAPCluster","kUnixCluster"]
 	PhysicalType *string `json:"physicalType,omitempty"`
 
 	// Specifies the list of applications to be registered with Physical Source.
@@ -141,7 +141,7 @@ var physicalSourceRegistrationParamsTypePhysicalTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kGroup","kHost","kWindowsCluster","kOracleRACCluster","kOracleAPCluster"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kGroup","kHost","kWindowsCluster","kOracleRACCluster","kOracleAPCluster","kUnixCluster"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -165,6 +165,9 @@ const (
 
 	// PhysicalSourceRegistrationParamsPhysicalTypeKOracleAPCluster captures enum value "kOracleAPCluster"
 	PhysicalSourceRegistrationParamsPhysicalTypeKOracleAPCluster string = "kOracleAPCluster"
+
+	// PhysicalSourceRegistrationParamsPhysicalTypeKUnixCluster captures enum value "kUnixCluster"
+	PhysicalSourceRegistrationParamsPhysicalTypeKUnixCluster string = "kUnixCluster"
 )
 
 // prop value enum

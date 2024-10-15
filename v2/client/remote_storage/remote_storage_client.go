@@ -70,7 +70,7 @@ type ClientService interface {
 /*
 DeleteRemoteStorageRegistration deletes remote storage registration
 
-Delete remote storage registration.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Delete remote storage registration.
 */
 func (a *Client) DeleteRemoteStorageRegistration(params *DeleteRemoteStorageRegistrationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRemoteStorageRegistrationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -110,7 +110,7 @@ func (a *Client) DeleteRemoteStorageRegistration(params *DeleteRemoteStorageRegi
 /*
 GetRegisteredRemoteStorageList gets registered remote storage servers list
 
-Get summary about list of registered remote storage servers.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get summary about list of registered remote storage servers.
 */
 func (a *Client) GetRegisteredRemoteStorageList(params *GetRegisteredRemoteStorageListParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRegisteredRemoteStorageListOK, error) {
 	// TODO: Validate the params before sending
@@ -150,7 +150,7 @@ func (a *Client) GetRegisteredRemoteStorageList(params *GetRegisteredRemoteStora
 /*
 GetRemoteStorageDetails gets remote storage details
 
-Get details of remote storage given by id.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get details of remote storage given by id.
 */
 func (a *Client) GetRemoteStorageDetails(params *GetRemoteStorageDetailsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRemoteStorageDetailsOK, error) {
 	// TODO: Validate the params before sending
@@ -190,7 +190,7 @@ func (a *Client) GetRemoteStorageDetails(params *GetRemoteStorageDetailsParams, 
 /*
 RegisterNewRemoteStorage registers remote storage
 
-Register a remote storage to be used for disaggregated storage.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Register a remote storage to be used for disaggregated storage.
 */
 func (a *Client) RegisterNewRemoteStorage(params *RegisterNewRemoteStorageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RegisterNewRemoteStorageCreated, error) {
 	// TODO: Validate the params before sending
@@ -230,7 +230,7 @@ func (a *Client) RegisterNewRemoteStorage(params *RegisterNewRemoteStorageParams
 /*
 UpdateRemoteStorageRegistration updates remote storage config
 
-Update Registered Remote Storage Config.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update Registered Remote Storage Config.
 */
 func (a *Client) UpdateRemoteStorageRegistration(params *UpdateRemoteStorageRegistrationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateRemoteStorageRegistrationOK, error) {
 	// TODO: Validate the params before sending

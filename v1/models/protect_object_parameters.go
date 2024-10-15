@@ -68,13 +68,21 @@ type ProtectObjectParameters struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	ProtectionSourceEnvironment *string `json:"protectionSourceEnvironment,omitempty"`
 
 	// Specifies the ids of the Protection Sources to protect.
@@ -112,7 +120,7 @@ var protectObjectParametersTypeProtectionSourceEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -145,123 +153,6 @@ const (
 
 	// ProtectObjectParametersProtectionSourceEnvironmentKNimble captures enum value "kNimble"
 	ProtectObjectParametersProtectionSourceEnvironmentKNimble string = "kNimble"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	ProtectObjectParametersProtectionSourceEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKAzure captures enum value "kAzure"
-	ProtectObjectParametersProtectionSourceEnvironmentKAzure string = "kAzure"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKNetapp captures enum value "kNetapp"
-	ProtectObjectParametersProtectionSourceEnvironmentKNetapp string = "kNetapp"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKAgent captures enum value "kAgent"
-	ProtectObjectParametersProtectionSourceEnvironmentKAgent string = "kAgent"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKGenericNas captures enum value "kGenericNas"
-	ProtectObjectParametersProtectionSourceEnvironmentKGenericNas string = "kGenericNas"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKAcropolis captures enum value "kAcropolis"
-	ProtectObjectParametersProtectionSourceEnvironmentKAcropolis string = "kAcropolis"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	ProtectObjectParametersProtectionSourceEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKIsilon captures enum value "kIsilon"
-	ProtectObjectParametersProtectionSourceEnvironmentKIsilon string = "kIsilon"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKGPFS captures enum value "kGPFS"
-	ProtectObjectParametersProtectionSourceEnvironmentKGPFS string = "kGPFS"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKKVM captures enum value "kKVM"
-	ProtectObjectParametersProtectionSourceEnvironmentKKVM string = "kKVM"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKAWS captures enum value "kAWS"
-	ProtectObjectParametersProtectionSourceEnvironmentKAWS string = "kAWS"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKExchange captures enum value "kExchange"
-	ProtectObjectParametersProtectionSourceEnvironmentKExchange string = "kExchange"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	ProtectObjectParametersProtectionSourceEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKOracle captures enum value "kOracle"
-	ProtectObjectParametersProtectionSourceEnvironmentKOracle string = "kOracle"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKGCP captures enum value "kGCP"
-	ProtectObjectParametersProtectionSourceEnvironmentKGCP string = "kGCP"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	ProtectObjectParametersProtectionSourceEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKAWSNative captures enum value "kAWSNative"
-	ProtectObjectParametersProtectionSourceEnvironmentKAWSNative string = "kAWSNative"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKO365 captures enum value "kO365"
-	ProtectObjectParametersProtectionSourceEnvironmentKO365 string = "kO365"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	ProtectObjectParametersProtectionSourceEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	ProtectObjectParametersProtectionSourceEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKGCPNative captures enum value "kGCPNative"
-	ProtectObjectParametersProtectionSourceEnvironmentKGCPNative string = "kGCPNative"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKAzureNative captures enum value "kAzureNative"
-	ProtectObjectParametersProtectionSourceEnvironmentKAzureNative string = "kAzureNative"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKKubernetes captures enum value "kKubernetes"
-	ProtectObjectParametersProtectionSourceEnvironmentKKubernetes string = "kKubernetes"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKElastifile captures enum value "kElastifile"
-	ProtectObjectParametersProtectionSourceEnvironmentKElastifile string = "kElastifile"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKAD captures enum value "kAD"
-	ProtectObjectParametersProtectionSourceEnvironmentKAD string = "kAD"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	ProtectObjectParametersProtectionSourceEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKCassandra captures enum value "kCassandra"
-	ProtectObjectParametersProtectionSourceEnvironmentKCassandra string = "kCassandra"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKMongoDB captures enum value "kMongoDB"
-	ProtectObjectParametersProtectionSourceEnvironmentKMongoDB string = "kMongoDB"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKCouchbase captures enum value "kCouchbase"
-	ProtectObjectParametersProtectionSourceEnvironmentKCouchbase string = "kCouchbase"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKHdfs captures enum value "kHdfs"
-	ProtectObjectParametersProtectionSourceEnvironmentKHdfs string = "kHdfs"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKHive captures enum value "kHive"
-	ProtectObjectParametersProtectionSourceEnvironmentKHive string = "kHive"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKHBase captures enum value "kHBase"
-	ProtectObjectParametersProtectionSourceEnvironmentKHBase string = "kHBase"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKUDA captures enum value "kUDA"
-	ProtectObjectParametersProtectionSourceEnvironmentKUDA string = "kUDA"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKO365Teams captures enum value "kO365Teams"
-	ProtectObjectParametersProtectionSourceEnvironmentKO365Teams string = "kO365Teams"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKO365Group captures enum value "kO365Group"
-	ProtectObjectParametersProtectionSourceEnvironmentKO365Group string = "kO365Group"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	ProtectObjectParametersProtectionSourceEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	ProtectObjectParametersProtectionSourceEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	ProtectObjectParametersProtectionSourceEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// ProtectObjectParametersProtectionSourceEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	ProtectObjectParametersProtectionSourceEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

@@ -8,6 +8,7 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -18,6 +19,12 @@ import (
 //
 // swagger:model CredentialsProto
 type CredentialsProto struct {
+
+	// Authentication method to be used for API calls.
+	AuthMethod *int32 `json:"authMethod,omitempty"`
+
+	// Information related to the AD account managed by AWS.
+	AwsManagedAd *CredentialsProtoAWSManagedADInfo `json:"awsManagedAd,omitempty"`
 
 	// AES256 encrypted password. The key for encryption should be obtained from
 	// KMS. This field stores the encrypted password when the credentials are
@@ -38,11 +45,69 @@ type CredentialsProto struct {
 
 // Validate validates this credentials proto
 func (m *CredentialsProto) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateAwsManagedAd(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this credentials proto based on context it is used
+func (m *CredentialsProto) validateAwsManagedAd(formats strfmt.Registry) error {
+	if swag.IsZero(m.AwsManagedAd) { // not required
+		return nil
+	}
+
+	if m.AwsManagedAd != nil {
+		if err := m.AwsManagedAd.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("awsManagedAd")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("awsManagedAd")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this credentials proto based on the context it is used
 func (m *CredentialsProto) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateAwsManagedAd(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *CredentialsProto) contextValidateAwsManagedAd(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.AwsManagedAd != nil {
+
+		if swag.IsZero(m.AwsManagedAd) { // not required
+			return nil
+		}
+
+		if err := m.AwsManagedAd.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("awsManagedAd")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("awsManagedAd")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

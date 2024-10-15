@@ -28,12 +28,12 @@ type RpoSchedule struct {
 	// RPOIntervalUnit.
 	//
 	// Specifies an RPO Schedule interval unit.
-	// kMinutes specifies that the rpo interval unit is hours.
-	// kHours specifies that the rpo interval unit is hours.
-	// kDays specifies that the rpo interval unit is days.
-	// kWeeks specifies that the rpo interval unit is weeks.
-	// kMonths specifies that the rpo interval unit is months.
-	// Enum: ["kMinutes","kHours","kDays","kWeeks","kMonths"]
+	// kMinute specifies that the rpo interval unit is hours.
+	// kHour specifies that the rpo interval unit is hours.
+	// kDay specifies that the rpo interval unit is days.
+	// kWeek specifies that the rpo interval unit is weeks.
+	// kMonth specifies that the rpo interval unit is months.
+	// Enum: ["kMinute","kHour","kDay","kWeek","kMonth"]
 	IntervalUnit *string `json:"intervalUnit,omitempty"`
 
 	// Specifies the multiplier value to be used with the  RPO interval unit
@@ -59,7 +59,7 @@ var rpoScheduleTypeIntervalUnitPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kMinutes","kHours","kDays","kWeeks","kMonths"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kMinute","kHour","kDay","kWeek","kMonth"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -69,20 +69,20 @@ func init() {
 
 const (
 
-	// RpoScheduleIntervalUnitKMinutes captures enum value "kMinutes"
-	RpoScheduleIntervalUnitKMinutes string = "kMinutes"
+	// RpoScheduleIntervalUnitKMinute captures enum value "kMinute"
+	RpoScheduleIntervalUnitKMinute string = "kMinute"
 
-	// RpoScheduleIntervalUnitKHours captures enum value "kHours"
-	RpoScheduleIntervalUnitKHours string = "kHours"
+	// RpoScheduleIntervalUnitKHour captures enum value "kHour"
+	RpoScheduleIntervalUnitKHour string = "kHour"
 
-	// RpoScheduleIntervalUnitKDays captures enum value "kDays"
-	RpoScheduleIntervalUnitKDays string = "kDays"
+	// RpoScheduleIntervalUnitKDay captures enum value "kDay"
+	RpoScheduleIntervalUnitKDay string = "kDay"
 
-	// RpoScheduleIntervalUnitKWeeks captures enum value "kWeeks"
-	RpoScheduleIntervalUnitKWeeks string = "kWeeks"
+	// RpoScheduleIntervalUnitKWeek captures enum value "kWeek"
+	RpoScheduleIntervalUnitKWeek string = "kWeek"
 
-	// RpoScheduleIntervalUnitKMonths captures enum value "kMonths"
-	RpoScheduleIntervalUnitKMonths string = "kMonths"
+	// RpoScheduleIntervalUnitKMonth captures enum value "kMonth"
+	RpoScheduleIntervalUnitKMonth string = "kMonth"
 )
 
 // prop value enum

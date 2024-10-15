@@ -64,7 +64,7 @@ type ClientService interface {
 /*
 GetClusterPartitionByID lists details about a single cluster partition
 
-Returns the Cluster Partition corresponding to the specified Cluster Partition Id.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the Cluster Partition corresponding to the specified Cluster Partition Id.
 */
 func (a *Client) GetClusterPartitionByID(params *GetClusterPartitionByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetClusterPartitionByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -104,7 +104,7 @@ func (a *Client) GetClusterPartitionByID(params *GetClusterPartitionByIDParams, 
 /*
 	GetClusterPartitions lists cluster partitions filtered by the specified parameters
 
-	If no parameters are specified, all Cluster Partitions currently on
+	**Privileges:** ```CLUSTER_VIEW``` <br><br>If no parameters are specified, all Cluster Partitions currently on
 
 the Cohesity Cluster are returned.
 Specifying parameters filters the results that are returned.

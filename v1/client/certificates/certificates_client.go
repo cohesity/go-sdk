@@ -70,7 +70,7 @@ type ClientService interface {
 /*
 DeleteWebServerCertificate deletes the s s l certificate in the cluster
 
-Returns delete status upon completion.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns delete status upon completion.
 */
 func (a *Client) DeleteWebServerCertificate(params *DeleteWebServerCertificateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteWebServerCertificateNoContent, error) {
 	// TODO: Validate the params before sending
@@ -110,7 +110,7 @@ func (a *Client) DeleteWebServerCertificate(params *DeleteWebServerCertificatePa
 /*
 DeployHostCertificate generates and deploy certificate for a single or multiple hosts
 
-Returns the global certificate for a single or multiple hosts.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the global certificate for a single or multiple hosts.
 */
 func (a *Client) DeployHostCertificate(params *DeployHostCertificateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeployHostCertificateCreated, error) {
 	// TODO: Validate the params before sending
@@ -150,7 +150,7 @@ func (a *Client) DeployHostCertificate(params *DeployHostCertificateParams, auth
 /*
 GetCertificateList lists the certificates generated and deployed on hosts
 
-Returns the all certificate and their details generated from this cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the all certificate and their details generated from this cluster.
 */
 func (a *Client) GetCertificateList(params *GetCertificateListParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetCertificateListOK, error) {
 	// TODO: Validate the params before sending
@@ -190,7 +190,7 @@ func (a *Client) GetCertificateList(params *GetCertificateListParams, authInfo r
 /*
 GetWebServerCertificate gets the server certificate configured on the cluster
 
-Returns the Server Certificate configured on the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the Server Certificate configured on the cluster.
 */
 func (a *Client) GetWebServerCertificate(params *GetWebServerCertificateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetWebServerCertificateOK, error) {
 	// TODO: Validate the params before sending
@@ -230,7 +230,7 @@ func (a *Client) GetWebServerCertificate(params *GetWebServerCertificateParams, 
 /*
 UpdateWebServerCertificate updates the web server certificate on the cluster
 
-Returns the updated Web Server Certificate on the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the updated Web Server Certificate on the cluster.
 */
 func (a *Client) UpdateWebServerCertificate(params *UpdateWebServerCertificateParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateWebServerCertificateOK, error) {
 	// TODO: Validate the params before sending

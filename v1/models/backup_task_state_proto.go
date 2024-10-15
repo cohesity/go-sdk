@@ -40,11 +40,15 @@ type BackupTaskStateProto struct {
 
 	// The state of application specific entities (if any) that are being
 	// backed up by this task. Note that this is populated for Iris on the fly.
-	AppEntityStateVec []*BackupTaskStateProtoAppEntityState `json:"appEntityStateVec"`
+	AppEntityStateVec []*AppEntityState `json:"appEntityStateVec"`
 
 	// True if the backed up data has been verified. Only valid if the status of
 	// the task is kFinished.
 	BackupVerified *bool `json:"backupVerified,omitempty"`
+
+	// Vector of BackupViewInfo to hold view names for each entity being backed
+	// up in this Backup Task.
+	BackupViewInfoVec []*BackupTaskStateProtoBackupViewInfo `json:"backupViewInfoVec"`
 
 	// Contains basic information about the backup task.
 	Base *BackupJobTaskStateBaseProto `json:"base,omitempty"`
@@ -61,7 +65,7 @@ type BackupTaskStateProto struct {
 	// that are backed up. Non-leaf level entities can be included when there is
 	// no ambiguity (in cases where hierarchy rooted a non-leaf entity is a tree
 	// and not a DAG).
-	EntityBackupStats []*BackupTaskStateProtoEntityBackupStatsEntry `json:"entityBackupStats"`
+	EntityBackupStats interface{} `json:"entityBackupStats,omitempty"`
 
 	// in progress state
 	InProgressState *BackupTaskStateProtoInProgressTaskStateProto `json:"inProgressState,omitempty"`
@@ -90,6 +94,9 @@ type BackupTaskStateProto struct {
 	// Contains information about the snapshot used by the last task that
 	// successfully backed up base.sources(0).
 	PreviousSnapshotInfo *SnapshotInfoProto `json:"previousSnapshotInfo,omitempty"`
+
+	// The job from which the previous snapshot information is taken.
+	PreviousSnapshotJobUID *UniversalIDProto `json:"previousSnapshotJobUid,omitempty"`
 
 	// The name of the QoS principal to use when backing up data.
 	QosPrincipalName *string `json:"qosPrincipalName,omitempty"`
@@ -134,6 +141,10 @@ type BackupTaskStateProto struct {
 	// current_snapshot_info and snapshot_delta can be set in the
 	// BackupSnapshotProto in a persistent record.
 	SnapshotDelta SnapshotDeltaProto `json:"snapshotDelta,omitempty"`
+
+	// Vector of SnapshotViewInfo to hold view names for each entity being backed
+	// up in this Backup Task.
+	SnapshotViewInfoVec []*BackupTaskStateProtoSnapshotViewInfo `json:"snapshotViewInfoVec"`
 
 	// An optional space usage policy configured while registering the entity.
 	SpaceUsagePolicy *SpaceUsagePolicy `json:"spaceUsagePolicy,omitempty"`
@@ -205,15 +216,15 @@ func (m *BackupTaskStateProto) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateBackupViewInfoVec(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateBase(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateCurrentSnapshotInfo(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateEntityBackupStats(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -229,7 +240,15 @@ func (m *BackupTaskStateProto) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validatePreviousSnapshotJobUID(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateRxReplicationError(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSnapshotViewInfoVec(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -331,6 +350,32 @@ func (m *BackupTaskStateProto) validateAppEntityStateVec(formats strfmt.Registry
 	return nil
 }
 
+func (m *BackupTaskStateProto) validateBackupViewInfoVec(formats strfmt.Registry) error {
+	if swag.IsZero(m.BackupViewInfoVec) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.BackupViewInfoVec); i++ {
+		if swag.IsZero(m.BackupViewInfoVec[i]) { // not required
+			continue
+		}
+
+		if m.BackupViewInfoVec[i] != nil {
+			if err := m.BackupViewInfoVec[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("backupViewInfoVec" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("backupViewInfoVec" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *BackupTaskStateProto) validateBase(formats strfmt.Registry) error {
 	if swag.IsZero(m.Base) { // not required
 		return nil
@@ -364,32 +409,6 @@ func (m *BackupTaskStateProto) validateCurrentSnapshotInfo(formats strfmt.Regist
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *BackupTaskStateProto) validateEntityBackupStats(formats strfmt.Registry) error {
-	if swag.IsZero(m.EntityBackupStats) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.EntityBackupStats); i++ {
-		if swag.IsZero(m.EntityBackupStats[i]) { // not required
-			continue
-		}
-
-		if m.EntityBackupStats[i] != nil {
-			if err := m.EntityBackupStats[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("entityBackupStats" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("entityBackupStats" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil
@@ -452,6 +471,25 @@ func (m *BackupTaskStateProto) validatePreviousSnapshotInfo(formats strfmt.Regis
 	return nil
 }
 
+func (m *BackupTaskStateProto) validatePreviousSnapshotJobUID(formats strfmt.Registry) error {
+	if swag.IsZero(m.PreviousSnapshotJobUID) { // not required
+		return nil
+	}
+
+	if m.PreviousSnapshotJobUID != nil {
+		if err := m.PreviousSnapshotJobUID.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("previousSnapshotJobUid")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("previousSnapshotJobUid")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *BackupTaskStateProto) validateRxReplicationError(formats strfmt.Registry) error {
 	if swag.IsZero(m.RxReplicationError) { // not required
 		return nil
@@ -466,6 +504,32 @@ func (m *BackupTaskStateProto) validateRxReplicationError(formats strfmt.Registr
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *BackupTaskStateProto) validateSnapshotViewInfoVec(formats strfmt.Registry) error {
+	if swag.IsZero(m.SnapshotViewInfoVec) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.SnapshotViewInfoVec); i++ {
+		if swag.IsZero(m.SnapshotViewInfoVec[i]) { // not required
+			continue
+		}
+
+		if m.SnapshotViewInfoVec[i] != nil {
+			if err := m.SnapshotViewInfoVec[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("snapshotViewInfoVec" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("snapshotViewInfoVec" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -620,15 +684,15 @@ func (m *BackupTaskStateProto) ContextValidate(ctx context.Context, formats strf
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateBackupViewInfoVec(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateBase(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.contextValidateCurrentSnapshotInfo(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateEntityBackupStats(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -644,7 +708,15 @@ func (m *BackupTaskStateProto) ContextValidate(ctx context.Context, formats strf
 		res = append(res, err)
 	}
 
+	if err := m.contextValidatePreviousSnapshotJobUID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateRxReplicationError(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSnapshotViewInfoVec(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -749,6 +821,31 @@ func (m *BackupTaskStateProto) contextValidateAppEntityStateVec(ctx context.Cont
 	return nil
 }
 
+func (m *BackupTaskStateProto) contextValidateBackupViewInfoVec(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.BackupViewInfoVec); i++ {
+
+		if m.BackupViewInfoVec[i] != nil {
+
+			if swag.IsZero(m.BackupViewInfoVec[i]) { // not required
+				return nil
+			}
+
+			if err := m.BackupViewInfoVec[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("backupViewInfoVec" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("backupViewInfoVec" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 func (m *BackupTaskStateProto) contextValidateBase(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Base != nil {
@@ -786,31 +883,6 @@ func (m *BackupTaskStateProto) contextValidateCurrentSnapshotInfo(ctx context.Co
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *BackupTaskStateProto) contextValidateEntityBackupStats(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.EntityBackupStats); i++ {
-
-		if m.EntityBackupStats[i] != nil {
-
-			if swag.IsZero(m.EntityBackupStats[i]) { // not required
-				return nil
-			}
-
-			if err := m.EntityBackupStats[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("entityBackupStats" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("entityBackupStats" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil
@@ -879,6 +951,27 @@ func (m *BackupTaskStateProto) contextValidatePreviousSnapshotInfo(ctx context.C
 	return nil
 }
 
+func (m *BackupTaskStateProto) contextValidatePreviousSnapshotJobUID(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.PreviousSnapshotJobUID != nil {
+
+		if swag.IsZero(m.PreviousSnapshotJobUID) { // not required
+			return nil
+		}
+
+		if err := m.PreviousSnapshotJobUID.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("previousSnapshotJobUid")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("previousSnapshotJobUid")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *BackupTaskStateProto) contextValidateRxReplicationError(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.RxReplicationError != nil {
@@ -895,6 +988,31 @@ func (m *BackupTaskStateProto) contextValidateRxReplicationError(ctx context.Con
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *BackupTaskStateProto) contextValidateSnapshotViewInfoVec(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.SnapshotViewInfoVec); i++ {
+
+		if m.SnapshotViewInfoVec[i] != nil {
+
+			if swag.IsZero(m.SnapshotViewInfoVec[i]) { // not required
+				return nil
+			}
+
+			if err := m.SnapshotViewInfoVec[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("snapshotViewInfoVec" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("snapshotViewInfoVec" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

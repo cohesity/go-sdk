@@ -69,13 +69,21 @@ type ProtectionSummaryByEnv struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies the number of objects that are protected under the given
@@ -112,7 +120,7 @@ var protectionSummaryByEnvTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -145,123 +153,6 @@ const (
 
 	// ProtectionSummaryByEnvEnvironmentKNimble captures enum value "kNimble"
 	ProtectionSummaryByEnvEnvironmentKNimble string = "kNimble"
-
-	// ProtectionSummaryByEnvEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	ProtectionSummaryByEnvEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// ProtectionSummaryByEnvEnvironmentKAzure captures enum value "kAzure"
-	ProtectionSummaryByEnvEnvironmentKAzure string = "kAzure"
-
-	// ProtectionSummaryByEnvEnvironmentKNetapp captures enum value "kNetapp"
-	ProtectionSummaryByEnvEnvironmentKNetapp string = "kNetapp"
-
-	// ProtectionSummaryByEnvEnvironmentKAgent captures enum value "kAgent"
-	ProtectionSummaryByEnvEnvironmentKAgent string = "kAgent"
-
-	// ProtectionSummaryByEnvEnvironmentKGenericNas captures enum value "kGenericNas"
-	ProtectionSummaryByEnvEnvironmentKGenericNas string = "kGenericNas"
-
-	// ProtectionSummaryByEnvEnvironmentKAcropolis captures enum value "kAcropolis"
-	ProtectionSummaryByEnvEnvironmentKAcropolis string = "kAcropolis"
-
-	// ProtectionSummaryByEnvEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	ProtectionSummaryByEnvEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// ProtectionSummaryByEnvEnvironmentKIsilon captures enum value "kIsilon"
-	ProtectionSummaryByEnvEnvironmentKIsilon string = "kIsilon"
-
-	// ProtectionSummaryByEnvEnvironmentKGPFS captures enum value "kGPFS"
-	ProtectionSummaryByEnvEnvironmentKGPFS string = "kGPFS"
-
-	// ProtectionSummaryByEnvEnvironmentKKVM captures enum value "kKVM"
-	ProtectionSummaryByEnvEnvironmentKKVM string = "kKVM"
-
-	// ProtectionSummaryByEnvEnvironmentKAWS captures enum value "kAWS"
-	ProtectionSummaryByEnvEnvironmentKAWS string = "kAWS"
-
-	// ProtectionSummaryByEnvEnvironmentKExchange captures enum value "kExchange"
-	ProtectionSummaryByEnvEnvironmentKExchange string = "kExchange"
-
-	// ProtectionSummaryByEnvEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	ProtectionSummaryByEnvEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// ProtectionSummaryByEnvEnvironmentKOracle captures enum value "kOracle"
-	ProtectionSummaryByEnvEnvironmentKOracle string = "kOracle"
-
-	// ProtectionSummaryByEnvEnvironmentKGCP captures enum value "kGCP"
-	ProtectionSummaryByEnvEnvironmentKGCP string = "kGCP"
-
-	// ProtectionSummaryByEnvEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	ProtectionSummaryByEnvEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// ProtectionSummaryByEnvEnvironmentKAWSNative captures enum value "kAWSNative"
-	ProtectionSummaryByEnvEnvironmentKAWSNative string = "kAWSNative"
-
-	// ProtectionSummaryByEnvEnvironmentKO365 captures enum value "kO365"
-	ProtectionSummaryByEnvEnvironmentKO365 string = "kO365"
-
-	// ProtectionSummaryByEnvEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	ProtectionSummaryByEnvEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// ProtectionSummaryByEnvEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	ProtectionSummaryByEnvEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// ProtectionSummaryByEnvEnvironmentKGCPNative captures enum value "kGCPNative"
-	ProtectionSummaryByEnvEnvironmentKGCPNative string = "kGCPNative"
-
-	// ProtectionSummaryByEnvEnvironmentKAzureNative captures enum value "kAzureNative"
-	ProtectionSummaryByEnvEnvironmentKAzureNative string = "kAzureNative"
-
-	// ProtectionSummaryByEnvEnvironmentKKubernetes captures enum value "kKubernetes"
-	ProtectionSummaryByEnvEnvironmentKKubernetes string = "kKubernetes"
-
-	// ProtectionSummaryByEnvEnvironmentKElastifile captures enum value "kElastifile"
-	ProtectionSummaryByEnvEnvironmentKElastifile string = "kElastifile"
-
-	// ProtectionSummaryByEnvEnvironmentKAD captures enum value "kAD"
-	ProtectionSummaryByEnvEnvironmentKAD string = "kAD"
-
-	// ProtectionSummaryByEnvEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	ProtectionSummaryByEnvEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// ProtectionSummaryByEnvEnvironmentKCassandra captures enum value "kCassandra"
-	ProtectionSummaryByEnvEnvironmentKCassandra string = "kCassandra"
-
-	// ProtectionSummaryByEnvEnvironmentKMongoDB captures enum value "kMongoDB"
-	ProtectionSummaryByEnvEnvironmentKMongoDB string = "kMongoDB"
-
-	// ProtectionSummaryByEnvEnvironmentKCouchbase captures enum value "kCouchbase"
-	ProtectionSummaryByEnvEnvironmentKCouchbase string = "kCouchbase"
-
-	// ProtectionSummaryByEnvEnvironmentKHdfs captures enum value "kHdfs"
-	ProtectionSummaryByEnvEnvironmentKHdfs string = "kHdfs"
-
-	// ProtectionSummaryByEnvEnvironmentKHive captures enum value "kHive"
-	ProtectionSummaryByEnvEnvironmentKHive string = "kHive"
-
-	// ProtectionSummaryByEnvEnvironmentKHBase captures enum value "kHBase"
-	ProtectionSummaryByEnvEnvironmentKHBase string = "kHBase"
-
-	// ProtectionSummaryByEnvEnvironmentKUDA captures enum value "kUDA"
-	ProtectionSummaryByEnvEnvironmentKUDA string = "kUDA"
-
-	// ProtectionSummaryByEnvEnvironmentKO365Teams captures enum value "kO365Teams"
-	ProtectionSummaryByEnvEnvironmentKO365Teams string = "kO365Teams"
-
-	// ProtectionSummaryByEnvEnvironmentKO365Group captures enum value "kO365Group"
-	ProtectionSummaryByEnvEnvironmentKO365Group string = "kO365Group"
-
-	// ProtectionSummaryByEnvEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	ProtectionSummaryByEnvEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// ProtectionSummaryByEnvEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	ProtectionSummaryByEnvEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// ProtectionSummaryByEnvEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	ProtectionSummaryByEnvEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// ProtectionSummaryByEnvEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	ProtectionSummaryByEnvEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

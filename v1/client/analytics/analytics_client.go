@@ -116,7 +116,7 @@ type ClientService interface {
 /*
 AnalyzeJar analyzes the uploaded jar
 
-Returns the result of the jar analysis.
+**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns the result of the jar analysis.
 */
 func (a *Client) AnalyzeJar(params *AnalyzeJarParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AnalyzeJarOK, error) {
 	// TODO: Validate the params before sending
@@ -156,7 +156,7 @@ func (a *Client) AnalyzeJar(params *AnalyzeJarParams, authInfo runtime.ClientAut
 /*
 CancelMapReduceInstanceRun cancels a specific map reduce instance run
 
-Returns the result.
+**Privileges:** ```ANALYTICS_VIEW``` <br><br>Returns the result.
 */
 func (a *Client) CancelMapReduceInstanceRun(params *CancelMapReduceInstanceRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelMapReduceInstanceRunOK, error) {
 	// TODO: Validate the params before sending
@@ -196,7 +196,7 @@ func (a *Client) CancelMapReduceInstanceRun(params *CancelMapReduceInstanceRunPa
 /*
 CreateApplication creates an application
 
-Returns the created application.
+**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns the created application.
 */
 func (a *Client) CreateApplication(params *CreateApplicationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateApplicationCreated, error) {
 	// TODO: Validate the params before sending
@@ -236,7 +236,7 @@ func (a *Client) CreateApplication(params *CreateApplicationParams, authInfo run
 /*
 CreateMapper creates a mapper
 
-Returns the created mapper.
+**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns the created mapper.
 */
 func (a *Client) CreateMapper(params *CreateMapperParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateMapperCreated, error) {
 	// TODO: Validate the params before sending
@@ -276,7 +276,7 @@ func (a *Client) CreateMapper(params *CreateMapperParams, authInfo runtime.Clien
 /*
 CreateReducer creates a reducer
 
-Returns the created reducer.
+**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns the created reducer.
 */
 func (a *Client) CreateReducer(params *CreateReducerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateReducerCreated, error) {
 	// TODO: Validate the params before sending
@@ -316,7 +316,7 @@ func (a *Client) CreateReducer(params *CreateReducerParams, authInfo runtime.Cli
 /*
 DeleteApplication deletes an application
 
-Returns delete status upon completion.
+**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns delete status upon completion.
 */
 func (a *Client) DeleteApplication(params *DeleteApplicationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteApplicationNoContent, error) {
 	// TODO: Validate the params before sending
@@ -356,7 +356,7 @@ func (a *Client) DeleteApplication(params *DeleteApplicationParams, authInfo run
 /*
 DeleteMapReduceInstanceRun deletes a map reduce application instance run
 
-Returns delete status upon completion.
+**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns delete status upon completion.
 */
 func (a *Client) DeleteMapReduceInstanceRun(params *DeleteMapReduceInstanceRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteMapReduceInstanceRunNoContent, error) {
 	// TODO: Validate the params before sending
@@ -396,7 +396,7 @@ func (a *Client) DeleteMapReduceInstanceRun(params *DeleteMapReduceInstanceRunPa
 /*
 DeleteMapper deletes a mapper
 
-Returns delete status upon completion.
+**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns delete status upon completion.
 */
 func (a *Client) DeleteMapper(params *DeleteMapperParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteMapperNoContent, error) {
 	// TODO: Validate the params before sending
@@ -436,7 +436,7 @@ func (a *Client) DeleteMapper(params *DeleteMapperParams, authInfo runtime.Clien
 /*
 DeleteReducer deletes a reducer
 
-Returns delete status upon completion.
+**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns delete status upon completion.
 */
 func (a *Client) DeleteReducer(params *DeleteReducerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteReducerNoContent, error) {
 	// TODO: Validate the params before sending
@@ -476,7 +476,7 @@ func (a *Client) DeleteReducer(params *DeleteReducerParams, authInfo runtime.Cli
 /*
 DeleteUploadedJar deletes the uploaded jar from temporary location
 
-Returns delete status upon completion.
+**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns delete status upon completion.
 */
 func (a *Client) DeleteUploadedJar(params *DeleteUploadedJarParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteUploadedJarNoContent, error) {
 	// TODO: Validate the params before sending
@@ -516,7 +516,7 @@ func (a *Client) DeleteUploadedJar(params *DeleteUploadedJarParams, authInfo run
 /*
 DownloadMRBaseJar downloads the map reduce base jar
 
-Returns a struct containing the map reduce base jar from the cluster.
+**Privileges:** ```ANALYTICS_VIEW``` <br><br>Returns a struct containing the map reduce base jar from the cluster.
 */
 func (a *Client) DownloadMRBaseJar(params *DownloadMRBaseJarParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DownloadMRBaseJarOK, error) {
 	// TODO: Validate the params before sending
@@ -556,7 +556,7 @@ func (a *Client) DownloadMRBaseJar(params *DownloadMRBaseJarParams, authInfo run
 /*
 DownloadMROutputFiles downloads map reduce base instance run output files from yoda
 
-Returns a struct containing the map reduce instance run output files from Yoda.
+**Privileges:** ```ANALYTICS_VIEW``` <br><br>Returns a struct containing the map reduce instance run output files from Yoda.
 */
 func (a *Client) DownloadMROutputFiles(params *DownloadMROutputFilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DownloadMROutputFilesOK, error) {
 	// TODO: Validate the params before sending
@@ -596,7 +596,7 @@ func (a *Client) DownloadMROutputFiles(params *DownloadMROutputFilesParams, auth
 /*
 GetApplicationByID lists details about a single application
 
-Returns the Application corresponding to the specified Application Id.
+**Privileges:** ```ANALYTICS_VIEW``` <br><br>Returns the Application corresponding to the specified Application Id.
 */
 func (a *Client) GetApplicationByID(params *GetApplicationByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetApplicationByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -636,7 +636,7 @@ func (a *Client) GetApplicationByID(params *GetApplicationByIDParams, authInfo r
 /*
 	GetApplications lists applications filtered by the specified parameters
 
-	If no parameters are specified, all Applications currently on
+	**Privileges:** ```ANALYTICS_VIEW``` <br><br>If no parameters are specified, all Applications currently on
 
 the Cohesity Cluster are returned.
 Specifying parameters filters the results that are returned.
@@ -679,7 +679,7 @@ func (a *Client) GetApplications(params *GetApplicationsParams, authInfo runtime
 /*
 GetMRUploadJarPath gets details about the mounted path to upload jars
 
-Returns the mounted path to upload Jars.
+**Privileges:** ```ANALYTICS_VIEW``` <br><br>Returns the mounted path to upload Jars.
 */
 func (a *Client) GetMRUploadJarPath(params *GetMRUploadJarPathParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetMRUploadJarPathOK, error) {
 	// TODO: Validate the params before sending
@@ -719,7 +719,7 @@ func (a *Client) GetMRUploadJarPath(params *GetMRUploadJarPathParams, authInfo r
 /*
 	GetMapReduceAppRuns lists map reduce application runs filtered by the specified parameters
 
-	If no parameters are specified, all map reduce application instance runs
+	**Privileges:** ```ANALYTICS_VIEW``` <br><br>If no parameters are specified, all map reduce application instance runs
 
 currently on the Cohesity Cluster are returned.
 Specifying parameters filters the results that are returned.
@@ -762,7 +762,7 @@ func (a *Client) GetMapReduceAppRuns(params *GetMapReduceAppRunsParams, authInfo
 /*
 	GetMapReduceFileFormats useds to retrieve supported output file formats from a map reduce instance
 
-	The Analytics workbench generates output files from map reduce instances run for
+	**Privileges:** ```ANALYTICS_VIEW``` <br><br>The Analytics workbench generates output files from map reduce instances run for
 
 a particular application. This API returns the output file formats available to
 the user for download.
@@ -805,7 +805,7 @@ func (a *Client) GetMapReduceFileFormats(params *GetMapReduceFileFormatsParams, 
 /*
 GetMapperByID lists details about a single mapper
 
-Returns the Mapper corresponding to the specified Mapper Id.
+**Privileges:** ```ANALYTICS_VIEW``` <br><br>Returns the Mapper corresponding to the specified Mapper Id.
 */
 func (a *Client) GetMapperByID(params *GetMapperByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetMapperByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -845,7 +845,7 @@ func (a *Client) GetMapperByID(params *GetMapperByIDParams, authInfo runtime.Cli
 /*
 	GetMappers lists mappers filtered by the specified parameters
 
-	If no parameters are specified, all Mappers currently on
+	**Privileges:** ```ANALYTICS_VIEW``` <br><br>If no parameters are specified, all Mappers currently on
 
 the Cohesity Cluster are returned.
 Specifying parameters filters the results that are returned.
@@ -888,7 +888,7 @@ func (a *Client) GetMappers(params *GetMappersParams, authInfo runtime.ClientAut
 /*
 GetReducerByID lists details about a single reducer
 
-Returns the Reducer corresponding to the specified Reducer Id.
+**Privileges:** ```ANALYTICS_VIEW``` <br><br>Returns the Reducer corresponding to the specified Reducer Id.
 */
 func (a *Client) GetReducerByID(params *GetReducerByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetReducerByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -928,7 +928,7 @@ func (a *Client) GetReducerByID(params *GetReducerByIDParams, authInfo runtime.C
 /*
 	GetReducers lists reducers filtered by the specified parameters
 
-	If no parameters are specified, all Reducers currently on
+	**Privileges:** ```ANALYTICS_VIEW``` <br><br>If no parameters are specified, all Reducers currently on
 
 the Cohesity Cluster are returned.
 Specifying parameters filters the results that are returned.
@@ -971,7 +971,7 @@ func (a *Client) GetReducers(params *GetReducersParams, authInfo runtime.ClientA
 /*
 	GetSupportedPatterns useds to retrieve supported patterns available for search in an application
 
-	The Analytics workbench has ability to search for patterns which can be system
+	**Privileges:** ```ANALYTICS_VIEW``` <br><br>The Analytics workbench has ability to search for patterns which can be system
 
 defined or can be user defined. This API returns the patterns available for
 search.
@@ -1014,7 +1014,7 @@ func (a *Client) GetSupportedPatterns(params *GetSupportedPatternsParams, authIn
 /*
 RunMapReduceAppInstance runs a map reduce application instance
 
-Returns the updated Application.
+**Privileges:** ```ANALYTICS_VIEW``` <br><br>Returns the updated Application.
 */
 func (a *Client) RunMapReduceAppInstance(params *RunMapReduceAppInstanceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RunMapReduceAppInstanceOK, error) {
 	// TODO: Validate the params before sending
@@ -1054,7 +1054,7 @@ func (a *Client) RunMapReduceAppInstance(params *RunMapReduceAppInstanceParams, 
 /*
 	SavePattern useds to save user patterns for search in an application
 
-	The Analytics workbench has ability to search for patterns which can be system
+	**Privileges:** ```ANALYTICS_MODIFY``` <br><br>The Analytics workbench has ability to search for patterns which can be system
 
 defined or can be user defined. This API enables the user to save patterns for
 searching.
@@ -1097,7 +1097,7 @@ func (a *Client) SavePattern(params *SavePatternParams, authInfo runtime.ClientA
 /*
 UpdateApplication updates an application
 
-Returns the updated Application.
+**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns the updated Application.
 */
 func (a *Client) UpdateApplication(params *UpdateApplicationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateApplicationOK, error) {
 	// TODO: Validate the params before sending
@@ -1137,7 +1137,7 @@ func (a *Client) UpdateApplication(params *UpdateApplicationParams, authInfo run
 /*
 UpdateMapper updates a mapper
 
-Returns the updated Mapper.
+**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns the updated Mapper.
 */
 func (a *Client) UpdateMapper(params *UpdateMapperParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateMapperOK, error) {
 	// TODO: Validate the params before sending
@@ -1177,7 +1177,7 @@ func (a *Client) UpdateMapper(params *UpdateMapperParams, authInfo runtime.Clien
 /*
 UpdateReducer updates a reducer
 
-Returns the updated reducer.
+**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns the updated reducer.
 */
 func (a *Client) UpdateReducer(params *UpdateReducerParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateReducerOK, error) {
 	// TODO: Validate the params before sending
@@ -1217,7 +1217,7 @@ func (a *Client) UpdateReducer(params *UpdateReducerParams, authInfo runtime.Cli
 /*
 	UploadJar uploads a jar to pre specified yoda internal view
 
-	Returns a struct containing the jar name and local mount path where the jar
+	**Privileges:** ```ANALYTICS_MODIFY``` <br><br>Returns a struct containing the jar name and local mount path where the jar
 
 will be uploaded.
 */

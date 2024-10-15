@@ -28,7 +28,7 @@ type CommonRecoveryRequestParams struct {
 
 	// Specifies the type of environment of snapshots for which the Recovery has to be performed.
 	// Required: true
-	// Enum: ["kVMware","kHyperV","kAzure","kGCP","kKVM","kAcropolis","kAWS","kPhysical","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kAzure","kGCP","kKVM","kAcropolis","kAWS","kPhysical","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kSAPHANA","kHBase","kUDA","kSfdc"]
 	SnapshotEnvironment *string `json:"snapshotEnvironment"`
 }
 
@@ -63,7 +63,7 @@ var commonRecoveryRequestParamsTypeSnapshotEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kGCP","kKVM","kAcropolis","kAWS","kPhysical","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kGCP","kKVM","kAcropolis","kAWS","kPhysical","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kSAPHANA","kHBase","kUDA","kSfdc"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -159,6 +159,9 @@ const (
 
 	// CommonRecoveryRequestParamsSnapshotEnvironmentKHive captures enum value "kHive"
 	CommonRecoveryRequestParamsSnapshotEnvironmentKHive string = "kHive"
+
+	// CommonRecoveryRequestParamsSnapshotEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	CommonRecoveryRequestParamsSnapshotEnvironmentKSAPHANA string = "kSAPHANA"
 
 	// CommonRecoveryRequestParamsSnapshotEnvironmentKHBase captures enum value "kHBase"
 	CommonRecoveryRequestParamsSnapshotEnvironmentKHBase string = "kHBase"

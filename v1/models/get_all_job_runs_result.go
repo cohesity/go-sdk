@@ -70,13 +70,21 @@ type GetAllJobRunsResult struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	EnvType *string `json:"envType,omitempty"`
 
 	// Specifies the job id.
@@ -117,7 +125,7 @@ var getAllJobRunsResultTypeEnvTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -150,123 +158,6 @@ const (
 
 	// GetAllJobRunsResultEnvTypeKNimble captures enum value "kNimble"
 	GetAllJobRunsResultEnvTypeKNimble string = "kNimble"
-
-	// GetAllJobRunsResultEnvTypeKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	GetAllJobRunsResultEnvTypeKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// GetAllJobRunsResultEnvTypeKAzure captures enum value "kAzure"
-	GetAllJobRunsResultEnvTypeKAzure string = "kAzure"
-
-	// GetAllJobRunsResultEnvTypeKNetapp captures enum value "kNetapp"
-	GetAllJobRunsResultEnvTypeKNetapp string = "kNetapp"
-
-	// GetAllJobRunsResultEnvTypeKAgent captures enum value "kAgent"
-	GetAllJobRunsResultEnvTypeKAgent string = "kAgent"
-
-	// GetAllJobRunsResultEnvTypeKGenericNas captures enum value "kGenericNas"
-	GetAllJobRunsResultEnvTypeKGenericNas string = "kGenericNas"
-
-	// GetAllJobRunsResultEnvTypeKAcropolis captures enum value "kAcropolis"
-	GetAllJobRunsResultEnvTypeKAcropolis string = "kAcropolis"
-
-	// GetAllJobRunsResultEnvTypeKPhysicalFiles captures enum value "kPhysicalFiles"
-	GetAllJobRunsResultEnvTypeKPhysicalFiles string = "kPhysicalFiles"
-
-	// GetAllJobRunsResultEnvTypeKIsilon captures enum value "kIsilon"
-	GetAllJobRunsResultEnvTypeKIsilon string = "kIsilon"
-
-	// GetAllJobRunsResultEnvTypeKGPFS captures enum value "kGPFS"
-	GetAllJobRunsResultEnvTypeKGPFS string = "kGPFS"
-
-	// GetAllJobRunsResultEnvTypeKKVM captures enum value "kKVM"
-	GetAllJobRunsResultEnvTypeKKVM string = "kKVM"
-
-	// GetAllJobRunsResultEnvTypeKAWS captures enum value "kAWS"
-	GetAllJobRunsResultEnvTypeKAWS string = "kAWS"
-
-	// GetAllJobRunsResultEnvTypeKExchange captures enum value "kExchange"
-	GetAllJobRunsResultEnvTypeKExchange string = "kExchange"
-
-	// GetAllJobRunsResultEnvTypeKHyperVVSS captures enum value "kHyperVVSS"
-	GetAllJobRunsResultEnvTypeKHyperVVSS string = "kHyperVVSS"
-
-	// GetAllJobRunsResultEnvTypeKOracle captures enum value "kOracle"
-	GetAllJobRunsResultEnvTypeKOracle string = "kOracle"
-
-	// GetAllJobRunsResultEnvTypeKGCP captures enum value "kGCP"
-	GetAllJobRunsResultEnvTypeKGCP string = "kGCP"
-
-	// GetAllJobRunsResultEnvTypeKFlashBlade captures enum value "kFlashBlade"
-	GetAllJobRunsResultEnvTypeKFlashBlade string = "kFlashBlade"
-
-	// GetAllJobRunsResultEnvTypeKAWSNative captures enum value "kAWSNative"
-	GetAllJobRunsResultEnvTypeKAWSNative string = "kAWSNative"
-
-	// GetAllJobRunsResultEnvTypeKO365 captures enum value "kO365"
-	GetAllJobRunsResultEnvTypeKO365 string = "kO365"
-
-	// GetAllJobRunsResultEnvTypeKO365Outlook captures enum value "kO365Outlook"
-	GetAllJobRunsResultEnvTypeKO365Outlook string = "kO365Outlook"
-
-	// GetAllJobRunsResultEnvTypeKHyperFlex captures enum value "kHyperFlex"
-	GetAllJobRunsResultEnvTypeKHyperFlex string = "kHyperFlex"
-
-	// GetAllJobRunsResultEnvTypeKGCPNative captures enum value "kGCPNative"
-	GetAllJobRunsResultEnvTypeKGCPNative string = "kGCPNative"
-
-	// GetAllJobRunsResultEnvTypeKAzureNative captures enum value "kAzureNative"
-	GetAllJobRunsResultEnvTypeKAzureNative string = "kAzureNative"
-
-	// GetAllJobRunsResultEnvTypeKKubernetes captures enum value "kKubernetes"
-	GetAllJobRunsResultEnvTypeKKubernetes string = "kKubernetes"
-
-	// GetAllJobRunsResultEnvTypeKElastifile captures enum value "kElastifile"
-	GetAllJobRunsResultEnvTypeKElastifile string = "kElastifile"
-
-	// GetAllJobRunsResultEnvTypeKAD captures enum value "kAD"
-	GetAllJobRunsResultEnvTypeKAD string = "kAD"
-
-	// GetAllJobRunsResultEnvTypeKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	GetAllJobRunsResultEnvTypeKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// GetAllJobRunsResultEnvTypeKCassandra captures enum value "kCassandra"
-	GetAllJobRunsResultEnvTypeKCassandra string = "kCassandra"
-
-	// GetAllJobRunsResultEnvTypeKMongoDB captures enum value "kMongoDB"
-	GetAllJobRunsResultEnvTypeKMongoDB string = "kMongoDB"
-
-	// GetAllJobRunsResultEnvTypeKCouchbase captures enum value "kCouchbase"
-	GetAllJobRunsResultEnvTypeKCouchbase string = "kCouchbase"
-
-	// GetAllJobRunsResultEnvTypeKHdfs captures enum value "kHdfs"
-	GetAllJobRunsResultEnvTypeKHdfs string = "kHdfs"
-
-	// GetAllJobRunsResultEnvTypeKHive captures enum value "kHive"
-	GetAllJobRunsResultEnvTypeKHive string = "kHive"
-
-	// GetAllJobRunsResultEnvTypeKHBase captures enum value "kHBase"
-	GetAllJobRunsResultEnvTypeKHBase string = "kHBase"
-
-	// GetAllJobRunsResultEnvTypeKUDA captures enum value "kUDA"
-	GetAllJobRunsResultEnvTypeKUDA string = "kUDA"
-
-	// GetAllJobRunsResultEnvTypeKO365Teams captures enum value "kO365Teams"
-	GetAllJobRunsResultEnvTypeKO365Teams string = "kO365Teams"
-
-	// GetAllJobRunsResultEnvTypeKO365Group captures enum value "kO365Group"
-	GetAllJobRunsResultEnvTypeKO365Group string = "kO365Group"
-
-	// GetAllJobRunsResultEnvTypeKO365Exchange captures enum value "kO365Exchange"
-	GetAllJobRunsResultEnvTypeKO365Exchange string = "kO365Exchange"
-
-	// GetAllJobRunsResultEnvTypeKO365OneDrive captures enum value "kO365OneDrive"
-	GetAllJobRunsResultEnvTypeKO365OneDrive string = "kO365OneDrive"
-
-	// GetAllJobRunsResultEnvTypeKO365Sharepoint captures enum value "kO365Sharepoint"
-	GetAllJobRunsResultEnvTypeKO365Sharepoint string = "kO365Sharepoint"
-
-	// GetAllJobRunsResultEnvTypeKO365PublicFolders captures enum value "kO365PublicFolders"
-	GetAllJobRunsResultEnvTypeKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

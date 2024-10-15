@@ -21,7 +21,7 @@ import (
 type EnvSpecificObjectProtectionResponseParams struct {
 
 	// Specifies the environment for current object.
-	// Enum: ["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsRDSPostgres","kAwsAuroraPostgres","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc","kO365ExchangeCSM","kO365OneDriveCSM","kO365SharepointCSM"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies the parameters which are specific to VMware related Object Backup.
@@ -68,6 +68,9 @@ type EnvSpecificObjectProtectionResponseParams struct {
 
 	// Specifies the parameters which are specific to Universal Data Adapter related Object Backup.
 	UdaParams *UdaObjectProtectionResponseParams `json:"udaParams,omitempty"`
+
+	// Specifies the parameters which are specific to SAP HANA related Object Backup.
+	SapHanaParams *SapHanaObjectProtectionResponseParams `json:"sapHanaParams,omitempty"`
 
 	// Specifies the parameters which are specific to Azure related Object Backup.
 	AzureParams *AzureObjectProtectionResponseParams `json:"azureParams,omitempty"`
@@ -141,6 +144,10 @@ func (m *EnvSpecificObjectProtectionResponseParams) Validate(formats strfmt.Regi
 		res = append(res, err)
 	}
 
+	if err := m.validateSapHanaParams(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateAzureParams(formats); err != nil {
 		res = append(res, err)
 	}
@@ -155,7 +162,7 @@ var envSpecificObjectProtectionResponseParamsTypeEnvironmentPropEnum []interface
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsRDSPostgres","kAwsAuroraPostgres","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc","kO365ExchangeCSM","kO365OneDriveCSM","kO365SharepointCSM"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -206,6 +213,12 @@ const (
 
 	// EnvSpecificObjectProtectionResponseParamsEnvironmentKAwsRDSPostgresBackup captures enum value "kAwsRDSPostgresBackup"
 	EnvSpecificObjectProtectionResponseParamsEnvironmentKAwsRDSPostgresBackup string = "kAwsRDSPostgresBackup"
+
+	// EnvSpecificObjectProtectionResponseParamsEnvironmentKAwsRDSPostgres captures enum value "kAwsRDSPostgres"
+	EnvSpecificObjectProtectionResponseParamsEnvironmentKAwsRDSPostgres string = "kAwsRDSPostgres"
+
+	// EnvSpecificObjectProtectionResponseParamsEnvironmentKAwsAuroraPostgres captures enum value "kAwsAuroraPostgres"
+	EnvSpecificObjectProtectionResponseParamsEnvironmentKAwsAuroraPostgres string = "kAwsAuroraPostgres"
 
 	// EnvSpecificObjectProtectionResponseParamsEnvironmentKAzureNative captures enum value "kAzureNative"
 	EnvSpecificObjectProtectionResponseParamsEnvironmentKAzureNative string = "kAzureNative"
@@ -306,11 +319,23 @@ const (
 	// EnvSpecificObjectProtectionResponseParamsEnvironmentKHBase captures enum value "kHBase"
 	EnvSpecificObjectProtectionResponseParamsEnvironmentKHBase string = "kHBase"
 
+	// EnvSpecificObjectProtectionResponseParamsEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	EnvSpecificObjectProtectionResponseParamsEnvironmentKSAPHANA string = "kSAPHANA"
+
 	// EnvSpecificObjectProtectionResponseParamsEnvironmentKUDA captures enum value "kUDA"
 	EnvSpecificObjectProtectionResponseParamsEnvironmentKUDA string = "kUDA"
 
 	// EnvSpecificObjectProtectionResponseParamsEnvironmentKSfdc captures enum value "kSfdc"
 	EnvSpecificObjectProtectionResponseParamsEnvironmentKSfdc string = "kSfdc"
+
+	// EnvSpecificObjectProtectionResponseParamsEnvironmentKO365ExchangeCSM captures enum value "kO365ExchangeCSM"
+	EnvSpecificObjectProtectionResponseParamsEnvironmentKO365ExchangeCSM string = "kO365ExchangeCSM"
+
+	// EnvSpecificObjectProtectionResponseParamsEnvironmentKO365OneDriveCSM captures enum value "kO365OneDriveCSM"
+	EnvSpecificObjectProtectionResponseParamsEnvironmentKO365OneDriveCSM string = "kO365OneDriveCSM"
+
+	// EnvSpecificObjectProtectionResponseParamsEnvironmentKO365SharepointCSM captures enum value "kO365SharepointCSM"
+	EnvSpecificObjectProtectionResponseParamsEnvironmentKO365SharepointCSM string = "kO365SharepointCSM"
 )
 
 // prop value enum
@@ -619,6 +644,25 @@ func (m *EnvSpecificObjectProtectionResponseParams) validateUdaParams(formats st
 	return nil
 }
 
+func (m *EnvSpecificObjectProtectionResponseParams) validateSapHanaParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.SapHanaParams) { // not required
+		return nil
+	}
+
+	if m.SapHanaParams != nil {
+		if err := m.SapHanaParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sapHanaParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sapHanaParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *EnvSpecificObjectProtectionResponseParams) validateAzureParams(formats strfmt.Registry) error {
 	if swag.IsZero(m.AzureParams) { // not required
 		return nil
@@ -699,6 +743,10 @@ func (m *EnvSpecificObjectProtectionResponseParams) ContextValidate(ctx context.
 	}
 
 	if err := m.contextValidateUdaParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSapHanaParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1019,6 +1067,27 @@ func (m *EnvSpecificObjectProtectionResponseParams) contextValidateUdaParams(ctx
 				return ve.ValidateName("udaParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("udaParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *EnvSpecificObjectProtectionResponseParams) contextValidateSapHanaParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.SapHanaParams != nil {
+
+		if swag.IsZero(m.SapHanaParams) { // not required
+			return nil
+		}
+
+		if err := m.SapHanaParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sapHanaParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sapHanaParams")
 			}
 			return err
 		}

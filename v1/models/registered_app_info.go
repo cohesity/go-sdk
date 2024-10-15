@@ -84,13 +84,21 @@ type RegisteredAppInfo struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies the list of check results internally performed to verify status of
@@ -177,7 +185,7 @@ var registeredAppInfoTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -210,123 +218,6 @@ const (
 
 	// RegisteredAppInfoEnvironmentKNimble captures enum value "kNimble"
 	RegisteredAppInfoEnvironmentKNimble string = "kNimble"
-
-	// RegisteredAppInfoEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	RegisteredAppInfoEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// RegisteredAppInfoEnvironmentKAzure captures enum value "kAzure"
-	RegisteredAppInfoEnvironmentKAzure string = "kAzure"
-
-	// RegisteredAppInfoEnvironmentKNetapp captures enum value "kNetapp"
-	RegisteredAppInfoEnvironmentKNetapp string = "kNetapp"
-
-	// RegisteredAppInfoEnvironmentKAgent captures enum value "kAgent"
-	RegisteredAppInfoEnvironmentKAgent string = "kAgent"
-
-	// RegisteredAppInfoEnvironmentKGenericNas captures enum value "kGenericNas"
-	RegisteredAppInfoEnvironmentKGenericNas string = "kGenericNas"
-
-	// RegisteredAppInfoEnvironmentKAcropolis captures enum value "kAcropolis"
-	RegisteredAppInfoEnvironmentKAcropolis string = "kAcropolis"
-
-	// RegisteredAppInfoEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	RegisteredAppInfoEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// RegisteredAppInfoEnvironmentKIsilon captures enum value "kIsilon"
-	RegisteredAppInfoEnvironmentKIsilon string = "kIsilon"
-
-	// RegisteredAppInfoEnvironmentKGPFS captures enum value "kGPFS"
-	RegisteredAppInfoEnvironmentKGPFS string = "kGPFS"
-
-	// RegisteredAppInfoEnvironmentKKVM captures enum value "kKVM"
-	RegisteredAppInfoEnvironmentKKVM string = "kKVM"
-
-	// RegisteredAppInfoEnvironmentKAWS captures enum value "kAWS"
-	RegisteredAppInfoEnvironmentKAWS string = "kAWS"
-
-	// RegisteredAppInfoEnvironmentKExchange captures enum value "kExchange"
-	RegisteredAppInfoEnvironmentKExchange string = "kExchange"
-
-	// RegisteredAppInfoEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	RegisteredAppInfoEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// RegisteredAppInfoEnvironmentKOracle captures enum value "kOracle"
-	RegisteredAppInfoEnvironmentKOracle string = "kOracle"
-
-	// RegisteredAppInfoEnvironmentKGCP captures enum value "kGCP"
-	RegisteredAppInfoEnvironmentKGCP string = "kGCP"
-
-	// RegisteredAppInfoEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	RegisteredAppInfoEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// RegisteredAppInfoEnvironmentKAWSNative captures enum value "kAWSNative"
-	RegisteredAppInfoEnvironmentKAWSNative string = "kAWSNative"
-
-	// RegisteredAppInfoEnvironmentKO365 captures enum value "kO365"
-	RegisteredAppInfoEnvironmentKO365 string = "kO365"
-
-	// RegisteredAppInfoEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	RegisteredAppInfoEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// RegisteredAppInfoEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	RegisteredAppInfoEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// RegisteredAppInfoEnvironmentKGCPNative captures enum value "kGCPNative"
-	RegisteredAppInfoEnvironmentKGCPNative string = "kGCPNative"
-
-	// RegisteredAppInfoEnvironmentKAzureNative captures enum value "kAzureNative"
-	RegisteredAppInfoEnvironmentKAzureNative string = "kAzureNative"
-
-	// RegisteredAppInfoEnvironmentKKubernetes captures enum value "kKubernetes"
-	RegisteredAppInfoEnvironmentKKubernetes string = "kKubernetes"
-
-	// RegisteredAppInfoEnvironmentKElastifile captures enum value "kElastifile"
-	RegisteredAppInfoEnvironmentKElastifile string = "kElastifile"
-
-	// RegisteredAppInfoEnvironmentKAD captures enum value "kAD"
-	RegisteredAppInfoEnvironmentKAD string = "kAD"
-
-	// RegisteredAppInfoEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	RegisteredAppInfoEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// RegisteredAppInfoEnvironmentKCassandra captures enum value "kCassandra"
-	RegisteredAppInfoEnvironmentKCassandra string = "kCassandra"
-
-	// RegisteredAppInfoEnvironmentKMongoDB captures enum value "kMongoDB"
-	RegisteredAppInfoEnvironmentKMongoDB string = "kMongoDB"
-
-	// RegisteredAppInfoEnvironmentKCouchbase captures enum value "kCouchbase"
-	RegisteredAppInfoEnvironmentKCouchbase string = "kCouchbase"
-
-	// RegisteredAppInfoEnvironmentKHdfs captures enum value "kHdfs"
-	RegisteredAppInfoEnvironmentKHdfs string = "kHdfs"
-
-	// RegisteredAppInfoEnvironmentKHive captures enum value "kHive"
-	RegisteredAppInfoEnvironmentKHive string = "kHive"
-
-	// RegisteredAppInfoEnvironmentKHBase captures enum value "kHBase"
-	RegisteredAppInfoEnvironmentKHBase string = "kHBase"
-
-	// RegisteredAppInfoEnvironmentKUDA captures enum value "kUDA"
-	RegisteredAppInfoEnvironmentKUDA string = "kUDA"
-
-	// RegisteredAppInfoEnvironmentKO365Teams captures enum value "kO365Teams"
-	RegisteredAppInfoEnvironmentKO365Teams string = "kO365Teams"
-
-	// RegisteredAppInfoEnvironmentKO365Group captures enum value "kO365Group"
-	RegisteredAppInfoEnvironmentKO365Group string = "kO365Group"
-
-	// RegisteredAppInfoEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	RegisteredAppInfoEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// RegisteredAppInfoEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	RegisteredAppInfoEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// RegisteredAppInfoEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	RegisteredAppInfoEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// RegisteredAppInfoEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	RegisteredAppInfoEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

@@ -66,7 +66,7 @@ type ClientService interface {
 /*
 	GetAllJobRuns lists runs of all the jobs
 
-	Returns the job runs for the filters.
+	**Privileges:** ```REPORTS_VIEW``` <br><br>Returns the job runs for the filters.
 
 Specifying parameters can alter the results that are returned.
 */
@@ -108,7 +108,7 @@ func (a *Client) GetAllJobRuns(params *GetAllJobRunsParams, authInfo runtime.Cli
 /*
 GetJobRunInfo lists info related to a job run
 
-Returns the run details for the job run.
+**Privileges:** ```REPORTS_VIEW``` <br><br>Returns the run details for the job run.
 */
 func (a *Client) GetJobRunInfo(params *GetJobRunInfoParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetJobRunInfoOK, error) {
 	// TODO: Validate the params before sending
@@ -148,7 +148,7 @@ func (a *Client) GetJobRunInfo(params *GetJobRunInfoParams, authInfo runtime.Cli
 /*
 GetRunObjectsDetails lists details of objects in a job run
 
-Returns the objects details for the job run.
+**Privileges:** ```REPORTS_VIEW``` <br><br>Returns the objects details for the job run.
 */
 func (a *Client) GetRunObjectsDetails(params *GetRunObjectsDetailsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRunObjectsDetailsOK, error) {
 	// TODO: Validate the params before sending

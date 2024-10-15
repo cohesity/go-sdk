@@ -18,21 +18,61 @@ import (
 // swagger:model AwsEntityMetadata
 type AwsEntityMetadata struct {
 
+	// Specifies the child metadata of aws entities.
+	ChildMetadata *AwsEntityChildMetadata `json:"childMetadata,omitempty"`
+
 	// Specifies the entity metadata of postgres entities.
 	PostgresParams *AwsPostgresEntityMetadata `json:"postgresParams,omitempty"`
+
+	// Specifies the entity metadata of rds entities.
+	RdsParams *AwsRdsEntityMetadata `json:"rdsParams,omitempty"`
+
+	// Specifies the entity metadata of aurora entities.
+	AuroraParams *AwsAuroraEntityMetadata `json:"auroraParams,omitempty"`
 }
 
 // Validate validates this aws entity metadata
 func (m *AwsEntityMetadata) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateChildMetadata(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validatePostgresParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRdsParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateAuroraParams(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *AwsEntityMetadata) validateChildMetadata(formats strfmt.Registry) error {
+	if swag.IsZero(m.ChildMetadata) { // not required
+		return nil
+	}
+
+	if m.ChildMetadata != nil {
+		if err := m.ChildMetadata.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("childMetadata")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("childMetadata")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -55,17 +95,88 @@ func (m *AwsEntityMetadata) validatePostgresParams(formats strfmt.Registry) erro
 	return nil
 }
 
+func (m *AwsEntityMetadata) validateRdsParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.RdsParams) { // not required
+		return nil
+	}
+
+	if m.RdsParams != nil {
+		if err := m.RdsParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("rdsParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("rdsParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *AwsEntityMetadata) validateAuroraParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.AuroraParams) { // not required
+		return nil
+	}
+
+	if m.AuroraParams != nil {
+		if err := m.AuroraParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("auroraParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("auroraParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this aws entity metadata based on the context it is used
 func (m *AwsEntityMetadata) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateChildMetadata(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidatePostgresParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRdsParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateAuroraParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *AwsEntityMetadata) contextValidateChildMetadata(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.ChildMetadata != nil {
+
+		if swag.IsZero(m.ChildMetadata) { // not required
+			return nil
+		}
+
+		if err := m.ChildMetadata.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("childMetadata")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("childMetadata")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -82,6 +193,48 @@ func (m *AwsEntityMetadata) contextValidatePostgresParams(ctx context.Context, f
 				return ve.ValidateName("postgresParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("postgresParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *AwsEntityMetadata) contextValidateRdsParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RdsParams != nil {
+
+		if swag.IsZero(m.RdsParams) { // not required
+			return nil
+		}
+
+		if err := m.RdsParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("rdsParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("rdsParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *AwsEntityMetadata) contextValidateAuroraParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.AuroraParams != nil {
+
+		if swag.IsZero(m.AuroraParams) { // not required
+			return nil
+		}
+
+		if err := m.AuroraParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("auroraParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("auroraParams")
 			}
 			return err
 		}

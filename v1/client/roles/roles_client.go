@@ -68,7 +68,7 @@ type ClientService interface {
 /*
 	CreateRole creates a new custom role
 
-	Returns the new custom role that was created.
+	**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Returns the new custom role that was created.
 
 A custom role is a user-defined role that is created using the REST API,
 the Cohesity Cluster or the CLI.
@@ -111,7 +111,7 @@ func (a *Client) CreateRole(params *CreateRoleParams, authInfo runtime.ClientAut
 /*
 DeleteRoles deletes one or more custom roles
 
-Returns Success if all the specified Roles are deleted.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Returns Success if all the specified Roles are deleted.
 */
 func (a *Client) DeleteRoles(params *DeleteRolesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRolesNoContent, error) {
 	// TODO: Validate the params before sending
@@ -151,7 +151,7 @@ func (a *Client) DeleteRoles(params *DeleteRolesParams, authInfo runtime.ClientA
 /*
 	GetRoles lists the roles defined on the cohesity cluster
 
-	If the 'name' parameter is not specified, all roles defined on the
+	**Privileges:** ```PRINCIPAL_VIEW``` <br><br>If the 'name' parameter is not specified, all roles defined on the
 
 Cohesity Cluster are returned. In addition, information about each role
 is returned such as the name, description, assigned privileges, etc.
@@ -196,7 +196,7 @@ func (a *Client) GetRoles(params *GetRolesParams, authInfo runtime.ClientAuthInf
 /*
 	UpdateRole updates a user defined custom role
 
-	For example, you could update the privileges assigned to a Role.
+	**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>For example, you could update the privileges assigned to a Role.
 
 Returns the updated role.
 */

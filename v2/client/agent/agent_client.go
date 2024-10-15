@@ -94,7 +94,7 @@ type ClientService interface {
 /*
 CreateUpgradeTask creates an upgrade task
 
-Create a schedule based agent upgrade task.
+**Privileges:** ```AGENT_UPGRADE_MODIFY``` <br><br>Create a schedule based agent upgrade task.
 */
 func (a *Client) CreateUpgradeTask(params *CreateUpgradeTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateUpgradeTaskCreated, error) {
 	// TODO: Validate the params before sending
@@ -134,7 +134,7 @@ func (a *Client) CreateUpgradeTask(params *CreateUpgradeTaskParams, authInfo run
 /*
 DownloadAgent downloads agent
 
-Download agent for different hosts.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Download agent for different hosts.
 */
 func (a *Client) DownloadAgent(params *DownloadAgentParams, authInfo runtime.ClientAuthInfoWriter, writer io.Writer, opts ...ClientOption) (*DownloadAgentOK, error) {
 	// TODO: Validate the params before sending
@@ -174,7 +174,7 @@ func (a *Client) DownloadAgent(params *DownloadAgentParams, authInfo runtime.Cli
 /*
 GetUpgradeTasks gets upgrade tasks
 
-Get the list of agent upgrade tasks.
+**Privileges:** ```AGENT_UPGRADE_VIEW``` <br><br>Get the list of agent upgrade tasks.
 */
 func (a *Client) GetUpgradeTasks(params *GetUpgradeTasksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUpgradeTasksOK, error) {
 	// TODO: Validate the params before sending
@@ -214,7 +214,7 @@ func (a *Client) GetUpgradeTasks(params *GetUpgradeTasksParams, authInfo runtime
 /*
 PerformActionOnAgentUpgradeTask performs action on an upgrade task
 
-Perform actions on an agent upgrade task.
+**Privileges:** ```AGENT_UPGRADE_MODIFY``` <br><br>Perform actions on an agent upgrade task.
 */
 func (a *Client) PerformActionOnAgentUpgradeTask(params *PerformActionOnAgentUpgradeTaskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PerformActionOnAgentUpgradeTaskCreated, error) {
 	// TODO: Validate the params before sending

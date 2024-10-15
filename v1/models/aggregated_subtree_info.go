@@ -69,13 +69,21 @@ type AggregatedSubtreeInfo struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies the number of leaf nodes under the subtree of this node.
@@ -104,7 +112,7 @@ var aggregatedSubtreeInfoTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -137,123 +145,6 @@ const (
 
 	// AggregatedSubtreeInfoEnvironmentKNimble captures enum value "kNimble"
 	AggregatedSubtreeInfoEnvironmentKNimble string = "kNimble"
-
-	// AggregatedSubtreeInfoEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	AggregatedSubtreeInfoEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// AggregatedSubtreeInfoEnvironmentKAzure captures enum value "kAzure"
-	AggregatedSubtreeInfoEnvironmentKAzure string = "kAzure"
-
-	// AggregatedSubtreeInfoEnvironmentKNetapp captures enum value "kNetapp"
-	AggregatedSubtreeInfoEnvironmentKNetapp string = "kNetapp"
-
-	// AggregatedSubtreeInfoEnvironmentKAgent captures enum value "kAgent"
-	AggregatedSubtreeInfoEnvironmentKAgent string = "kAgent"
-
-	// AggregatedSubtreeInfoEnvironmentKGenericNas captures enum value "kGenericNas"
-	AggregatedSubtreeInfoEnvironmentKGenericNas string = "kGenericNas"
-
-	// AggregatedSubtreeInfoEnvironmentKAcropolis captures enum value "kAcropolis"
-	AggregatedSubtreeInfoEnvironmentKAcropolis string = "kAcropolis"
-
-	// AggregatedSubtreeInfoEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	AggregatedSubtreeInfoEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// AggregatedSubtreeInfoEnvironmentKIsilon captures enum value "kIsilon"
-	AggregatedSubtreeInfoEnvironmentKIsilon string = "kIsilon"
-
-	// AggregatedSubtreeInfoEnvironmentKGPFS captures enum value "kGPFS"
-	AggregatedSubtreeInfoEnvironmentKGPFS string = "kGPFS"
-
-	// AggregatedSubtreeInfoEnvironmentKKVM captures enum value "kKVM"
-	AggregatedSubtreeInfoEnvironmentKKVM string = "kKVM"
-
-	// AggregatedSubtreeInfoEnvironmentKAWS captures enum value "kAWS"
-	AggregatedSubtreeInfoEnvironmentKAWS string = "kAWS"
-
-	// AggregatedSubtreeInfoEnvironmentKExchange captures enum value "kExchange"
-	AggregatedSubtreeInfoEnvironmentKExchange string = "kExchange"
-
-	// AggregatedSubtreeInfoEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	AggregatedSubtreeInfoEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// AggregatedSubtreeInfoEnvironmentKOracle captures enum value "kOracle"
-	AggregatedSubtreeInfoEnvironmentKOracle string = "kOracle"
-
-	// AggregatedSubtreeInfoEnvironmentKGCP captures enum value "kGCP"
-	AggregatedSubtreeInfoEnvironmentKGCP string = "kGCP"
-
-	// AggregatedSubtreeInfoEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	AggregatedSubtreeInfoEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// AggregatedSubtreeInfoEnvironmentKAWSNative captures enum value "kAWSNative"
-	AggregatedSubtreeInfoEnvironmentKAWSNative string = "kAWSNative"
-
-	// AggregatedSubtreeInfoEnvironmentKO365 captures enum value "kO365"
-	AggregatedSubtreeInfoEnvironmentKO365 string = "kO365"
-
-	// AggregatedSubtreeInfoEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	AggregatedSubtreeInfoEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// AggregatedSubtreeInfoEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	AggregatedSubtreeInfoEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// AggregatedSubtreeInfoEnvironmentKGCPNative captures enum value "kGCPNative"
-	AggregatedSubtreeInfoEnvironmentKGCPNative string = "kGCPNative"
-
-	// AggregatedSubtreeInfoEnvironmentKAzureNative captures enum value "kAzureNative"
-	AggregatedSubtreeInfoEnvironmentKAzureNative string = "kAzureNative"
-
-	// AggregatedSubtreeInfoEnvironmentKKubernetes captures enum value "kKubernetes"
-	AggregatedSubtreeInfoEnvironmentKKubernetes string = "kKubernetes"
-
-	// AggregatedSubtreeInfoEnvironmentKElastifile captures enum value "kElastifile"
-	AggregatedSubtreeInfoEnvironmentKElastifile string = "kElastifile"
-
-	// AggregatedSubtreeInfoEnvironmentKAD captures enum value "kAD"
-	AggregatedSubtreeInfoEnvironmentKAD string = "kAD"
-
-	// AggregatedSubtreeInfoEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	AggregatedSubtreeInfoEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// AggregatedSubtreeInfoEnvironmentKCassandra captures enum value "kCassandra"
-	AggregatedSubtreeInfoEnvironmentKCassandra string = "kCassandra"
-
-	// AggregatedSubtreeInfoEnvironmentKMongoDB captures enum value "kMongoDB"
-	AggregatedSubtreeInfoEnvironmentKMongoDB string = "kMongoDB"
-
-	// AggregatedSubtreeInfoEnvironmentKCouchbase captures enum value "kCouchbase"
-	AggregatedSubtreeInfoEnvironmentKCouchbase string = "kCouchbase"
-
-	// AggregatedSubtreeInfoEnvironmentKHdfs captures enum value "kHdfs"
-	AggregatedSubtreeInfoEnvironmentKHdfs string = "kHdfs"
-
-	// AggregatedSubtreeInfoEnvironmentKHive captures enum value "kHive"
-	AggregatedSubtreeInfoEnvironmentKHive string = "kHive"
-
-	// AggregatedSubtreeInfoEnvironmentKHBase captures enum value "kHBase"
-	AggregatedSubtreeInfoEnvironmentKHBase string = "kHBase"
-
-	// AggregatedSubtreeInfoEnvironmentKUDA captures enum value "kUDA"
-	AggregatedSubtreeInfoEnvironmentKUDA string = "kUDA"
-
-	// AggregatedSubtreeInfoEnvironmentKO365Teams captures enum value "kO365Teams"
-	AggregatedSubtreeInfoEnvironmentKO365Teams string = "kO365Teams"
-
-	// AggregatedSubtreeInfoEnvironmentKO365Group captures enum value "kO365Group"
-	AggregatedSubtreeInfoEnvironmentKO365Group string = "kO365Group"
-
-	// AggregatedSubtreeInfoEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	AggregatedSubtreeInfoEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// AggregatedSubtreeInfoEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	AggregatedSubtreeInfoEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// AggregatedSubtreeInfoEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	AggregatedSubtreeInfoEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// AggregatedSubtreeInfoEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	AggregatedSubtreeInfoEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

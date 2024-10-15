@@ -19,6 +19,9 @@ import (
 // swagger:model MongoDBBackupJobParams
 type MongoDBBackupJobParams struct {
 
+	// Should the agent backup users and roles in this job.
+	BackupUserRole *bool `json:"backupUserRole,omitempty"`
+
 	// Additional parameters required for Mongo backup
 	MongodbAdditionalInfo *MongoDBAdditionalParams `json:"mongodbAdditionalInfo,omitempty"`
 }

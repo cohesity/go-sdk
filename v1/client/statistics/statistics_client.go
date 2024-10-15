@@ -78,7 +78,7 @@ type ClientService interface {
 /*
 	GetEntities lists the entities for the specified schema
 
-	An entity is an object found on the Cohesity Cluster, such as a disk or a
+	**Privileges:** ```CLUSTER_VIEW``` <br><br>An entity is an object found on the Cohesity Cluster, such as a disk or a
 
 Node.
 In the Cohesity Dashboard, similar functionality is provided in Advanced
@@ -122,7 +122,7 @@ func (a *Client) GetEntities(params *GetEntitiesParams, authInfo runtime.ClientA
 /*
 	GetEntitiesSchema lists the entity schemas filtered by the specified parameters
 
-	An entity schema specifies the meta-data associated with entity such as
+	**Privileges:** ```CLUSTER_VIEW, TENANT_VIEW``` <br><br>An entity schema specifies the meta-data associated with entity such as
 
 the list of attributes and a time series of data.
 For example, for a Disk entity, the entity schema specifies the Node that is
@@ -173,7 +173,7 @@ func (a *Client) GetEntitiesSchema(params *GetEntitiesSchemaParams, authInfo run
 /*
 	GetEntitySchemaByName gets the entity schema for the specified schema
 
-	An entity schema specifies the meta-data associated with entity such as the
+	```Unknown Privileges``` <br><br>An entity schema specifies the meta-data associated with entity such as the
 
 list of attributes and a time series of data.
 For example, for a Disk entity, the entity schema specifies the Node that is
@@ -220,6 +220,8 @@ func (a *Client) GetEntitySchemaByName(params *GetEntitySchemaByNameParams, auth
 
 /*
 GetFileDownloadsCounter gets the global stats counter to track the successful file downloads
+
+**Privileges:** ```CLUSTER_VIEW``` <br><br>
 */
 func (a *Client) GetFileDownloadsCounter(params *GetFileDownloadsCounterParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetFileDownloadsCounterOK, error) {
 	// TODO: Validate the params before sending
@@ -258,6 +260,8 @@ func (a *Client) GetFileDownloadsCounter(params *GetFileDownloadsCounterParams, 
 
 /*
 GetProgressMonitorByPath gets the progress and status of task from pulse for a given path
+
+**Privileges:** ```CLUSTER_VIEW, TENANT_VIEW, PROTECTION_VIEW, RESTORE_VIEW``` <br><br>
 */
 func (a *Client) GetProgressMonitorByPath(params *GetProgressMonitorByPathParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProgressMonitorByPathOK, error) {
 	// TODO: Validate the params before sending
@@ -296,6 +300,8 @@ func (a *Client) GetProgressMonitorByPath(params *GetProgressMonitorByPathParams
 
 /*
 GetProgressMonitors gets the progress and status of tasks from pulse
+
+**Privileges:** ```CLUSTER_VIEW, TENANT_VIEW, PROTECTION_VIEW, RESTORE_VIEW``` <br><br>
 */
 func (a *Client) GetProgressMonitors(params *GetProgressMonitorsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProgressMonitorsOK, error) {
 	// TODO: Validate the params before sending
@@ -334,6 +340,8 @@ func (a *Client) GetProgressMonitors(params *GetProgressMonitorsParams, authInfo
 
 /*
 GetTasks gets the progress and status of tasks
+
+**Privileges:** ```CLUSTER_VIEW, TENANT_VIEW``` <br><br>
 */
 func (a *Client) GetTasks(params *GetTasksParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetTasksOK, error) {
 	// TODO: Validate the params before sending
@@ -371,7 +379,7 @@ func (a *Client) GetTasks(params *GetTasksParams, authInfo runtime.ClientAuthInf
 }
 
 /*
-	GetTimeSeriesSchema Gets the Apollo schema information for an entity to list a series of data
+	GetTimeSeriesSchema **Privileges:** ```CLUSTER_VIEW, TENANT_VIEW, STORAGE_DOMAIN_VIEW``` <br><br>Gets the Apollo schema information for an entity to list a series of data
 
 points.
 */
@@ -413,7 +421,7 @@ func (a *Client) GetTimeSeriesSchema(params *GetTimeSeriesSchemaParams, authInfo
 /*
 	GetTimeSeriesStats lists a series of data points for an entity of a metric in a schema during the specified time period
 
-	A Metric specifies a data point (such as CPU usage and IOPS) to track over a
+	**Privileges:** ```CLUSTER_VIEW, TENANT_VIEW, STORAGE_DOMAIN_VIEW, STORAGE_VIEW, PROTECTION_VIEW``` <br><br>A Metric specifies a data point (such as CPU usage and IOPS) to track over a
 
 period of time.
 For example for a disk in the Cluster, you can report on the 'Disk Health'

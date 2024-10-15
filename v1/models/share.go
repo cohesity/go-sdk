@@ -75,6 +75,9 @@ type Share struct {
 	// Specifies the unique id of the tenant.
 	TenantID *string `json:"tenantId,omitempty"`
 
+	// Specifies the view id
+	ViewID *int64 `json:"viewId,omitempty"`
+
 	// Specifies the view name this share belongs to.
 	ViewName *string `json:"viewName,omitempty"`
 }

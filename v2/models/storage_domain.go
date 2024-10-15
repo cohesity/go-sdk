@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	"encoding/json"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -27,6 +28,11 @@ type StorageDomain struct {
 	// Specifies the Storage Domain name.
 	// Required: true
 	Name *string `json:"name"`
+
+	// Specifies the current removal state of the Storage Domain. 'DontRemove' means the state of object is functional and it is not being removed. 'MarkedForRemoval' means the object is being removed. 'OkToRemove' means the object has been removed on the Cohesity Cluster and if the object is physical, it can be removed from the Cohesity Cluster.
+	// Read Only: true
+	// Enum: ["DontRemove","MarkedForRemoval","OkToRemove"]
+	RemovalState *string `json:"removalState,omitempty"`
 
 	// Specifies the cluster partition id of the Storage Domain.
 	// Required: true
@@ -121,6 +127,10 @@ func (m *StorageDomain) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateRemovalState(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateClusterPartitionID(formats); err != nil {
 		res = append(res, err)
 	}
@@ -170,6 +180,51 @@ func (m *StorageDomain) Validate(formats strfmt.Registry) error {
 func (m *StorageDomain) validateName(formats strfmt.Registry) error {
 
 	if err := validate.Required("name", "body", m.Name); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var storageDomainTypeRemovalStatePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["DontRemove","MarkedForRemoval","OkToRemove"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		storageDomainTypeRemovalStatePropEnum = append(storageDomainTypeRemovalStatePropEnum, v)
+	}
+}
+
+const (
+
+	// StorageDomainRemovalStateDontRemove captures enum value "DontRemove"
+	StorageDomainRemovalStateDontRemove string = "DontRemove"
+
+	// StorageDomainRemovalStateMarkedForRemoval captures enum value "MarkedForRemoval"
+	StorageDomainRemovalStateMarkedForRemoval string = "MarkedForRemoval"
+
+	// StorageDomainRemovalStateOkToRemove captures enum value "OkToRemove"
+	StorageDomainRemovalStateOkToRemove string = "OkToRemove"
+)
+
+// prop value enum
+func (m *StorageDomain) validateRemovalStateEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, storageDomainTypeRemovalStatePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *StorageDomain) validateRemovalState(formats strfmt.Registry) error {
+	if swag.IsZero(m.RemovalState) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateRemovalStateEnum("removalState", "body", *m.RemovalState); err != nil {
 		return err
 	}
 
@@ -385,6 +440,10 @@ func (m *StorageDomain) ContextValidate(ctx context.Context, formats strfmt.Regi
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateRemovalState(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateClusterPartitionName(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -438,6 +497,15 @@ func (m *StorageDomain) ContextValidate(ctx context.Context, formats strfmt.Regi
 func (m *StorageDomain) contextValidateID(ctx context.Context, formats strfmt.Registry) error {
 
 	if err := validate.ReadOnly(ctx, "id", "body", m.ID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *StorageDomain) contextValidateRemovalState(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "removalState", "body", m.RemovalState); err != nil {
 		return err
 	}
 

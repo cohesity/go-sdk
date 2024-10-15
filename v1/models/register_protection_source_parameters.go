@@ -56,6 +56,9 @@ type RegisterProtectionSourceParameters struct {
 	// deprecated: true
 	BlacklistedIPAddresses []string `json:"blacklistedIpAddresses"`
 
+	// Specifies the cloud credentials used to authenticate with cloud(Aws).
+	CloudCredentials *CloudCredentials `json:"cloudCredentials,omitempty"`
+
 	// Specifies information related to cluster. This is only valid for CE
 	// clusters. This is only populated for kIAMUser entity.
 	ClusterNetworkInfo *FleetNetworkParams `json:"clusterNetworkInfo,omitempty"`
@@ -68,6 +71,10 @@ type RegisterProtectionSourceParameters struct {
 	// Specifies the list of IP Addresses on the registered source to be denied
 	// for doing any type of IO operations.
 	DeniedIPAddresses []string `json:"deniedIpAddresses"`
+
+	// Specifies whether to enable M365 Storage Service API based(CSM) Backup
+	// for the M365 source.
+	EnableM365CSMBackup *bool `json:"enableM365CSMBackup,omitempty"`
 
 	// If set, user has encrypted the credential with 'user_ecryption_key'.
 	// It is assumed that credentials are first encrypted using
@@ -127,13 +134,21 @@ type RegisterProtectionSourceParameters struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies information about the preference order while choosing
@@ -369,6 +384,10 @@ func (m *RegisterProtectionSourceParameters) Validate(formats strfmt.Registry) e
 		res = append(res, err)
 	}
 
+	if err := m.validateCloudCredentials(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateClusterNetworkInfo(formats); err != nil {
 		res = append(res, err)
 	}
@@ -587,6 +606,25 @@ func (m *RegisterProtectionSourceParameters) validateAzureCredentials(formats st
 	return nil
 }
 
+func (m *RegisterProtectionSourceParameters) validateCloudCredentials(formats strfmt.Registry) error {
+	if swag.IsZero(m.CloudCredentials) { // not required
+		return nil
+	}
+
+	if m.CloudCredentials != nil {
+		if err := m.CloudCredentials.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *RegisterProtectionSourceParameters) validateClusterNetworkInfo(formats strfmt.Registry) error {
 	if swag.IsZero(m.ClusterNetworkInfo) { // not required
 		return nil
@@ -610,7 +648,7 @@ var registerProtectionSourceParametersTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -643,123 +681,6 @@ const (
 
 	// RegisterProtectionSourceParametersEnvironmentKNimble captures enum value "kNimble"
 	RegisterProtectionSourceParametersEnvironmentKNimble string = "kNimble"
-
-	// RegisterProtectionSourceParametersEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	RegisterProtectionSourceParametersEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// RegisterProtectionSourceParametersEnvironmentKAzure captures enum value "kAzure"
-	RegisterProtectionSourceParametersEnvironmentKAzure string = "kAzure"
-
-	// RegisterProtectionSourceParametersEnvironmentKNetapp captures enum value "kNetapp"
-	RegisterProtectionSourceParametersEnvironmentKNetapp string = "kNetapp"
-
-	// RegisterProtectionSourceParametersEnvironmentKAgent captures enum value "kAgent"
-	RegisterProtectionSourceParametersEnvironmentKAgent string = "kAgent"
-
-	// RegisterProtectionSourceParametersEnvironmentKGenericNas captures enum value "kGenericNas"
-	RegisterProtectionSourceParametersEnvironmentKGenericNas string = "kGenericNas"
-
-	// RegisterProtectionSourceParametersEnvironmentKAcropolis captures enum value "kAcropolis"
-	RegisterProtectionSourceParametersEnvironmentKAcropolis string = "kAcropolis"
-
-	// RegisterProtectionSourceParametersEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	RegisterProtectionSourceParametersEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// RegisterProtectionSourceParametersEnvironmentKIsilon captures enum value "kIsilon"
-	RegisterProtectionSourceParametersEnvironmentKIsilon string = "kIsilon"
-
-	// RegisterProtectionSourceParametersEnvironmentKGPFS captures enum value "kGPFS"
-	RegisterProtectionSourceParametersEnvironmentKGPFS string = "kGPFS"
-
-	// RegisterProtectionSourceParametersEnvironmentKKVM captures enum value "kKVM"
-	RegisterProtectionSourceParametersEnvironmentKKVM string = "kKVM"
-
-	// RegisterProtectionSourceParametersEnvironmentKAWS captures enum value "kAWS"
-	RegisterProtectionSourceParametersEnvironmentKAWS string = "kAWS"
-
-	// RegisterProtectionSourceParametersEnvironmentKExchange captures enum value "kExchange"
-	RegisterProtectionSourceParametersEnvironmentKExchange string = "kExchange"
-
-	// RegisterProtectionSourceParametersEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	RegisterProtectionSourceParametersEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// RegisterProtectionSourceParametersEnvironmentKOracle captures enum value "kOracle"
-	RegisterProtectionSourceParametersEnvironmentKOracle string = "kOracle"
-
-	// RegisterProtectionSourceParametersEnvironmentKGCP captures enum value "kGCP"
-	RegisterProtectionSourceParametersEnvironmentKGCP string = "kGCP"
-
-	// RegisterProtectionSourceParametersEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	RegisterProtectionSourceParametersEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// RegisterProtectionSourceParametersEnvironmentKAWSNative captures enum value "kAWSNative"
-	RegisterProtectionSourceParametersEnvironmentKAWSNative string = "kAWSNative"
-
-	// RegisterProtectionSourceParametersEnvironmentKO365 captures enum value "kO365"
-	RegisterProtectionSourceParametersEnvironmentKO365 string = "kO365"
-
-	// RegisterProtectionSourceParametersEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	RegisterProtectionSourceParametersEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// RegisterProtectionSourceParametersEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	RegisterProtectionSourceParametersEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// RegisterProtectionSourceParametersEnvironmentKGCPNative captures enum value "kGCPNative"
-	RegisterProtectionSourceParametersEnvironmentKGCPNative string = "kGCPNative"
-
-	// RegisterProtectionSourceParametersEnvironmentKAzureNative captures enum value "kAzureNative"
-	RegisterProtectionSourceParametersEnvironmentKAzureNative string = "kAzureNative"
-
-	// RegisterProtectionSourceParametersEnvironmentKKubernetes captures enum value "kKubernetes"
-	RegisterProtectionSourceParametersEnvironmentKKubernetes string = "kKubernetes"
-
-	// RegisterProtectionSourceParametersEnvironmentKElastifile captures enum value "kElastifile"
-	RegisterProtectionSourceParametersEnvironmentKElastifile string = "kElastifile"
-
-	// RegisterProtectionSourceParametersEnvironmentKAD captures enum value "kAD"
-	RegisterProtectionSourceParametersEnvironmentKAD string = "kAD"
-
-	// RegisterProtectionSourceParametersEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	RegisterProtectionSourceParametersEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// RegisterProtectionSourceParametersEnvironmentKCassandra captures enum value "kCassandra"
-	RegisterProtectionSourceParametersEnvironmentKCassandra string = "kCassandra"
-
-	// RegisterProtectionSourceParametersEnvironmentKMongoDB captures enum value "kMongoDB"
-	RegisterProtectionSourceParametersEnvironmentKMongoDB string = "kMongoDB"
-
-	// RegisterProtectionSourceParametersEnvironmentKCouchbase captures enum value "kCouchbase"
-	RegisterProtectionSourceParametersEnvironmentKCouchbase string = "kCouchbase"
-
-	// RegisterProtectionSourceParametersEnvironmentKHdfs captures enum value "kHdfs"
-	RegisterProtectionSourceParametersEnvironmentKHdfs string = "kHdfs"
-
-	// RegisterProtectionSourceParametersEnvironmentKHive captures enum value "kHive"
-	RegisterProtectionSourceParametersEnvironmentKHive string = "kHive"
-
-	// RegisterProtectionSourceParametersEnvironmentKHBase captures enum value "kHBase"
-	RegisterProtectionSourceParametersEnvironmentKHBase string = "kHBase"
-
-	// RegisterProtectionSourceParametersEnvironmentKUDA captures enum value "kUDA"
-	RegisterProtectionSourceParametersEnvironmentKUDA string = "kUDA"
-
-	// RegisterProtectionSourceParametersEnvironmentKO365Teams captures enum value "kO365Teams"
-	RegisterProtectionSourceParametersEnvironmentKO365Teams string = "kO365Teams"
-
-	// RegisterProtectionSourceParametersEnvironmentKO365Group captures enum value "kO365Group"
-	RegisterProtectionSourceParametersEnvironmentKO365Group string = "kO365Group"
-
-	// RegisterProtectionSourceParametersEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	RegisterProtectionSourceParametersEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// RegisterProtectionSourceParametersEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	RegisterProtectionSourceParametersEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// RegisterProtectionSourceParametersEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	RegisterProtectionSourceParametersEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// RegisterProtectionSourceParametersEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	RegisterProtectionSourceParametersEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum
@@ -1604,6 +1525,10 @@ func (m *RegisterProtectionSourceParameters) ContextValidate(ctx context.Context
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateCloudCredentials(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateClusterNetworkInfo(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -1733,6 +1658,27 @@ func (m *RegisterProtectionSourceParameters) contextValidateAzureCredentials(ctx
 				return ve.ValidateName("azureCredentials")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("azureCredentials")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *RegisterProtectionSourceParameters) contextValidateCloudCredentials(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CloudCredentials != nil {
+
+		if swag.IsZero(m.CloudCredentials) { // not required
+			return nil
+		}
+
+		if err := m.CloudCredentials.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
 			}
 			return err
 		}

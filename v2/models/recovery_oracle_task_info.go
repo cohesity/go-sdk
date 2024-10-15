@@ -28,7 +28,7 @@ type RecoveryOracleTaskInfo struct {
 
 	// Specifies the status of the recovery.
 	// Read Only: true
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]
 	Status *string `json:"status,omitempty"`
 
 	// Specifies the start time in Unix timestamp epoch in microseconds.
@@ -58,7 +58,7 @@ var recoveryOracleTaskInfoTypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -100,6 +100,9 @@ const (
 
 	// RecoveryOracleTaskInfoStatusSkipped captures enum value "Skipped"
 	RecoveryOracleTaskInfoStatusSkipped string = "Skipped"
+
+	// RecoveryOracleTaskInfoStatusLegalHold captures enum value "LegalHold"
+	RecoveryOracleTaskInfoStatusLegalHold string = "LegalHold"
 )
 
 // prop value enum

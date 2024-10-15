@@ -88,6 +88,8 @@ type PhysicalProtectionSource struct {
 	// 'kWindowsCluster' indicates a Microsoft Windows cluster.
 	// 'kOracleRACCluster' indicates an Oracle Real Application Cluster(RAC).
 	// 'kOracleAPCluster' indicates an Oracle Active-Passive Cluster.
+	// 'kUnixCluster' indicates a RedHat Pacemaker or any UnixCluster.
+	// kUnixCluster
 	// Enum: ["kGroup","kHost","kWindowsCluster","kOracleRACCluster","kOracleAPCluster"]
 	Type *string `json:"type,omitempty"`
 

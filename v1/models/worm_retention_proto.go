@@ -19,6 +19,7 @@ import (
 // run completion..
 // 3. backup tasks do not inherit WORM retention. Instead they check for WORM
 // property on the corresponding backup run.
+//
 // There are no WORM attributes associated with the backup job.
 //
 // swagger:model WormRetentionProto

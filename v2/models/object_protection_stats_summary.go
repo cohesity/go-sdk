@@ -23,7 +23,7 @@ import (
 type ObjectProtectionStatsSummary struct {
 
 	// Specifies the environment of the object.
-	// Enum: ["kVMware","kHyperV","kAzure","kKVM","kAWS","kAzureSQL","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kAzure","kKVM","kAWS","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies the count of the protected leaf objects.
@@ -60,7 +60,7 @@ var objectProtectionStatsSummaryTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kKVM","kAWS","kAzureSQL","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kKVM","kAWS","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -84,9 +84,6 @@ const (
 
 	// ObjectProtectionStatsSummaryEnvironmentKAWS captures enum value "kAWS"
 	ObjectProtectionStatsSummaryEnvironmentKAWS string = "kAWS"
-
-	// ObjectProtectionStatsSummaryEnvironmentKAzureSQL captures enum value "kAzureSQL"
-	ObjectProtectionStatsSummaryEnvironmentKAzureSQL string = "kAzureSQL"
 
 	// ObjectProtectionStatsSummaryEnvironmentKAcropolis captures enum value "kAcropolis"
 	ObjectProtectionStatsSummaryEnvironmentKAcropolis string = "kAcropolis"
@@ -168,6 +165,9 @@ const (
 
 	// ObjectProtectionStatsSummaryEnvironmentKHBase captures enum value "kHBase"
 	ObjectProtectionStatsSummaryEnvironmentKHBase string = "kHBase"
+
+	// ObjectProtectionStatsSummaryEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	ObjectProtectionStatsSummaryEnvironmentKSAPHANA string = "kSAPHANA"
 
 	// ObjectProtectionStatsSummaryEnvironmentKUDA captures enum value "kUDA"
 	ObjectProtectionStatsSummaryEnvironmentKUDA string = "kUDA"

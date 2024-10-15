@@ -53,6 +53,23 @@ type RemoteClusterParams struct {
 	// Read Only: true
 	IsAutoRegistered *bool `json:"isAutoRegistered,omitempty"`
 
+	// Specifies if the Remote Cluster has Multi-Tenancy enabled.
+	MultiTenancyEnabled *bool `json:"multiTenancyEnabled,omitempty"`
+
+	// Specifies if Tenant Storage Domain sharing is enabled on the Remote Cluster.
+	TenantStorageDomainSharingEnabled *bool `json:"tenantStorageDomainSharingEnabled,omitempty"`
+
+	// Specifies the AES Encryption mode of the remote cluster.
+	// Enum: ["CBC","GCM"]
+	SupportedAesEncryptionMode *string `json:"supportedAesEncryptionMode,omitempty"`
+
+	// Specifies the effective AES Encryption mode negotiated between local and the remote cluster.
+	// Enum: ["CBC","GCM"]
+	EffectiveAesEncryptionMode *string `json:"effectiveAesEncryptionMode,omitempty"`
+
+	// Specifies if TLS is enabled on the Remote Cluster.
+	TLSEnabled *bool `json:"tlsEnabled,omitempty"`
+
 	// Specifies the replication config for a Remote Cluster. Required when usedForReplication is set to true.
 	ReplicationParams *ReplicationParams `json:"replicationParams,omitempty"`
 }
@@ -62,6 +79,14 @@ func (m *RemoteClusterParams) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validatePurpose(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSupportedAesEncryptionMode(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateEffectiveAesEncryptionMode(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -106,6 +131,90 @@ func (m *RemoteClusterParams) validatePurpose(formats strfmt.Registry) error {
 			return err
 		}
 
+	}
+
+	return nil
+}
+
+var remoteClusterParamsTypeSupportedAesEncryptionModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["CBC","GCM"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		remoteClusterParamsTypeSupportedAesEncryptionModePropEnum = append(remoteClusterParamsTypeSupportedAesEncryptionModePropEnum, v)
+	}
+}
+
+const (
+
+	// RemoteClusterParamsSupportedAesEncryptionModeCBC captures enum value "CBC"
+	RemoteClusterParamsSupportedAesEncryptionModeCBC string = "CBC"
+
+	// RemoteClusterParamsSupportedAesEncryptionModeGCM captures enum value "GCM"
+	RemoteClusterParamsSupportedAesEncryptionModeGCM string = "GCM"
+)
+
+// prop value enum
+func (m *RemoteClusterParams) validateSupportedAesEncryptionModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, remoteClusterParamsTypeSupportedAesEncryptionModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *RemoteClusterParams) validateSupportedAesEncryptionMode(formats strfmt.Registry) error {
+	if swag.IsZero(m.SupportedAesEncryptionMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateSupportedAesEncryptionModeEnum("supportedAesEncryptionMode", "body", *m.SupportedAesEncryptionMode); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var remoteClusterParamsTypeEffectiveAesEncryptionModePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["CBC","GCM"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		remoteClusterParamsTypeEffectiveAesEncryptionModePropEnum = append(remoteClusterParamsTypeEffectiveAesEncryptionModePropEnum, v)
+	}
+}
+
+const (
+
+	// RemoteClusterParamsEffectiveAesEncryptionModeCBC captures enum value "CBC"
+	RemoteClusterParamsEffectiveAesEncryptionModeCBC string = "CBC"
+
+	// RemoteClusterParamsEffectiveAesEncryptionModeGCM captures enum value "GCM"
+	RemoteClusterParamsEffectiveAesEncryptionModeGCM string = "GCM"
+)
+
+// prop value enum
+func (m *RemoteClusterParams) validateEffectiveAesEncryptionModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, remoteClusterParamsTypeEffectiveAesEncryptionModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *RemoteClusterParams) validateEffectiveAesEncryptionMode(formats strfmt.Registry) error {
+	if swag.IsZero(m.EffectiveAesEncryptionMode) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateEffectiveAesEncryptionModeEnum("effectiveAesEncryptionMode", "body", *m.EffectiveAesEncryptionMode); err != nil {
+		return err
 	}
 
 	return nil

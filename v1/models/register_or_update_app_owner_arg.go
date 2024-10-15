@@ -31,7 +31,7 @@ type RegisterOrUpdateAppOwnerArg struct {
 	// to access an application in the environment (for example, kOracle where
 	// after authorizing with the database host, to access a database separate
 	// credentials are required).
-	AppCredentialsVec []*AppCredentials `json:"appCredentialsVec"`
+	AppCredentialsVec []*PrivateAppCredentials `json:"appCredentialsVec"`
 
 	// The types of application environments (for example, kSQL, kExchange,
 	// kOracle).

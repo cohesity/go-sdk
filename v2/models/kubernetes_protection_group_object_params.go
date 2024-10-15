@@ -35,6 +35,9 @@ type KubernetesProtectionGroupObjectParams struct {
 
 	// Specifies a list of Pvcs to include in the protection. This is only applicable to kubernetes.
 	IncludePvcs []*KubernetesPvcInfo `json:"includePvcs"`
+
+	// Specifies the quiescing rules are which specified by the user for doing backup.
+	QuiesceGroups []*QuiesceGroup `json:"quiesceGroups"`
 }
 
 // Validate validates this kubernetes protection group object params
@@ -50,6 +53,10 @@ func (m *KubernetesProtectionGroupObjectParams) Validate(formats strfmt.Registry
 	}
 
 	if err := m.validateIncludePvcs(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateQuiesceGroups(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -120,6 +127,32 @@ func (m *KubernetesProtectionGroupObjectParams) validateIncludePvcs(formats strf
 	return nil
 }
 
+func (m *KubernetesProtectionGroupObjectParams) validateQuiesceGroups(formats strfmt.Registry) error {
+	if swag.IsZero(m.QuiesceGroups) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.QuiesceGroups); i++ {
+		if swag.IsZero(m.QuiesceGroups[i]) { // not required
+			continue
+		}
+
+		if m.QuiesceGroups[i] != nil {
+			if err := m.QuiesceGroups[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("quiesceGroups" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("quiesceGroups" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 // ContextValidate validate this kubernetes protection group object params based on the context it is used
 func (m *KubernetesProtectionGroupObjectParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -133,6 +166,10 @@ func (m *KubernetesProtectionGroupObjectParams) ContextValidate(ctx context.Cont
 	}
 
 	if err := m.contextValidateIncludePvcs(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateQuiesceGroups(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -191,6 +228,31 @@ func (m *KubernetesProtectionGroupObjectParams) contextValidateIncludePvcs(ctx c
 					return ve.ValidateName("includePvcs" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("includePvcs" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *KubernetesProtectionGroupObjectParams) contextValidateQuiesceGroups(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.QuiesceGroups); i++ {
+
+		if m.QuiesceGroups[i] != nil {
+
+			if swag.IsZero(m.QuiesceGroups[i]) { // not required
+				return nil
+			}
+
+			if err := m.QuiesceGroups[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("quiesceGroups" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("quiesceGroups" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

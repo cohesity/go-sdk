@@ -58,9 +58,13 @@ type ClientService interface {
 
 	CreateBond(params *CreateBondParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateBondOK, error)
 
+	CreateIPConfig(params *CreateIPConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateIPConfigOK, error)
+
 	DeleteBond(params *DeleteBondParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteBondNoContent, error)
 
 	DeleteHosts(params *DeleteHostsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteHostsOK, error)
+
+	DeleteIPConfig(params *DeleteIPConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteIPConfigNoContent, error)
 
 	EditHosts(params *EditHostsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EditHostsOK, error)
 
@@ -72,7 +76,7 @@ type ClientService interface {
 /*
 	AppendHosts adds new entries to the etc hosts file
 
-	Sends a request to add one or more new entries to the Cluster's /etc/hosts
+	**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to add one or more new entries to the Cluster's /etc/hosts
 
 file.
 */
@@ -114,7 +118,7 @@ func (a *Client) AppendHosts(params *AppendHostsParams, authInfo runtime.ClientA
 /*
 	CreateBond creates a new network bond
 
-	Sends a request to create a new network bond on the Cluster. This can only be
+	**Privileges:** ```CLUSTER_CREATE``` <br><br>Sends a request to create a new network bond on the Cluster. This can only be
 
 performed on a Node before it is part of a Cluster.
 */
@@ -154,9 +158,49 @@ func (a *Client) CreateBond(params *CreateBondParams, authInfo runtime.ClientAut
 }
 
 /*
+CreateIPConfig creates a new ipconfig entry on the cluster
+
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to create a new ipconfig entry on the Cluster.
+*/
+func (a *Client) CreateIPConfig(params *CreateIPConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateIPConfigOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateIPConfigParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "CreateIpConfig",
+		Method:             "POST",
+		PathPattern:        "/public/network/ipConfig",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateIPConfigReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateIPConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateIPConfigDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
 	DeleteBond deletes a network bond
 
-	Sends a request to delete a network bond from the Cluster. This can only be
+	**Privileges:** ```CLUSTER_CREATE``` <br><br>Sends a request to delete a network bond from the Cluster. This can only be
 
 performed on a Node before it is part of a Cluster.
 */
@@ -198,7 +242,7 @@ func (a *Client) DeleteBond(params *DeleteBondParams, authInfo runtime.ClientAut
 /*
 	DeleteHosts removes entries from the etc hosts file
 
-	Sends a request to remove one or more entries from the Cluster's
+	**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to remove one or more entries from the Cluster's
 
 etc/hosts file.
 */
@@ -238,9 +282,49 @@ func (a *Client) DeleteHosts(params *DeleteHostsParams, authInfo runtime.ClientA
 }
 
 /*
+DeleteIPConfig deletes a new ipconfig entry from the cluster
+
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to delete a new ipconfig entry from the Cluster.
+*/
+func (a *Client) DeleteIPConfig(params *DeleteIPConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteIPConfigNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteIPConfigParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DeleteIpConfig",
+		Method:             "DELETE",
+		PathPattern:        "/public/network/ipConfig",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteIPConfigReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteIPConfigNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteIPConfigDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
 EditHosts edits entries in the cluster s etc hosts file
 
-Sends a request to edit one or more entries in the Cluster's /etc/hosts file.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to edit one or more entries in the Cluster's /etc/hosts file.
 */
 func (a *Client) EditHosts(params *EditHostsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EditHostsOK, error) {
 	// TODO: Validate the params before sending
@@ -280,7 +364,7 @@ func (a *Client) EditHosts(params *EditHostsParams, authInfo runtime.ClientAuthI
 /*
 	ListHosts gets the current entries in the hosts file on the cluster
 
-	Sends a request to get a list of the current entries in the hosts file
+	**Privileges:** ```CLUSTER_VIEW``` <br><br>Sends a request to get a list of the current entries in the hosts file
 
 on the Cluster.
 */

@@ -20,6 +20,11 @@ import (
 // swagger:model RemoteVaultRestoreTaskStatus
 type RemoteVaultRestoreTaskStatus struct {
 
+	// Cloud Domain Folder
+	//
+	// Specifies the cloud domain folder which the restore downloads from.
+	CloudDomainFolder *string `json:"cloudDomainFolder,omitempty"`
+
 	// Status of Indexing Restore Task.
 	//
 	// Specifies the status of an indexing task that builds an index from

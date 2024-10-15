@@ -65,6 +65,8 @@ type ClientService interface {
 
 /*
 GetFileRestoreInfo gets restore information for files
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) GetFileRestoreInfo(params *GetFileRestoreInfoParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetFileRestoreInfoOK, error) {
 	// TODO: Validate the params before sending
@@ -103,6 +105,8 @@ func (a *Client) GetFileRestoreInfo(params *GetFileRestoreInfoParams, authInfo r
 
 /*
 GetFileStat gets file stat
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) GetFileStat(params *GetFileStatParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetFileStatOK, error) {
 	// TODO: Validate the params before sending
@@ -141,6 +145,8 @@ func (a *Client) GetFileStat(params *GetFileStatParams, authInfo runtime.ClientA
 
 /*
 GetFileVersions gets the versions for a specific file
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) GetFileVersions(params *GetFileVersionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetFileVersionsOK, error) {
 	// TODO: Validate the params before sending

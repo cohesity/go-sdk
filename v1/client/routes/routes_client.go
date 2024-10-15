@@ -66,7 +66,7 @@ type ClientService interface {
 /*
 AddRoute creates a static route on the cohesity cluster
 
-Returns the create status upon completion.
+**Privileges:** ```CLUSTER_MODIFY, CLUSTER_CREATE``` <br><br>Returns the create status upon completion.
 */
 func (a *Client) AddRoute(params *AddRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AddRouteOK, error) {
 	// TODO: Validate the params before sending
@@ -106,7 +106,7 @@ func (a *Client) AddRoute(params *AddRouteParams, authInfo runtime.ClientAuthInf
 /*
 DeleteRoute deletes the specified static route from the cohesity cluster
 
-Returns the delete status upon completion.
+**Privileges:** ```CLUSTER_MODIFY, CLUSTER_CREATE``` <br><br>Returns the delete status upon completion.
 */
 func (a *Client) DeleteRoute(params *DeleteRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteRouteNoContent, error) {
 	// TODO: Validate the params before sending
@@ -146,7 +146,7 @@ func (a *Client) DeleteRoute(params *DeleteRouteParams, authInfo runtime.ClientA
 /*
 GetRoutes lists the static routes for the cohesity cluster
 
-Returns the Static Routes for the Cohesity Cluster.
+**Privileges:** ```CLUSTER_VIEW, CLUSTER_CREATE``` <br><br>Returns the Static Routes for the Cohesity Cluster.
 */
 func (a *Client) GetRoutes(params *GetRoutesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetRoutesOK, error) {
 	// TODO: Validate the params before sending

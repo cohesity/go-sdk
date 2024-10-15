@@ -7,11 +7,13 @@ package models
 
 import (
 	"context"
+	"encoding/json"
 	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // ViewStatsInfo Specifies the View stats.
@@ -36,6 +38,10 @@ type ViewStatsInfo struct {
 func (m *ViewStatsInfo) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateProtocols(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateStats(formats); err != nil {
 		res = append(res, err)
 	}
@@ -43,6 +49,42 @@ func (m *ViewStatsInfo) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+var viewStatsInfoProtocolsItemsEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["kNfs","kSmb","kS3","kIscsi"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		viewStatsInfoProtocolsItemsEnum = append(viewStatsInfoProtocolsItemsEnum, v)
+	}
+}
+
+func (m *ViewStatsInfo) validateProtocolsItemsEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, viewStatsInfoProtocolsItemsEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *ViewStatsInfo) validateProtocols(formats strfmt.Registry) error {
+	if swag.IsZero(m.Protocols) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Protocols); i++ {
+
+		// value enum
+		if err := m.validateProtocolsItemsEnum("protocols"+"."+strconv.Itoa(i), "body", m.Protocols[i]); err != nil {
+			return err
+		}
+
+	}
+
 	return nil
 }
 

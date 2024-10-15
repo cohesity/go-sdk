@@ -64,7 +64,7 @@ type ClientService interface {
 /*
 ConfigureIP configures the specfied IP settings on the cohesity cluster
 
-Returns the create status upon completion.
+**Privileges:** ```CLUSTER_CREATE, CLUSTER_MODIFY``` <br><br>Returns the create status upon completion.
 */
 func (a *Client) ConfigureIP(params *ConfigureIPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ConfigureIPOK, error) {
 	// TODO: Validate the params before sending
@@ -104,7 +104,7 @@ func (a *Client) ConfigureIP(params *ConfigureIPParams, authInfo runtime.ClientA
 /*
 UnconfigureIP deletes the specified IP settings on the cohesity cluster
 
-Returns the delete status upon completion.
+**Privileges:** ```CLUSTER_CREATE, CLUSTER_MODIFY``` <br><br>Returns the delete status upon completion.
 */
 func (a *Client) UnconfigureIP(params *UnconfigureIPParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnconfigureIPNoContent, error) {
 	// TODO: Validate the params before sending

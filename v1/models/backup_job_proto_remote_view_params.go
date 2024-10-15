@@ -7,9 +7,7 @@ package models
 
 import (
 	"context"
-	"strconv"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -25,85 +23,16 @@ type BackupJobProtoRemoteViewParams struct {
 	// A map from view id on source cluster to the view name params on remote
 	// cluster. This is applicable for view backups with replication configured
 	// in the policy.
-	RemoteViewMap []*BackupJobProtoRemoteViewParamsRemoteViewMapEntry `json:"remoteViewMap"`
+	RemoteViewMap interface{} `json:"remoteViewMap,omitempty"`
 }
 
 // Validate validates this backup job proto remote view params
 func (m *BackupJobProtoRemoteViewParams) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateRemoteViewMap(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *BackupJobProtoRemoteViewParams) validateRemoteViewMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.RemoteViewMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.RemoteViewMap); i++ {
-		if swag.IsZero(m.RemoteViewMap[i]) { // not required
-			continue
-		}
-
-		if m.RemoteViewMap[i] != nil {
-			if err := m.RemoteViewMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("remoteViewMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("remoteViewMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this backup job proto remote view params based on the context it is used
+// ContextValidate validates this backup job proto remote view params based on context it is used
 func (m *BackupJobProtoRemoteViewParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateRemoteViewMap(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *BackupJobProtoRemoteViewParams) contextValidateRemoteViewMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.RemoteViewMap); i++ {
-
-		if m.RemoteViewMap[i] != nil {
-
-			if swag.IsZero(m.RemoteViewMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.RemoteViewMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("remoteViewMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("remoteViewMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

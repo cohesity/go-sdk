@@ -33,6 +33,9 @@ type RestoreO365GroupsParams struct {
 	// Whether or not all groups are restored to original location.
 	RestoreToOriginal *bool `json:"restoreToOriginal,omitempty"`
 
+	// Bool which specifies if SP lists needs to be restored.
+	ShouldRestoreLists *bool `json:"shouldRestoreLists,omitempty"`
+
 	// Target group in case restore_to_original is false.
 	TargetGroup *string `json:"targetGroup,omitempty"`
 

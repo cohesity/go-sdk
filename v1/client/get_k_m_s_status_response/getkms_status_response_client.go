@@ -61,6 +61,8 @@ type ClientService interface {
 
 /*
 GetKmsStatus returns the status of the k m s server
+
+**Privileges:** ```CLUSTER_VIEW``` <br><br>
 */
 func (a *Client) GetKmsStatus(params *GetKmsStatusParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetKmsStatusOK, error) {
 	// TODO: Validate the params before sending

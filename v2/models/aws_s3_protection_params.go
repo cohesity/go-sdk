@@ -34,6 +34,20 @@ type AwsS3ProtectionParams struct {
 
 	// Specifies whether to backup object level acls. Default value is false.
 	BackupObjectLevelACLs *bool `json:"backupObjectLevelACLs,omitempty"`
+
+	// ARN of the inventory report destination bucket for S3 backups.
+	InventoryReportDestination *string `json:"inventoryReportDestination,omitempty"`
+
+	// The prefix in the S3 destination bucket where inventory reports will be stored.
+	InventoryReportDestinationPrefix *string `json:"inventoryReportDestinationPrefix,omitempty"`
+
+	// Specifies the frequency to generate inventory reports.
+	// Enum: ["Weekly","Monthly"]
+	InventoryReportFrequency *string `json:"inventoryReportFrequency,omitempty"`
+
+	// Specifies the baseline incremental frequency.
+	// Enum: ["Daily","Weekly","Monthly"]
+	BaselineIncrementalFrequency *string `json:"baselineIncrementalFrequency,omitempty"`
 }
 
 // Validate validates this aws s3 protection params
@@ -45,6 +59,14 @@ func (m *AwsS3ProtectionParams) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateStorageClass(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateInventoryReportFrequency(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateBaselineIncrementalFrequency(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -111,6 +133,93 @@ func (m *AwsS3ProtectionParams) validateStorageClass(formats strfmt.Registry) er
 			return err
 		}
 
+	}
+
+	return nil
+}
+
+var awsS3ProtectionParamsTypeInventoryReportFrequencyPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Weekly","Monthly"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		awsS3ProtectionParamsTypeInventoryReportFrequencyPropEnum = append(awsS3ProtectionParamsTypeInventoryReportFrequencyPropEnum, v)
+	}
+}
+
+const (
+
+	// AwsS3ProtectionParamsInventoryReportFrequencyWeekly captures enum value "Weekly"
+	AwsS3ProtectionParamsInventoryReportFrequencyWeekly string = "Weekly"
+
+	// AwsS3ProtectionParamsInventoryReportFrequencyMonthly captures enum value "Monthly"
+	AwsS3ProtectionParamsInventoryReportFrequencyMonthly string = "Monthly"
+)
+
+// prop value enum
+func (m *AwsS3ProtectionParams) validateInventoryReportFrequencyEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, awsS3ProtectionParamsTypeInventoryReportFrequencyPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *AwsS3ProtectionParams) validateInventoryReportFrequency(formats strfmt.Registry) error {
+	if swag.IsZero(m.InventoryReportFrequency) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateInventoryReportFrequencyEnum("inventoryReportFrequency", "body", *m.InventoryReportFrequency); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+var awsS3ProtectionParamsTypeBaselineIncrementalFrequencyPropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Daily","Weekly","Monthly"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		awsS3ProtectionParamsTypeBaselineIncrementalFrequencyPropEnum = append(awsS3ProtectionParamsTypeBaselineIncrementalFrequencyPropEnum, v)
+	}
+}
+
+const (
+
+	// AwsS3ProtectionParamsBaselineIncrementalFrequencyDaily captures enum value "Daily"
+	AwsS3ProtectionParamsBaselineIncrementalFrequencyDaily string = "Daily"
+
+	// AwsS3ProtectionParamsBaselineIncrementalFrequencyWeekly captures enum value "Weekly"
+	AwsS3ProtectionParamsBaselineIncrementalFrequencyWeekly string = "Weekly"
+
+	// AwsS3ProtectionParamsBaselineIncrementalFrequencyMonthly captures enum value "Monthly"
+	AwsS3ProtectionParamsBaselineIncrementalFrequencyMonthly string = "Monthly"
+)
+
+// prop value enum
+func (m *AwsS3ProtectionParams) validateBaselineIncrementalFrequencyEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, awsS3ProtectionParamsTypeBaselineIncrementalFrequencyPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *AwsS3ProtectionParams) validateBaselineIncrementalFrequency(formats strfmt.Registry) error {
+	if swag.IsZero(m.BaselineIncrementalFrequency) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateBaselineIncrementalFrequencyEnum("baselineIncrementalFrequency", "body", *m.BaselineIncrementalFrequency); err != nil {
+		return err
 	}
 
 	return nil

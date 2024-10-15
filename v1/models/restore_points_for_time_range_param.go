@@ -73,13 +73,21 @@ type RestorePointsForTimeRangeParam struct {
 	// 'kHive' indicates Hive Protection Source environment.
 	// 'kHBase' indicates HBase Protection Source environment.
 	// 'kUDA' indicates Universal Data Adapter Protection Source environment.
+	// 'kSAPHANA' indicates SAP HANA protection source environment.
 	// 'kO365Teams' indicates the Office365 Teams Protection Source environment.
 	// 'kO365Group' indicates the Office365 Groups Protection Source environment.
 	// 'kO365Exchange' indicates the Office365 Mailbox Protection Source environment.
 	// 'kO365OneDrive' indicates the Office365 OneDrive Protection Source environment.
 	// 'kO365Sharepoint' indicates the Office365 SharePoint Protection Source environment.
 	// 'kO365PublicFolders' indicates the Office365 PublicFolders Protection Source environment.
-	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]
+	// kIbmFlashSystem, kAzure, kNetapp, kAgent, kGenericNas, kAcropolis,
+	// kPhysicalFiles, kIsilon, kGPFS, kKVM, kAWS, kExchange, kHyperVVSS, kOracle,
+	// kGCP, kFlashBlade, kAWSNative, kO365, kO365Outlook, kHyperFlex, kGCPNative,
+	// kAzureNative, kKubernetes, kElastifile, kAD, kRDSSnapshotManager,
+	// kCassandra, kMongoDB, kCouchbase, kHdfs, kHive, kHBase, kUDA, kSAPHANA,
+	// kO365Teams, kO365Group, kO365Exchange, kO365OneDrive, kO365Sharepoint,
+	// kO365PublicFolders
+	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Environment *string `json:"environment,omitempty"`
 
 	// Specifies the jobs for which to get the full snapshot information.
@@ -116,7 +124,7 @@ var restorePointsForTimeRangeParamTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble","kIbmFlashSystem","kAzure","kNetapp","kAgent","kGenericNas","kAcropolis","kPhysicalFiles","kIsilon","kGPFS","kKVM","kAWS","kExchange","kHyperVVSS","kOracle","kGCP","kFlashBlade","kAWSNative","kO365","kO365Outlook","kHyperFlex","kGCPNative","kAzureNative","kKubernetes","kElastifile","kAD","kRDSSnapshotManager","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kO365PublicFolders"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -149,123 +157,6 @@ const (
 
 	// RestorePointsForTimeRangeParamEnvironmentKNimble captures enum value "kNimble"
 	RestorePointsForTimeRangeParamEnvironmentKNimble string = "kNimble"
-
-	// RestorePointsForTimeRangeParamEnvironmentKIbmFlashSystem captures enum value "kIbmFlashSystem"
-	RestorePointsForTimeRangeParamEnvironmentKIbmFlashSystem string = "kIbmFlashSystem"
-
-	// RestorePointsForTimeRangeParamEnvironmentKAzure captures enum value "kAzure"
-	RestorePointsForTimeRangeParamEnvironmentKAzure string = "kAzure"
-
-	// RestorePointsForTimeRangeParamEnvironmentKNetapp captures enum value "kNetapp"
-	RestorePointsForTimeRangeParamEnvironmentKNetapp string = "kNetapp"
-
-	// RestorePointsForTimeRangeParamEnvironmentKAgent captures enum value "kAgent"
-	RestorePointsForTimeRangeParamEnvironmentKAgent string = "kAgent"
-
-	// RestorePointsForTimeRangeParamEnvironmentKGenericNas captures enum value "kGenericNas"
-	RestorePointsForTimeRangeParamEnvironmentKGenericNas string = "kGenericNas"
-
-	// RestorePointsForTimeRangeParamEnvironmentKAcropolis captures enum value "kAcropolis"
-	RestorePointsForTimeRangeParamEnvironmentKAcropolis string = "kAcropolis"
-
-	// RestorePointsForTimeRangeParamEnvironmentKPhysicalFiles captures enum value "kPhysicalFiles"
-	RestorePointsForTimeRangeParamEnvironmentKPhysicalFiles string = "kPhysicalFiles"
-
-	// RestorePointsForTimeRangeParamEnvironmentKIsilon captures enum value "kIsilon"
-	RestorePointsForTimeRangeParamEnvironmentKIsilon string = "kIsilon"
-
-	// RestorePointsForTimeRangeParamEnvironmentKGPFS captures enum value "kGPFS"
-	RestorePointsForTimeRangeParamEnvironmentKGPFS string = "kGPFS"
-
-	// RestorePointsForTimeRangeParamEnvironmentKKVM captures enum value "kKVM"
-	RestorePointsForTimeRangeParamEnvironmentKKVM string = "kKVM"
-
-	// RestorePointsForTimeRangeParamEnvironmentKAWS captures enum value "kAWS"
-	RestorePointsForTimeRangeParamEnvironmentKAWS string = "kAWS"
-
-	// RestorePointsForTimeRangeParamEnvironmentKExchange captures enum value "kExchange"
-	RestorePointsForTimeRangeParamEnvironmentKExchange string = "kExchange"
-
-	// RestorePointsForTimeRangeParamEnvironmentKHyperVVSS captures enum value "kHyperVVSS"
-	RestorePointsForTimeRangeParamEnvironmentKHyperVVSS string = "kHyperVVSS"
-
-	// RestorePointsForTimeRangeParamEnvironmentKOracle captures enum value "kOracle"
-	RestorePointsForTimeRangeParamEnvironmentKOracle string = "kOracle"
-
-	// RestorePointsForTimeRangeParamEnvironmentKGCP captures enum value "kGCP"
-	RestorePointsForTimeRangeParamEnvironmentKGCP string = "kGCP"
-
-	// RestorePointsForTimeRangeParamEnvironmentKFlashBlade captures enum value "kFlashBlade"
-	RestorePointsForTimeRangeParamEnvironmentKFlashBlade string = "kFlashBlade"
-
-	// RestorePointsForTimeRangeParamEnvironmentKAWSNative captures enum value "kAWSNative"
-	RestorePointsForTimeRangeParamEnvironmentKAWSNative string = "kAWSNative"
-
-	// RestorePointsForTimeRangeParamEnvironmentKO365 captures enum value "kO365"
-	RestorePointsForTimeRangeParamEnvironmentKO365 string = "kO365"
-
-	// RestorePointsForTimeRangeParamEnvironmentKO365Outlook captures enum value "kO365Outlook"
-	RestorePointsForTimeRangeParamEnvironmentKO365Outlook string = "kO365Outlook"
-
-	// RestorePointsForTimeRangeParamEnvironmentKHyperFlex captures enum value "kHyperFlex"
-	RestorePointsForTimeRangeParamEnvironmentKHyperFlex string = "kHyperFlex"
-
-	// RestorePointsForTimeRangeParamEnvironmentKGCPNative captures enum value "kGCPNative"
-	RestorePointsForTimeRangeParamEnvironmentKGCPNative string = "kGCPNative"
-
-	// RestorePointsForTimeRangeParamEnvironmentKAzureNative captures enum value "kAzureNative"
-	RestorePointsForTimeRangeParamEnvironmentKAzureNative string = "kAzureNative"
-
-	// RestorePointsForTimeRangeParamEnvironmentKKubernetes captures enum value "kKubernetes"
-	RestorePointsForTimeRangeParamEnvironmentKKubernetes string = "kKubernetes"
-
-	// RestorePointsForTimeRangeParamEnvironmentKElastifile captures enum value "kElastifile"
-	RestorePointsForTimeRangeParamEnvironmentKElastifile string = "kElastifile"
-
-	// RestorePointsForTimeRangeParamEnvironmentKAD captures enum value "kAD"
-	RestorePointsForTimeRangeParamEnvironmentKAD string = "kAD"
-
-	// RestorePointsForTimeRangeParamEnvironmentKRDSSnapshotManager captures enum value "kRDSSnapshotManager"
-	RestorePointsForTimeRangeParamEnvironmentKRDSSnapshotManager string = "kRDSSnapshotManager"
-
-	// RestorePointsForTimeRangeParamEnvironmentKCassandra captures enum value "kCassandra"
-	RestorePointsForTimeRangeParamEnvironmentKCassandra string = "kCassandra"
-
-	// RestorePointsForTimeRangeParamEnvironmentKMongoDB captures enum value "kMongoDB"
-	RestorePointsForTimeRangeParamEnvironmentKMongoDB string = "kMongoDB"
-
-	// RestorePointsForTimeRangeParamEnvironmentKCouchbase captures enum value "kCouchbase"
-	RestorePointsForTimeRangeParamEnvironmentKCouchbase string = "kCouchbase"
-
-	// RestorePointsForTimeRangeParamEnvironmentKHdfs captures enum value "kHdfs"
-	RestorePointsForTimeRangeParamEnvironmentKHdfs string = "kHdfs"
-
-	// RestorePointsForTimeRangeParamEnvironmentKHive captures enum value "kHive"
-	RestorePointsForTimeRangeParamEnvironmentKHive string = "kHive"
-
-	// RestorePointsForTimeRangeParamEnvironmentKHBase captures enum value "kHBase"
-	RestorePointsForTimeRangeParamEnvironmentKHBase string = "kHBase"
-
-	// RestorePointsForTimeRangeParamEnvironmentKUDA captures enum value "kUDA"
-	RestorePointsForTimeRangeParamEnvironmentKUDA string = "kUDA"
-
-	// RestorePointsForTimeRangeParamEnvironmentKO365Teams captures enum value "kO365Teams"
-	RestorePointsForTimeRangeParamEnvironmentKO365Teams string = "kO365Teams"
-
-	// RestorePointsForTimeRangeParamEnvironmentKO365Group captures enum value "kO365Group"
-	RestorePointsForTimeRangeParamEnvironmentKO365Group string = "kO365Group"
-
-	// RestorePointsForTimeRangeParamEnvironmentKO365Exchange captures enum value "kO365Exchange"
-	RestorePointsForTimeRangeParamEnvironmentKO365Exchange string = "kO365Exchange"
-
-	// RestorePointsForTimeRangeParamEnvironmentKO365OneDrive captures enum value "kO365OneDrive"
-	RestorePointsForTimeRangeParamEnvironmentKO365OneDrive string = "kO365OneDrive"
-
-	// RestorePointsForTimeRangeParamEnvironmentKO365Sharepoint captures enum value "kO365Sharepoint"
-	RestorePointsForTimeRangeParamEnvironmentKO365Sharepoint string = "kO365Sharepoint"
-
-	// RestorePointsForTimeRangeParamEnvironmentKO365PublicFolders captures enum value "kO365PublicFolders"
-	RestorePointsForTimeRangeParamEnvironmentKO365PublicFolders string = "kO365PublicFolders"
 )
 
 // prop value enum

@@ -27,7 +27,7 @@ type HostInformation struct {
 	Name *string `json:"name,omitempty"`
 
 	// Specifies the environment of the object.
-	// Enum: ["kVMware","kHyperV","kAzure","kKVM","kAWS","kAzureSQL","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kAzure","kKVM","kAWS","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc"]
 	Environment *string `json:"environment,omitempty"`
 }
 
@@ -49,7 +49,7 @@ var hostInformationTypeEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kKVM","kAWS","kAzureSQL","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kKVM","kAWS","kAcropolis","kGCP","kPhysical","kPhysicalFiles","kIsilon","kNetapp","kGenericNas","kFlashBlade","kElastifile","kGPFS","kPure","kIbmFlashSystem","kNimble","kSQL","kOracle","kExchange","kAD","kView","kO365","kHyperFlex","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -73,9 +73,6 @@ const (
 
 	// HostInformationEnvironmentKAWS captures enum value "kAWS"
 	HostInformationEnvironmentKAWS string = "kAWS"
-
-	// HostInformationEnvironmentKAzureSQL captures enum value "kAzureSQL"
-	HostInformationEnvironmentKAzureSQL string = "kAzureSQL"
 
 	// HostInformationEnvironmentKAcropolis captures enum value "kAcropolis"
 	HostInformationEnvironmentKAcropolis string = "kAcropolis"
@@ -157,6 +154,9 @@ const (
 
 	// HostInformationEnvironmentKHBase captures enum value "kHBase"
 	HostInformationEnvironmentKHBase string = "kHBase"
+
+	// HostInformationEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	HostInformationEnvironmentKSAPHANA string = "kSAPHANA"
 
 	// HostInformationEnvironmentKUDA captures enum value "kUDA"
 	HostInformationEnvironmentKUDA string = "kUDA"

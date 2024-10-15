@@ -7,9 +7,7 @@ package models
 
 import (
 	"context"
-	"strconv"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -45,85 +43,16 @@ type PhysicalBackupParams struct {
 	// This contains the map of volume guid to device key as present in master.
 	// This will be referred to while generating the device key for newly
 	// discovered volumes.
-	VolumeGUIDDeviceKeyMap []*PhysicalBackupParamsVolumeGUIDDeviceKeyMapEntry `json:"volumeGuidDeviceKeyMap"`
+	VolumeGUIDDeviceKeyMap map[string]int64 `json:"volumeGuidDeviceKeyMap,omitempty"`
 }
 
 // Validate validates this physical backup params
 func (m *PhysicalBackupParams) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateVolumeGUIDDeviceKeyMap(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *PhysicalBackupParams) validateVolumeGUIDDeviceKeyMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.VolumeGUIDDeviceKeyMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.VolumeGUIDDeviceKeyMap); i++ {
-		if swag.IsZero(m.VolumeGUIDDeviceKeyMap[i]) { // not required
-			continue
-		}
-
-		if m.VolumeGUIDDeviceKeyMap[i] != nil {
-			if err := m.VolumeGUIDDeviceKeyMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("volumeGuidDeviceKeyMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("volumeGuidDeviceKeyMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this physical backup params based on the context it is used
+// ContextValidate validates this physical backup params based on context it is used
 func (m *PhysicalBackupParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateVolumeGUIDDeviceKeyMap(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *PhysicalBackupParams) contextValidateVolumeGUIDDeviceKeyMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.VolumeGUIDDeviceKeyMap); i++ {
-
-		if m.VolumeGUIDDeviceKeyMap[i] != nil {
-
-			if swag.IsZero(m.VolumeGUIDDeviceKeyMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.VolumeGUIDDeviceKeyMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("volumeGuidDeviceKeyMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("volumeGuidDeviceKeyMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

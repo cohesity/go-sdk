@@ -70,7 +70,7 @@ type ClientService interface {
 /*
 CreateStorageDomain creates a storage domain
 
-Create a Storage Domain.
+**Privileges:** ```STORAGE_DOMAIN_MODIFY``` <br><br>Create a Storage Domain.
 */
 func (a *Client) CreateStorageDomain(params *CreateStorageDomainParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateStorageDomainCreated, error) {
 	// TODO: Validate the params before sending
@@ -110,7 +110,7 @@ func (a *Client) CreateStorageDomain(params *CreateStorageDomainParams, authInfo
 /*
 DeleteStorageDomain deletes a storage domain
 
-Delete a Storage Domain.
+**Privileges:** ```STORAGE_DOMAIN_MODIFY``` <br><br>Delete a Storage Domain.
 */
 func (a *Client) DeleteStorageDomain(params *DeleteStorageDomainParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteStorageDomainNoContent, error) {
 	// TODO: Validate the params before sending
@@ -150,7 +150,7 @@ func (a *Client) DeleteStorageDomain(params *DeleteStorageDomainParams, authInfo
 /*
 GetStorageDomainByID gets a storage domain by id
 
-Get a Storage Domain by id.
+**Privileges:** ```STORAGE_DOMAIN_VIEW``` <br><br>Get a Storage Domain by id.
 */
 func (a *Client) GetStorageDomainByID(params *GetStorageDomainByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetStorageDomainByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -190,7 +190,7 @@ func (a *Client) GetStorageDomainByID(params *GetStorageDomainByIDParams, authIn
 /*
 GetStorageDomains gets storage domains
 
-Get Storage Domains.
+**Privileges:** ```STORAGE_DOMAIN_VIEW``` <br><br>Get Storage Domains.
 */
 func (a *Client) GetStorageDomains(params *GetStorageDomainsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetStorageDomainsOK, error) {
 	// TODO: Validate the params before sending
@@ -230,7 +230,7 @@ func (a *Client) GetStorageDomains(params *GetStorageDomainsParams, authInfo run
 /*
 UpdateStorageDomain updates a storage domain
 
-Update a Storage Domain.
+**Privileges:** ```STORAGE_DOMAIN_MODIFY``` <br><br>Update a Storage Domain.
 */
 func (a *Client) UpdateStorageDomain(params *UpdateStorageDomainParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateStorageDomainOK, error) {
 	// TODO: Validate the params before sending

@@ -45,6 +45,9 @@ type MongoDBConnectParams struct {
 	// Specifies the seeds of this MongoDB Cluster.
 	Seeds []string `json:"seeds"`
 
+	// Set this to true if you want the system to peform backups from fixed nodes.
+	UseFixedNodeForBackup *bool `json:"useFixedNodeForBackup,omitempty"`
+
 	// Set this to true if you want the system to peform backups from secondary nodes.
 	UseSecondaryForBackup *bool `json:"useSecondaryForBackup,omitempty"`
 }

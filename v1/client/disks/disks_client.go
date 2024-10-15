@@ -72,7 +72,7 @@ type ClientService interface {
 /*
 GetDiskByID lists details about a single disk
 
-Returns the Disk corresponding to the specified Disk Id.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the Disk corresponding to the specified Disk Id.
 */
 func (a *Client) GetDiskByID(params *GetDiskByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDiskByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -112,7 +112,7 @@ func (a *Client) GetDiskByID(params *GetDiskByIDParams, authInfo runtime.ClientA
 /*
 GetDiskStats lists details about disk stats
 
-Returns the top level stats for the disks in the clusters.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the top level stats for the disks in the clusters.
 */
 func (a *Client) GetDiskStats(params *GetDiskStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetDiskStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -152,7 +152,7 @@ func (a *Client) GetDiskStats(params *GetDiskStatsParams, authInfo runtime.Clien
 /*
 	GetDisks lists disks filtered by some parameters
 
-	If no parameters are specified, all Disks currently on the Cohesity Cluster are
+	**Privileges:** ```CLUSTER_VIEW``` <br><br>If no parameters are specified, all Disks currently on the Cohesity Cluster are
 
 returned.
 Specifying parameters filters the results that are returned.
@@ -195,7 +195,7 @@ func (a *Client) GetDisks(params *GetDisksParams, authInfo runtime.ClientAuthInf
 /*
 MarkDiskForRemoval marks a disk for removal
 
-Returns delete status upon completion.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns delete status upon completion.
 */
 func (a *Client) MarkDiskForRemoval(params *MarkDiskForRemovalParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*MarkDiskForRemovalAccepted, error) {
 	// TODO: Validate the params before sending
@@ -235,7 +235,7 @@ func (a *Client) MarkDiskForRemoval(params *MarkDiskForRemovalParams, authInfo r
 /*
 UpdateDisk updates a disk
 
-Returns the updated Disk.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the updated Disk.
 */
 func (a *Client) UpdateDisk(params *UpdateDiskParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateDiskOK, error) {
 	// TODO: Validate the params before sending
@@ -275,7 +275,7 @@ func (a *Client) UpdateDisk(params *UpdateDiskParams, authInfo runtime.ClientAut
 /*
 UpdateHydraDiskReservation updates a hydra disk reservation
 
-Returns the updated hydra disk reservation.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the updated hydra disk reservation.
 */
 func (a *Client) UpdateHydraDiskReservation(params *UpdateHydraDiskReservationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateHydraDiskReservationOK, error) {
 	// TODO: Validate the params before sending

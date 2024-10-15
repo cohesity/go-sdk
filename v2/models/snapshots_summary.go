@@ -42,8 +42,11 @@ type SnapshotsSummary struct {
 	// Specifies the timestamp in Unix time epoch in microseconds when the latest run started.
 	LatestRunStartTimeUsecs *int64 `json:"latestRunStartTimeUsecs,omitempty"`
 
+	// Specifies the timestamp in Unix time epoch in microseconds representing the latest end time.
+	LatestEndTimeUsecs *int64 `json:"latestEndTimeUsecs,omitempty"`
+
 	// Specifies the status of latest run.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]
 	LatestRunStatus *string `json:"latestRunStatus,omitempty"`
 
 	// Specifies the ownership context of the snapshot target.
@@ -135,7 +138,7 @@ var snapshotsSummaryTypeLatestRunStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -177,6 +180,9 @@ const (
 
 	// SnapshotsSummaryLatestRunStatusSkipped captures enum value "Skipped"
 	SnapshotsSummaryLatestRunStatusSkipped string = "Skipped"
+
+	// SnapshotsSummaryLatestRunStatusLegalHold captures enum value "LegalHold"
+	SnapshotsSummaryLatestRunStatusLegalHold string = "LegalHold"
 )
 
 // prop value enum

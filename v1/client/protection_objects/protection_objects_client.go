@@ -68,7 +68,7 @@ type ClientService interface {
 /*
 GetProtectionObjectSummary protects an object
 
-Returns the Protected Object and its corresponding Protection Job information.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Returns the Protected Object and its corresponding Protection Job information.
 */
 func (a *Client) GetProtectionObjectSummary(params *GetProtectionObjectSummaryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionObjectSummaryOK, error) {
 	// TODO: Validate the params before sending
@@ -108,7 +108,7 @@ func (a *Client) GetProtectionObjectSummary(params *GetProtectionObjectSummaryPa
 /*
 ProtectObject protects an object
 
-Returns the Protected Object and its corresponding Protection Job information.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Returns the Protected Object and its corresponding Protection Job information.
 */
 func (a *Client) ProtectObject(params *ProtectObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ProtectObjectCreated, error) {
 	// TODO: Validate the params before sending
@@ -147,6 +147,8 @@ func (a *Client) ProtectObject(params *ProtectObjectParams, authInfo runtime.Cli
 
 /*
 UnprotectObject unprotects a protected object
+
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>
 */
 func (a *Client) UnprotectObject(params *UnprotectObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UnprotectObjectNoContent, error) {
 	// TODO: Validate the params before sending
@@ -186,7 +188,7 @@ func (a *Client) UnprotectObject(params *UnprotectObjectParams, authInfo runtime
 /*
 UpdateProtectionObject updates a protected object
 
-Returns the Updated Protected Object.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Returns the Updated Protected Object.
 */
 func (a *Client) UpdateProtectionObject(params *UpdateProtectionObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProtectionObjectOK, error) {
 	// TODO: Validate the params before sending

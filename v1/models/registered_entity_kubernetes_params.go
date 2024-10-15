@@ -38,7 +38,7 @@ type RegisteredEntityKubernetesParams struct {
 	S3AccountID *string `json:"s3AccountId,omitempty"`
 
 	// Contains generic annotations to be put on services.
-	ServiceAnnotations []*RegisteredEntityKubernetesParamsServiceAnnotationsEntry `json:"serviceAnnotations"`
+	ServiceAnnotations map[string]string `json:"serviceAnnotations,omitempty"`
 
 	// Custom tolerations for Datamover pods.
 	TolerationsVec []*PodInfoPodSpecToleration `json:"tolerationsVec"`
@@ -61,10 +61,6 @@ func (m *RegisteredEntityKubernetesParams) Validate(formats strfmt.Registry) err
 	var res []error
 
 	if err := m.validateDefaultVlanParams(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateServiceAnnotations(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -96,32 +92,6 @@ func (m *RegisteredEntityKubernetesParams) validateDefaultVlanParams(formats str
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *RegisteredEntityKubernetesParams) validateServiceAnnotations(formats strfmt.Registry) error {
-	if swag.IsZero(m.ServiceAnnotations) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.ServiceAnnotations); i++ {
-		if swag.IsZero(m.ServiceAnnotations[i]) { // not required
-			continue
-		}
-
-		if m.ServiceAnnotations[i] != nil {
-			if err := m.ServiceAnnotations[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("serviceAnnotations" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("serviceAnnotations" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil
@@ -187,10 +157,6 @@ func (m *RegisteredEntityKubernetesParams) ContextValidate(ctx context.Context, 
 		res = append(res, err)
 	}
 
-	if err := m.contextValidateServiceAnnotations(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.contextValidateTolerationsVec(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -221,31 +187,6 @@ func (m *RegisteredEntityKubernetesParams) contextValidateDefaultVlanParams(ctx 
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *RegisteredEntityKubernetesParams) contextValidateServiceAnnotations(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.ServiceAnnotations); i++ {
-
-		if m.ServiceAnnotations[i] != nil {
-
-			if swag.IsZero(m.ServiceAnnotations[i]) { // not required
-				return nil
-			}
-
-			if err := m.ServiceAnnotations[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("serviceAnnotations" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("serviceAnnotations" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

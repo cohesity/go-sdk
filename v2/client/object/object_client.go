@@ -62,6 +62,8 @@ type ClientService interface {
 
 	ConstructMetaInfo(params *ConstructMetaInfoParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ConstructMetaInfoOK, error)
 
+	DeleteEntityMetadata(params *DeleteEntityMetadataParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteEntityMetadataNoContent, error)
+
 	FilterObjects(params *FilterObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*FilterObjectsOK, error)
 
 	GetAllIndexedObjectSnapshots(params *GetAllIndexedObjectSnapshotsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAllIndexedObjectSnapshotsOK, error)
@@ -108,7 +110,7 @@ type ClientService interface {
 /*
 AssociateEntityMetadata associates metadata with entity
 
-Associates metadata with entities in the entity hierarchy. This metadata can be of various types (eg. Credentials). Returns a list of entity id and corresponding errors encountered (if any) while associating metadata with that entity. Note that a partial success response is possible where we succeed in associating metadata with some of the entities but fail for others. The API also expects the entities being updated belong to same source.
+**Privileges:** ```PROTECTION_SOURCE_MODIFY``` <br><br>Associates metadata with entities in the entity hierarchy. This metadata can be of various types (eg. Credentials). Returns a list of entity id and corresponding errors encountered (if any) while associating metadata with that entity. Note that a partial success response is possible where we succeed in associating metadata with some of the entities but fail for others. The API also expects the entities being updated belong to same source.
 */
 func (a *Client) AssociateEntityMetadata(params *AssociateEntityMetadataParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AssociateEntityMetadataMultiStatus, error) {
 	// TODO: Validate the params before sending
@@ -148,7 +150,7 @@ func (a *Client) AssociateEntityMetadata(params *AssociateEntityMetadataParams, 
 /*
 BrowseObjectContents fetches the contents files and folders for the specified object
 
-Fetch the contents (files & folders) of the specified path inside the specified object.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Fetch the contents (files & folders) of the specified path inside the specified object.
 */
 func (a *Client) BrowseObjectContents(params *BrowseObjectContentsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*BrowseObjectContentsOK, error) {
 	// TODO: Validate the params before sending
@@ -188,7 +190,7 @@ func (a *Client) BrowseObjectContents(params *BrowseObjectContentsParams, authIn
 /*
 CancelObjectRuns cancels object runs
 
-Cancel object runs for object based protection. This does not apply to Group based protection.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Cancel object runs for object based protection. This does not apply to Group based protection.
 */
 func (a *Client) CancelObjectRuns(params *CancelObjectRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CancelObjectRunsMultiStatus, error) {
 	// TODO: Validate the params before sending
@@ -228,7 +230,7 @@ func (a *Client) CancelObjectRuns(params *CancelObjectRunsParams, authInfo runti
 /*
 ConstructMetaInfo constructs meta info for any workflow from object snapshot and some other information
 
-Construct meta info from object snapshot and some additional params.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Construct meta info from object snapshot and some additional params.
 */
 func (a *Client) ConstructMetaInfo(params *ConstructMetaInfoParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ConstructMetaInfoOK, error) {
 	// TODO: Validate the params before sending
@@ -266,9 +268,49 @@ func (a *Client) ConstructMetaInfo(params *ConstructMetaInfoParams, authInfo run
 }
 
 /*
+DeleteEntityMetadata deletes metadata with entity
+
+```Unknown Privileges``` <br><br>Deletes entity metadata for the given entity Id. Currently only supported for RDS and Aurora Postgres Credential metadata.
+*/
+func (a *Client) DeleteEntityMetadata(params *DeleteEntityMetadataParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteEntityMetadataNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteEntityMetadataParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DeleteEntityMetadata",
+		Method:             "DELETE",
+		PathPattern:        "/data-protect/objects/metadata/{id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteEntityMetadataReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteEntityMetadataNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteEntityMetadataDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
 FilterObjects lists all the filtered objects
 
-List all the filtered objects using given regular expressions and wildcard supported search strings. We are currenly supporting this for only SQL adapter.
+**Privileges:** ```RESTORE_VIEW``` <br><br>List all the filtered objects using given regular expressions and wildcard supported search strings. We are currenly supporting this for only SQL adapter.
 */
 func (a *Client) FilterObjects(params *FilterObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*FilterObjectsOK, error) {
 	// TODO: Validate the params before sending
@@ -308,7 +350,7 @@ func (a *Client) FilterObjects(params *FilterObjectsParams, authInfo runtime.Cli
 /*
 GetAllIndexedObjectSnapshots gets snapshots of indexed object
 
-Get snapshots of indexed object.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Get snapshots of indexed object.
 */
 func (a *Client) GetAllIndexedObjectSnapshots(params *GetAllIndexedObjectSnapshotsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAllIndexedObjectSnapshotsOK, error) {
 	// TODO: Validate the params before sending
@@ -348,7 +390,7 @@ func (a *Client) GetAllIndexedObjectSnapshots(params *GetAllIndexedObjectSnapsho
 /*
 GetEntityMetadata gets metadata of entities
 
-Gets entity metadata for entities. This can be used as a input for the PUT API.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Gets entity metadata for entities. This can be used as a input for the PUT API.
 */
 func (a *Client) GetEntityMetadata(params *GetEntityMetadataParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetEntityMetadataOK, error) {
 	// TODO: Validate the params before sending
@@ -388,7 +430,7 @@ func (a *Client) GetEntityMetadata(params *GetEntityMetadataParams, authInfo run
 /*
 GetIndexedObjectSnapshots gets snapshots of indexed object
 
-Get snapshots of indexed object.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Get snapshots of indexed object.
 */
 func (a *Client) GetIndexedObjectSnapshots(params *GetIndexedObjectSnapshotsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetIndexedObjectSnapshotsOK, error) {
 	// TODO: Validate the params before sending
@@ -428,7 +470,7 @@ func (a *Client) GetIndexedObjectSnapshots(params *GetIndexedObjectSnapshotsPara
 /*
 GetObjectRunByRunID gets a run for an object
 
-Get a run for an object.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get a run for an object.
 */
 func (a *Client) GetObjectRunByRunID(params *GetObjectRunByRunIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetObjectRunByRunIDOK, error) {
 	// TODO: Validate the params before sending
@@ -468,7 +510,7 @@ func (a *Client) GetObjectRunByRunID(params *GetObjectRunByRunIDParams, authInfo
 /*
 GetObjectRuns gets the list of runs for an object
 
-Get the runs for a particular object.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get the runs for a particular object.
 */
 func (a *Client) GetObjectRuns(params *GetObjectRunsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetObjectRunsOK, error) {
 	// TODO: Validate the params before sending
@@ -508,7 +550,7 @@ func (a *Client) GetObjectRuns(params *GetObjectRunsParams, authInfo runtime.Cli
 /*
 GetObjectSnapshotInfo gets details of object snapshot
 
-Get details of object snapshot.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Get details of object snapshot.
 */
 func (a *Client) GetObjectSnapshotInfo(params *GetObjectSnapshotInfoParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetObjectSnapshotInfoOK, error) {
 	// TODO: Validate the params before sending
@@ -548,7 +590,7 @@ func (a *Client) GetObjectSnapshotInfo(params *GetObjectSnapshotInfoParams, auth
 /*
 GetObjectSnapshotVolumeInfo gets volume info of object snapshot
 
-Get volume info of object snapshot.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Get volume info of object snapshot.
 */
 func (a *Client) GetObjectSnapshotVolumeInfo(params *GetObjectSnapshotVolumeInfoParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetObjectSnapshotVolumeInfoOK, error) {
 	// TODO: Validate the params before sending
@@ -588,7 +630,7 @@ func (a *Client) GetObjectSnapshotVolumeInfo(params *GetObjectSnapshotVolumeInfo
 /*
 GetObjectSnapshots lists the snapshots for a given object
 
-List the snapshots for a given object.
+**Privileges:** ```RESTORE_VIEW``` <br><br>List the snapshots for a given object.
 */
 func (a *Client) GetObjectSnapshots(params *GetObjectSnapshotsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetObjectSnapshotsOK, error) {
 	// TODO: Validate the params before sending
@@ -628,7 +670,7 @@ func (a *Client) GetObjectSnapshots(params *GetObjectSnapshotsParams, authInfo r
 /*
 GetObjectStats gets stats for a given object
 
-Get stats for a given object.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Get stats for a given object.
 */
 func (a *Client) GetObjectStats(params *GetObjectStatsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetObjectStatsOK, error) {
 	// TODO: Validate the params before sending
@@ -668,7 +710,7 @@ func (a *Client) GetObjectStats(params *GetObjectStatsParams, authInfo runtime.C
 /*
 GetObjectTree gets the objects tree hierarchy for for an object
 
-Get the objects tree hierarchy for for an Object. If the object does not have a hierarchy then a single object will be returned.
+```Unknown Privileges``` <br><br>Get the objects tree hierarchy for for an Object. If the object does not have a hierarchy then a single object will be returned.
 */
 func (a *Client) GetObjectTree(params *GetObjectTreeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetObjectTreeOK, error) {
 	// TODO: Validate the params before sending
@@ -708,7 +750,7 @@ func (a *Client) GetObjectTree(params *GetObjectTreeParams, authInfo runtime.Cli
 /*
 GetObjectsLastRun gets last protection run of objects
 
-Get last protection run of objects.
+```Unknown Privileges``` <br><br>Get last protection run of objects.
 */
 func (a *Client) GetObjectsLastRun(params *GetObjectsLastRunParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetObjectsLastRunOK, error) {
 	// TODO: Validate the params before sending
@@ -748,7 +790,7 @@ func (a *Client) GetObjectsLastRun(params *GetObjectsLastRunParams, authInfo run
 /*
 GetPITRangesForProtectedObject gets p i t ranges for an object
 
-Returns the ranges in various types like time, SCN etc. within which the specified protected object can be restored to any Point in time.
+**Privileges:** ```RESTORE_VIEW``` <br><br>Returns the ranges in various types like time, SCN etc. within which the specified protected object can be restored to any Point in time.
 */
 func (a *Client) GetPITRangesForProtectedObject(params *GetPITRangesForProtectedObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPITRangesForProtectedObjectOK, error) {
 	// TODO: Validate the params before sending
@@ -788,7 +830,7 @@ func (a *Client) GetPITRangesForProtectedObject(params *GetPITRangesForProtected
 /*
 GetProtectedObjectOfAnyTypeByID gets an object
 
-Get Object configurations for given object id.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get Object configurations for given object id.
 */
 func (a *Client) GetProtectedObjectOfAnyTypeByID(params *GetProtectedObjectOfAnyTypeByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectedObjectOfAnyTypeByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -828,7 +870,7 @@ func (a *Client) GetProtectedObjectOfAnyTypeByID(params *GetProtectedObjectOfAny
 /*
 GetProtectedObjectsOfAnyType gets objects
 
-Get Objects Configurations.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>Get Objects Configurations.
 */
 func (a *Client) GetProtectedObjectsOfAnyType(params *GetProtectedObjectsOfAnyTypeParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectedObjectsOfAnyTypeOK, error) {
 	// TODO: Validate the params before sending
@@ -868,7 +910,7 @@ func (a *Client) GetProtectedObjectsOfAnyType(params *GetProtectedObjectsOfAnyTy
 /*
 GetSnapshotDiff gets diff between two snapshots of a given object
 
-Get diff (files added/deleted) between two snapshots of a given object.
+**Privileges:** ```ALERT_VIEW``` <br><br>Get diff (files added/deleted) between two snapshots of a given object.
 */
 func (a *Client) GetSnapshotDiff(params *GetSnapshotDiffParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSnapshotDiffOK, error) {
 	// TODO: Validate the params before sending
@@ -908,7 +950,7 @@ func (a *Client) GetSnapshotDiff(params *GetSnapshotDiffParams, authInfo runtime
 /*
 GetSourceHierarchyObjects lists objects on a source which can be used for data protection
 
-List objects which can be used for data protection.
+**Privileges:** ```PROTECTION_VIEW``` <br><br>List objects which can be used for data protection.
 */
 func (a *Client) GetSourceHierarchyObjects(params *GetSourceHierarchyObjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSourceHierarchyObjectsOK, error) {
 	// TODO: Validate the params before sending
@@ -948,7 +990,7 @@ func (a *Client) GetSourceHierarchyObjects(params *GetSourceHierarchyObjectsPara
 /*
 ObjectsActions actions on objects
 
-Specifies the request to perform various actions on multiple objects.
+**Privileges:** ```PROTECTION_MODIFY``` <br><br>Specifies the request to perform various actions on multiple objects.
 */
 func (a *Client) ObjectsActions(params *ObjectsActionsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ObjectsActionsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -988,7 +1030,7 @@ func (a *Client) ObjectsActions(params *ObjectsActionsParams, authInfo runtime.C
 /*
 PerformActionOnObject performs an action on an object
 
-Perform an action on an object. Depending on the object environment type, different actions are available.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Perform an action on an object. Depending on the object environment type, different actions are available.
 */
 func (a *Client) PerformActionOnObject(params *PerformActionOnObjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*PerformActionOnObjectNoContent, error) {
 	// TODO: Validate the params before sending
@@ -1028,7 +1070,7 @@ func (a *Client) PerformActionOnObject(params *PerformActionOnObjectParams, auth
 /*
 UpdateObjectSnapshot updates an object snapshot
 
-Update an object snapshot.
+**Privileges:** ```RESTORE_MODIFY``` <br><br>Update an object snapshot.
 */
 func (a *Client) UpdateObjectSnapshot(params *UpdateObjectSnapshotParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateObjectSnapshotOK, error) {
 	// TODO: Validate the params before sending

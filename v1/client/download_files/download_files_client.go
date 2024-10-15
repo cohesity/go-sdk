@@ -61,6 +61,8 @@ type ClientService interface {
 
 /*
 DownloadFiles downloads files from yoda
+
+**Privileges:** ```RESTORE_DOWNLOAD``` <br><br>
 */
 func (a *Client) DownloadFiles(params *DownloadFilesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DownloadFilesOK, error) {
 	// TODO: Validate the params before sending

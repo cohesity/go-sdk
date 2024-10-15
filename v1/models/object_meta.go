@@ -7,9 +7,7 @@ package models
 
 import (
 	"context"
-	"strconv"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -20,10 +18,10 @@ import (
 type ObjectMeta struct {
 
 	// Annotations added to the object.
-	Annotations []*ObjectMetaAnnotationsEntry `json:"annotations"`
+	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// A set of key-value pairs, capturing the labels of a k8s object.
-	Labels []*ObjectMetaLabelsEntry `json:"labels"`
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name must be unique within a namespace. Is required when creating
 	// resources, although some resources may allow a client to request the
@@ -44,139 +42,11 @@ type ObjectMeta struct {
 
 // Validate validates this object meta
 func (m *ObjectMeta) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateAnnotations(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateLabels(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *ObjectMeta) validateAnnotations(formats strfmt.Registry) error {
-	if swag.IsZero(m.Annotations) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Annotations); i++ {
-		if swag.IsZero(m.Annotations[i]) { // not required
-			continue
-		}
-
-		if m.Annotations[i] != nil {
-			if err := m.Annotations[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("annotations" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("annotations" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *ObjectMeta) validateLabels(formats strfmt.Registry) error {
-	if swag.IsZero(m.Labels) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Labels); i++ {
-		if swag.IsZero(m.Labels[i]) { // not required
-			continue
-		}
-
-		if m.Labels[i] != nil {
-			if err := m.Labels[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("labels" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("labels" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this object meta based on the context it is used
+// ContextValidate validates this object meta based on context it is used
 func (m *ObjectMeta) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateAnnotations(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateLabels(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *ObjectMeta) contextValidateAnnotations(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.Annotations); i++ {
-
-		if m.Annotations[i] != nil {
-
-			if swag.IsZero(m.Annotations[i]) { // not required
-				return nil
-			}
-
-			if err := m.Annotations[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("annotations" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("annotations" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *ObjectMeta) contextValidateLabels(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.Labels); i++ {
-
-		if m.Labels[i] != nil {
-
-			if swag.IsZero(m.Labels[i]) { // not required
-				return nil
-			}
-
-			if err := m.Labels[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("labels" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("labels" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

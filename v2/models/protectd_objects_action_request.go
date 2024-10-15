@@ -27,7 +27,7 @@ type ProtectdObjectsActionRequest struct {
 	Action *string `json:"action"`
 
 	// Specifies the object action key for any action on the given object.
-	// Enum: ["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsRDSPostgres","kAwsAuroraPostgres","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc","kO365ExchangeCSM","kO365OneDriveCSM","kO365SharepointCSM"]
 	ObjectActionKey *string `json:"objectActionKey,omitempty"`
 
 	// If provided action is 'Pause' then this object should be provided as input.
@@ -138,7 +138,7 @@ var protectdObjectsActionRequestTypeObjectActionKeyPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kVCD","kAzure","kGCP","kKVM","kAcropolis","kAWS","kAWSNative","kAwsS3","kAWSSnapshotManager","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsRDSPostgresBackup","kAwsRDSPostgres","kAwsAuroraPostgres","kAzureNative","kAzureSQL","kAzureSnapshotManager","kPhysical","kPhysicalFiles","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kO365PublicFolders","kO365Teams","kO365Group","kO365Exchange","kO365OneDrive","kO365Sharepoint","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kSAPHANA","kUDA","kSfdc","kO365ExchangeCSM","kO365OneDriveCSM","kO365SharepointCSM"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -189,6 +189,12 @@ const (
 
 	// ProtectdObjectsActionRequestObjectActionKeyKAwsRDSPostgresBackup captures enum value "kAwsRDSPostgresBackup"
 	ProtectdObjectsActionRequestObjectActionKeyKAwsRDSPostgresBackup string = "kAwsRDSPostgresBackup"
+
+	// ProtectdObjectsActionRequestObjectActionKeyKAwsRDSPostgres captures enum value "kAwsRDSPostgres"
+	ProtectdObjectsActionRequestObjectActionKeyKAwsRDSPostgres string = "kAwsRDSPostgres"
+
+	// ProtectdObjectsActionRequestObjectActionKeyKAwsAuroraPostgres captures enum value "kAwsAuroraPostgres"
+	ProtectdObjectsActionRequestObjectActionKeyKAwsAuroraPostgres string = "kAwsAuroraPostgres"
 
 	// ProtectdObjectsActionRequestObjectActionKeyKAzureNative captures enum value "kAzureNative"
 	ProtectdObjectsActionRequestObjectActionKeyKAzureNative string = "kAzureNative"
@@ -289,11 +295,23 @@ const (
 	// ProtectdObjectsActionRequestObjectActionKeyKHBase captures enum value "kHBase"
 	ProtectdObjectsActionRequestObjectActionKeyKHBase string = "kHBase"
 
+	// ProtectdObjectsActionRequestObjectActionKeyKSAPHANA captures enum value "kSAPHANA"
+	ProtectdObjectsActionRequestObjectActionKeyKSAPHANA string = "kSAPHANA"
+
 	// ProtectdObjectsActionRequestObjectActionKeyKUDA captures enum value "kUDA"
 	ProtectdObjectsActionRequestObjectActionKeyKUDA string = "kUDA"
 
 	// ProtectdObjectsActionRequestObjectActionKeyKSfdc captures enum value "kSfdc"
 	ProtectdObjectsActionRequestObjectActionKeyKSfdc string = "kSfdc"
+
+	// ProtectdObjectsActionRequestObjectActionKeyKO365ExchangeCSM captures enum value "kO365ExchangeCSM"
+	ProtectdObjectsActionRequestObjectActionKeyKO365ExchangeCSM string = "kO365ExchangeCSM"
+
+	// ProtectdObjectsActionRequestObjectActionKeyKO365OneDriveCSM captures enum value "kO365OneDriveCSM"
+	ProtectdObjectsActionRequestObjectActionKeyKO365OneDriveCSM string = "kO365OneDriveCSM"
+
+	// ProtectdObjectsActionRequestObjectActionKeyKO365SharepointCSM captures enum value "kO365SharepointCSM"
+	ProtectdObjectsActionRequestObjectActionKeyKO365SharepointCSM string = "kO365SharepointCSM"
 )
 
 // prop value enum
@@ -397,7 +415,7 @@ var protectdObjectsActionRequestSnapshotBackendTypesItemsEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kAWSNative","kAWSSnapshotManager","kPhysical","kSQL","kOracle","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsS3","kAwsRDSPostgresBackup","kAzureNative","kAzureSnapshotManager","kAzureSQL"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kAWSNative","kAWSSnapshotManager","kPhysical","kSQL","kOracle","kRDSSnapshotManager","kAuroraSnapshotManager","kAwsS3","kAwsRDSPostgresBackup","kAzureNative","kAzureSnapshotManager","kAzureSQL","kAwsAuroraPostgres","kAwsRDSPostgres"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

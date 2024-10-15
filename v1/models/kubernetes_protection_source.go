@@ -60,6 +60,9 @@ type KubernetesProtectionSource struct {
 	// only when service is of type LoadBalancer.
 	ServiceAnnotations []*VlanInfoServiceAnnotationsEntry `json:"serviceAnnotations"`
 
+	// Specifies storage class information of source.
+	StorageClass []*KubernetesStorageClassInfo `json:"storageClass"`
+
 	// Specifies the type of the entity in a Kubernetes environment.
 	// Specifies the type of a Kubernetes Protection Source.
 	// 'kCluster' indicates a Kubernetes Cluster.
@@ -105,6 +108,10 @@ func (m *KubernetesProtectionSource) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateServiceAnnotations(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateStorageClass(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -250,6 +257,32 @@ func (m *KubernetesProtectionSource) validateServiceAnnotations(formats strfmt.R
 	return nil
 }
 
+func (m *KubernetesProtectionSource) validateStorageClass(formats strfmt.Registry) error {
+	if swag.IsZero(m.StorageClass) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.StorageClass); i++ {
+		if swag.IsZero(m.StorageClass[i]) { // not required
+			continue
+		}
+
+		if m.StorageClass[i] != nil {
+			if err := m.StorageClass[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("storageClass" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("storageClass" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 var kubernetesProtectionSourceTypeTypePropEnum []interface{}
 
 func init() {
@@ -337,6 +370,10 @@ func (m *KubernetesProtectionSource) ContextValidate(ctx context.Context, format
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateStorageClass(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateVlanInfoVec(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -408,6 +445,31 @@ func (m *KubernetesProtectionSource) contextValidateServiceAnnotations(ctx conte
 					return ve.ValidateName("serviceAnnotations" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
 					return ce.ValidateName("serviceAnnotations" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *KubernetesProtectionSource) contextValidateStorageClass(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.StorageClass); i++ {
+
+		if m.StorageClass[i] != nil {
+
+			if swag.IsZero(m.StorageClass[i]) { // not required
+				return nil
+			}
+
+			if err := m.StorageClass[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("storageClass" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("storageClass" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

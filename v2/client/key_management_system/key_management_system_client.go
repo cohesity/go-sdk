@@ -68,7 +68,7 @@ type ClientService interface {
 /*
 AddKmsConfiguration adds k m s
 
-Add a key management system(KMS) to the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Add a key management system(KMS) to the cluster.
 */
 func (a *Client) AddKmsConfiguration(params *AddKmsConfigurationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AddKmsConfigurationCreated, error) {
 	// TODO: Validate the params before sending
@@ -108,7 +108,7 @@ func (a *Client) AddKmsConfiguration(params *AddKmsConfigurationParams, authInfo
 /*
 DeleteKmsConfig deletes k m s
 
-Delete KMS configued on the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Delete KMS configued on the cluster.
 */
 func (a *Client) DeleteKmsConfig(params *DeleteKmsConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteKmsConfigNoContent, error) {
 	// TODO: Validate the params before sending
@@ -148,7 +148,7 @@ func (a *Client) DeleteKmsConfig(params *DeleteKmsConfigParams, authInfo runtime
 /*
 GetKmsConfigurations gets k m s
 
-Get key management systems(KMS) configured on the cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Get key management systems(KMS) configured on the cluster.
 */
 func (a *Client) GetKmsConfigurations(params *GetKmsConfigurationsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetKmsConfigurationsOK, error) {
 	// TODO: Validate the params before sending
@@ -188,7 +188,7 @@ func (a *Client) GetKmsConfigurations(params *GetKmsConfigurationsParams, authIn
 /*
 UpdateKmsConfiguration updates k m s
 
-Update KMS on the cluster.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update KMS on the cluster.
 */
 func (a *Client) UpdateKmsConfiguration(params *UpdateKmsConfigurationParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateKmsConfigurationOK, error) {
 	// TODO: Validate the params before sending

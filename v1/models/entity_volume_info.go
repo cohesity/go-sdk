@@ -17,6 +17,9 @@ import (
 // swagger:model Entity_VolumeInfo
 type EntityVolumeInfo struct {
 
+	// Unique name of the clustered resource.
+	ClusterResourceName *string `json:"clusterResourceName,omitempty"`
+
 	// If this is a local volume, the path to the device that hosts the
 	// volume.
 	DevicePath *string `json:"devicePath,omitempty"`

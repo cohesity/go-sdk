@@ -7,7 +7,6 @@ package models
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -18,6 +17,9 @@ import (
 //
 // swagger:model NoSqlBackupJobParams
 type NoSQLBackupJobParams struct {
+
+	// Specifies a flag to auto scale concurrency.
+	AutoScaleConcurrency *bool `json:"autoScaleConcurrency,omitempty"`
 
 	// Net bandwidth bytes per second.
 	BandwidthBytesPerSecond *int64 `json:"bandwidthBytesPerSecond,omitempty"`
@@ -55,7 +57,7 @@ type NoSQLBackupJobParams struct {
 	// EntityProto. The immediate_ancestor_entity_id is used by Imanis to
 	// populate entity id of non-leaf objects in yoda
 	// (such as databases, keyspaces)
-	ImmediateAncestorMap []*NoSQLBackupJobParamsImmediateAncestorMapEntry `json:"immediateAncestorMap"`
+	ImmediateAncestorMap interface{} `json:"immediateAncestorMap,omitempty"`
 
 	// The last time (in usecs) when the compaction ran for this jobs.
 	LastCompactionRunTimeUsecs *int64 `json:"lastCompactionRunTimeUsecs,omitempty"`
@@ -88,10 +90,6 @@ func (m *NoSQLBackupJobParams) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateHiveBackupJobParams(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateImmediateAncestorMap(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -181,32 +179,6 @@ func (m *NoSQLBackupJobParams) validateHiveBackupJobParams(formats strfmt.Regist
 	return nil
 }
 
-func (m *NoSQLBackupJobParams) validateImmediateAncestorMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.ImmediateAncestorMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.ImmediateAncestorMap); i++ {
-		if swag.IsZero(m.ImmediateAncestorMap[i]) { // not required
-			continue
-		}
-
-		if m.ImmediateAncestorMap[i] != nil {
-			if err := m.ImmediateAncestorMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("immediateAncestorMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("immediateAncestorMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
 func (m *NoSQLBackupJobParams) validateMongodbBackupJobParams(formats strfmt.Registry) error {
 	if swag.IsZero(m.MongodbBackupJobParams) { // not required
 		return nil
@@ -243,10 +215,6 @@ func (m *NoSQLBackupJobParams) ContextValidate(ctx context.Context, formats strf
 	}
 
 	if err := m.contextValidateHiveBackupJobParams(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateImmediateAncestorMap(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -339,31 +307,6 @@ func (m *NoSQLBackupJobParams) contextValidateHiveBackupJobParams(ctx context.Co
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *NoSQLBackupJobParams) contextValidateImmediateAncestorMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.ImmediateAncestorMap); i++ {
-
-		if m.ImmediateAncestorMap[i] != nil {
-
-			if swag.IsZero(m.ImmediateAncestorMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.ImmediateAncestorMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("immediateAncestorMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("immediateAncestorMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
 	}
 
 	return nil

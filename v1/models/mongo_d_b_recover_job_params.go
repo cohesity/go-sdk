@@ -18,6 +18,12 @@ import (
 // swagger:model MongoDBRecoverJobParams
 type MongoDBRecoverJobParams struct {
 
+	// Should the agent Recover users and roles in this job.
+	RecoverUserRole *bool `json:"recoverUserRole,omitempty"`
+
+	// Should the agent Recover zones/shard tags in this job.
+	RecoverZonesTags *bool `json:"recoverZonesTags,omitempty"`
+
 	// A suffix that is to be applied to all recovered entities
 	Suffix *string `json:"suffix,omitempty"`
 }

@@ -8,6 +8,7 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -20,20 +21,82 @@ type S3AccountParams struct {
 	// Specifies the S3 Account Canonical User ID.
 	S3AccountID *string `json:"s3AccountId,omitempty"`
 
-	// Specifies the S3 Account Access Key ID.
-	S3AccessKeyID *string `json:"s3AccessKeyId,omitempty"`
+	S3Keys
+}
 
-	// Specifies the S3 Account Secret Key.
-	S3SecretKey *string `json:"s3SecretKey,omitempty"`
+// UnmarshalJSON unmarshals this object from a JSON structure
+func (m *S3AccountParams) UnmarshalJSON(raw []byte) error {
+	// AO0
+	var dataAO0 struct {
+		S3AccountID *string `json:"s3AccountId,omitempty"`
+	}
+	if err := swag.ReadJSON(raw, &dataAO0); err != nil {
+		return err
+	}
+
+	m.S3AccountID = dataAO0.S3AccountID
+
+	// AO1
+	var aO1 S3Keys
+	if err := swag.ReadJSON(raw, &aO1); err != nil {
+		return err
+	}
+	m.S3Keys = aO1
+
+	return nil
+}
+
+// MarshalJSON marshals this object to a JSON structure
+func (m S3AccountParams) MarshalJSON() ([]byte, error) {
+	_parts := make([][]byte, 0, 2)
+
+	var dataAO0 struct {
+		S3AccountID *string `json:"s3AccountId,omitempty"`
+	}
+
+	dataAO0.S3AccountID = m.S3AccountID
+
+	jsonDataAO0, errAO0 := swag.WriteJSON(dataAO0)
+	if errAO0 != nil {
+		return nil, errAO0
+	}
+	_parts = append(_parts, jsonDataAO0)
+
+	aO1, err := swag.WriteJSON(m.S3Keys)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO1)
+	return swag.ConcatJSON(_parts...), nil
 }
 
 // Validate validates this s3 account params
 func (m *S3AccountParams) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	// validation for a type composition with S3Keys
+	if err := m.S3Keys.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this s3 account params based on context it is used
+// ContextValidate validate this s3 account params based on the context it is used
 func (m *S3AccountParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	// validation for a type composition with S3Keys
+	if err := m.S3Keys.ContextValidate(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 

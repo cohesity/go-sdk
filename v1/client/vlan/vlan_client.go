@@ -74,7 +74,7 @@ type ClientService interface {
 /*
 CreateBifrostVlan creates a bifrost v l a n of the cohesity cluster
 
-Returns the created Bifrost VLAN on the Cohesity Cluster.
+**Privileges:** ```BIFROST_VLAN_MODIFY, CLUSTER_CREATE``` <br><br>Returns the created Bifrost VLAN on the Cohesity Cluster.
 */
 func (a *Client) CreateBifrostVlan(params *CreateBifrostVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateBifrostVlanOK, error) {
 	// TODO: Validate the params before sending
@@ -114,7 +114,7 @@ func (a *Client) CreateBifrostVlan(params *CreateBifrostVlanParams, authInfo run
 /*
 CreateVlan creates a v l a n of the cohesity cluster
 
-Returns the created VLAN on the Cohesity Cluster.
+**Privileges:** ```VLAN_MODIFY, CLUSTER_CREATE``` <br><br>Returns the created VLAN on the Cohesity Cluster.
 */
 func (a *Client) CreateVlan(params *CreateVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateVlanOK, error) {
 	// TODO: Validate the params before sending
@@ -154,7 +154,7 @@ func (a *Client) CreateVlan(params *CreateVlanParams, authInfo runtime.ClientAut
 /*
 GetBifrostTenantVlans lists the bifrost tenant v l a ns for the cohesity cluster
 
-Returns the Bifrost Tenant VLANs for the Cohesity Cluster.
+**Privileges:** ```BIFROST_VLAN_VIEW, CLUSTER_CREATE``` <br><br>Returns the Bifrost Tenant VLANs for the Cohesity Cluster.
 */
 func (a *Client) GetBifrostTenantVlans(params *GetBifrostTenantVlansParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetBifrostTenantVlansOK, error) {
 	// TODO: Validate the params before sending
@@ -194,7 +194,7 @@ func (a *Client) GetBifrostTenantVlans(params *GetBifrostTenantVlansParams, auth
 /*
 	GetVlanByID lists the details about a single v l a n
 
-	Returns the VLAN corresponding to the specified VLAN ID or a specified
+	**Privileges:** ```VLAN_VIEW, CLUSTER_CREATE``` <br><br>Returns the VLAN corresponding to the specified VLAN ID or a specified
 
 vlan interface group name.
 Example: /public/vlans/intf_group1.20
@@ -237,7 +237,7 @@ func (a *Client) GetVlanByID(params *GetVlanByIDParams, authInfo runtime.ClientA
 /*
 GetVlans lists the v l a ns for the cohesity cluster
 
-Returns the VLANs for the Cohesity Cluster.
+**Privileges:** ```VLAN_VIEW, CLUSTER_CREATE``` <br><br>Returns the VLANs for the Cohesity Cluster.
 */
 func (a *Client) GetVlans(params *GetVlansParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetVlansOK, error) {
 	// TODO: Validate the params before sending
@@ -277,7 +277,7 @@ func (a *Client) GetVlans(params *GetVlansParams, authInfo runtime.ClientAuthInf
 /*
 RemoveVlan removes the specified v l a n from the cohesity cluster
 
-Returns the delete status upon completion.
+**Privileges:** ```VLAN_MODIFY, CLUSTER_CREATE``` <br><br>Returns the delete status upon completion.
 */
 func (a *Client) RemoveVlan(params *RemoveVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RemoveVlanNoContent, error) {
 	// TODO: Validate the params before sending
@@ -317,7 +317,7 @@ func (a *Client) RemoveVlan(params *RemoveVlanParams, authInfo runtime.ClientAut
 /*
 UpdateVlan creates or updates a v l a n of the cohesity cluster
 
-Returns the created or updated VLAN on the Cohesity Cluster.
+**Privileges:** ```VLAN_MODIFY, CLUSTER_CREATE``` <br><br>Returns the created or updated VLAN on the Cohesity Cluster.
 */
 func (a *Client) UpdateVlan(params *UpdateVlanParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateVlanOK, error) {
 	// TODO: Validate the params before sending

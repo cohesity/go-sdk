@@ -86,7 +86,7 @@ type ClientService interface {
 /*
 	AddActiveDirectoryPrincipals adds multiple groups or users on the cohesity cluster for the specified active directory principals in addition assign cohesity roles to the users or groups to define their cohesity privileges
 
-	After a group or user has been added to a Cohesity Cluster,
+	**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>After a group or user has been added to a Cohesity Cluster,
 
 the referenced Active Directory principal can be used by the Cohesity Cluster.
 In addition, this operation maps Cohesity roles with a group or user and
@@ -141,7 +141,7 @@ func (a *Client) AddActiveDirectoryPrincipals(params *AddActiveDirectoryPrincipa
 /*
 	CreateActiveDirectoryEntry joins the cohesity cluster to the specified active directory
 
-	After a Cohesity Cluster has been joined to an Active Directory domain,
+	**Privileges:** ```AD_LDAP_MODIFY``` <br><br>After a Cohesity Cluster has been joined to an Active Directory domain,
 
 the users and groups in the domain can be authenticated on the Cohesity Cluster
 using their Active Directory credentials.
@@ -184,7 +184,7 @@ func (a *Client) CreateActiveDirectoryEntry(params *CreateActiveDirectoryEntryPa
 /*
 	DeleteActiveDirectoryEntry deletes the join with the active directory
 
-	Deletes the join of the Cohesity Cluster to the specified
+	**Privileges:** ```AD_LDAP_MODIFY``` <br><br>Deletes the join of the Cohesity Cluster to the specified
 
 Active Directory domain. After the deletion, the Cohesity Cluster
 no longer has access to the principals on the Active Directory.
@@ -228,6 +228,8 @@ func (a *Client) DeleteActiveDirectoryEntry(params *DeleteActiveDirectoryEntryPa
 
 /*
 EnableTrustedDomainDiscovery updates the states of trusted domains discovery
+
+**Privileges:** ```AD_LDAP_MODIFY``` <br><br>
 */
 func (a *Client) EnableTrustedDomainDiscovery(params *EnableTrustedDomainDiscoveryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EnableTrustedDomainDiscoveryOK, error) {
 	// TODO: Validate the params before sending
@@ -266,6 +268,8 @@ func (a *Client) EnableTrustedDomainDiscovery(params *EnableTrustedDomainDiscove
 
 /*
 GetActiveDirectoryDomainControllers lists the domain controllers for a domain
+
+**Privileges:** ```AD_LDAP_VIEW``` <br><br>
 */
 func (a *Client) GetActiveDirectoryDomainControllers(params *GetActiveDirectoryDomainControllersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetActiveDirectoryDomainControllersOK, error) {
 	// TODO: Validate the params before sending
@@ -305,7 +309,7 @@ func (a *Client) GetActiveDirectoryDomainControllers(params *GetActiveDirectoryD
 /*
 	GetActiveDirectoryEntry lists the active directories that the cohesity cluster has joined
 
-	After a Cohesity Cluster has been joined to an Active Directory domain,
+	**Privileges:** ```PRINCIPAL_VIEW, AD_LDAP_VIEW``` <br><br>After a Cohesity Cluster has been joined to an Active Directory domain,
 
 the users and groups in the domain can be authenticated on the Cohesity Cluster
 using their Active Directory credentials.
@@ -349,6 +353,8 @@ func (a *Client) GetActiveDirectoryEntry(params *GetActiveDirectoryEntryParams, 
 
 /*
 ListCentrifyZones fetches the list centrify zones of an active directory domain
+
+**Privileges:** ```AD_LDAP_VIEW``` <br><br>
 */
 func (a *Client) ListCentrifyZones(params *ListCentrifyZonesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListCentrifyZonesOK, error) {
 	// TODO: Validate the params before sending
@@ -388,7 +394,7 @@ func (a *Client) ListCentrifyZones(params *ListCentrifyZonesParams, authInfo run
 /*
 	SearchActiveDirectoryPrincipals lists the user and group principals in the active directory that match the filter criteria specified using parameters
 
-	Optionally limit the search results by specifying security identifiers (SIDs),
+	**Privileges:** ```PRINCIPAL_VIEW, AD_LDAP_VIEW``` <br><br>Optionally limit the search results by specifying security identifiers (SIDs),
 
 an object class (user or group) or a substring.
 You can specify SIDs or a substring but not both.
@@ -430,6 +436,8 @@ func (a *Client) SearchActiveDirectoryPrincipals(params *SearchActiveDirectoryPr
 
 /*
 UpdateActiveDirectoryIDMapping updates the user id mapping info of an active directory
+
+**Privileges:** ```AD_LDAP_MODIFY``` <br><br>
 */
 func (a *Client) UpdateActiveDirectoryIDMapping(params *UpdateActiveDirectoryIDMappingParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateActiveDirectoryIDMappingOK, error) {
 	// TODO: Validate the params before sending
@@ -468,6 +476,8 @@ func (a *Client) UpdateActiveDirectoryIDMapping(params *UpdateActiveDirectoryIDM
 
 /*
 UpdateActiveDirectoryIgnoredTrustedDomains updates the list of trusted domains to be ignored during trusted domain discovery of an active directory
+
+**Privileges:** ```AD_LDAP_MODIFY``` <br><br>
 */
 func (a *Client) UpdateActiveDirectoryIgnoredTrustedDomains(params *UpdateActiveDirectoryIgnoredTrustedDomainsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateActiveDirectoryIgnoredTrustedDomainsOK, error) {
 	// TODO: Validate the params before sending
@@ -506,6 +516,8 @@ func (a *Client) UpdateActiveDirectoryIgnoredTrustedDomains(params *UpdateActive
 
 /*
 UpdateActiveDirectoryLdapProvider updates the l d a p provide Id for an active directory domain
+
+**Privileges:** ```AD_LDAP_MODIFY``` <br><br>
 */
 func (a *Client) UpdateActiveDirectoryLdapProvider(params *UpdateActiveDirectoryLdapProviderParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateActiveDirectoryLdapProviderOK, error) {
 	// TODO: Validate the params before sending
@@ -544,6 +556,8 @@ func (a *Client) UpdateActiveDirectoryLdapProvider(params *UpdateActiveDirectory
 
 /*
 UpdateActiveDirectoryMachineAccounts updates the machine accounts of an active directory
+
+**Privileges:** ```AD_LDAP_MODIFY``` <br><br>
 */
 func (a *Client) UpdateActiveDirectoryMachineAccounts(params *UpdateActiveDirectoryMachineAccountsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateActiveDirectoryMachineAccountsOK, error) {
 	// TODO: Validate the params before sending
@@ -581,7 +595,7 @@ func (a *Client) UpdateActiveDirectoryMachineAccounts(params *UpdateActiveDirect
 }
 
 /*
-UpdatePreferredDomainControllers Updates the preferred domain controllers of an Active Directory
+UpdatePreferredDomainControllers **Privileges:** ```AD_LDAP_MODIFY``` <br><br>Updates the preferred domain controllers of an Active Directory
 */
 func (a *Client) UpdatePreferredDomainControllers(params *UpdatePreferredDomainControllersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdatePreferredDomainControllersOK, error) {
 	// TODO: Validate the params before sending

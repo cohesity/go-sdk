@@ -24,6 +24,12 @@ type AzureObjectLevelParams struct {
 	// Specifies the id of the object being protected. This can be a leaf level or non leaf level object.
 	// Required: true
 	ID *int64 `json:"id"`
+
+	// Specifies the parameters to exclude disks attached to Azure VM (this object) at object level.
+	DiskExclusionParams *AzureDiskExclusionParams `json:"diskExclusionParams,omitempty"`
+
+	// Specifies the list of IDs of the objects not to be protected in this backup. This field only applies if provided object id is non leaf entity such as Tag. This can be used to ignore specific objects (can include tags) under a parent object which has been included for protection.
+	ExcludeObjectIds []*int64 `json:"excludeObjectIds"`
 }
 
 // Validate validates this azure object level params
@@ -31,6 +37,10 @@ func (m *AzureObjectLevelParams) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDiskExclusionParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -49,8 +59,57 @@ func (m *AzureObjectLevelParams) validateID(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this azure object level params based on context it is used
+func (m *AzureObjectLevelParams) validateDiskExclusionParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.DiskExclusionParams) { // not required
+		return nil
+	}
+
+	if m.DiskExclusionParams != nil {
+		if err := m.DiskExclusionParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("diskExclusionParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("diskExclusionParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this azure object level params based on the context it is used
 func (m *AzureObjectLevelParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateDiskExclusionParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *AzureObjectLevelParams) contextValidateDiskExclusionParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.DiskExclusionParams != nil {
+
+		if swag.IsZero(m.DiskExclusionParams) { // not required
+			return nil
+		}
+
+		if err := m.DiskExclusionParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("diskExclusionParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("diskExclusionParams")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

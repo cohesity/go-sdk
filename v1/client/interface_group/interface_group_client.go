@@ -68,7 +68,7 @@ type ClientService interface {
 /*
 CreateInterfaceGroup creates an interface group on the cohesity cluster
 
-Returns the create status upon completion.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the create status upon completion.
 */
 func (a *Client) CreateInterfaceGroup(params *CreateInterfaceGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateInterfaceGroupCreated, error) {
 	// TODO: Validate the params before sending
@@ -108,7 +108,7 @@ func (a *Client) CreateInterfaceGroup(params *CreateInterfaceGroupParams, authIn
 /*
 DeleteInterfaceGroup deletes the specified interface group from the cohesity cluster
 
-Returns the delete status upon completion.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the delete status upon completion.
 */
 func (a *Client) DeleteInterfaceGroup(params *DeleteInterfaceGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteInterfaceGroupNoContent, error) {
 	// TODO: Validate the params before sending
@@ -148,7 +148,7 @@ func (a *Client) DeleteInterfaceGroup(params *DeleteInterfaceGroupParams, authIn
 /*
 GetInterfaceGroups lists the interface groups for the cohesity cluster
 
-Returns the interface groups for the Cohesity Cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Returns the interface groups for the Cohesity Cluster.
 */
 func (a *Client) GetInterfaceGroups(params *GetInterfaceGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetInterfaceGroupsOK, error) {
 	// TODO: Validate the params before sending
@@ -188,7 +188,7 @@ func (a *Client) GetInterfaceGroups(params *GetInterfaceGroupsParams, authInfo r
 /*
 UpdateInterfaceGroup updates an interface group on the cohesity cluster
 
-Returns the update status upon completion.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Returns the update status upon completion.
 */
 func (a *Client) UpdateInterfaceGroup(params *UpdateInterfaceGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateInterfaceGroupOK, error) {
 	// TODO: Validate the params before sending

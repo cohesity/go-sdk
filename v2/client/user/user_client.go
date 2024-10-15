@@ -106,13 +106,15 @@ type ClientService interface {
 
 	UpdateUserAPIKeyByID(params *UpdateUserAPIKeyByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateUserAPIKeyByIDOK, error)
 
+	UpdateUserS3Keys(params *UpdateUserS3KeysParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateUserS3KeysNoContent, error)
+
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
 CreateGroup creates groups
 
-If an Active Directory/IdP domain is specified, a new group is added to the Cohesity Cluster for the specified Active Directory/IdP group principal. If the LOCAL domain is specified, a new group is created directly in the default LOCAL domain on the Cohesity Cluster.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>If an Active Directory/IdP domain is specified, a new group is added to the Cohesity Cluster for the specified Active Directory/IdP group principal. If the LOCAL domain is specified, a new group is created directly in the default LOCAL domain on the Cohesity Cluster.
 */
 func (a *Client) CreateGroup(params *CreateGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateGroupCreated, error) {
 	// TODO: Validate the params before sending
@@ -152,7 +154,7 @@ func (a *Client) CreateGroup(params *CreateGroupParams, authInfo runtime.ClientA
 /*
 CreateSession creates a user session
 
-Create a user session
+```No Privileges Required``` <br><br>Create a user session
 */
 func (a *Client) CreateSession(params *CreateSessionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateSessionCreated, error) {
 	// TODO: Validate the params before sending
@@ -192,7 +194,7 @@ func (a *Client) CreateSession(params *CreateSessionParams, authInfo runtime.Cli
 /*
 CreateUserAPIKey creates a new user API key
 
-Create a new user API key.
+```No Privileges Required``` <br><br>Create a new user API key.
 */
 func (a *Client) CreateUserAPIKey(params *CreateUserAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateUserAPIKeyCreated, error) {
 	// TODO: Validate the params before sending
@@ -232,7 +234,7 @@ func (a *Client) CreateUserAPIKey(params *CreateUserAPIKeyParams, authInfo runti
 /*
 CreateUsers adds one or more users to cohesity cluster
 
-Add one or more users to Cohesity Cluster.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Add one or more users to Cohesity Cluster.
 */
 func (a *Client) CreateUsers(params *CreateUsersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateUsersCreated, error) {
 	// TODO: Validate the params before sending
@@ -272,7 +274,7 @@ func (a *Client) CreateUsers(params *CreateUsersParams, authInfo runtime.ClientA
 /*
 DeleteGroup deletes group
 
-If the group on the Cohesity Cluster was added for an Active Directory/IdP group, the referenced principal group on the Active Directory/IdP domain is NOT deleted. Only the group on the Cohesity Cluster is deleted.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>If the group on the Cohesity Cluster was added for an Active Directory/IdP group, the referenced principal group on the Active Directory/IdP domain is NOT deleted. Only the group on the Cohesity Cluster is deleted.
 */
 func (a *Client) DeleteGroup(params *DeleteGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteGroupNoContent, error) {
 	// TODO: Validate the params before sending
@@ -312,7 +314,7 @@ func (a *Client) DeleteGroup(params *DeleteGroupParams, authInfo runtime.ClientA
 /*
 DeleteGroups deletes groups
 
-If the Cohesity group was created against an Active Directory/IdP, the referenced principal group on the Active Directory/IdP domain is NOT deleted. Only the group on the Cohesity Cluster is deleted.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>If the Cohesity group was created against an Active Directory/IdP, the referenced principal group on the Active Directory/IdP domain is NOT deleted. Only the group on the Cohesity Cluster is deleted.
 */
 func (a *Client) DeleteGroups(params *DeleteGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteGroupsNoContent, error) {
 	// TODO: Validate the params before sending
@@ -352,7 +354,7 @@ func (a *Client) DeleteGroups(params *DeleteGroupsParams, authInfo runtime.Clien
 /*
 DeleteSession deletes user sessions
 
-Deletes all sessions for given user sid or system wide sessions
+```No Privileges Required``` <br><br>Deletes all sessions for given user sid or system wide sessions
 */
 func (a *Client) DeleteSession(params *DeleteSessionParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteSessionNoContent, error) {
 	// TODO: Validate the params before sending
@@ -392,7 +394,7 @@ func (a *Client) DeleteSession(params *DeleteSessionParams, authInfo runtime.Cli
 /*
 DeleteUser deletes a cohesity l o c a l Id p a d user
 
-Delete a Cohesity user.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Delete a Cohesity user.
 */
 func (a *Client) DeleteUser(params *DeleteUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteUserNoContent, error) {
 	// TODO: Validate the params before sending
@@ -432,7 +434,7 @@ func (a *Client) DeleteUser(params *DeleteUserParams, authInfo runtime.ClientAut
 /*
 DeleteUserAPIKeyByID deletes a user API key
 
-Delete a user API key.
+```No Privileges Required``` <br><br>Delete a user API key.
 */
 func (a *Client) DeleteUserAPIKeyByID(params *DeleteUserAPIKeyByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteUserAPIKeyByIDNoContent, error) {
 	// TODO: Validate the params before sending
@@ -472,7 +474,7 @@ func (a *Client) DeleteUserAPIKeyByID(params *DeleteUserAPIKeyByIDParams, authIn
 /*
 DeleteUsers deletes one or more cohesity users
 
-Delete one or more Cohesity users.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Delete one or more Cohesity users.
 */
 func (a *Client) DeleteUsers(params *DeleteUsersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteUsersNoContent, error) {
 	// TODO: Validate the params before sending
@@ -512,7 +514,7 @@ func (a *Client) DeleteUsers(params *DeleteUsersParams, authInfo runtime.ClientA
 /*
 GetActiveSessionsCount gets sessions count
 
-Get the number of user sessions.
+**Privileges:** ```PRINCIPAL_VIEW``` <br><br>Get the number of user sessions.
 */
 func (a *Client) GetActiveSessionsCount(params *GetActiveSessionsCountParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetActiveSessionsCountOK, error) {
 	// TODO: Validate the params before sending
@@ -552,7 +554,7 @@ func (a *Client) GetActiveSessionsCount(params *GetActiveSessionsCountParams, au
 /*
 GetAllAPIKeys gets the list of all API keys which are created or owned by the user
 
-Get the list of all API keys which are created or owned by the user.
+```No Privileges Required``` <br><br>Get the list of all API keys which are created or owned by the user.
 */
 func (a *Client) GetAllAPIKeys(params *GetAllAPIKeysParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAllAPIKeysOK, error) {
 	// TODO: Validate the params before sending
@@ -592,7 +594,7 @@ func (a *Client) GetAllAPIKeys(params *GetAllAPIKeysParams, authInfo runtime.Cli
 /*
 GetGroupBySID gets group by s ID
 
-Get Group by SID.
+```No Privileges Required``` <br><br>Get Group by SID.
 */
 func (a *Client) GetGroupBySID(params *GetGroupBySIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetGroupBySIDOK, error) {
 	// TODO: Validate the params before sending
@@ -632,7 +634,7 @@ func (a *Client) GetGroupBySID(params *GetGroupBySIDParams, authInfo runtime.Cli
 /*
 GetGroups gets groups
 
-Get groups on the Cohesity cluster.
+```No Privileges Required``` <br><br>Get groups on the Cohesity cluster.
 */
 func (a *Client) GetGroups(params *GetGroupsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetGroupsOK, error) {
 	// TODO: Validate the params before sending
@@ -672,7 +674,7 @@ func (a *Client) GetGroups(params *GetGroupsParams, authInfo runtime.ClientAuthI
 /*
 GetPrincipalSources fetches sources and views assigned to a user group
 
-Fetches all the sources assigned to a principal.
+```No Privileges Required``` <br><br>Fetches all the sources assigned to a principal.
 */
 func (a *Client) GetPrincipalSources(params *GetPrincipalSourcesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPrincipalSourcesOK, error) {
 	// TODO: Validate the params before sending
@@ -712,7 +714,7 @@ func (a *Client) GetPrincipalSources(params *GetPrincipalSourcesParams, authInfo
 /*
 GetSecurityPrincipals gets security principals
 
-Get Security Principals
+**Privileges:** ```PRINCIPAL_VIEW``` <br><br>Get Security Principals
 */
 func (a *Client) GetSecurityPrincipals(params *GetSecurityPrincipalsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSecurityPrincipalsOK, error) {
 	// TODO: Validate the params before sending
@@ -752,7 +754,7 @@ func (a *Client) GetSecurityPrincipals(params *GetSecurityPrincipalsParams, auth
 /*
 GetUserAPIKeyByID gets the API key by id
 
-Get the API key by id.
+```No Privileges Required``` <br><br>Get the API key by id.
 */
 func (a *Client) GetUserAPIKeyByID(params *GetUserAPIKeyByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUserAPIKeyByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -792,7 +794,7 @@ func (a *Client) GetUserAPIKeyByID(params *GetUserAPIKeyByIDParams, authInfo run
 /*
 GetUserAPIKeys gets the list of API keys owned by the user
 
-Returns the list of API keys owned by the user. For security reasons there is no way to retrieve the key itself after it's created.
+```No Privileges Required``` <br><br>Returns the list of API keys owned by the user. For security reasons there is no way to retrieve the key itself after it's created.
 */
 func (a *Client) GetUserAPIKeys(params *GetUserAPIKeysParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUserAPIKeysOK, error) {
 	// TODO: Validate the params before sending
@@ -832,7 +834,7 @@ func (a *Client) GetUserAPIKeys(params *GetUserAPIKeysParams, authInfo runtime.C
 /*
 GetUserBySID gets user by s ID
 
-Get User by SID.
+```No Privileges Required``` <br><br>Get User by SID.
 */
 func (a *Client) GetUserBySID(params *GetUserBySIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUserBySIDOK, error) {
 	// TODO: Validate the params before sending
@@ -872,7 +874,7 @@ func (a *Client) GetUserBySID(params *GetUserBySIDParams, authInfo runtime.Clien
 /*
 GetUsers gets users
 
-Get Users.
+```No Privileges Required``` <br><br>Get Users.
 */
 func (a *Client) GetUsers(params *GetUsersParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUsersOK, error) {
 	// TODO: Validate the params before sending
@@ -912,7 +914,7 @@ func (a *Client) GetUsers(params *GetUsersParams, authInfo runtime.ClientAuthInf
 /*
 RegenerateS3Key resets s3 secret access key
 
-Reset the S3 secret access key for the specified user on the Cohesity Cluster. Admin users who have the Manage Users privilege can generate keys for other users. When generating a new key, anyone using the old key will lose access until they retrieve and use the newly generated key. The user must have the following privilege to access this endpoint, 'Manage S3 Keys'.
+```No Privileges Required``` <br><br>Reset the S3 secret access key for the specified user on the Cohesity Cluster. Admin users who have the Manage Users privilege can generate keys for other users. When generating a new key, anyone using the old key will lose access until they retrieve and use the newly generated key. The user must have the following privilege to access this endpoint, 'Manage S3 Keys'.
 */
 func (a *Client) RegenerateS3Key(params *RegenerateS3KeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RegenerateS3KeyCreated, error) {
 	// TODO: Validate the params before sending
@@ -952,7 +954,7 @@ func (a *Client) RegenerateS3Key(params *RegenerateS3KeyParams, authInfo runtime
 /*
 RotateUserAPIKey refreshes an existing user API key
 
-Refresh an existing user API key.
+```No Privileges Required``` <br><br>Refresh an existing user API key.
 */
 func (a *Client) RotateUserAPIKey(params *RotateUserAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*RotateUserAPIKeyOK, error) {
 	// TODO: Validate the params before sending
@@ -992,7 +994,7 @@ func (a *Client) RotateUserAPIKey(params *RotateUserAPIKeyParams, authInfo runti
 /*
 UpdateGroup updates group
 
-Only group settings on the Cohesity Cluster are updated. No changes are made to the referenced group principal on the Active Directory/IdP.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Only group settings on the Cohesity Cluster are updated. No changes are made to the referenced group principal on the Active Directory/IdP.
 */
 func (a *Client) UpdateGroup(params *UpdateGroupParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateGroupOK, error) {
 	// TODO: Validate the params before sending
@@ -1032,7 +1034,7 @@ func (a *Client) UpdateGroup(params *UpdateGroupParams, authInfo runtime.ClientA
 /*
 UpdatePrincipalSources updates protection sources assigned to a user group
 
-Update protection sources assigned to a user/group.
+```No Privileges Required``` <br><br>Update protection sources assigned to a user/group.
 */
 func (a *Client) UpdatePrincipalSources(params *UpdatePrincipalSourcesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdatePrincipalSourcesOK, error) {
 	// TODO: Validate the params before sending
@@ -1072,7 +1074,7 @@ func (a *Client) UpdatePrincipalSources(params *UpdatePrincipalSourcesParams, au
 /*
 UpdateUser updates user information
 
-Update an existing user on the Cohesity Cluster. Only user settings on the Cohesity Cluster are updated. No changes are made to the referenced user principal on the Active Directory/IdP.
+```No Privileges Required``` <br><br>Update an existing user on the Cohesity Cluster. Only user settings on the Cohesity Cluster are updated. No changes are made to the referenced user principal on the Active Directory/IdP.
 */
 func (a *Client) UpdateUser(params *UpdateUserParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateUserOK, error) {
 	// TODO: Validate the params before sending
@@ -1112,7 +1114,7 @@ func (a *Client) UpdateUser(params *UpdateUserParams, authInfo runtime.ClientAut
 /*
 UpdateUserAPIKeyByID updates a user API key
 
-Update a user API key.
+```No Privileges Required``` <br><br>Update a user API key.
 */
 func (a *Client) UpdateUserAPIKeyByID(params *UpdateUserAPIKeyByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateUserAPIKeyByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -1146,6 +1148,46 @@ func (a *Client) UpdateUserAPIKeyByID(params *UpdateUserAPIKeyByIDParams, authIn
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*UpdateUserAPIKeyByIDDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+UpdateUserS3Keys updates s3 keys for a user
+
+```No Privileges Required``` <br><br>Update the S3 Access/Secret Keys for a User on the Cohesity Cluster.
+*/
+func (a *Client) UpdateUserS3Keys(params *UpdateUserS3KeysParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateUserS3KeysNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdateUserS3KeysParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "UpdateUserS3Keys",
+		Method:             "POST",
+		PathPattern:        "/users/{sid}/update-s3-keys",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdateUserS3KeysReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UpdateUserS3KeysNoContent)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UpdateUserS3KeysDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

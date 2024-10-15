@@ -26,6 +26,10 @@ type SQLBackupParams struct {
 	// this will contain the databases being restored.
 	AppEntityVec []*PrivateEntityProto `json:"appEntityVec"`
 
+	// Used to indicate if the salve can use the native backup flow to perfrom
+	// the log backup.
+	BackupLogUsingNativeOp *bool `json:"backupLogUsingNativeOp,omitempty"`
+
 	// Set to true if this is a SQL tail log backup run.
 	IsSQLTailLogBackup *bool `json:"isSqlTailLogBackup,omitempty"`
 

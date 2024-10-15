@@ -51,11 +51,21 @@ type CopyBackupRunStateProto struct {
 	// Whether this is an out of band (OOB) copy run triggered by the user.
 	IsOutOfBandRun *bool `json:"isOutOfBandRun,omitempty"`
 
+	// This field indicates whether the expiry time of the copy tasks under this
+	// run was determined artifically by the smart retention adjustment feature.
+	IsSmartRetentionSet *bool `json:"isSmartRetentionSet,omitempty"`
+
 	// The instance id of the backup run whose snapshots are to be copied.
 	JobInstanceID *int64 `json:"jobInstanceId,omitempty"`
 
 	// The globally unique id of the backup job whose snapshots are to be copied.
 	JobUID *UniversalIDProto `json:"jobUid,omitempty"`
+
+	// This is a run sequencer which will incremented whenever run reaches a new
+	// milestone. A milestone can be a change in state, or attempts, progress
+	// percentage incrementals (e.g. 10%), This will be used by Helios ETL to
+	// identify the latest copy of the backup run.
+	LastUpdateLogicalTimestamp *int64 `json:"lastUpdateLogicalTimestamp,omitempty"`
 
 	// Indicates whether the backup run corresponding to this copy run should be
 	// locked or not.
@@ -76,6 +86,9 @@ type CopyBackupRunStateProto struct {
 	// backup run. This field will contain the sum total of the duration of each
 	// of the copy runs that were merged.
 	TotalDurationUsecs *int64 `json:"totalDurationUsecs,omitempty"`
+
+	// The environment type of the backup run whose snapshots are to be copied.
+	Type *int32 `json:"type,omitempty"`
 }
 
 // Validate validates this copy backup run state proto

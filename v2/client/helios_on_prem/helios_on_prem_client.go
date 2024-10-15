@@ -64,7 +64,7 @@ type ClientService interface {
 /*
 GetHeliosOnPremConfig retreives helios on prem configuration
 
-View the configuration for Helios OnPrem VM Node.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>View the configuration for Helios OnPrem VM Node.
 */
 func (a *Client) GetHeliosOnPremConfig(params *GetHeliosOnPremConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetHeliosOnPremConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -104,7 +104,7 @@ func (a *Client) GetHeliosOnPremConfig(params *GetHeliosOnPremConfigParams, auth
 /*
 UpdateHeliosOnPremConfig updates helios on prem configuration
 
-Update the configuration for Helios OnPrem VM Node.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update the configuration for Helios OnPrem VM Node.
 */
 func (a *Client) UpdateHeliosOnPremConfig(params *UpdateHeliosOnPremConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateHeliosOnPremConfigOK, error) {
 	// TODO: Validate the params before sending

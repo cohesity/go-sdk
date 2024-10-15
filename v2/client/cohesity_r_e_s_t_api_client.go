@@ -23,7 +23,6 @@ import (
 	"github.com/cohesity/go-sdk/v2/client/failover"
 	"github.com/cohesity/go-sdk/v2/client/firewall"
 	"github.com/cohesity/go-sdk/v2/client/helios_on_prem"
-	"github.com/cohesity/go-sdk/v2/client/i_ps"
 	"github.com/cohesity/go-sdk/v2/client/identity_provider"
 	"github.com/cohesity/go-sdk/v2/client/kerberos_provider"
 	"github.com/cohesity/go-sdk/v2/client/key_management_system"
@@ -113,7 +112,6 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *CohesityRE
 	cli.Failover = failover.New(transport, formats)
 	cli.Firewall = firewall.New(transport, formats)
 	cli.HeliosOnPrem = helios_on_prem.New(transport, formats)
-	cli.IPs = i_ps.New(transport, formats)
 	cli.IdentityProvider = identity_provider.New(transport, formats)
 	cli.KerberosProvider = kerberos_provider.New(transport, formats)
 	cli.KeyManagementSystem = key_management_system.New(transport, formats)
@@ -216,8 +214,6 @@ type CohesityRESTAPI struct {
 
 	HeliosOnPrem helios_on_prem.ClientService
 
-	IPs i_ps.ClientService
-
 	IdentityProvider identity_provider.ClientService
 
 	KerberosProvider kerberos_provider.ClientService
@@ -301,7 +297,6 @@ func (c *CohesityRESTAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Failover.SetTransport(transport)
 	c.Firewall.SetTransport(transport)
 	c.HeliosOnPrem.SetTransport(transport)
-	c.IPs.SetTransport(transport)
 	c.IdentityProvider.SetTransport(transport)
 	c.KerberosProvider.SetTransport(transport)
 	c.KeyManagementSystem.SetTransport(transport)

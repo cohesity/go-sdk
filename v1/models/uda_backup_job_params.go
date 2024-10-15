@@ -12,6 +12,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // UdaBackupJobParams Contains backup params at the job level applicable for
@@ -22,7 +23,7 @@ type UdaBackupJobParams struct {
 
 	// Map to store custom arguments which will be provided to the backup job
 	// scripts.
-	BackupJobArgumentsMap []*UdaBackupJobParamsBackupJobArgumentsMapEntry `json:"backupJobArgumentsMap"`
+	BackupJobArgumentsMap map[string]UdaCustomArgument `json:"backupJobArgumentsMap,omitempty"`
 
 	// Max concurrency for the backup job.
 	Concurrency *int32 `json:"concurrency,omitempty"`
@@ -96,17 +97,17 @@ func (m *UdaBackupJobParams) validateBackupJobArgumentsMap(formats strfmt.Regist
 		return nil
 	}
 
-	for i := 0; i < len(m.BackupJobArgumentsMap); i++ {
-		if swag.IsZero(m.BackupJobArgumentsMap[i]) { // not required
-			continue
-		}
+	for k := range m.BackupJobArgumentsMap {
 
-		if m.BackupJobArgumentsMap[i] != nil {
-			if err := m.BackupJobArgumentsMap[i].Validate(formats); err != nil {
+		if err := validate.Required("backupJobArgumentsMap"+"."+k, "body", m.BackupJobArgumentsMap[k]); err != nil {
+			return err
+		}
+		if val, ok := m.BackupJobArgumentsMap[k]; ok {
+			if err := val.Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("backupJobArgumentsMap" + "." + strconv.Itoa(i))
+					return ve.ValidateName("backupJobArgumentsMap" + "." + k)
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("backupJobArgumentsMap" + "." + strconv.Itoa(i))
+					return ce.ValidateName("backupJobArgumentsMap" + "." + k)
 				}
 				return err
 			}
@@ -186,20 +187,10 @@ func (m *UdaBackupJobParams) ContextValidate(ctx context.Context, formats strfmt
 
 func (m *UdaBackupJobParams) contextValidateBackupJobArgumentsMap(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.BackupJobArgumentsMap); i++ {
+	for k := range m.BackupJobArgumentsMap {
 
-		if m.BackupJobArgumentsMap[i] != nil {
-
-			if swag.IsZero(m.BackupJobArgumentsMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.BackupJobArgumentsMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("backupJobArgumentsMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("backupJobArgumentsMap" + "." + strconv.Itoa(i))
-				}
+		if val, ok := m.BackupJobArgumentsMap[k]; ok {
+			if err := val.ContextValidate(ctx, formats); err != nil {
 				return err
 			}
 		}

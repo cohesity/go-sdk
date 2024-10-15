@@ -21,7 +21,7 @@ import (
 type AwsPostgresMetadata struct {
 
 	// Specifies the standard username and password type of credentials.
-	StandardCredentials *Credentials `json:"standardCredentials,omitempty"`
+	StandardCredentials *AwsCredentials `json:"standardCredentials,omitempty"`
 
 	// Specifies the type of metadata being sent in the request.
 	// Required: true

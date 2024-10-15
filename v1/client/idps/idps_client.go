@@ -72,7 +72,7 @@ type ClientService interface {
 /*
 	AddIdpDirectoryPrincipals adds multiple groups or users on the cohesity cluster for the specified idp principals in addition assign cohesity roles to the users or groups to define their cohesity privileges
 
-	After a group or user has been added to a Cohesity Cluster,
+	**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>After a group or user has been added to a Cohesity Cluster,
 
 the referenced Idp principal can be used by the Cohesity Cluster.
 In addition, this operation maps Cohesity roles with a group or user and
@@ -127,7 +127,7 @@ func (a *Client) AddIdpDirectoryPrincipals(params *AddIdpDirectoryPrincipalsPara
 /*
 CreateIdp creates an Id p configuration
 
-Returns the newly created IdP configuration.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Returns the newly created IdP configuration.
 */
 func (a *Client) CreateIdp(params *CreateIdpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateIdpCreated, error) {
 	// TODO: Validate the params before sending
@@ -167,7 +167,7 @@ func (a *Client) CreateIdp(params *CreateIdpParams, authInfo runtime.ClientAuthI
 /*
 DeleteIdp deletes one Id p configuration
 
-Returns Success if the IdP configuration is deleted.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Returns Success if the IdP configuration is deleted.
 */
 func (a *Client) DeleteIdp(params *DeleteIdpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteIdpNoContent, error) {
 	// TODO: Validate the params before sending
@@ -207,7 +207,7 @@ func (a *Client) DeleteIdp(params *DeleteIdpParams, authInfo runtime.ClientAuthI
 /*
 	GetIdps lists the Id ps configured on the cluster
 
-	Returns the Idps configured on the Cohesity Cluster corresponding to the filter
+	**Privileges:** ```PRINCIPAL_VIEW``` <br><br>Returns the Idps configured on the Cohesity Cluster corresponding to the filter
 
 parameters. If no filter is given, all Idp configurations are returned.
 */
@@ -249,7 +249,7 @@ func (a *Client) GetIdps(params *GetIdpsParams, authInfo runtime.ClientAuthInfoW
 /*
 IdpLogin logins to cohesity cluster using an Id p
 
-Redirects the client to the IdP site with the URI to login.
+```No Privileges Required``` <br><br>Redirects the client to the IdP site with the URI to login.
 */
 func (a *Client) IdpLogin(params *IdpLoginParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) error {
 	// TODO: Validate the params before sending
@@ -283,7 +283,7 @@ func (a *Client) IdpLogin(params *IdpLoginParams, authInfo runtime.ClientAuthInf
 /*
 UpdateIdp updates an Id p configuration
 
-Returns the updated IdP configuration.
+**Privileges:** ```PRINCIPAL_MODIFY``` <br><br>Returns the updated IdP configuration.
 */
 func (a *Client) UpdateIdp(params *UpdateIdpParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateIdpOK, error) {
 	// TODO: Validate the params before sending

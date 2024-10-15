@@ -7,9 +7,7 @@ package models
 
 import (
 	"context"
-	"strconv"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -20,7 +18,7 @@ import (
 type PeristentVolumeStatus struct {
 
 	// capacity represents the actual resources of the underlying volume.
-	Capacity []*PeristentVolumeStatusCapacityEntry `json:"capacity"`
+	Capacity map[string]string `json:"capacity,omitempty"`
 
 	// Describes the phase of PV i.e. whether it is bound or not.
 	Phase *string `json:"phase,omitempty"`
@@ -28,80 +26,11 @@ type PeristentVolumeStatus struct {
 
 // Validate validates this peristent volume status
 func (m *PeristentVolumeStatus) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateCapacity(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *PeristentVolumeStatus) validateCapacity(formats strfmt.Registry) error {
-	if swag.IsZero(m.Capacity) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Capacity); i++ {
-		if swag.IsZero(m.Capacity[i]) { // not required
-			continue
-		}
-
-		if m.Capacity[i] != nil {
-			if err := m.Capacity[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("capacity" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("capacity" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this peristent volume status based on the context it is used
+// ContextValidate validates this peristent volume status based on context it is used
 func (m *PeristentVolumeStatus) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateCapacity(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *PeristentVolumeStatus) contextValidateCapacity(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.Capacity); i++ {
-
-		if m.Capacity[i] != nil {
-
-			if swag.IsZero(m.Capacity[i]) { // not required
-				return nil
-			}
-
-			if err := m.Capacity[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("capacity" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("capacity" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

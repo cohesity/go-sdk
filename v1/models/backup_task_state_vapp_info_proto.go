@@ -8,6 +8,7 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -42,6 +43,9 @@ type BackupTaskStateVappInfoProto struct {
 	// Contains the entire VApp info fetched from VCD in xml format.
 	VappInfoXML *string `json:"vappInfoXml,omitempty"`
 
+	// Contains the metadata associated with the vApp.
+	VappMetadata *MetadataInfo `json:"vappMetadata,omitempty"`
+
 	// Contains the VApp name.
 	VappName *string `json:"vappName,omitempty"`
 
@@ -54,11 +58,69 @@ type BackupTaskStateVappInfoProto struct {
 
 // Validate validates this backup task state vapp info proto
 func (m *BackupTaskStateVappInfoProto) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateVappMetadata(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this backup task state vapp info proto based on context it is used
+func (m *BackupTaskStateVappInfoProto) validateVappMetadata(formats strfmt.Registry) error {
+	if swag.IsZero(m.VappMetadata) { // not required
+		return nil
+	}
+
+	if m.VappMetadata != nil {
+		if err := m.VappMetadata.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("vappMetadata")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vappMetadata")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this backup task state vapp info proto based on the context it is used
 func (m *BackupTaskStateVappInfoProto) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateVappMetadata(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *BackupTaskStateVappInfoProto) contextValidateVappMetadata(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.VappMetadata != nil {
+
+		if swag.IsZero(m.VappMetadata) { // not required
+			return nil
+		}
+
+		if err := m.VappMetadata.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("vappMetadata")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("vappMetadata")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

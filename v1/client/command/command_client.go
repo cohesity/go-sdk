@@ -64,7 +64,7 @@ type ClientService interface {
 /*
 LinuxCommandExecute runs a linux command
 
-Returns the command status upon completion.
+**Privileges:** ```CLUSTER_VIEW, CLUSTER_CREATE, CLUSTER_MODIFY, LINUX_USER_SUDO_ACCESS``` <br><br>Returns the command status upon completion.
 */
 func (a *Client) LinuxCommandExecute(params *LinuxCommandExecuteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*LinuxCommandExecuteOK, error) {
 	// TODO: Validate the params before sending
@@ -104,7 +104,7 @@ func (a *Client) LinuxCommandExecute(params *LinuxCommandExecuteParams, authInfo
 /*
 LinuxCommandList runs a linux command
 
-Returns the command status upon completion.
+**Privileges:** ```CLUSTER_VIEW, CLUSTER_CREATE, CLUSTER_MODIFY, LINUX_USER_SUDO_ACCESS``` <br><br>Returns the command status upon completion.
 */
 func (a *Client) LinuxCommandList(params *LinuxCommandListParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*LinuxCommandListOK, error) {
 	// TODO: Validate the params before sending

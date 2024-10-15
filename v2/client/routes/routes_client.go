@@ -56,19 +56,13 @@ type ClientOption func(*runtime.ClientOperation)
 type ClientService interface {
 	AddStaticRoute(params *AddStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AddStaticRouteCreated, error)
 
-	DeleteStaticRoute(params *DeleteStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteStaticRouteNoContent, error)
-
-	ListStaticRoutes(params *ListStaticRoutesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListStaticRoutesOK, error)
-
-	UpdateStaticRoute(params *UpdateStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateStaticRouteOK, error)
-
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
 AddStaticRoute configures a static route
 
-Configure a static route on an interface.
+```Unknown Privileges``` <br><br>Configure a static route on an interface.
 */
 func (a *Client) AddStaticRoute(params *AddStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*AddStaticRouteCreated, error) {
 	// TODO: Validate the params before sending
@@ -102,126 +96,6 @@ func (a *Client) AddStaticRoute(params *AddStaticRouteParams, authInfo runtime.C
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*AddStaticRouteDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-DeleteStaticRoute deletes a static route
-
-Delete a static route on a network interface.
-*/
-func (a *Client) DeleteStaticRoute(params *DeleteStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteStaticRouteNoContent, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewDeleteStaticRouteParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "DeleteStaticRoute",
-		Method:             "DELETE",
-		PathPattern:        "/network/routes/{routeId}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &DeleteStaticRouteReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*DeleteStaticRouteNoContent)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*DeleteStaticRouteDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-ListStaticRoutes lists all static routes
-
-List the static routes for the Cohesity Cluster.
-*/
-func (a *Client) ListStaticRoutes(params *ListStaticRoutesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListStaticRoutesOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewListStaticRoutesParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "ListStaticRoutes",
-		Method:             "GET",
-		PathPattern:        "/network/routes",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &ListStaticRoutesReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*ListStaticRoutesOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*ListStaticRoutesDefault)
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-/*
-UpdateStaticRoute updates a static route
-
-Update static route details.
-*/
-func (a *Client) UpdateStaticRoute(params *UpdateStaticRouteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateStaticRouteOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewUpdateStaticRouteParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "UpdateStaticRoute",
-		Method:             "PUT",
-		PathPattern:        "/network/routes/{routeId}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"https"},
-		Params:             params,
-		Reader:             &UpdateStaticRouteReader{formats: a.formats},
-		AuthInfo:           authInfo,
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*UpdateStaticRouteOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	unexpectedSuccess := result.(*UpdateStaticRouteDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

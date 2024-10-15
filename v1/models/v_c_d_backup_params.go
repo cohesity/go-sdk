@@ -7,9 +7,7 @@ package models
 
 import (
 	"context"
-	"strconv"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -21,85 +19,16 @@ import (
 type VCDBackupParams struct {
 
 	// Map from VM id to VApp it is part of.
-	VMToVappMap []*VCDBackupParamsVMToVappMapEntry `json:"vmToVappMap"`
+	VMToVappMap interface{} `json:"vmToVappMap,omitempty"`
 }
 
 // Validate validates this v c d backup params
 func (m *VCDBackupParams) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateVMToVappMap(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *VCDBackupParams) validateVMToVappMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.VMToVappMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.VMToVappMap); i++ {
-		if swag.IsZero(m.VMToVappMap[i]) { // not required
-			continue
-		}
-
-		if m.VMToVappMap[i] != nil {
-			if err := m.VMToVappMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("vmToVappMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("vmToVappMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this v c d backup params based on the context it is used
+// ContextValidate validates this v c d backup params based on context it is used
 func (m *VCDBackupParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateVMToVappMap(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *VCDBackupParams) contextValidateVMToVappMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.VMToVappMap); i++ {
-
-		if m.VMToVappMap[i] != nil {
-
-			if swag.IsZero(m.VMToVappMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.VMToVappMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("vmToVappMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("vmToVappMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

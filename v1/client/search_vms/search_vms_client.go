@@ -61,6 +61,8 @@ type ClientService interface {
 
 /*
 SearchVms searches for v ms
+
+**Privileges:** ```RESTORE_VIEW``` <br><br>
 */
 func (a *Client) SearchVms(params *SearchVmsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*SearchVmsOK, error) {
 	// TODO: Validate the params before sending

@@ -58,13 +58,15 @@ type ClientService interface {
 
 	ListPackages(params *ListPackagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListPackagesOK, error)
 
+	UploadPackage(params *UploadPackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadPackageOK, error)
+
 	SetTransport(transport runtime.ClientTransport)
 }
 
 /*
 DownloadPackage downloads a package to the cluster by providing a URL where the package is hosted
 
-Sends a request to download a package from a URL to the Cluster.
+**Privileges:** ```CLUSTER_MODIFY, CLUSTER_CREATE``` <br><br>Sends a request to download a package from a URL to the Cluster.
 */
 func (a *Client) DownloadPackage(params *DownloadPackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DownloadPackageAccepted, error) {
 	// TODO: Validate the params before sending
@@ -104,7 +106,7 @@ func (a *Client) DownloadPackage(params *DownloadPackageParams, authInfo runtime
 /*
 	ListPackages lists all currently installed packages on a cohesity cluster
 
-	Sends a request retrieve information about all packages which are currently
+	**Privileges:** ```CLUSTER_VIEW``` <br><br>Sends a request retrieve information about all packages which are currently
 
 installed on the Cluster.
 */
@@ -140,6 +142,49 @@ func (a *Client) ListPackages(params *ListPackagesParams, authInfo runtime.Clien
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*ListPackagesDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+	UploadPackage uploads a package which is located locally on your machine to a cluster
+
+	**Privileges:** ```CLUSTER_MODIFY``` <br><br>Sends a request to upload a package to a Cluster. This can be used to upload
+
+a package which is on your local machine. The user must send the package as
+a multipart/form-data request.
+*/
+func (a *Client) UploadPackage(params *UploadPackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadPackageOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUploadPackageParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "UploadPackage",
+		Method:             "POST",
+		PathPattern:        "/public/packages/file",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UploadPackageReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UploadPackageOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UploadPackageDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

@@ -7,9 +7,7 @@ package models
 
 import (
 	"context"
-	"strconv"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -20,85 +18,16 @@ import (
 type PVCInfoPVCSpecResources struct {
 
 	// Map of requested resources and their values.
-	Requests []*PVCInfoPVCSpecResourcesRequestsEntry `json:"requests"`
+	Requests map[string]string `json:"requests,omitempty"`
 }
 
 // Validate validates this p v c info p v c spec resources
 func (m *PVCInfoPVCSpecResources) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateRequests(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *PVCInfoPVCSpecResources) validateRequests(formats strfmt.Registry) error {
-	if swag.IsZero(m.Requests) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.Requests); i++ {
-		if swag.IsZero(m.Requests[i]) { // not required
-			continue
-		}
-
-		if m.Requests[i] != nil {
-			if err := m.Requests[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("requests" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("requests" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this p v c info p v c spec resources based on the context it is used
+// ContextValidate validates this p v c info p v c spec resources based on context it is used
 func (m *PVCInfoPVCSpecResources) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateRequests(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *PVCInfoPVCSpecResources) contextValidateRequests(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.Requests); i++ {
-
-		if m.Requests[i] != nil {
-
-			if swag.IsZero(m.Requests[i]) { // not required
-				return nil
-			}
-
-			if err := m.Requests[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("requests" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("requests" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

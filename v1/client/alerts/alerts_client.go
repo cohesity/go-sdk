@@ -84,7 +84,7 @@ type ClientService interface {
 /*
 	CreateNotificationRule creates a new alert notification rule
 
-	Creates a new notification rule with provided delivery targets such as email
+	**Privileges:** ```ALERT_MODIFY``` <br><br>Creates a new notification rule with provided delivery targets such as email
 
 addresses and external apis.
 */
@@ -126,7 +126,7 @@ func (a *Client) CreateNotificationRule(params *CreateNotificationRuleParams, au
 /*
 	CreateResolution creates an alert resolution
 
-	Create an Alert Resolution and apply it to one or more Alerts.
+	**Privileges:** ```ALERT_MODIFY``` <br><br>Create an Alert Resolution and apply it to one or more Alerts.
 
 Mark the Alerts as resolved.
 */
@@ -168,7 +168,7 @@ func (a *Client) CreateResolution(params *CreateResolutionParams, authInfo runti
 /*
 DeleteNotificationRule deletes an alert notification rule
 
-Deletes an existing alert notification rule matching the rule id.
+**Privileges:** ```ALERT_MODIFY``` <br><br>Deletes an existing alert notification rule matching the rule id.
 */
 func (a *Client) DeleteNotificationRule(params *DeleteNotificationRuleParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteNotificationRuleNoContent, error) {
 	// TODO: Validate the params before sending
@@ -208,7 +208,7 @@ func (a *Client) DeleteNotificationRule(params *DeleteNotificationRuleParams, au
 /*
 GetAlertByID lists details about a single alert
 
-Returns the Alert object corresponding to the specified id.
+**Privileges:** ```ALERT_VIEW``` <br><br>Returns the Alert object corresponding to the specified id.
 */
 func (a *Client) GetAlertByID(params *GetAlertByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAlertByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -248,7 +248,7 @@ func (a *Client) GetAlertByID(params *GetAlertByIDParams, authInfo runtime.Clien
 /*
 GetAlertCategories gets alert categories in the cohesity cluster
 
-Returns alert categories in Cohesity cluster.
+**Privileges:** ```ALERT_VIEW``` <br><br>Returns alert categories in Cohesity cluster.
 */
 func (a *Client) GetAlertCategories(params *GetAlertCategoriesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAlertCategoriesOK, error) {
 	// TODO: Validate the params before sending
@@ -288,7 +288,7 @@ func (a *Client) GetAlertCategories(params *GetAlertCategoriesParams, authInfo r
 /*
 	GetAlertTypes gets registered alerts in the cohesity cluster
 
-	Returns registered alerts in the Cohesity cluster that match the filter
+	**Privileges:** ```ALERT_VIEW``` <br><br>Returns registered alerts in the Cohesity cluster that match the filter
 
 criteria specified using parameters. If no filter parameters are specified,
 all registered alerts in the Cohesity cluster are returned.
@@ -331,7 +331,7 @@ func (a *Client) GetAlertTypes(params *GetAlertTypesParams, authInfo runtime.Cli
 /*
 	GetAlerts lists the alerts on the cohesity cluster
 
-	Returns all Alert objects found on the Cohesity Cluster that
+	**Privileges:** ```ALERT_VIEW``` <br><br>Returns all Alert objects found on the Cohesity Cluster that
 
 match the filter criteria specified using parameters.
 The Cohesity Cluster creates an Alert when a potential problem
@@ -377,7 +377,7 @@ func (a *Client) GetAlerts(params *GetAlertsParams, authInfo runtime.ClientAuthI
 /*
 	GetNotificationRules gets all alert notification rules
 
-	Gets all alert notification rules containing criteria to deliver notification
+	**Privileges:** ```ALERT_VIEW``` <br><br>Gets all alert notification rules containing criteria to deliver notification
 
 to delivery targets such as email addresses, invoking external apis etc.
 */
@@ -419,7 +419,7 @@ func (a *Client) GetNotificationRules(params *GetNotificationRulesParams, authIn
 /*
 	GetResolutionByID lists details about a single alert resolution
 
-	Returns the Alert Resolution object corresponding to passed in Alert
+	**Privileges:** ```ALERT_VIEW``` <br><br>Returns the Alert Resolution object corresponding to passed in Alert
 
 Resolution Id.
 */
@@ -461,7 +461,7 @@ func (a *Client) GetResolutionByID(params *GetResolutionByIDParams, authInfo run
 /*
 	GetResolutions lists the alert resolutions on the cohesity cluster
 
-	Returns all Alert Resolution objects found on the Cohesity Cluster
+	**Privileges:** ```ALERT_VIEW``` <br><br>Returns all Alert Resolution objects found on the Cohesity Cluster
 
 that match the filter criteria specified using parameters.
 If no filter parameters are specified,
@@ -507,7 +507,7 @@ func (a *Client) GetResolutions(params *GetResolutionsParams, authInfo runtime.C
 /*
 	UpdateNotificationRule updates an existing alert notification rule
 
-	Updates delivery targets such as email addresses and external apis in an
+	**Privileges:** ```ALERT_MODIFY``` <br><br>Updates delivery targets such as email addresses and external apis in an
 
 existing notification rule.
 */
@@ -549,7 +549,7 @@ func (a *Client) UpdateNotificationRule(params *UpdateNotificationRuleParams, au
 /*
 	UpdateResolution applies an existing alert resolution to additional alerts
 
-	Apply an existing Alert Resolution to one or more additional Alerts.
+	**Privileges:** ```ALERT_MODIFY``` <br><br>Apply an existing Alert Resolution to one or more additional Alerts.
 
 Mark those additional Alerts as resolved.
 */

@@ -14,6 +14,7 @@ import (
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 
 	"github.com/cohesity/go-sdk/v2/models"
 )
@@ -68,6 +69,12 @@ type ValidateRemoteClusterParams struct {
 	   Specifies the request to validate Remote Cluster.
 	*/
 	Body *models.ValidateRemoteClusterConnectionParam
+
+	/* IncludeMetadata.
+
+	   Specifies if Remote Cluster metadata should be included in the response.
+	*/
+	IncludeMetadata *bool
 
 	timeout    time.Duration
 	Context    context.Context
@@ -133,6 +140,17 @@ func (o *ValidateRemoteClusterParams) SetBody(body *models.ValidateRemoteCluster
 	o.Body = body
 }
 
+// WithIncludeMetadata adds the includeMetadata to the validate remote cluster params
+func (o *ValidateRemoteClusterParams) WithIncludeMetadata(includeMetadata *bool) *ValidateRemoteClusterParams {
+	o.SetIncludeMetadata(includeMetadata)
+	return o
+}
+
+// SetIncludeMetadata adds the includeMetadata to the validate remote cluster params
+func (o *ValidateRemoteClusterParams) SetIncludeMetadata(includeMetadata *bool) {
+	o.IncludeMetadata = includeMetadata
+}
+
 // WriteToRequest writes these params to a swagger request
 func (o *ValidateRemoteClusterParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
@@ -143,6 +161,23 @@ func (o *ValidateRemoteClusterParams) WriteToRequest(r runtime.ClientRequest, re
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err
+		}
+	}
+
+	if o.IncludeMetadata != nil {
+
+		// query param includeMetadata
+		var qrIncludeMetadata bool
+
+		if o.IncludeMetadata != nil {
+			qrIncludeMetadata = *o.IncludeMetadata
+		}
+		qIncludeMetadata := swag.FormatBool(qrIncludeMetadata)
+		if qIncludeMetadata != "" {
+
+			if err := r.SetQueryParam("includeMetadata", qIncludeMetadata); err != nil {
+				return err
+			}
 		}
 	}
 

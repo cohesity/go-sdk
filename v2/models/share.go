@@ -30,6 +30,10 @@ type Share struct {
 	// Required: true
 	ViewName *string `json:"viewName"`
 
+	// Specifies the id of the View.
+	// Read Only: true
+	ViewID int64 `json:"viewId,omitempty"`
+
 	// Specifies the View path of this Share.
 	// Required: true
 	ViewPath *string `json:"viewPath"`
@@ -66,6 +70,8 @@ func (m *Share) UnmarshalJSON(raw []byte) error {
 
 		ViewName *string `json:"viewName"`
 
+		ViewID int64 `json:"viewId,omitempty"`
+
 		ViewPath *string `json:"viewPath"`
 
 		NfsMountPaths []string `json:"nfsMountPaths"`
@@ -83,6 +89,8 @@ func (m *Share) UnmarshalJSON(raw []byte) error {
 	m.Name = dataAO1.Name
 
 	m.ViewName = dataAO1.ViewName
+
+	m.ViewID = dataAO1.ViewID
 
 	m.ViewPath = dataAO1.ViewPath
 
@@ -111,6 +119,8 @@ func (m Share) MarshalJSON() ([]byte, error) {
 
 		ViewName *string `json:"viewName"`
 
+		ViewID int64 `json:"viewId,omitempty"`
+
 		ViewPath *string `json:"viewPath"`
 
 		NfsMountPaths []string `json:"nfsMountPaths"`
@@ -125,6 +135,8 @@ func (m Share) MarshalJSON() ([]byte, error) {
 	dataAO1.Name = m.Name
 
 	dataAO1.ViewName = m.ViewName
+
+	dataAO1.ViewID = m.ViewID
 
 	dataAO1.ViewPath = m.ViewPath
 
@@ -207,6 +219,10 @@ func (m *Share) ContextValidate(ctx context.Context, formats strfmt.Registry) er
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateViewID(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateNfsMountPaths(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -226,6 +242,15 @@ func (m *Share) ContextValidate(ctx context.Context, formats strfmt.Registry) er
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Share) contextValidateViewID(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := validate.ReadOnly(ctx, "viewId", "body", int64(m.ViewID)); err != nil {
+		return err
+	}
+
 	return nil
 }
 

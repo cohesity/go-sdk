@@ -66,6 +66,9 @@ type SourceRegistration struct {
 	// Specifies the parameters to register a Universal Data Adapter Protection Source.
 	UdaParams *UdaSourceRegistrationParams `json:"udaParams,omitempty"`
 
+	// Specifies the parameters to register a SAP HANA Protection Source.
+	SapHanaParams *SapHanaSourceRegistrationParams `json:"sapHanaParams,omitempty"`
+
 	// Specifies the parameters to register an office 365 Source.
 	Office365Params *Office365SourceRegistrationParams `json:"office365Params,omitempty"`
 
@@ -126,6 +129,8 @@ func (m *SourceRegistration) UnmarshalJSON(raw []byte) error {
 
 		UdaParams *UdaSourceRegistrationParams `json:"udaParams,omitempty"`
 
+		SapHanaParams *SapHanaSourceRegistrationParams `json:"sapHanaParams,omitempty"`
+
 		Office365Params *Office365SourceRegistrationParams `json:"office365Params,omitempty"`
 
 		AwsParams *AwsSourceRegistrationParams `json:"awsParams,omitempty"`
@@ -171,6 +176,8 @@ func (m *SourceRegistration) UnmarshalJSON(raw []byte) error {
 	m.HiveParams = dataAO1.HiveParams
 
 	m.UdaParams = dataAO1.UdaParams
+
+	m.SapHanaParams = dataAO1.SapHanaParams
 
 	m.Office365Params = dataAO1.Office365Params
 
@@ -227,6 +234,8 @@ func (m SourceRegistration) MarshalJSON() ([]byte, error) {
 
 		UdaParams *UdaSourceRegistrationParams `json:"udaParams,omitempty"`
 
+		SapHanaParams *SapHanaSourceRegistrationParams `json:"sapHanaParams,omitempty"`
+
 		Office365Params *Office365SourceRegistrationParams `json:"office365Params,omitempty"`
 
 		AwsParams *AwsSourceRegistrationParams `json:"awsParams,omitempty"`
@@ -269,6 +278,8 @@ func (m SourceRegistration) MarshalJSON() ([]byte, error) {
 	dataAO1.HiveParams = m.HiveParams
 
 	dataAO1.UdaParams = m.UdaParams
+
+	dataAO1.SapHanaParams = m.SapHanaParams
 
 	dataAO1.Office365Params = m.Office365Params
 
@@ -356,6 +367,10 @@ func (m *SourceRegistration) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateUdaParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSapHanaParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -689,6 +704,26 @@ func (m *SourceRegistration) validateUdaParams(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *SourceRegistration) validateSapHanaParams(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.SapHanaParams) { // not required
+		return nil
+	}
+
+	if m.SapHanaParams != nil {
+		if err := m.SapHanaParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sapHanaParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sapHanaParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *SourceRegistration) validateOffice365Params(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Office365Params) { // not required
@@ -875,6 +910,10 @@ func (m *SourceRegistration) ContextValidate(ctx context.Context, formats strfmt
 	}
 
 	if err := m.contextValidateUdaParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSapHanaParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1215,6 +1254,27 @@ func (m *SourceRegistration) contextValidateUdaParams(ctx context.Context, forma
 				return ve.ValidateName("udaParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("udaParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *SourceRegistration) contextValidateSapHanaParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.SapHanaParams != nil {
+
+		if swag.IsZero(m.SapHanaParams) { // not required
+			return nil
+		}
+
+		if err := m.SapHanaParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sapHanaParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sapHanaParams")
 			}
 			return err
 		}

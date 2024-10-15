@@ -66,7 +66,7 @@ type ClientService interface {
 /*
 GetSupportUserConfig gets support user configuration
 
-Cohesity provides a support user account for improved security and you need to use the support user account to log in to the Cohesity cluster bash shell using SSH. This endpoint returns the current support user configuration on the Cohesity cluster.
+**Privileges:** ```CLUSTER_VIEW``` <br><br>Cohesity provides a support user account for improved security and you need to use the support user account to log in to the Cohesity cluster bash shell using SSH. This endpoint returns the current support user configuration on the Cohesity cluster.
 */
 func (a *Client) GetSupportUserConfig(params *GetSupportUserConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetSupportUserConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -106,7 +106,7 @@ func (a *Client) GetSupportUserConfig(params *GetSupportUserConfigParams, authIn
 /*
 UpdateSupportUserConfig updates support user configuration
 
-Update support user's configuration. This allows you to update the support user's password and/or grant sudo access to the user.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Update support user's configuration. This allows you to update the support user's password and/or grant sudo access to the user.
 */
 func (a *Client) UpdateSupportUserConfig(params *UpdateSupportUserConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateSupportUserConfigOK, error) {
 	// TODO: Validate the params before sending
@@ -146,7 +146,7 @@ func (a *Client) UpdateSupportUserConfig(params *UpdateSupportUserConfigParams, 
 /*
 ValidateSupportUserCreds validates the support user credentials
 
-Validates the support user credentials.
+**Privileges:** ```CLUSTER_MODIFY``` <br><br>Validates the support user credentials.
 */
 func (a *Client) ValidateSupportUserCreds(params *ValidateSupportUserCredsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ValidateSupportUserCredsOK, error) {
 	// TODO: Validate the params before sending

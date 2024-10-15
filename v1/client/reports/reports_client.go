@@ -74,7 +74,7 @@ type ClientService interface {
 }
 
 /*
-	GetAgentDeploymentReport Get the list of all the installed agents which includes the health status and
+	GetAgentDeploymentReport **Privileges:** ```REPORTS_VIEW``` <br><br>Get the list of all the installed agents which includes the health status and
 
 upgradability of the agent.
 */
@@ -116,7 +116,7 @@ func (a *Client) GetAgentDeploymentReport(params *GetAgentDeploymentReportParams
 /*
 	GetCloudArchiveReportRequest gets summary statistics about succesful failed job runs queued archival jobs
 
-	last run status by each protection job.
+	**Privileges:** ```REPORTS_VIEW``` <br><br>last run status by each protection job.
 
 Cohesity Cluster to Vaults (External Targets).
 */
@@ -158,7 +158,7 @@ func (a *Client) GetCloudArchiveReportRequest(params *GetCloudArchiveReportReque
 /*
 	GetDataTransferFromVaultsReportRequest gets summary statistics about transferring data from vaults external targets to this cohesity cluster
 
-	A Vault can provide an additional Cloud Tier where cold data of the
+	**Privileges:** ```REPORTS_VIEW``` <br><br>A Vault can provide an additional Cloud Tier where cold data of the
 
 Cohesity Cluster is stored in the Cloud.
 A Vault can also provide archive storage for backup data.
@@ -202,7 +202,7 @@ func (a *Client) GetDataTransferFromVaultsReportRequest(params *GetDataTransferF
 /*
 	GetDataTransferToVaultsReportRequest gets summary statistics about transferring data from the cohesity cluster to vaults external targets
 
-	A Vault can provide an additional Cloud Tier where cold data of the
+	**Privileges:** ```REPORTS_VIEW``` <br><br>A Vault can provide an additional Cloud Tier where cold data of the
 
 Cohesity Cluster can be stored in the Cloud.
 A Vault can also provide archive storage for backup data.
@@ -246,7 +246,7 @@ func (a *Client) GetDataTransferToVaultsReportRequest(params *GetDataTransferToV
 /*
 GetGdprReport gets gdpr report related information
 
-Returns the GDPR report information.
+**Privileges:** ```GDPR_VIEW``` <br><br>Returns the GDPR report information.
 */
 func (a *Client) GetGdprReport(params *GetGdprReportParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetGdprReportOK, error) {
 	// TODO: Validate the params before sending
@@ -286,7 +286,7 @@ func (a *Client) GetGdprReport(params *GetGdprReportParams, authInfo runtime.Cli
 /*
 	GetProtectedObjectsTrendsReportRequest gets protected objects trends grouped by days weeks months
 
-	This gives a summary of protection trend for protected resources during the
+	**Privileges:** ```REPORTS_VIEW, TENANT_VIEW``` <br><br>This gives a summary of protection trend for protected resources during the
 
 given time range.
 If no roll up is specified, then the trends will be grouped by days.
@@ -329,7 +329,7 @@ func (a *Client) GetProtectedObjectsTrendsReportRequest(params *GetProtectedObje
 /*
 	GetProtectionSourcesJobRunsReportRequest gets protection details about the specified list of leaf protection source objects such as a v ms
 
-	Returns the Snapshots that contain backups of the specified
+	**Privileges:** ```REPORTS_VIEW, TENANT_VIEW``` <br><br>Returns the Snapshots that contain backups of the specified
 
 Protection Source Objects and match the specified filter criteria.
 */
@@ -371,7 +371,7 @@ func (a *Client) GetProtectionSourcesJobRunsReportRequest(params *GetProtectionS
 /*
 	GetProtectionSourcesJobsSummaryReportRequest gets job run snapshot summary statistics about the leaf protection sources objects that match the specified filter criteria
 
-	For example, if two Job ids are passed in, Snapshot summary statistics about
+	**Privileges:** ```REPORTS_VIEW, TENANT_VIEW``` <br><br>For example, if two Job ids are passed in, Snapshot summary statistics about
 
 all the leaf Objects that have been protected by the two specified
 Jobs are reported.

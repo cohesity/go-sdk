@@ -47,6 +47,9 @@ type CreateCloudClusterParameters struct {
 	// Specifies the configuration for the nodes in the new cluster.
 	// Required: true
 	NodeIps []string `json:"nodeIps"`
+
+	// Specifies Trust Domain used for Service Identity.
+	TrustDomain *string `json:"trustDomain,omitempty"`
 }
 
 // Validate validates this create cloud cluster parameters

@@ -52,6 +52,9 @@ type UpdateProtectionSourceParameters struct {
 	// deprecated: true
 	BlacklistedIPAddresses []string `json:"blacklistedIpAddresses"`
 
+	// Specifies the cloud credentials used to authenticate with cloud(Aws).
+	CloudCredentials *CloudCredentials `json:"cloudCredentials,omitempty"`
+
 	// Specifies information related to cluster. This is only valid for CE
 	// clusters. This is only populated for kIAMUser entity.
 	ClusterNetworkInfo *FleetNetworkParams `json:"clusterNetworkInfo,omitempty"`
@@ -64,6 +67,10 @@ type UpdateProtectionSourceParameters struct {
 	// Specifies the list of IP Addresses on the registered source to be denied
 	// for doing any type of IO operations.
 	DeniedIPAddresses []string `json:"deniedIpAddresses"`
+
+	// Specifies whether to enable M365 Storage Service API based(CSM) Backup
+	// for the M365 source.
+	EnableM365CSMBackup *bool `json:"enableM365CSMBackup,omitempty"`
 
 	// Specifies the network endpoint of the Protection Source where it is
 	// reachable. It could be an URL or hostname or an IP address of the
@@ -237,6 +244,10 @@ func (m *UpdateProtectionSourceParameters) Validate(formats strfmt.Registry) err
 		res = append(res, err)
 	}
 
+	if err := m.validateCloudCredentials(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateClusterNetworkInfo(formats); err != nil {
 		res = append(res, err)
 	}
@@ -356,6 +367,25 @@ func (m *UpdateProtectionSourceParameters) validateAzureCredentials(formats strf
 				return ve.ValidateName("azureCredentials")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("azureCredentials")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *UpdateProtectionSourceParameters) validateCloudCredentials(formats strfmt.Registry) error {
+	if swag.IsZero(m.CloudCredentials) { // not required
+		return nil
+	}
+
+	if m.CloudCredentials != nil {
+		if err := m.CloudCredentials.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
 			}
 			return err
 		}
@@ -761,6 +791,10 @@ func (m *UpdateProtectionSourceParameters) ContextValidate(ctx context.Context, 
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateCloudCredentials(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateClusterNetworkInfo(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -882,6 +916,27 @@ func (m *UpdateProtectionSourceParameters) contextValidateAzureCredentials(ctx c
 				return ve.ValidateName("azureCredentials")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("azureCredentials")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *UpdateProtectionSourceParameters) contextValidateCloudCredentials(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.CloudCredentials != nil {
+
+		if swag.IsZero(m.CloudCredentials) { // not required
+			return nil
+		}
+
+		if err := m.CloudCredentials.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("cloudCredentials")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("cloudCredentials")
 			}
 			return err
 		}

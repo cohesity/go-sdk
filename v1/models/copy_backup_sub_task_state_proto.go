@@ -33,6 +33,10 @@ type CopyBackupSubTaskStateProto struct {
 	// task.
 	AncestorReplicationUIDHint *UniversalIDProto `json:"ancestorReplicationUidHint,omitempty"`
 
+	// The state of application specific entities (if any) that are being
+	// backed up by this task. Note that this is populated on the fly.
+	AppEntityStateVec []*AppEntityState `json:"appEntityStateVec"`
+
 	// Id of the task that performed the backup of the above entity. Due to
 	// retries on errors, a leaf level entity can have more than one attempt and
 	// thus have more than one snapshot. If job policy dictates that snapshots
@@ -128,6 +132,18 @@ type CopyBackupSubTaskStateProto struct {
 	// Iris-facing task state. This field is stamped during the export.
 	PublicStatus *int32 `json:"publicStatus,omitempty"`
 
+	// Specifies the time at which the latest snapshot on target was queued to
+	// schedule to copy from the local snapshot for corresponding entity.
+	//
+	// Note:
+	// 1. Currently this is used for displaying queued time in the replication
+	// page and should be same on both Tx & Rx.
+	// 2. This is set to the corresponding backup task end time if this is part
+	// of the first copy run else it is set to that copy run start time.
+	// 3. It is assumed that new sub tasks are created only when the previous
+	// snapshot is expired/deleted on Rx while this is being set.
+	QueuedTimestampUsecs *int64 `json:"queuedTimestampUsecs,omitempty"`
+
 	// If this is a replication task, this field will contain some basic info
 	// about the replication task.
 	ReplicationInfo *ReplicationInfoBase `json:"replicationInfo,omitempty"`
@@ -138,6 +154,11 @@ type CopyBackupSubTaskStateProto struct {
 	// Set to true if entity being copied needs to be converted to on-prem format
 	// for "DR to cloud" failback use case.
 	ShouldConvert *bool `json:"shouldConvert,omitempty"`
+
+	// Whether the snapshot for the task has been deleted. This is a transient
+	// field not stored permanently. It's populated on the fly while generating
+	// the response for GetBackupJobRuns API.
+	SnapshotDeleted *bool `json:"snapshotDeleted,omitempty"`
 
 	// The target location where the snapshots should be copied to.
 	SnapshotTarget *SnapshotTarget `json:"snapshotTarget,omitempty"`
@@ -157,6 +178,12 @@ type CopyBackupSubTaskStateProto struct {
 	// backup task and target. This field will contain the sum total of the
 	// duration of each of the copy sub-tasks that were merged.
 	TotalDurationUsecs *int64 `json:"totalDurationUsecs,omitempty"`
+
+	// The view box id corresponding to the 'view_name' above.
+	ViewBoxID *int64 `json:"viewBoxId,omitempty"`
+
+	// The view name where snapshots for this copy sub-task are kept.
+	ViewName *string `json:"viewName,omitempty"`
 }
 
 // Validate validates this copy backup sub task state proto
@@ -164,6 +191,10 @@ func (m *CopyBackupSubTaskStateProto) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAncestorReplicationUIDHint(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateAppEntityStateVec(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -227,6 +258,32 @@ func (m *CopyBackupSubTaskStateProto) validateAncestorReplicationUIDHint(formats
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *CopyBackupSubTaskStateProto) validateAppEntityStateVec(formats strfmt.Registry) error {
+	if swag.IsZero(m.AppEntityStateVec) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.AppEntityStateVec); i++ {
+		if swag.IsZero(m.AppEntityStateVec[i]) { // not required
+			continue
+		}
+
+		if m.AppEntityStateVec[i] != nil {
+			if err := m.AppEntityStateVec[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("appEntityStateVec" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("appEntityStateVec" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -437,6 +494,10 @@ func (m *CopyBackupSubTaskStateProto) ContextValidate(ctx context.Context, forma
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateAppEntityStateVec(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateCloudDeployTaskState(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -499,6 +560,31 @@ func (m *CopyBackupSubTaskStateProto) contextValidateAncestorReplicationUIDHint(
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *CopyBackupSubTaskStateProto) contextValidateAppEntityStateVec(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.AppEntityStateVec); i++ {
+
+		if m.AppEntityStateVec[i] != nil {
+
+			if swag.IsZero(m.AppEntityStateVec[i]) { // not required
+				return nil
+			}
+
+			if err := m.AppEntityStateVec[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("appEntityStateVec" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("appEntityStateVec" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

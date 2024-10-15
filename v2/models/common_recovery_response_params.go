@@ -37,18 +37,18 @@ type CommonRecoveryResponseParams struct {
 	EndTimeUsecs *int64 `json:"endTimeUsecs,omitempty"`
 
 	// Status of the Recovery. 'Running' indicates that the Recovery is still running. 'Canceled' indicates that the Recovery has been cancelled. 'Canceling' indicates that the Recovery is in the process of being cancelled. 'Failed' indicates that the Recovery has failed. 'Succeeded' indicates that the Recovery has finished successfully. 'SucceededWithWarning' indicates that the Recovery finished successfully, but there were some warning messages. 'Skipped' indicates that the Recovery task was skipped.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]
 	Status *string `json:"status,omitempty"`
 
 	// Progress monitor task id for Recovery.
 	ProgressTaskID *string `json:"progressTaskId,omitempty"`
 
 	// Specifies the type of snapshot environment for which the Recovery was performed.
-	// Enum: ["kVMware","kHyperV","kAzure","kGCP","kKVM","kAcropolis","kAWS","kPhysical","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]
+	// Enum: ["kVMware","kHyperV","kAzure","kGCP","kKVM","kAcropolis","kAWS","kPhysical","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kSAPHANA","kHBase","kUDA","kSfdc"]
 	SnapshotEnvironment string `json:"snapshotEnvironment,omitempty"`
 
 	// Specifies the type of recover action.
-	// Enum: ["RecoverVMs","RecoverFiles","InstantVolumeMount","RecoverVmDisks","RecoverVApps","RecoverVAppTemplates","UptierSnapshot","RecoverRDS","RecoverAurora","RecoverS3Buckets","RecoverRDSPostgres","RecoverAzureSQL","RecoverApps","CloneApps","RecoverNasVolume","RecoverPhysicalVolumes","RecoverSystem","RecoverExchangeDbs","CloneAppView","RecoverSanVolumes","RecoverSanGroup","RecoverMailbox","RecoverOneDrive","RecoverSharePoint","RecoverPublicFolders","RecoverMsGroup","RecoverMsTeam","ConvertToPst","DownloadChats","RecoverNamespaces","RecoverObjects","RecoverSfdcObjects","RecoverSfdcOrg","RecoverSfdcRecords","DownloadFilesAndFolders","CloneVMs","CloneView","CloneRefreshApp","CloneVMsToView","ConvertAndDeployVMs","DeployVMs"]
+	// Enum: ["RecoverVMs","RecoverFiles","InstantVolumeMount","RecoverVmDisks","RecoverVApps","RecoverVAppTemplates","UptierSnapshot","RecoverRDS","RecoverAurora","RecoverS3Buckets","RecoverRDSPostgres","RecoverAzureSQL","RecoverApps","CloneApps","RecoverNasVolume","RecoverPhysicalVolumes","RecoverSystem","RecoverExchangeDbs","CloneAppView","RecoverSanVolumes","RecoverSanGroup","RecoverMailbox","RecoverOneDrive","RecoverSharePoint","RecoverPublicFolders","RecoverMsGroup","RecoverMsTeam","ConvertToPst","DownloadChats","RecoverMailboxCSM","RecoverOneDriveCSM","RecoverSharePointCSM","RecoverNamespaces","RecoverObjects","RecoverSfdcObjects","RecoverSfdcOrg","RecoverSfdcRecords","DownloadFilesAndFolders","CloneVMs","CloneView","CloneRefreshApp","CloneVMsToView","ConvertAndDeployVMs","DeployVMs"]
 	RecoveryAction string `json:"recoveryAction,omitempty"`
 
 	// Specifies the list of tenants that have permissions for this recovery.
@@ -146,7 +146,7 @@ var commonRecoveryResponseParamsTypeStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -188,6 +188,9 @@ const (
 
 	// CommonRecoveryResponseParamsStatusSkipped captures enum value "Skipped"
 	CommonRecoveryResponseParamsStatusSkipped string = "Skipped"
+
+	// CommonRecoveryResponseParamsStatusLegalHold captures enum value "LegalHold"
+	CommonRecoveryResponseParamsStatusLegalHold string = "LegalHold"
 )
 
 // prop value enum
@@ -215,7 +218,7 @@ var commonRecoveryResponseParamsTypeSnapshotEnvironmentPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kGCP","kKVM","kAcropolis","kAWS","kPhysical","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kHBase","kUDA","kSfdc"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kVMware","kHyperV","kAzure","kGCP","kKVM","kAcropolis","kAWS","kPhysical","kGPFS","kElastifile","kNetapp","kGenericNas","kIsilon","kFlashBlade","kPure","kIbmFlashSystem","kSQL","kExchange","kAD","kOracle","kView","kRemoteAdapter","kO365","kKubernetes","kCassandra","kMongoDB","kCouchbase","kHdfs","kHive","kSAPHANA","kHBase","kUDA","kSfdc"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -312,6 +315,9 @@ const (
 	// CommonRecoveryResponseParamsSnapshotEnvironmentKHive captures enum value "kHive"
 	CommonRecoveryResponseParamsSnapshotEnvironmentKHive string = "kHive"
 
+	// CommonRecoveryResponseParamsSnapshotEnvironmentKSAPHANA captures enum value "kSAPHANA"
+	CommonRecoveryResponseParamsSnapshotEnvironmentKSAPHANA string = "kSAPHANA"
+
 	// CommonRecoveryResponseParamsSnapshotEnvironmentKHBase captures enum value "kHBase"
 	CommonRecoveryResponseParamsSnapshotEnvironmentKHBase string = "kHBase"
 
@@ -347,7 +353,7 @@ var commonRecoveryResponseParamsTypeRecoveryActionPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["RecoverVMs","RecoverFiles","InstantVolumeMount","RecoverVmDisks","RecoverVApps","RecoverVAppTemplates","UptierSnapshot","RecoverRDS","RecoverAurora","RecoverS3Buckets","RecoverRDSPostgres","RecoverAzureSQL","RecoverApps","CloneApps","RecoverNasVolume","RecoverPhysicalVolumes","RecoverSystem","RecoverExchangeDbs","CloneAppView","RecoverSanVolumes","RecoverSanGroup","RecoverMailbox","RecoverOneDrive","RecoverSharePoint","RecoverPublicFolders","RecoverMsGroup","RecoverMsTeam","ConvertToPst","DownloadChats","RecoverNamespaces","RecoverObjects","RecoverSfdcObjects","RecoverSfdcOrg","RecoverSfdcRecords","DownloadFilesAndFolders","CloneVMs","CloneView","CloneRefreshApp","CloneVMsToView","ConvertAndDeployVMs","DeployVMs"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["RecoverVMs","RecoverFiles","InstantVolumeMount","RecoverVmDisks","RecoverVApps","RecoverVAppTemplates","UptierSnapshot","RecoverRDS","RecoverAurora","RecoverS3Buckets","RecoverRDSPostgres","RecoverAzureSQL","RecoverApps","CloneApps","RecoverNasVolume","RecoverPhysicalVolumes","RecoverSystem","RecoverExchangeDbs","CloneAppView","RecoverSanVolumes","RecoverSanGroup","RecoverMailbox","RecoverOneDrive","RecoverSharePoint","RecoverPublicFolders","RecoverMsGroup","RecoverMsTeam","ConvertToPst","DownloadChats","RecoverMailboxCSM","RecoverOneDriveCSM","RecoverSharePointCSM","RecoverNamespaces","RecoverObjects","RecoverSfdcObjects","RecoverSfdcOrg","RecoverSfdcRecords","DownloadFilesAndFolders","CloneVMs","CloneView","CloneRefreshApp","CloneVMsToView","ConvertAndDeployVMs","DeployVMs"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -443,6 +449,15 @@ const (
 
 	// CommonRecoveryResponseParamsRecoveryActionDownloadChats captures enum value "DownloadChats"
 	CommonRecoveryResponseParamsRecoveryActionDownloadChats string = "DownloadChats"
+
+	// CommonRecoveryResponseParamsRecoveryActionRecoverMailboxCSM captures enum value "RecoverMailboxCSM"
+	CommonRecoveryResponseParamsRecoveryActionRecoverMailboxCSM string = "RecoverMailboxCSM"
+
+	// CommonRecoveryResponseParamsRecoveryActionRecoverOneDriveCSM captures enum value "RecoverOneDriveCSM"
+	CommonRecoveryResponseParamsRecoveryActionRecoverOneDriveCSM string = "RecoverOneDriveCSM"
+
+	// CommonRecoveryResponseParamsRecoveryActionRecoverSharePointCSM captures enum value "RecoverSharePointCSM"
+	CommonRecoveryResponseParamsRecoveryActionRecoverSharePointCSM string = "RecoverSharePointCSM"
 
 	// CommonRecoveryResponseParamsRecoveryActionRecoverNamespaces captures enum value "RecoverNamespaces"
 	CommonRecoveryResponseParamsRecoveryActionRecoverNamespaces string = "RecoverNamespaces"

@@ -72,7 +72,7 @@ type ClientService interface {
 /*
 CreateProtectionPolicy creates a protection policy
 
-Returns the created Protection Policy.
+**Privileges:** ```PROTECTION_POLICY_MODIFY``` <br><br>Returns the created Protection Policy.
 */
 func (a *Client) CreateProtectionPolicy(params *CreateProtectionPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProtectionPolicyCreated, error) {
 	// TODO: Validate the params before sending
@@ -112,7 +112,7 @@ func (a *Client) CreateProtectionPolicy(params *CreateProtectionPolicyParams, au
 /*
 DeleteProtectionPolicy deletes a protection policy
 
-Returns Success if the Protection Policy is deleted.
+**Privileges:** ```PROTECTION_POLICY_MODIFY``` <br><br>Returns Success if the Protection Policy is deleted.
 */
 func (a *Client) DeleteProtectionPolicy(params *DeleteProtectionPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProtectionPolicyNoContent, error) {
 	// TODO: Validate the params before sending
@@ -152,7 +152,7 @@ func (a *Client) DeleteProtectionPolicy(params *DeleteProtectionPolicyParams, au
 /*
 	GetProtectionPolicies lists protection policies filtered by some parameters
 
-	If no parameters are specified, all Protection Policies currently on the
+	**Privileges:** ```PROTECTION_POLICY_VIEW``` <br><br>If no parameters are specified, all Protection Policies currently on the
 
 Cohesity Cluster are returned.
 Specifying parameters filters the results that are returned.
@@ -195,7 +195,7 @@ func (a *Client) GetProtectionPolicies(params *GetProtectionPoliciesParams, auth
 /*
 GetProtectionPolicyByID lists details about a single protection policy
 
-Returns the Protection Policy corresponding to the specified Policy Id.
+**Privileges:** ```PROTECTION_POLICY_VIEW``` <br><br>Returns the Protection Policy corresponding to the specified Policy Id.
 */
 func (a *Client) GetProtectionPolicyByID(params *GetProtectionPolicyByIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionPolicyByIDOK, error) {
 	// TODO: Validate the params before sending
@@ -234,6 +234,8 @@ func (a *Client) GetProtectionPolicyByID(params *GetProtectionPolicyByIDParams, 
 
 /*
 GetProtectionPolicySummary lists protection policy summary
+
+**Privileges:** ```PROTECTION_POLICY_VIEW``` <br><br>
 */
 func (a *Client) GetProtectionPolicySummary(params *GetProtectionPolicySummaryParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetProtectionPolicySummaryOK, error) {
 	// TODO: Validate the params before sending
@@ -273,7 +275,7 @@ func (a *Client) GetProtectionPolicySummary(params *GetProtectionPolicySummaryPa
 /*
 UpdateProtectionPolicy updates a protection policy
 
-Returns the updated Protection Policy.
+**Privileges:** ```PROTECTION_POLICY_MODIFY``` <br><br>Returns the updated Protection Policy.
 */
 func (a *Client) UpdateProtectionPolicy(params *UpdateProtectionPolicyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdateProtectionPolicyOK, error) {
 	// TODO: Validate the params before sending

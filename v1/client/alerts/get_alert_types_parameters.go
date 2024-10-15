@@ -101,6 +101,10 @@ type GetAlertTypesParams struct {
 	kCDP - Alert associated with Continuous Data Protection.
 	kViewFailover - Alert associated with view Failover.
 	kDisasterRecovery - Alert associated with Disaster Recovery.
+	kStorageDevice - Alert associated with storage hardware(tape drives & libraries, Fiber HBAs used to attach devices, etc).
+	kStoragePool - Alert associated with storage pools -- logical groupings of similar kinds of storage hardware (disk, tape, etc) into which client data is stored.
+	kGeneralSoftwareFailure - Alert associated with general software failures - that don't fall into any known categories.
+	kAgent - Alert associated with agent based protection workloads.
 	*/
 	AlertCategoryList []string
 

@@ -28,6 +28,9 @@ type Properties struct {
 	// Present when the Cristie BMR product is installed on the host.
 	CbmrInfo *CBMRInfo `json:"cbmrInfo,omitempty"`
 
+	// Present when the Windows Dedup driver is installed on the host.
+	DedupDriverInfo *DedupDriverInfo `json:"dedupDriverInfo,omitempty"`
+
 	// This contains information about the FsCbt driver.
 	FileCbtInfo *PrivateCbtInfo `json:"fileCbtInfo,omitempty"`
 
@@ -84,6 +87,10 @@ func (m *Properties) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateDedupDriverInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateFileCbtInfo(formats); err != nil {
 		res = append(res, err)
 	}
@@ -117,6 +124,25 @@ func (m *Properties) validateCbmrInfo(formats strfmt.Registry) error {
 				return ve.ValidateName("cbmrInfo")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("cbmrInfo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Properties) validateDedupDriverInfo(formats strfmt.Registry) error {
+	if swag.IsZero(m.DedupDriverInfo) { // not required
+		return nil
+	}
+
+	if m.DedupDriverInfo != nil {
+		if err := m.DedupDriverInfo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("dedupDriverInfo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("dedupDriverInfo")
 			}
 			return err
 		}
@@ -209,6 +235,10 @@ func (m *Properties) ContextValidate(ctx context.Context, formats strfmt.Registr
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateDedupDriverInfo(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateFileCbtInfo(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -244,6 +274,27 @@ func (m *Properties) contextValidateCbmrInfo(ctx context.Context, formats strfmt
 				return ve.ValidateName("cbmrInfo")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("cbmrInfo")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Properties) contextValidateDedupDriverInfo(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.DedupDriverInfo != nil {
+
+		if swag.IsZero(m.DedupDriverInfo) { // not required
+			return nil
+		}
+
+		if err := m.DedupDriverInfo.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("dedupDriverInfo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("dedupDriverInfo")
 			}
 			return err
 		}

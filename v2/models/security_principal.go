@@ -30,7 +30,7 @@ type SecurityPrincipal struct {
 	PrincipalName *string `json:"principalName,omitempty"`
 
 	// Specifies the object class of the security principal.
-	// Enum: ["User","Group","Computer","WellKnownPrincipal"]
+	// Enum: ["User","Group","Computer","WellKnownPrincipal","ServiceAccount"]
 	ObjectClass *string `json:"objectClass,omitempty"`
 
 	// Specifies the SID of the security principal.
@@ -55,7 +55,7 @@ var securityPrincipalTypeObjectClassPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["User","Group","Computer","WellKnownPrincipal"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["User","Group","Computer","WellKnownPrincipal","ServiceAccount"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -76,6 +76,9 @@ const (
 
 	// SecurityPrincipalObjectClassWellKnownPrincipal captures enum value "WellKnownPrincipal"
 	SecurityPrincipalObjectClassWellKnownPrincipal string = "WellKnownPrincipal"
+
+	// SecurityPrincipalObjectClassServiceAccount captures enum value "ServiceAccount"
+	SecurityPrincipalObjectClassServiceAccount string = "ServiceAccount"
 )
 
 // prop value enum

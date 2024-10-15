@@ -16,17 +16,17 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// UpdateInfectedFilesParameters Specifies the parameters of infected files to be updated.
+// UpdateInfectedFilesParameters Specifies the parameters of infected entities to be updated.
 //
 // swagger:model UpdateInfectedFilesParameters
 type UpdateInfectedFilesParameters struct {
 
-	// Specifies a list of infected files to be updated.
+	// Specifies a list of infected entities to be updated.
 	// Required: true
 	// Min Items: 1
 	InfectedFiles []*InfectedFile `json:"infectedFiles"`
 
-	// Specifies the state[Quarantined, Unquarantined] of the infected file.
+	// Specifies the state[Quarantined, Unquarantined] of the infected entity.
 	// Enum: ["Quarantined","Unquarantined"]
 	State *string `json:"state,omitempty"`
 }

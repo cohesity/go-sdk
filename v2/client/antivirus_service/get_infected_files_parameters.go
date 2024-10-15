@@ -90,7 +90,7 @@ type GetInfectedFilesParams struct {
 
 	/* ViewIds.
 
-	   Specifies a list of view ids. Only infected files from these views will be returned.
+	   Specifies a list of view ids. Only infected entities from these views will be returned.
 	*/
 	ViewIds []int64
 

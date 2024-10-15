@@ -20,6 +20,25 @@ type S3BackupJobParams struct {
 	// If true, we will also backup object level acls if they are enabled.
 	BackupObjectAcls *bool `json:"backupObjectAcls,omitempty"`
 
+	// Version number of the backup associated with the job
+	// version = 1 -> ENG-321027
+	// version = 2 -> ENG-313025
+	BackupVersion *int64 `json:"backupVersion,omitempty"`
+
+	// The Amazon S3 Inventory report configuration
+	InventoryReportFrequency *int32 `json:"inventoryReportFrequency,omitempty"`
+
+	// ARN of the inventory report destination bucket for S3 backups.
+	S3InventoryReportDestinationBucket *string `json:"s3InventoryReportDestinationBucket,omitempty"`
+
+	// The prefix in the S3 destination bucket where inventory reports will be
+	// stored. This field should be in the format
+	// <destination-bucket-arn>/prefix.
+	S3InventoryReportDestinationBucketPrefix *string `json:"s3InventoryReportDestinationBucketPrefix,omitempty"`
+
+	// scheduled baseline freq days
+	ScheduledBaselineFreqDays *int32 `json:"scheduledBaselineFreqDays,omitempty"`
+
 	// If true then backup job will skip the S3 objects whose backup get failed.
 	// Basically, won't fail the backup job if some of the objects gets failed.
 	SkipFilesOnError *bool `json:"skipFilesOnError,omitempty"`

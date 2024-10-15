@@ -7,9 +7,7 @@ package models
 
 import (
 	"context"
-	"strconv"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -53,10 +51,10 @@ type MSGraphAppCredentials struct {
 	Scope *string `json:"scope,omitempty"`
 
 	// Mapping from scope to client/application ids.
-	ScopeClientIDMap []*MSGraphAppCredentialsScopeClientIDMapEntry `json:"scopeClientIdMap"`
+	ScopeClientIDMap map[string]string `json:"scopeClientIdMap,omitempty"`
 
 	// Mapping from scope to the oauth token for that scope.
-	ScopeTokenMap []*MSGraphAppCredentialsScopeTokenMapEntry `json:"scopeTokenMap"`
+	ScopeTokenMap map[string]string `json:"scopeTokenMap,omitempty"`
 
 	// Whether OAuth should be used for authentication with EWS API, applicable
 	// only for Exchange Online. This field is deprecated here and moved to
@@ -66,139 +64,11 @@ type MSGraphAppCredentials struct {
 
 // Validate validates this m s graph app credentials
 func (m *MSGraphAppCredentials) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateScopeClientIDMap(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateScopeTokenMap(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
 	return nil
 }
 
-func (m *MSGraphAppCredentials) validateScopeClientIDMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.ScopeClientIDMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.ScopeClientIDMap); i++ {
-		if swag.IsZero(m.ScopeClientIDMap[i]) { // not required
-			continue
-		}
-
-		if m.ScopeClientIDMap[i] != nil {
-			if err := m.ScopeClientIDMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("scopeClientIdMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("scopeClientIdMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *MSGraphAppCredentials) validateScopeTokenMap(formats strfmt.Registry) error {
-	if swag.IsZero(m.ScopeTokenMap) { // not required
-		return nil
-	}
-
-	for i := 0; i < len(m.ScopeTokenMap); i++ {
-		if swag.IsZero(m.ScopeTokenMap[i]) { // not required
-			continue
-		}
-
-		if m.ScopeTokenMap[i] != nil {
-			if err := m.ScopeTokenMap[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("scopeTokenMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("scopeTokenMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// ContextValidate validate this m s graph app credentials based on the context it is used
+// ContextValidate validates this m s graph app credentials based on context it is used
 func (m *MSGraphAppCredentials) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateScopeClientIDMap(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateScopeTokenMap(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *MSGraphAppCredentials) contextValidateScopeClientIDMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.ScopeClientIDMap); i++ {
-
-		if m.ScopeClientIDMap[i] != nil {
-
-			if swag.IsZero(m.ScopeClientIDMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.ScopeClientIDMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("scopeClientIdMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("scopeClientIdMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
-	return nil
-}
-
-func (m *MSGraphAppCredentials) contextValidateScopeTokenMap(ctx context.Context, formats strfmt.Registry) error {
-
-	for i := 0; i < len(m.ScopeTokenMap); i++ {
-
-		if m.ScopeTokenMap[i] != nil {
-
-			if swag.IsZero(m.ScopeTokenMap[i]) { // not required
-				return nil
-			}
-
-			if err := m.ScopeTokenMap[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("scopeTokenMap" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("scopeTokenMap" + "." + strconv.Itoa(i))
-				}
-				return err
-			}
-		}
-
-	}
-
 	return nil
 }
 

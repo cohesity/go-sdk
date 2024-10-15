@@ -17,6 +17,11 @@ import (
 // swagger:model VmwareParams
 type VmwareParams struct {
 
+	// Specifies whether to update the last backup details, including the time of
+	// the backup attempt and backup status, for the virtual machines on the
+	// vCenter.
+	UpdateLastBackupDetails *bool `json:"UpdateLastBackupDetails,omitempty"`
+
 	// Specifies to use VM BIOS UUID to track virtual machines in the host.
 	UseVMBiosUUID *bool `json:"useVmBiosUuid,omitempty"`
 }

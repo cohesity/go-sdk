@@ -143,6 +143,11 @@ type PerformRestoreJobStateProto struct {
 	// kRecoverVMs.
 	RestoreKvmVmsParams *RestoreKVMVMsParams `json:"restoreKvmVmsParams,omitempty"`
 
+	// This field defines the params for triggering M365 Backup Storage API
+	// based recoveries. This is valid for kRecoverM365ExchangeCSM,
+	// kRecoverM365OneDriveCSM & kRecoverM365SharepointCSM.
+	RestoreM365CsmParams *RestoreM365CSMParams `json:"restoreM365CsmParams,omitempty"`
+
 	// Field to indicate the objects specific customization.
 	RestoreObjectCustomizations []*RestoreObjectCustomization `json:"restoreObjectCustomizations"`
 
@@ -318,6 +323,10 @@ func (m *PerformRestoreJobStateProto) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRestoreKvmVmsParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRestoreM365CsmParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -743,6 +752,25 @@ func (m *PerformRestoreJobStateProto) validateRestoreKvmVmsParams(formats strfmt
 	return nil
 }
 
+func (m *PerformRestoreJobStateProto) validateRestoreM365CsmParams(formats strfmt.Registry) error {
+	if swag.IsZero(m.RestoreM365CsmParams) { // not required
+		return nil
+	}
+
+	if m.RestoreM365CsmParams != nil {
+		if err := m.RestoreM365CsmParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("restoreM365CsmParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("restoreM365CsmParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *PerformRestoreJobStateProto) validateRestoreObjectCustomizations(formats strfmt.Registry) error {
 	if swag.IsZero(m.RestoreObjectCustomizations) { // not required
 		return nil
@@ -1122,6 +1150,10 @@ func (m *PerformRestoreJobStateProto) ContextValidate(ctx context.Context, forma
 	}
 
 	if err := m.contextValidateRestoreKvmVmsParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateRestoreM365CsmParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1569,6 +1601,27 @@ func (m *PerformRestoreJobStateProto) contextValidateRestoreKvmVmsParams(ctx con
 				return ve.ValidateName("restoreKvmVmsParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("restoreKvmVmsParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *PerformRestoreJobStateProto) contextValidateRestoreM365CsmParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.RestoreM365CsmParams != nil {
+
+		if swag.IsZero(m.RestoreM365CsmParams) { // not required
+			return nil
+		}
+
+		if err := m.RestoreM365CsmParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("restoreM365CsmParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("restoreM365CsmParams")
 			}
 			return err
 		}

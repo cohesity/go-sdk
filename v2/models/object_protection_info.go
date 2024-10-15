@@ -52,7 +52,7 @@ type ObjectProtectionInfo struct {
 	ObjectBackupConfiguration []*ProtectionSummary `json:"objectBackupConfiguration"`
 
 	// Specifies the status of the object's last protection run.
-	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]
+	// Enum: ["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]
 	LastRunStatus *string `json:"lastRunStatus,omitempty"`
 }
 
@@ -134,7 +134,7 @@ var objectProtectionInfoTypeLastRunStatusPropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","Paused"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Accepted","Running","Canceled","Canceling","Failed","Missed","Succeeded","SucceededWithWarning","OnHold","Finalizing","Skipped","LegalHold","Paused"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -176,6 +176,9 @@ const (
 
 	// ObjectProtectionInfoLastRunStatusSkipped captures enum value "Skipped"
 	ObjectProtectionInfoLastRunStatusSkipped string = "Skipped"
+
+	// ObjectProtectionInfoLastRunStatusLegalHold captures enum value "LegalHold"
+	ObjectProtectionInfoLastRunStatusLegalHold string = "LegalHold"
 
 	// ObjectProtectionInfoLastRunStatusPaused captures enum value "Paused"
 	ObjectProtectionInfoLastRunStatusPaused string = "Paused"

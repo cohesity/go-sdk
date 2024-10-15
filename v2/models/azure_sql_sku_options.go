@@ -23,11 +23,11 @@ import (
 type AzureSQLSkuOptions struct {
 
 	// Specifies the sku name for azure sql databases and by default Hyperscale is selected.
-	// Enum: ["Basic","Standard","Premium","GeneralPurpose","BusinessCritical","Hyperscale","DataWarehouse","Stretch"]
+	// Enum: ["Free","Basic","Standard","Premium","DataWarehouse","Stretch","BC_DC","BC_Gen5","BC_M","GP_DC","GP_Fsv2","GP_Gen5","GP_S_Gen5","HS_DC","HS_Gen5","HS_S_Gen5","HS_MOPRMS","HS_PRMS"]
 	Name *string `json:"name,omitempty"`
 
 	// Specifies the sku tier selection for azure sql databases and by default HS_Gen5 is selected. The tiers must match their sku name selected.
-	// Enum: ["S0","S1","S2","S3","S4","S6","S7","S9","S12","P1","P2","P4","P6","P11","P15","BC_DC","BC_Gen5","BC_M","GP_DC","GP_Fsv2","GP_Gen5","GP_S_Gen5","HS_DC","HS_Gen5","HS_S_Gen5","HS_MOPRMS","HS_PRMS","Free","Basic","Standard","Premium","DataWarehouse","Stretch"]
+	// Enum: ["Basic","Standard","Premium","GeneralPurpose","BusinessCritical","Hyperscale","DataWarehouse","Stretch"]
 	TierType *string `json:"tierType,omitempty"`
 
 	// Specifies the capacity of the sku. For azure sql dbs, this is the number of cores. Default value is 4.
@@ -56,7 +56,7 @@ var azureSqlSkuOptionsTypeNamePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["Basic","Standard","Premium","GeneralPurpose","BusinessCritical","Hyperscale","DataWarehouse","Stretch"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Free","Basic","Standard","Premium","DataWarehouse","Stretch","BC_DC","BC_Gen5","BC_M","GP_DC","GP_Fsv2","GP_Gen5","GP_S_Gen5","HS_DC","HS_Gen5","HS_S_Gen5","HS_MOPRMS","HS_PRMS"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -65,6 +65,9 @@ func init() {
 }
 
 const (
+
+	// AzureSQLSkuOptionsNameFree captures enum value "Free"
+	AzureSQLSkuOptionsNameFree string = "Free"
 
 	// AzureSQLSkuOptionsNameBasic captures enum value "Basic"
 	AzureSQLSkuOptionsNameBasic string = "Basic"
@@ -75,20 +78,47 @@ const (
 	// AzureSQLSkuOptionsNamePremium captures enum value "Premium"
 	AzureSQLSkuOptionsNamePremium string = "Premium"
 
-	// AzureSQLSkuOptionsNameGeneralPurpose captures enum value "GeneralPurpose"
-	AzureSQLSkuOptionsNameGeneralPurpose string = "GeneralPurpose"
-
-	// AzureSQLSkuOptionsNameBusinessCritical captures enum value "BusinessCritical"
-	AzureSQLSkuOptionsNameBusinessCritical string = "BusinessCritical"
-
-	// AzureSQLSkuOptionsNameHyperscale captures enum value "Hyperscale"
-	AzureSQLSkuOptionsNameHyperscale string = "Hyperscale"
-
 	// AzureSQLSkuOptionsNameDataWarehouse captures enum value "DataWarehouse"
 	AzureSQLSkuOptionsNameDataWarehouse string = "DataWarehouse"
 
 	// AzureSQLSkuOptionsNameStretch captures enum value "Stretch"
 	AzureSQLSkuOptionsNameStretch string = "Stretch"
+
+	// AzureSQLSkuOptionsNameBCDC captures enum value "BC_DC"
+	AzureSQLSkuOptionsNameBCDC string = "BC_DC"
+
+	// AzureSQLSkuOptionsNameBCGen5 captures enum value "BC_Gen5"
+	AzureSQLSkuOptionsNameBCGen5 string = "BC_Gen5"
+
+	// AzureSQLSkuOptionsNameBCM captures enum value "BC_M"
+	AzureSQLSkuOptionsNameBCM string = "BC_M"
+
+	// AzureSQLSkuOptionsNameGPDC captures enum value "GP_DC"
+	AzureSQLSkuOptionsNameGPDC string = "GP_DC"
+
+	// AzureSQLSkuOptionsNameGPFsv2 captures enum value "GP_Fsv2"
+	AzureSQLSkuOptionsNameGPFsv2 string = "GP_Fsv2"
+
+	// AzureSQLSkuOptionsNameGPGen5 captures enum value "GP_Gen5"
+	AzureSQLSkuOptionsNameGPGen5 string = "GP_Gen5"
+
+	// AzureSQLSkuOptionsNameGPSGen5 captures enum value "GP_S_Gen5"
+	AzureSQLSkuOptionsNameGPSGen5 string = "GP_S_Gen5"
+
+	// AzureSQLSkuOptionsNameHSDC captures enum value "HS_DC"
+	AzureSQLSkuOptionsNameHSDC string = "HS_DC"
+
+	// AzureSQLSkuOptionsNameHSGen5 captures enum value "HS_Gen5"
+	AzureSQLSkuOptionsNameHSGen5 string = "HS_Gen5"
+
+	// AzureSQLSkuOptionsNameHSSGen5 captures enum value "HS_S_Gen5"
+	AzureSQLSkuOptionsNameHSSGen5 string = "HS_S_Gen5"
+
+	// AzureSQLSkuOptionsNameHSMOPRMS captures enum value "HS_MOPRMS"
+	AzureSQLSkuOptionsNameHSMOPRMS string = "HS_MOPRMS"
+
+	// AzureSQLSkuOptionsNameHSPRMS captures enum value "HS_PRMS"
+	AzureSQLSkuOptionsNameHSPRMS string = "HS_PRMS"
 )
 
 // prop value enum
@@ -116,7 +146,7 @@ var azureSqlSkuOptionsTypeTierTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["S0","S1","S2","S3","S4","S6","S7","S9","S12","P1","P2","P4","P6","P11","P15","BC_DC","BC_Gen5","BC_M","GP_DC","GP_Fsv2","GP_Gen5","GP_S_Gen5","HS_DC","HS_Gen5","HS_S_Gen5","HS_MOPRMS","HS_PRMS","Free","Basic","Standard","Premium","DataWarehouse","Stretch"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["Basic","Standard","Premium","GeneralPurpose","BusinessCritical","Hyperscale","DataWarehouse","Stretch"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -126,90 +156,6 @@ func init() {
 
 const (
 
-	// AzureSQLSkuOptionsTierTypeS0 captures enum value "S0"
-	AzureSQLSkuOptionsTierTypeS0 string = "S0"
-
-	// AzureSQLSkuOptionsTierTypeS1 captures enum value "S1"
-	AzureSQLSkuOptionsTierTypeS1 string = "S1"
-
-	// AzureSQLSkuOptionsTierTypeS2 captures enum value "S2"
-	AzureSQLSkuOptionsTierTypeS2 string = "S2"
-
-	// AzureSQLSkuOptionsTierTypeS3 captures enum value "S3"
-	AzureSQLSkuOptionsTierTypeS3 string = "S3"
-
-	// AzureSQLSkuOptionsTierTypeS4 captures enum value "S4"
-	AzureSQLSkuOptionsTierTypeS4 string = "S4"
-
-	// AzureSQLSkuOptionsTierTypeS6 captures enum value "S6"
-	AzureSQLSkuOptionsTierTypeS6 string = "S6"
-
-	// AzureSQLSkuOptionsTierTypeS7 captures enum value "S7"
-	AzureSQLSkuOptionsTierTypeS7 string = "S7"
-
-	// AzureSQLSkuOptionsTierTypeS9 captures enum value "S9"
-	AzureSQLSkuOptionsTierTypeS9 string = "S9"
-
-	// AzureSQLSkuOptionsTierTypeS12 captures enum value "S12"
-	AzureSQLSkuOptionsTierTypeS12 string = "S12"
-
-	// AzureSQLSkuOptionsTierTypeP1 captures enum value "P1"
-	AzureSQLSkuOptionsTierTypeP1 string = "P1"
-
-	// AzureSQLSkuOptionsTierTypeP2 captures enum value "P2"
-	AzureSQLSkuOptionsTierTypeP2 string = "P2"
-
-	// AzureSQLSkuOptionsTierTypeP4 captures enum value "P4"
-	AzureSQLSkuOptionsTierTypeP4 string = "P4"
-
-	// AzureSQLSkuOptionsTierTypeP6 captures enum value "P6"
-	AzureSQLSkuOptionsTierTypeP6 string = "P6"
-
-	// AzureSQLSkuOptionsTierTypeP11 captures enum value "P11"
-	AzureSQLSkuOptionsTierTypeP11 string = "P11"
-
-	// AzureSQLSkuOptionsTierTypeP15 captures enum value "P15"
-	AzureSQLSkuOptionsTierTypeP15 string = "P15"
-
-	// AzureSQLSkuOptionsTierTypeBCDC captures enum value "BC_DC"
-	AzureSQLSkuOptionsTierTypeBCDC string = "BC_DC"
-
-	// AzureSQLSkuOptionsTierTypeBCGen5 captures enum value "BC_Gen5"
-	AzureSQLSkuOptionsTierTypeBCGen5 string = "BC_Gen5"
-
-	// AzureSQLSkuOptionsTierTypeBCM captures enum value "BC_M"
-	AzureSQLSkuOptionsTierTypeBCM string = "BC_M"
-
-	// AzureSQLSkuOptionsTierTypeGPDC captures enum value "GP_DC"
-	AzureSQLSkuOptionsTierTypeGPDC string = "GP_DC"
-
-	// AzureSQLSkuOptionsTierTypeGPFsv2 captures enum value "GP_Fsv2"
-	AzureSQLSkuOptionsTierTypeGPFsv2 string = "GP_Fsv2"
-
-	// AzureSQLSkuOptionsTierTypeGPGen5 captures enum value "GP_Gen5"
-	AzureSQLSkuOptionsTierTypeGPGen5 string = "GP_Gen5"
-
-	// AzureSQLSkuOptionsTierTypeGPSGen5 captures enum value "GP_S_Gen5"
-	AzureSQLSkuOptionsTierTypeGPSGen5 string = "GP_S_Gen5"
-
-	// AzureSQLSkuOptionsTierTypeHSDC captures enum value "HS_DC"
-	AzureSQLSkuOptionsTierTypeHSDC string = "HS_DC"
-
-	// AzureSQLSkuOptionsTierTypeHSGen5 captures enum value "HS_Gen5"
-	AzureSQLSkuOptionsTierTypeHSGen5 string = "HS_Gen5"
-
-	// AzureSQLSkuOptionsTierTypeHSSGen5 captures enum value "HS_S_Gen5"
-	AzureSQLSkuOptionsTierTypeHSSGen5 string = "HS_S_Gen5"
-
-	// AzureSQLSkuOptionsTierTypeHSMOPRMS captures enum value "HS_MOPRMS"
-	AzureSQLSkuOptionsTierTypeHSMOPRMS string = "HS_MOPRMS"
-
-	// AzureSQLSkuOptionsTierTypeHSPRMS captures enum value "HS_PRMS"
-	AzureSQLSkuOptionsTierTypeHSPRMS string = "HS_PRMS"
-
-	// AzureSQLSkuOptionsTierTypeFree captures enum value "Free"
-	AzureSQLSkuOptionsTierTypeFree string = "Free"
-
 	// AzureSQLSkuOptionsTierTypeBasic captures enum value "Basic"
 	AzureSQLSkuOptionsTierTypeBasic string = "Basic"
 
@@ -218,6 +164,15 @@ const (
 
 	// AzureSQLSkuOptionsTierTypePremium captures enum value "Premium"
 	AzureSQLSkuOptionsTierTypePremium string = "Premium"
+
+	// AzureSQLSkuOptionsTierTypeGeneralPurpose captures enum value "GeneralPurpose"
+	AzureSQLSkuOptionsTierTypeGeneralPurpose string = "GeneralPurpose"
+
+	// AzureSQLSkuOptionsTierTypeBusinessCritical captures enum value "BusinessCritical"
+	AzureSQLSkuOptionsTierTypeBusinessCritical string = "BusinessCritical"
+
+	// AzureSQLSkuOptionsTierTypeHyperscale captures enum value "Hyperscale"
+	AzureSQLSkuOptionsTierTypeHyperscale string = "Hyperscale"
 
 	// AzureSQLSkuOptionsTierTypeDataWarehouse captures enum value "DataWarehouse"
 	AzureSQLSkuOptionsTierTypeDataWarehouse string = "DataWarehouse"

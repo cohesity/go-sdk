@@ -64,6 +64,9 @@ type EnvSpecificObjectProtectionRequestParams struct {
 	// Specifies the parameters which are specific to Universal Data Adapter related Object Backup.
 	UdaParams *UdaObjectProtectionRequestParams `json:"udaParams,omitempty"`
 
+	// Specifies the parameters which are specific to SAP HANA related Object Backup.
+	SapHanaParams *SapHanaObjectProtectionRequestParams `json:"sapHanaParams,omitempty"`
+
 	// Specifies the parameters which are specific to Azure related Object Backup.
 	AzureParams *AzureObjectProtectionRequestParams `json:"azureParams,omitempty"`
 }
@@ -109,6 +112,8 @@ func (m *EnvSpecificObjectProtectionRequestParams) UnmarshalJSON(raw []byte) err
 
 		UdaParams *UdaObjectProtectionRequestParams `json:"udaParams,omitempty"`
 
+		SapHanaParams *SapHanaObjectProtectionRequestParams `json:"sapHanaParams,omitempty"`
+
 		AzureParams *AzureObjectProtectionRequestParams `json:"azureParams,omitempty"`
 	}
 	if err := swag.ReadJSON(raw, &dataAO1); err != nil {
@@ -144,6 +149,8 @@ func (m *EnvSpecificObjectProtectionRequestParams) UnmarshalJSON(raw []byte) err
 	m.SfdcParams = dataAO1.SfdcParams
 
 	m.UdaParams = dataAO1.UdaParams
+
+	m.SapHanaParams = dataAO1.SapHanaParams
 
 	m.AzureParams = dataAO1.AzureParams
 
@@ -190,6 +197,8 @@ func (m EnvSpecificObjectProtectionRequestParams) MarshalJSON() ([]byte, error) 
 
 		UdaParams *UdaObjectProtectionRequestParams `json:"udaParams,omitempty"`
 
+		SapHanaParams *SapHanaObjectProtectionRequestParams `json:"sapHanaParams,omitempty"`
+
 		AzureParams *AzureObjectProtectionRequestParams `json:"azureParams,omitempty"`
 	}
 
@@ -222,6 +231,8 @@ func (m EnvSpecificObjectProtectionRequestParams) MarshalJSON() ([]byte, error) 
 	dataAO1.SfdcParams = m.SfdcParams
 
 	dataAO1.UdaParams = m.UdaParams
+
+	dataAO1.SapHanaParams = m.SapHanaParams
 
 	dataAO1.AzureParams = m.AzureParams
 
@@ -299,6 +310,10 @@ func (m *EnvSpecificObjectProtectionRequestParams) Validate(formats strfmt.Regis
 	}
 
 	if err := m.validateUdaParams(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSapHanaParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -612,6 +627,26 @@ func (m *EnvSpecificObjectProtectionRequestParams) validateUdaParams(formats str
 	return nil
 }
 
+func (m *EnvSpecificObjectProtectionRequestParams) validateSapHanaParams(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.SapHanaParams) { // not required
+		return nil
+	}
+
+	if m.SapHanaParams != nil {
+		if err := m.SapHanaParams.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sapHanaParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sapHanaParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *EnvSpecificObjectProtectionRequestParams) validateAzureParams(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.AzureParams) { // not required
@@ -698,6 +733,10 @@ func (m *EnvSpecificObjectProtectionRequestParams) ContextValidate(ctx context.C
 	}
 
 	if err := m.contextValidateUdaParams(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateSapHanaParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -1018,6 +1057,27 @@ func (m *EnvSpecificObjectProtectionRequestParams) contextValidateUdaParams(ctx 
 				return ve.ValidateName("udaParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("udaParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *EnvSpecificObjectProtectionRequestParams) contextValidateSapHanaParams(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.SapHanaParams != nil {
+
+		if swag.IsZero(m.SapHanaParams) { // not required
+			return nil
+		}
+
+		if err := m.SapHanaParams.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("sapHanaParams")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("sapHanaParams")
 			}
 			return err
 		}

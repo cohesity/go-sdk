@@ -48,11 +48,17 @@ type UdaSourceCapabilities struct {
 	// Whether the source supports restore of multiple objects.
 	MultiObjectRestore *bool `json:"multiObjectRestore,omitempty"`
 
+	// pause resume backup
+	PauseResumeBackup *bool `json:"pauseResumeBackup,omitempty"`
+
 	// Make a source call before actual start backup call.
 	PreBackupJobScript *bool `json:"preBackupJobScript,omitempty"`
 
 	// resource throttling
 	ResourceThrottling *bool `json:"resourceThrottling,omitempty"`
+
+	// snapfs cert
+	SnapfsCert *bool `json:"snapfsCert,omitempty"`
 }
 
 // Validate validates this uda source capabilities
