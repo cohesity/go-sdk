@@ -16,7 +16,7 @@ harness the power of *Cohesity REST APIs* in your Go applications.
 
 ### Installation
 ```
-go get github.com/cohesity/go-sdk
+go get github.com/cohesity/go-sdk@v0.72.1001
 ```
 ## <a name="compatibility-matrix"></a> Compatibility Matrix
 
