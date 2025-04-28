@@ -39,9 +39,6 @@ type KubernetesEnvParams struct {
 	// If specified, the backup job will use CSI snapshot for backups.
 	LeverageCsiSnapshot *bool `json:"leverageCsiSnapshot,omitempty"`
 
-	// S3 account ID of the user who has triggered the backup workflow.
-	S3AccountID *string `json:"s3AccountId,omitempty"`
-
 	// Indicates the vlan preference that is selected by the user for doing
 	// backup.
 	VlanParams *VlanParams `json:"vlanParams,omitempty"`

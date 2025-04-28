@@ -17,6 +17,11 @@ import (
 // swagger:model MarkNodeDeleteRequest
 type MarkNodeDeleteRequest struct {
 
+	// ClearPreCheckResultOnly param
+	// If ClearPreCheckResultOnly is true, API only clears the pre-check
+	// Default is false
+	ClearPreCheckResultOnly *bool `json:"clearPreCheckResultOnly,omitempty"`
+
 	// Id of the node to be marked for deletion.
 	ID *int64 `json:"id,omitempty"`
 

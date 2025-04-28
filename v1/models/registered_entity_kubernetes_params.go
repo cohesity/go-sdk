@@ -19,10 +19,6 @@ import (
 // swagger:model RegisteredEntityKubernetesParams
 type RegisteredEntityKubernetesParams struct {
 
-	// The params required to perform autoprotection of the source along with
-	// the registration.
-	AutoProtectParams *RegisteredEntityKubernetesParamsKubernetesAutoProtectParams `json:"autoProtectParams,omitempty"`
-
 	// List of annotations to apply to resources created/deployed by cohesity
 	// at the source.
 	CohesityResourceAnnotations map[string]string `json:"cohesityResourceAnnotations,omitempty"`
@@ -84,10 +80,6 @@ type RegisteredEntityKubernetesParams struct {
 func (m *RegisteredEntityKubernetesParams) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateAutoProtectParams(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.validateDefaultVlanParams(formats); err != nil {
 		res = append(res, err)
 	}
@@ -103,25 +95,6 @@ func (m *RegisteredEntityKubernetesParams) Validate(formats strfmt.Registry) err
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *RegisteredEntityKubernetesParams) validateAutoProtectParams(formats strfmt.Registry) error {
-	if swag.IsZero(m.AutoProtectParams) { // not required
-		return nil
-	}
-
-	if m.AutoProtectParams != nil {
-		if err := m.AutoProtectParams.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("autoProtectParams")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("autoProtectParams")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -200,10 +173,6 @@ func (m *RegisteredEntityKubernetesParams) validateVlanInfoVec(formats strfmt.Re
 func (m *RegisteredEntityKubernetesParams) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidateAutoProtectParams(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
 	if err := m.contextValidateDefaultVlanParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -219,27 +188,6 @@ func (m *RegisteredEntityKubernetesParams) ContextValidate(ctx context.Context, 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *RegisteredEntityKubernetesParams) contextValidateAutoProtectParams(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.AutoProtectParams != nil {
-
-		if swag.IsZero(m.AutoProtectParams) { // not required
-			return nil
-		}
-
-		if err := m.AutoProtectParams.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("autoProtectParams")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("autoProtectParams")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

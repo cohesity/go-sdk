@@ -117,6 +117,14 @@ type GetBackupJobsSummaryParams struct {
 	*/
 	IncludeRpoSnapshots *bool
 
+	/* IncludeSourceNames.
+
+	     If true, both names and ids of Sources inside the protection group will be
+	sent in the response.
+	If false, only Source ids will be sent in the response.
+	*/
+	IncludeSourceNames *bool
+
 	/* IsActive.
 
 	     IsActive is the parameter to filter active/inactive jobs. If it is
@@ -389,6 +397,17 @@ func (o *GetBackupJobsSummaryParams) WithIncludeRpoSnapshots(includeRpoSnapshots
 // SetIncludeRpoSnapshots adds the includeRpoSnapshots to the get backup jobs summary params
 func (o *GetBackupJobsSummaryParams) SetIncludeRpoSnapshots(includeRpoSnapshots *bool) {
 	o.IncludeRpoSnapshots = includeRpoSnapshots
+}
+
+// WithIncludeSourceNames adds the includeSourceNames to the get backup jobs summary params
+func (o *GetBackupJobsSummaryParams) WithIncludeSourceNames(includeSourceNames *bool) *GetBackupJobsSummaryParams {
+	o.SetIncludeSourceNames(includeSourceNames)
+	return o
+}
+
+// SetIncludeSourceNames adds the includeSourceNames to the get backup jobs summary params
+func (o *GetBackupJobsSummaryParams) SetIncludeSourceNames(includeSourceNames *bool) {
+	o.IncludeSourceNames = includeSourceNames
 }
 
 // WithIsActive adds the isActive to the get backup jobs summary params
@@ -716,6 +735,23 @@ func (o *GetBackupJobsSummaryParams) WriteToRequest(r runtime.ClientRequest, reg
 		if qIncludeRpoSnapshots != "" {
 
 			if err := r.SetQueryParam("includeRpoSnapshots", qIncludeRpoSnapshots); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.IncludeSourceNames != nil {
+
+		// query param includeSourceNames
+		var qrIncludeSourceNames bool
+
+		if o.IncludeSourceNames != nil {
+			qrIncludeSourceNames = *o.IncludeSourceNames
+		}
+		qIncludeSourceNames := swag.FormatBool(qrIncludeSourceNames)
+		if qIncludeSourceNames != "" {
+
+			if err := r.SetQueryParam("includeSourceNames", qIncludeSourceNames); err != nil {
 				return err
 			}
 		}

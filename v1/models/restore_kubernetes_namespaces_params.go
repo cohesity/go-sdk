@@ -70,9 +70,6 @@ type RestoreKubernetesNamespacesParams struct {
 	// S3 account ID that was used to register the source.
 	S3AccountID *string `json:"s3AccountId,omitempty"`
 
-	// Whether to skip restore validation.
-	SkipRestoreValidation *bool `json:"skipRestoreValidation,omitempty"`
-
 	// Indicates the VLAN information to use for restore.
 	VlanParams *VlanParams `json:"vlanParams,omitempty"`
 }

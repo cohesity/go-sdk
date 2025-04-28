@@ -95,9 +95,6 @@ type ObjectSnapshotDocument struct {
 	// Primary name of the object.
 	ObjectName *string `json:"objectName,omitempty"`
 
-	// This field contains Oracle related information.
-	OracleParams *ObjectSnapshotDocumentOracleParams `json:"oracleParams,omitempty"`
-
 	// Inferred OS type.
 	OsType *string `json:"osType,omitempty"`
 
@@ -167,10 +164,6 @@ func (m *ObjectSnapshotDocument) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateObjectID(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateOracleParams(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -317,25 +310,6 @@ func (m *ObjectSnapshotDocument) validateObjectID(formats strfmt.Registry) error
 	return nil
 }
 
-func (m *ObjectSnapshotDocument) validateOracleParams(formats strfmt.Registry) error {
-	if swag.IsZero(m.OracleParams) { // not required
-		return nil
-	}
-
-	if m.OracleParams != nil {
-		if err := m.OracleParams.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("oracleParams")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("oracleParams")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
 func (m *ObjectSnapshotDocument) validateRegisteredSource(formats strfmt.Registry) error {
 	if swag.IsZero(m.RegisteredSource) { // not required
 		return nil
@@ -458,10 +432,6 @@ func (m *ObjectSnapshotDocument) ContextValidate(ctx context.Context, formats st
 	}
 
 	if err := m.contextValidateObjectID(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateOracleParams(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -609,27 +579,6 @@ func (m *ObjectSnapshotDocument) contextValidateObjectID(ctx context.Context, fo
 				return ve.ValidateName("objectId")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("objectId")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *ObjectSnapshotDocument) contextValidateOracleParams(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.OracleParams != nil {
-
-		if swag.IsZero(m.OracleParams) { // not required
-			return nil
-		}
-
-		if err := m.OracleParams.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("oracleParams")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("oracleParams")
 			}
 			return err
 		}

@@ -43,9 +43,6 @@ type CreateCloudClusterParameters struct {
 	// Serial number of the disks to designate properties.
 	DiskSerials []string `json:"diskSerials"`
 
-	// Tiers of the disks to designate.
-	DiskTiers []string `json:"diskTiers"`
-
 	// Enable Cloud RF1 feature.
 	EnableCloudRf1 *bool `json:"enableCloudRf1,omitempty"`
 

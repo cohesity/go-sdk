@@ -89,9 +89,8 @@ type PhysicalProtectionSource struct {
 	// 'kOracleRACCluster' indicates an Oracle Real Application Cluster(RAC).
 	// 'kOracleAPCluster' indicates an Oracle Active-Passive Cluster.
 	// 'kUnixCluster' indicates a RedHat Pacemaker or any UnixCluster.
-	// 'kOracleCluster' indicates Oracle clustered entity. This is updated after
-	// registration to either kOracleRACCluster or kOracleAPCluster.
-	// Enum: ["kGroup","kHost","kWindowsCluster","kOracleRACCluster","kOracleAPCluster","kUnixCluster","kOracleCluster"]
+	// kUnixCluster
+	// Enum: ["kGroup","kHost","kWindowsCluster","kOracleRACCluster","kOracleAPCluster"]
 	Type *string `json:"type,omitempty"`
 
 	// Specifies cluster version for VCS host.
@@ -294,7 +293,7 @@ var physicalProtectionSourceTypeTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kGroup","kHost","kWindowsCluster","kOracleRACCluster","kOracleAPCluster","kUnixCluster","kOracleCluster"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kGroup","kHost","kWindowsCluster","kOracleRACCluster","kOracleAPCluster"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -318,12 +317,6 @@ const (
 
 	// PhysicalProtectionSourceTypeKOracleAPCluster captures enum value "kOracleAPCluster"
 	PhysicalProtectionSourceTypeKOracleAPCluster string = "kOracleAPCluster"
-
-	// PhysicalProtectionSourceTypeKUnixCluster captures enum value "kUnixCluster"
-	PhysicalProtectionSourceTypeKUnixCluster string = "kUnixCluster"
-
-	// PhysicalProtectionSourceTypeKOracleCluster captures enum value "kOracleCluster"
-	PhysicalProtectionSourceTypeKOracleCluster string = "kOracleCluster"
 )
 
 // prop value enum
