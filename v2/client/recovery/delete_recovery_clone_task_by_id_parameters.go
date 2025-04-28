@@ -143,7 +143,7 @@ func (o *DeleteRecoveryCloneTaskByIDParams) WriteToRequest(r runtime.ClientReque
 	var res []error
 
 	// path param id
-	if err := r.SetPathParam("id", swag.FormatInt64(o.Id)); err != nil {
+	if err := r.SetPathParam("id", swag.FormatInt64(o.ID)); err != nil {
 		return err
 	}
 
