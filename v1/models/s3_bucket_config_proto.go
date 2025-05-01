@@ -97,6 +97,9 @@ type S3BucketConfigProto struct {
 	// Protocol type of this bucket.
 	ProtocolType *int32 `json:"protocolType,omitempty"`
 
+	// S3 Embedded config.
+	S3EmbeddedCredConfig *S3BucketConfigProtoS3EmbeddedCredentialConfig `json:"s3EmbeddedCredConfig,omitempty"`
+
 	// Whether this bucket is based on snap_obs(true) or snap_fs(false).
 	SnapObsBased *bool `json:"snapObsBased,omitempty"`
 
@@ -140,6 +143,10 @@ func (m *S3BucketConfigProto) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateOwnershipControls(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateS3EmbeddedCredConfig(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -286,6 +293,25 @@ func (m *S3BucketConfigProto) validateOwnershipControls(formats strfmt.Registry)
 	return nil
 }
 
+func (m *S3BucketConfigProto) validateS3EmbeddedCredConfig(formats strfmt.Registry) error {
+	if swag.IsZero(m.S3EmbeddedCredConfig) { // not required
+		return nil
+	}
+
+	if m.S3EmbeddedCredConfig != nil {
+		if err := m.S3EmbeddedCredConfig.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("s3EmbeddedCredConfig")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("s3EmbeddedCredConfig")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (m *S3BucketConfigProto) validateSwiftContainerTag(formats strfmt.Registry) error {
 	if swag.IsZero(m.SwiftContainerTag) { // not required
 		return nil
@@ -334,6 +360,10 @@ func (m *S3BucketConfigProto) ContextValidate(ctx context.Context, formats strfm
 	}
 
 	if err := m.contextValidateOwnershipControls(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateS3EmbeddedCredConfig(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -486,6 +516,27 @@ func (m *S3BucketConfigProto) contextValidateOwnershipControls(ctx context.Conte
 				return ve.ValidateName("ownershipControls")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("ownershipControls")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *S3BucketConfigProto) contextValidateS3EmbeddedCredConfig(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.S3EmbeddedCredConfig != nil {
+
+		if swag.IsZero(m.S3EmbeddedCredConfig) { // not required
+			return nil
+		}
+
+		if err := m.S3EmbeddedCredConfig.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("s3EmbeddedCredConfig")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("s3EmbeddedCredConfig")
 			}
 			return err
 		}

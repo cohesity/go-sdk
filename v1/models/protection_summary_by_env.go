@@ -8,6 +8,7 @@ package models
 import (
 	"context"
 	"encoding/json"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -87,6 +88,9 @@ type ProtectionSummaryByEnv struct {
 	// Enum: ["kVMware","kHyperV","kSQL","kView","kPuppeteer","kPhysical","kPure","kNimble"]
 	Environment *string `json:"environment,omitempty"`
 
+	// Specifies the breakdown of the kubernetes clusters by distribution type
+	KubernetesDistributionStats []*ProtectionSummaryForK8sDistributions `json:"kubernetesDistributionStats"`
+
 	// Specifies the number of objects that are protected under the given
 	// entity.
 	ProtectedCount *int64 `json:"protectedCount,omitempty"`
@@ -108,6 +112,10 @@ func (m *ProtectionSummaryByEnv) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateEnvironment(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateKubernetesDistributionStats(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -177,8 +185,68 @@ func (m *ProtectionSummaryByEnv) validateEnvironment(formats strfmt.Registry) er
 	return nil
 }
 
-// ContextValidate validates this protection summary by env based on context it is used
+func (m *ProtectionSummaryByEnv) validateKubernetesDistributionStats(formats strfmt.Registry) error {
+	if swag.IsZero(m.KubernetesDistributionStats) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.KubernetesDistributionStats); i++ {
+		if swag.IsZero(m.KubernetesDistributionStats[i]) { // not required
+			continue
+		}
+
+		if m.KubernetesDistributionStats[i] != nil {
+			if err := m.KubernetesDistributionStats[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("kubernetesDistributionStats" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("kubernetesDistributionStats" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this protection summary by env based on the context it is used
 func (m *ProtectionSummaryByEnv) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateKubernetesDistributionStats(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ProtectionSummaryByEnv) contextValidateKubernetesDistributionStats(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.KubernetesDistributionStats); i++ {
+
+		if m.KubernetesDistributionStats[i] != nil {
+
+			if swag.IsZero(m.KubernetesDistributionStats[i]) { // not required
+				return nil
+			}
+
+			if err := m.KubernetesDistributionStats[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("kubernetesDistributionStats" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("kubernetesDistributionStats" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

@@ -20,9 +20,6 @@ type LinuxSupportUserSudoAccessReqParams struct {
 	// If the enable flag is set to true, the sudo access will be enabled.
 	// If the enable flag is set to false, the sudo access will be disabled.
 	SudoAccessEnable *bool `json:"sudoAccessEnable,omitempty"`
-
-	// sudo access end time stamp in milliseconds since unix epoch.
-	SudoAccessEndTimestampMsecs *int64 `json:"sudoAccessEndTimestampMsecs,omitempty"`
 }
 
 // Validate validates this linux support user sudo access req params

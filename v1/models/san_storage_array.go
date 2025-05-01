@@ -21,9 +21,6 @@ import (
 // swagger:model SanStorageArray
 type SanStorageArray struct {
 
-	// Specifies the hardware model of the SAN Storage Array.
-	HardwareModel *string `json:"hardwareModel,omitempty"`
-
 	// Specifies a unique id of a SAN Storage Array.
 	// The id is unique across Cohesity Clusters.
 	ID *string `json:"id,omitempty"`

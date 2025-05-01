@@ -29,6 +29,9 @@ type KmsCreateRequestParameters struct {
 	// Cryptsoft KMS config.
 	CryptsoftKms *CryptsoftKmsConfiguration `json:"cryptsoftKms,omitempty"`
 
+	// IBM KMS conifg.
+	IbmKms *IbmKmsConfiguration `json:"ibmKms,omitempty"`
+
 	// The Id of a KMS server.
 	ID *int64 `json:"id,omitempty"`
 
@@ -80,6 +83,10 @@ func (m *KmsCreateRequestParameters) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateCryptsoftKms(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateIbmKms(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -150,6 +157,25 @@ func (m *KmsCreateRequestParameters) validateCryptsoftKms(formats strfmt.Registr
 				return ve.ValidateName("cryptsoftKms")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("cryptsoftKms")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *KmsCreateRequestParameters) validateIbmKms(formats strfmt.Registry) error {
+	if swag.IsZero(m.IbmKms) { // not required
+		return nil
+	}
+
+	if m.IbmKms != nil {
+		if err := m.IbmKms.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ibmKms")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ibmKms")
 			}
 			return err
 		}
@@ -306,6 +332,10 @@ func (m *KmsCreateRequestParameters) ContextValidate(ctx context.Context, format
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateIbmKms(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -367,6 +397,27 @@ func (m *KmsCreateRequestParameters) contextValidateCryptsoftKms(ctx context.Con
 				return ve.ValidateName("cryptsoftKms")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("cryptsoftKms")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *KmsCreateRequestParameters) contextValidateIbmKms(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.IbmKms != nil {
+
+		if swag.IsZero(m.IbmKms) { // not required
+			return nil
+		}
+
+		if err := m.IbmKms.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ibmKms")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ibmKms")
 			}
 			return err
 		}

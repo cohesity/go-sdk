@@ -49,9 +49,6 @@ type RestoreOutlookParams struct {
 	// Whether to skip recovery of archive recoverable items folders.
 	SkipRecoverArchiveRecoverableItems *bool `json:"skipRecoverArchiveRecoverableItems,omitempty"`
 
-	// Whether to skip recovery of items in the message folder root.
-	SkipRecoverPrimaryMailbox *bool `json:"skipRecoverPrimaryMailbox,omitempty"`
-
 	// Whether to skip recovery of recoverable items folders.
 	SkipRecoverRecoverableItems *bool `json:"skipRecoverRecoverableItems,omitempty"`
 

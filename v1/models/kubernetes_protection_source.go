@@ -44,6 +44,7 @@ type KubernetesProtectionSource struct {
 
 	// Specifies the type of the entity in a Kubernetes environment.
 	// Determines the K8s distribution.
+	// kIKS, kROKS
 	// Enum: ["kMainline","kOpenshift","kRancher","kEKS","kGKE","kAKS","kVMwareTanzu"]
 	Distribution *string `json:"distribution,omitempty"`
 

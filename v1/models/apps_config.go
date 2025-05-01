@@ -20,9 +20,6 @@ import (
 // swagger:model AppsConfig
 type AppsConfig struct {
 
-	// Override node level resource reservation with cluster level
-	OverrideNodeResourceReservation *bool `json:"OverrideNodeResourceReservation,omitempty"`
-
 	// Whether to allow pod external traffic.
 	AllowExternalTraffic *bool `json:"allowExternalTraffic,omitempty"`
 
@@ -49,9 +46,6 @@ type AppsConfig struct {
 	// on a VM hosted by the node.
 	// Enum: ["kDisabled","kBareMetal","kVmOnly"]
 	MarketplaceAppsMode *string `json:"marketplaceAppsMode,omitempty"`
-
-	// ID of nodes in the cluster
-	NodeIds []int64 `json:"nodeIds"`
 
 	// The system memory to overcommit for apps.
 	OvercommitMemoryPct *int32 `json:"overcommitMemoryPct,omitempty"`

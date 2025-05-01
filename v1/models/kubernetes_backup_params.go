@@ -37,6 +37,14 @@ type KubernetesBackupParams struct {
 	// Indicates if resource selection feature is enabled in the feature enabler.
 	IsResourceSelectionEnabled *bool `json:"isResourceSelectionEnabled,omitempty"`
 
+	// Indicates if s3 embedded credentials feature is enabled in the feature
+	// enabler.
+	IsS3SeparateVeleroViewWithEmbeddedCredentialsEnabled *bool `json:"isS3SeparateVeleroViewWithEmbeddedCredentialsEnabled,omitempty"`
+
+	// Indicates if separate velero view feature is enabled in the feature
+	// enabler.
+	IsSeparateVeleroViewEnabled *bool `json:"isSeparateVeleroViewEnabled,omitempty"`
+
 	// Indicates if volume inclusion/exclusion feature is enabled in the feature
 	// enabler.
 	IsVolumeExclusionEnabled *bool `json:"isVolumeExclusionEnabled,omitempty"`

@@ -37,9 +37,6 @@ type PrivatePureEntity struct {
 	// The base_volume id to be cloned for nimble adapter.
 	BaseVolumeID *string `json:"baseVolumeId,omitempty"`
 
-	// The hardware model of the array.
-	HardwareModel *string `json:"hardwareModel,omitempty"`
-
 	// A version field representing the current entity property by which this
 	// entity is tracked in this cluster.
 	IDVersion *int32 `json:"idVersion,omitempty"`

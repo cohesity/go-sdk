@@ -63,8 +63,7 @@ type BasicClusterInfo struct {
 	// on Google Cloud Platform using Cohesity's Cloud Edition.
 	// 'kIBMCloud' indicates the Cohesity Cluster is hosted in a VM
 	// on IBM Cloud
-	// kIBMCloud
-	// Enum: ["kPhysical","kVirtualRobo","kMicrosoftCloud","kAmazonCloud","kGoogleCloud"]
+	// Enum: ["kPhysical","kVirtualRobo","kMicrosoftCloud","kAmazonCloud","kGoogleCloud","kIBMCloud"]
 	ClusterType *string `json:"clusterType,omitempty"`
 
 	// Specifies if dodin mode is enabled on the cluster.
@@ -261,7 +260,7 @@ var basicClusterInfoTypeClusterTypePropEnum []interface{}
 
 func init() {
 	var res []string
-	if err := json.Unmarshal([]byte(`["kPhysical","kVirtualRobo","kMicrosoftCloud","kAmazonCloud","kGoogleCloud"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["kPhysical","kVirtualRobo","kMicrosoftCloud","kAmazonCloud","kGoogleCloud","kIBMCloud"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
@@ -285,6 +284,9 @@ const (
 
 	// BasicClusterInfoClusterTypeKGoogleCloud captures enum value "kGoogleCloud"
 	BasicClusterInfoClusterTypeKGoogleCloud string = "kGoogleCloud"
+
+	// BasicClusterInfoClusterTypeKIBMCloud captures enum value "kIBMCloud"
+	BasicClusterInfoClusterTypeKIBMCloud string = "kIBMCloud"
 )
 
 // prop value enum

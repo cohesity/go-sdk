@@ -50,6 +50,10 @@ type Entity struct {
 	// K8s distribution. This will only be applicable to kCluster entities.
 	Distribution *int32 `json:"distribution,omitempty"`
 
+	// Front end size information. An example use case is for billing purposes
+	// in "[Backup | Data Management] as a Service" offering.
+	FrontEndSizeInfo *SizeInfo `json:"frontEndSizeInfo,omitempty"`
+
 	// List of hosts to be populated as SAN fields in the agent certificate.
 	Hosts []string `json:"hosts"`
 
@@ -94,6 +98,11 @@ type Entity struct {
 	// IDs. This will be generated during registration and updated during
 	// refresh. Applicable only for 'kCluster' type entities.
 	ServicesToConnectorIdsMap map[string]int64 `json:"servicesToConnectorIdsMap,omitempty"`
+
+	// Identifier to be used while deploying resources on the kubernetes cluster.
+	// This will be set to a randomly generated guid for DMaaS clusters and
+	// Cohesity cluster id for on prem clusters.
+	SourceID *string `json:"sourceId,omitempty"`
 
 	// This is populated for the root entity only (type kCluster).
 	StorageClassVec []*EntityStorageClassInfo `json:"storageClassVec"`
@@ -141,6 +150,10 @@ func (m *Entity) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateFrontEndSizeInfo(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateIPMode(formats); err != nil {
 		res = append(res, err)
 	}
@@ -178,6 +191,25 @@ func (m *Entity) validateDefaultVlanParams(formats strfmt.Registry) error {
 				return ve.ValidateName("defaultVlanParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("defaultVlanParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Entity) validateFrontEndSizeInfo(formats strfmt.Registry) error {
+	if swag.IsZero(m.FrontEndSizeInfo) { // not required
+		return nil
+	}
+
+	if m.FrontEndSizeInfo != nil {
+		if err := m.FrontEndSizeInfo.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("frontEndSizeInfo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("frontEndSizeInfo")
 			}
 			return err
 		}
@@ -317,6 +349,10 @@ func (m *Entity) ContextValidate(ctx context.Context, formats strfmt.Registry) e
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateFrontEndSizeInfo(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateIPMode(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -356,6 +392,27 @@ func (m *Entity) contextValidateDefaultVlanParams(ctx context.Context, formats s
 				return ve.ValidateName("defaultVlanParams")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("defaultVlanParams")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Entity) contextValidateFrontEndSizeInfo(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.FrontEndSizeInfo != nil {
+
+		if swag.IsZero(m.FrontEndSizeInfo) { // not required
+			return nil
+		}
+
+		if err := m.FrontEndSizeInfo.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("frontEndSizeInfo")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("frontEndSizeInfo")
 			}
 			return err
 		}

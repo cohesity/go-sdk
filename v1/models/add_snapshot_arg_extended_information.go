@@ -26,6 +26,9 @@ type AddSnapshotArgExtendedInformation struct {
 	// O365 specific information.
 	O365AddSnapshotArg *O365AddSnapshotArg `json:"o365AddSnapshotArg,omitempty"`
 
+	// Oracle specific information.
+	OracleAddSnapshotArg *OracleAddSnapshotArg `json:"oracleAddSnapshotArg,omitempty"`
+
 	// record stats
 	RecordStats *AddSnapshotArgExtendedInformationRecordStats `json:"recordStats,omitempty"`
 
@@ -44,6 +47,10 @@ func (m *AddSnapshotArgExtendedInformation) Validate(formats strfmt.Registry) er
 	var res []error
 
 	if err := m.validateO365AddSnapshotArg(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateOracleAddSnapshotArg(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -76,6 +83,25 @@ func (m *AddSnapshotArgExtendedInformation) validateO365AddSnapshotArg(formats s
 				return ve.ValidateName("o365AddSnapshotArg")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("o365AddSnapshotArg")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *AddSnapshotArgExtendedInformation) validateOracleAddSnapshotArg(formats strfmt.Registry) error {
+	if swag.IsZero(m.OracleAddSnapshotArg) { // not required
+		return nil
+	}
+
+	if m.OracleAddSnapshotArg != nil {
+		if err := m.OracleAddSnapshotArg.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("oracleAddSnapshotArg")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("oracleAddSnapshotArg")
 			}
 			return err
 		}
@@ -149,6 +175,10 @@ func (m *AddSnapshotArgExtendedInformation) ContextValidate(ctx context.Context,
 		res = append(res, err)
 	}
 
+	if err := m.contextValidateOracleAddSnapshotArg(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateRecordStats(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -180,6 +210,27 @@ func (m *AddSnapshotArgExtendedInformation) contextValidateO365AddSnapshotArg(ct
 				return ve.ValidateName("o365AddSnapshotArg")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("o365AddSnapshotArg")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *AddSnapshotArgExtendedInformation) contextValidateOracleAddSnapshotArg(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.OracleAddSnapshotArg != nil {
+
+		if swag.IsZero(m.OracleAddSnapshotArg) { // not required
+			return nil
+		}
+
+		if err := m.OracleAddSnapshotArg.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("oracleAddSnapshotArg")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("oracleAddSnapshotArg")
 			}
 			return err
 		}

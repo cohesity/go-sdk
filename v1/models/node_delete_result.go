@@ -19,9 +19,6 @@ import (
 // swagger:model NodeDeleteResult
 type NodeDeleteResult struct {
 
-	// True if PreCheck result is cleared
-	ClearedPreCheckResult *bool `json:"clearedPreCheckResult,omitempty"`
-
 	// Id of the node to be marked for deletion.
 	ID *int64 `json:"id,omitempty"`
 

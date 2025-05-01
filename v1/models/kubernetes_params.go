@@ -41,6 +41,7 @@ type KubernetesParams struct {
 
 	// Specifies the distribution if the environment is kKubernetes.
 	// overrideDescription: true
+	// kIKS, kROKS
 	// Enum: ["kMainline","kOpenshift","kRancher","kEKS","kGKE","kAKS","kVMwareTanzu"]
 	KubernetesDistribution *string `json:"kubernetesDistribution,omitempty"`
 

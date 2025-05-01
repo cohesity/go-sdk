@@ -87,7 +87,7 @@ import (
 	"github.com/cohesity/go-sdk/v1/client/vm"
 )
 
-// Default cohesity internal r e s t API HTTP client.
+// Default cohesity r e s t API HTTP client.
 var Default = NewHTTPClient(nil)
 
 const (
@@ -102,14 +102,14 @@ const (
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
 var DefaultSchemes = []string{"https"}
 
-// NewHTTPClient creates a new cohesity internal r e s t API HTTP client.
-func NewHTTPClient(formats strfmt.Registry) *CohesityInternalRESTAPI {
+// NewHTTPClient creates a new cohesity r e s t API HTTP client.
+func NewHTTPClient(formats strfmt.Registry) *CohesityRESTAPI {
 	return NewHTTPClientWithConfig(formats, nil)
 }
 
-// NewHTTPClientWithConfig creates a new cohesity internal r e s t API HTTP client,
+// NewHTTPClientWithConfig creates a new cohesity r e s t API HTTP client,
 // using a customizable transport config.
-func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *CohesityInternalRESTAPI {
+func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *CohesityRESTAPI {
 	// ensure nullable parameters have default
 	if cfg == nil {
 		cfg = DefaultTransportConfig()
@@ -120,14 +120,14 @@ func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *Coh
 	return New(transport, formats)
 }
 
-// New creates a new cohesity internal r e s t API client
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *CohesityInternalRESTAPI {
+// New creates a new cohesity r e s t API client
+func New(transport runtime.ClientTransport, formats strfmt.Registry) *CohesityRESTAPI {
 	// ensure nullable parameters have default
 	if formats == nil {
 		formats = strfmt.Default
 	}
 
-	cli := new(CohesityInternalRESTAPI)
+	cli := new(CohesityRESTAPI)
 	cli.Transport = transport
 	cli.AccessTokens = access_tokens.New(transport, formats)
 	cli.ActiveDirectory = active_directory.New(transport, formats)
@@ -246,8 +246,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 	return cfg
 }
 
-// CohesityInternalRESTAPI is a client for cohesity internal r e s t API
-type CohesityInternalRESTAPI struct {
+// CohesityRESTAPI is a client for cohesity r e s t API
+type CohesityRESTAPI struct {
 	AccessTokens access_tokens.ClientService
 
 	ActiveDirectory active_directory.ClientService
@@ -402,7 +402,7 @@ type CohesityInternalRESTAPI struct {
 }
 
 // SetTransport changes the transport on the client and all its subresources
-func (c *CohesityInternalRESTAPI) SetTransport(transport runtime.ClientTransport) {
+func (c *CohesityRESTAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 	c.AccessTokens.SetTransport(transport)
 	c.ActiveDirectory.SetTransport(transport)

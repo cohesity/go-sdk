@@ -41,11 +41,6 @@ type O365BackupParams struct {
 	// If true, then automatic full backup was triggered for this attempt.
 	IsAutomaticFullBackup *bool `json:"isAutomaticFullBackup,omitempty"`
 
-	// If true, indicates that the site belongs to a new tenant, i.e. registered
-	// after the timestamp defined in the flag,
-	// magneto_o365spo_pnp_pwsh_skip_site_page_files_for_domains_registered_after
-	IsNewTenant *bool `json:"isNewTenant,omitempty"`
-
 	// Indicates whether sharepoint template backup can be skipped or not.
 	MaybeSkipSharepointTemplateBackup *bool `json:"maybeSkipSharepointTemplateBackup,omitempty"`
 

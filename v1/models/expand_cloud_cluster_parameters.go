@@ -33,6 +33,9 @@ type ExpandCloudClusterParameters struct {
 	// Serial number of the disks to designate properties.
 	DiskSerials []string `json:"diskSerials"`
 
+	// Tiers of the disks to designate.
+	DiskTiers []string `json:"diskTiers"`
+
 	// Specifies the list of IPs of the new Nodes.
 	// Required: true
 	NodeIps []string `json:"nodeIps"`

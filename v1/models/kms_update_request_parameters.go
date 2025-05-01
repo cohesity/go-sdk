@@ -24,6 +24,9 @@ type KmsUpdateRequestParameters struct {
 	// Specifies the config response for cryptsoftKMS.
 	CryptsoftKms *CryptsoftKmsUpdateParams `json:"cryptsoftKms,omitempty"`
 
+	// IBM KMS conifg update params.
+	IbmKms *IbmKmsUpdateParams `json:"ibmKms,omitempty"`
+
 	// The Id of a KMS server.
 	ID *int64 `json:"id,omitempty"`
 
@@ -49,6 +52,10 @@ func (m *KmsUpdateRequestParameters) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateCryptsoftKms(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateIbmKms(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -96,6 +103,25 @@ func (m *KmsUpdateRequestParameters) validateCryptsoftKms(formats strfmt.Registr
 	return nil
 }
 
+func (m *KmsUpdateRequestParameters) validateIbmKms(formats strfmt.Registry) error {
+	if swag.IsZero(m.IbmKms) { // not required
+		return nil
+	}
+
+	if m.IbmKms != nil {
+		if err := m.IbmKms.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ibmKms")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ibmKms")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this kms update request parameters based on the context it is used
 func (m *KmsUpdateRequestParameters) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
@@ -105,6 +131,10 @@ func (m *KmsUpdateRequestParameters) ContextValidate(ctx context.Context, format
 	}
 
 	if err := m.contextValidateCryptsoftKms(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateIbmKms(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -148,6 +178,27 @@ func (m *KmsUpdateRequestParameters) contextValidateCryptsoftKms(ctx context.Con
 				return ve.ValidateName("cryptsoftKms")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
 				return ce.ValidateName("cryptsoftKms")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *KmsUpdateRequestParameters) contextValidateIbmKms(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.IbmKms != nil {
+
+		if swag.IsZero(m.IbmKms) { // not required
+			return nil
+		}
+
+		if err := m.IbmKms.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ibmKms")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("ibmKms")
 			}
 			return err
 		}
